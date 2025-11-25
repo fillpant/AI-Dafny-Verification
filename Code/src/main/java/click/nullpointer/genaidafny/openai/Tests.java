@@ -5,6 +5,9 @@ import click.nullpointer.genaidafny.openai.completion.common.OpenAIMessage;
 import click.nullpointer.genaidafny.openai.completion.common.OpenAIMessageRole;
 import click.nullpointer.genaidafny.openai.completion.common.OpenAITextModel;
 import click.nullpointer.genaidafny.openai.completion.requests.OpenAICompletionRequest;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 import java.io.File;
 import java.util.concurrent.ExecutionException;
@@ -12,7 +15,7 @@ import java.util.concurrent.ExecutionException;
 public class Tests {
 
     public static void main(String[] args) throws ExecutionException, InterruptedException {
-        OpenAICompletionManager comp = new OpenAICompletionManager("", new File("request_logs"));
+        OpenAICompletionManager comp = new OpenAICompletionManager(args[0], new File("request_logs"));
         OpenAIMessage msg = new OpenAIMessage(OpenAIMessageRole.USER, "What is 3+892?");
         OpenAICompletionRequest request = new OpenAICompletionRequest(OpenAITextModel.GPT_4O_MINI, msg);
         request.setMaxCompletionTokens(200);
