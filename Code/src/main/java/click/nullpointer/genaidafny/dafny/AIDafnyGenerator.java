@@ -17,7 +17,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
 
 public class AIDafnyGenerator {
-    private static final String PROMPT_STRUCTURE = "You are given the following task to perform in Dafny: \"%s\". The signature should be: \"%s\". The method should respect the following contract: \"%s\". Produce and show only the Dafny body of this method, including the curly braces that surround it. Do not show the signature nor contract.";
+    private static final String PROMPT_STRUCTURE = "You are given the following task to perform in Dafny: \"%s\". The signature should be: \"%s\". The method should respect the following contract: \"method %s\". Produce and show only the Dafny body of this method, including the curly braces that surround it. Do not show the signature nor contract.";
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
     private static final JsonObject STRUCTURED_RESPONSE_JSON = GSON.fromJson("""
             {
@@ -69,8 +69,18 @@ public class AIDafnyGenerator {
             cacheResponse(resp, prompt);
         }
         JsonObject parsedResp = GSON.fromJson(resp, JsonObject.class);
-        return parsedResp.get("method_body").getAsString();
+        return turnGenAIResponseToDafnyMethod(parsedResp.get("method_body").getAsString());
     }
+
+    private String turnGenAIResponseToDafnyMethod(String response) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("method ").append(problem.dafny().methodSignature()).append("\n");
+        problem.dafny().requires().forEach(a -> sb.append("\t").append("requires ").append(a).append("\n"));
+        problem.dafny().ensures().forEach(a -> sb.append("\t").append("ensures ").append(a).append("\n"));
+        sb.append(response);
+        return sb.toString();
+    }
+
 
     private void cacheResponse(String resp, String prompt) throws IOException {
         JsonObject obj = new JsonObject();
