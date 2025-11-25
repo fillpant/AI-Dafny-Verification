@@ -1,0 +1,65 @@
+[
+	{
+		"name":"Sum",
+		"nat_lang_statement": "Write a method that takes two integers as parameter and then returns the sum.",
+		"dafny": {
+			"method_signature": "sum(x: int, y: int) returns (result: int)",
+			"requires": [],
+			"ensures": ["result == x + y"]
+		}
+	},
+	{
+		"name":"Difference",
+		"nat_lang_statement": "Write a method that takes two integers as parameter and then returns the difference.",
+		"dafny": {
+			"method_signature": "difference(x: int, y: int) returns (result: int)",
+			"requires": [],
+			"ensures": ["result == x - y"]
+		}
+	},
+	{
+		"name":"Product",
+		"nat_lang_statement": "Write a method that takes two integers as parameter and then returns the product.",
+		"dafny": {
+			"method_signature": "product(x: int, y: int) returns (result: int)",
+			"requires": [],
+			"ensures": ["result == x * y"]
+		}
+	},
+	{
+		"name":"Average",
+		"nat_lang_statement": "Write a method that takes two integers as parameter and then returns the average.",
+		"dafny": {
+			"method_signature": "average(x: int, y: int) returns (result: int)",
+			"requires": [],
+			"ensures": ["result == (x + y) / 2"]
+		}
+	},
+	{
+		"name":"Distance",
+		"nat_lang_statement":"Write a method that takes two integers as parameters and then returns the (absolute value of the) distance.",
+		"dafny": {
+			"method_signature": "distance(x: int, y: int) returns (result: int)",
+			"requires": ["true"],
+			"ensures": ["x >= y ==> result == x - y", "y > x ==> result == y - x"]
+		}
+	},
+	{
+		"name":"Minimum",
+		"nat_lang_statement": "Write a method that takes two integers as parameter and then returns the minimum.",
+		"dafny": {
+			"method_signature": "minimum(x: int, y: int) returns (result: int)",
+			"requires": [],
+			"ensures": ["result == if x < y then x else y"]
+		}
+	},
+	{
+		"name":"Maximum",
+		"nat_lang_statement": "Write a method that takes two integers as parameter and then returns the maximum.",
+		"dafny": {
+			"method_signature": "maximum(x: int, y: int) returns (result: int)",
+			"requires": [],
+			"ensures": ["result == if x > y then x else y"]
+		}
+	}
+]
