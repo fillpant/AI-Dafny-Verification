@@ -1,3 +1,5 @@
+openai_problem_response_cache/
+openai_promp_logs
 target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
