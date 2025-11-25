@@ -5,6 +5,7 @@ import click.nullpointer.genaidafny.openai.completion.common.OpenAIMessage;
 import click.nullpointer.genaidafny.openai.completion.common.OpenAIMessageRole;
 import click.nullpointer.genaidafny.openai.completion.common.OpenAITextModel;
 import click.nullpointer.genaidafny.openai.completion.requests.OpenAICompletionRequest;
+import click.nullpointer.genaidafny.openai.completion.requests.formats.OpenAIStructuredResponseFormat;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
@@ -16,8 +17,26 @@ import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
 
 public class AIDafnyGenerator {
-    private static final String PROMPT_STRUCTURE = "Write a Dafny program for the following task: \"%s\". The signature should be \"method %s\" and respect the following contract \"%s\".";
+    private static final String PROMPT_STRUCTURE = "You are given the following task to perform in Dafny: \"%s\". The signature should be: \"%s\". The method should respect the following contract: \"%s\". Produce and show only the Dafny body of this method, including the curly braces that surround it. Do not show the signature nor contract.";
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
+    private static final JsonObject STRUCTURED_RESPONSE_JSON = GSON.fromJson("""
+            {
+              "name": "dr",
+              "strict": true,
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "method_body": {
+                    "type": "string"
+                  }
+                },
+                "additionalProperties": false,
+                "required": [
+                  "method_body"
+                ]
+              }
+            }
+            """, JsonObject.class);
     private final File cacheDir;
     private final DafnyProblem problem;
     private final OpenAICompletionManager completionManager;
@@ -40,15 +59,17 @@ public class AIDafnyGenerator {
     }
 
     public String generateResponse() throws IOException, ExecutionException, InterruptedException {
-        String cachedResponse = loadCachedResponse();
-        if (cachedResponse != null)
-            return cachedResponse;
-        String prompt = constructAIPrompt();
-        OpenAIMessage message = new OpenAIMessage(OpenAIMessageRole.USER, prompt);
-        OpenAICompletionRequest req = new OpenAICompletionRequest(OpenAITextModel.GPT_4O_MINI, message);
-        String resp = completionManager.submitCompletion(req).thenApply(a -> a.choices().getFirst().message().getContent()).get();
-        cacheResponse(resp, prompt);
-        return resp;
+        String resp = loadCachedResponse();
+        if (resp == null) {
+            String prompt = constructAIPrompt();
+            OpenAIMessage message = new OpenAIMessage(OpenAIMessageRole.USER, prompt);
+            OpenAICompletionRequest req = new OpenAICompletionRequest(OpenAITextModel.GPT_4O_MINI, message);
+            req.setResponseFormat(new OpenAIStructuredResponseFormat(STRUCTURED_RESPONSE_JSON));
+            resp = completionManager.submitCompletion(req).thenApply(a -> a.choices().getFirst().message().getContent()).get();
+            cacheResponse(resp, prompt);
+        }
+        JsonObject parsedResp = GSON.fromJson(resp, JsonObject.class);
+        return parsedResp.get("method_body").getAsString();
     }
 
     private void cacheResponse(String resp, String prompt) throws IOException {
