@@ -38,7 +38,6 @@ public class Main {
             if (!validateProblemList(problems)) {
                 LOG.severe("Program exiting due to failed validation.");
             }
-
             processAllProblems(force, problems);
         }
     }
@@ -50,7 +49,30 @@ public class Main {
         counts.entrySet().stream().filter(a -> a.getValue() > 1).forEach(e -> {
             LOG.severe("The problem with name '" + e.getKey() + "' appears " + e.getValue() + " times in the file. Problem names must be unique.");
         });
-        return counts.size() == problems.length;
+        boolean valid = counts.size() == problems.length;
+        if (valid) {
+            for (DafnyProblem problem : problems) {
+                if (problem.dafny() == null) {
+                    LOG.severe("No dafny spec found for problem " + problem);
+                    valid = false;
+                } else {
+                    if (problem.dafny().requires() == null) {
+                        LOG.severe("No 'requires' array found in dafny spec for problem " + problem);
+                        valid = false;
+                    }
+                    if (problem.dafny().ensures() == null) {
+                        LOG.severe("No 'ensures' array found in dafny spec for problem " + problem);
+                        valid = false;
+                    }
+                    if (problem.dafny().methodSignature() == null) {
+                        LOG.severe("No method signature found in dafny spec for problem " + problem);
+                        valid = false;
+                    } else if (problem.dafny().methodSignature().isBlank())
+                        LOG.warning("Blank method signature found in dafny spec for problem " + problem + " going to assume this is by design.");
+                }
+            }
+        }
+        return valid;
     }
 
     private static void processAllProblems(boolean force, DafnyProblem... problems) {
