@@ -29,7 +29,18 @@ public class Utilities {
                 String loggerName = record.getLoggerName();
                 String level = record.getLevel().getName();
                 String message = formatMessage(record);
-                return String.format("[%s] [%s] [%s]: %s%n", timestamp, loggerName, level, message);
+                String excepton = "";
+                Throwable thrown = record.getThrown();
+                if (thrown != null) {
+                    StringBuilder builder = new StringBuilder();
+                    builder.append("\n");
+                    builder.append(thrown.getClass().getName()).append(": ").append(thrown.getMessage()).append('\n');
+                    for (StackTraceElement ste : thrown.getStackTrace()) {
+                        builder.append('\t').append("-> ").append(ste.toString()).append('\n');
+                    }
+                    excepton = builder.toString();
+                }
+                return String.format("[%s] [%s] [%s]: %s%s%n", timestamp, loggerName, level, message, excepton);
             }
         };
 
