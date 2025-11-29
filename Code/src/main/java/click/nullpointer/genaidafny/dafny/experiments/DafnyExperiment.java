@@ -29,7 +29,7 @@ import java.util.stream.Collectors;
 
 public class DafnyExperiment {
     private static final int MAX_GEN_AI_INTERACTIONS = 10;
-    private static final String INITIAL_PROMPT_STRUCTURE = "You are given the following task to perform in Dafny: \"%s\". The signature should be: \"%s\". The method should respect the following contract: \"method %s\". Produce and show only the Dafny body of this method, including the curly braces that surround it. Do not show the signature nor contract.";
+    private static final String INITIAL_PROMPT_STRUCTURE = "You are given the following task to perform in Dafny: \"%s\". The signature should be: \"%s\". The method should respect the following contract: \"%s\". Produce and show only the Dafny body of this method, including the curly braces that surround it. Do not show the signature nor contract.";
     private static final String RESOLVE_FAIL_PROMPT_STRUCTURE = "Consider the below dafny method: \n%s\n When using dafny resolve, the below error is emitted and resolve fails: \n%s\nCorrect the error by altering only the method body. Produce and show only the Dafny body, including the curly braces that surround it. Do not show the signature nor contract.";
     private static final String VERIFY_FAIL_PROMPT_STRUCTURE = "Consider the below dafny method: \n%s\n When using dafny verify, the below error is emitted and verify fails: \n%s\nCorrect the error by altering only the method body. Produce and show only the Dafny body, including the curly braces that surround it. Do not show the signature nor contract.";
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
@@ -85,14 +85,12 @@ public class DafnyExperiment {
         try {
             String prompt = constructAIPrompt();
             log.info("Using initial prompt: " + prompt);
-//            saveExperimentFile("prompt.txt", prompt);//TODO fix!
 
             while (genAIInteractions < MAX_GEN_AI_INTERACTIONS) {
                 log.info("Querrying GenAI...");
                 genAIInteractions++;
                 String aiMethodBody = generateResponse(prompt);
 
-//              saveExperimentFile("gen_ai_response.txt", aiMethodBody);//TODO: no longer just one
 
                 log.info("Converting GenAI response to method...");
                 String method = turnGenAIResponseToDafnyMethod(aiMethodBody);
@@ -110,8 +108,6 @@ public class DafnyExperiment {
                 }
 
                 log.info("Dafny resolution check passed.");
-//                String jsonResolveOut = GSON.toJson(resolveOut);
-//                saveExperimentFile("resolve_result.json", jsonResolveOut);//TODO log all resolution outputs!
 
                 log.info("Calling dafny to verify the generated method...");
                 CLIProgramOutput verifyOut = DafnyCLIIntegrator.verify(new File(problemDir, "program.dfy"));
@@ -122,8 +118,6 @@ public class DafnyExperiment {
                     prompt = constructVerificationPrompt(verifyOut.getFullScreenOutput(), method);
                     continue;
                 }
-//                String jsonVerifyOut = GSON.toJson(verifyOut);
-//                saveExperimentFile("verify_result.json", jsonVerifyOut);//TODO log all verify outputs!
                 log.info("Dafny verification check passed.");
                 break; //Poor code restructure.
             }
@@ -145,7 +139,7 @@ public class DafnyExperiment {
                 outcome = verificationAttempts == 0 ? DafnyExperimentOutcome.FAILURE_RESOLVE : DafnyExperimentOutcome.FAILURE_VERIFY;
             }
         }
-        DafnyExperimentResult result = new DafnyExperimentResult(outcome, resolutionAttempts, verificationAttempts);
+        DafnyExperimentResult result = new DafnyExperimentResult(outcome, verificationAttempts, resolutionAttempts);
         try {
             saveExperimentFile("experiment_result.json", GSON.toJson(result));
         } catch (IOException e) {
@@ -216,7 +210,7 @@ public class DafnyExperiment {
         if (!problem.dafny().requires().isEmpty() && !problem.dafny().ensures().isEmpty())
             contract.append(", ");
         contract.append(problem.dafny().ensures().stream().map(a -> "ensures " + a).collect(Collectors.joining(", ")));
-        return String.format(INITIAL_PROMPT_STRUCTURE, problem.statement(), problem.dafny().methodSignature(), contract.toString());
+        return String.format(INITIAL_PROMPT_STRUCTURE, problem.statement(), "method " + problem.dafny().methodSignature(), contract.toString());
     }
 
     private String generateResponse(String prompt) throws ExecutionException, InterruptedException {
@@ -252,25 +246,5 @@ public class DafnyExperiment {
         sb.append(response);
         return sb.toString();
     }
-
-
-//    private void cacheResponse(String resp, String prompt) throws IOException {
-//        JsonObject obj = new JsonObject();
-//        obj.addProperty("response", resp);
-//        obj.addProperty("prompt", prompt);
-//        File cache = new File(rootDir, problem.name() + ".json");
-//        Files.writeString(cache.toPath(), GSON.toJson(obj));
-//    }
-//
-//    private String loadCachedResponse() throws IOException {
-//        File cache = new File(rootDir, problem.name() + ".json");
-//        if (cache.exists() && cache.length() != 0) {
-//            String contents = Files.readString(cache.toPath());
-//            JsonObject data = GSON.fromJson(contents, JsonObject.class);
-//            return data.get("response").getAsString();
-//        }
-//        return null;
-//    }
-
 }
 
