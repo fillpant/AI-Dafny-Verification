@@ -34,9 +34,9 @@ import java.util.stream.Collectors;
 
 public class DafnyExperiment {
     private static final int MAX_GEN_AI_INTERACTIONS = Integer.parseInt(Main.getConfig().get(ConfigurationKeys.MAX_GEN_AI_INTERACTIONS));
-    private static final String INITIAL_PROMPT_STRUCTURE = "You are given the following task to perform in Dafny: \"%s\". The signature should be: \"%s\". The method should respect the following contract: \"%s\". Produce and show only the Dafny body of this method, including the curly braces that surround it. Do not show the signature nor contract.";
-    private static final String RESOLVE_FAIL_PROMPT_STRUCTURE = "Consider the below dafny method: \n\n%s\n\n When using dafny resolve, the below error is emitted and resolve fails: \n\n%s\n\nCorrect the error by altering only the method body. Produce and show only the Dafny body, including the curly braces that surround it. Do not show the signature nor contract.";
-    private static final String VERIFY_FAIL_PROMPT_STRUCTURE = "Consider the below dafny method: \n\n%s\n\n When using dafny verify, the below error is emitted and verify fails: \n\n%s\n\nCorrect the error by altering only the method body. Produce and show only the Dafny body, including the curly braces that surround it. Do not show the signature nor contract.";
+    private static final String INITIAL_PROMPT_STRUCTURE = "You are given the following task to perform in Dafny:\n\n%s\n\nThe signature should be:\n\n%s\n\nThe method should respect the following contract:\n\n%s\n\n%sProduce and show only the Dafny body of this method, including the curly braces that surround it. Do not show the signature nor contract.";
+    private static final String RESOLVE_FAIL_PROMPT_STRUCTURE = "Consider the method \"%s\" shown below: \n\n%s\n\n When using dafny resolve, the below error is emitted and resolve fails: \n\n%s\n\nCorrect the error by altering only the method body. Produce and show only the Dafny body, including the curly braces that surround it. Do not show the signature nor contract.";
+    private static final String VERIFY_FAIL_PROMPT_STRUCTURE = "Consider the method \"%s\" shown below: \n\n%s\n\n When using dafny verify, the below error is emitted and verify fails: \n\n%s\n\nCorrect the error by altering only the method body. Produce and show only the Dafny body, including the curly braces that surround it. Do not show the signature nor contract.";
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
     private static final JsonObject STRUCTURED_RESPONSE_JSON = GSON.fromJson("""
             {
@@ -108,7 +108,7 @@ public class DafnyExperiment {
                 resolutionAttempts++;
                 if (resolveOut.exitCode() != 0) {
                     log.warning("Failed to resolve the generated method. Preparing GenAI prompt to fix...");
-                    prompt = constructResolutionPrompt(resolveOut.getFullScreenOutput(), method);
+                    prompt = constructResolutionPrompt(problem.dafny().methodSignature(), resolveOut.getFullScreenOutput(), method);
                     continue; //oops
                 }
                 log.info("Dafny resolution check passed.");
@@ -118,7 +118,7 @@ public class DafnyExperiment {
                 verificationAttempts++;
                 if (verifyOut.exitCode() != 0) {
                     log.warning("Failed to verify the generated method. Preparing GenAI prompt to fix...");
-                    prompt = constructVerificationPrompt(verifyOut.getFullScreenOutput(), method);
+                    prompt = constructVerificationPrompt(problem.dafny().methodSignature(), verifyOut.getFullScreenOutput(), method);
                     continue;
                 }
                 log.info("Dafny verification check passed.");
@@ -167,12 +167,12 @@ public class DafnyExperiment {
         }
     }
 
-    private String constructVerificationPrompt(String fullScreenOutput, String fullMethod) {
-        return VERIFY_FAIL_PROMPT_STRUCTURE.formatted(fullMethod, fullScreenOutput);
+    private String constructVerificationPrompt(String methodSig, String fullScreenOutput, String fullMethod) {
+        return VERIFY_FAIL_PROMPT_STRUCTURE.formatted(methodSig, fullMethod, fullScreenOutput);
     }
 
-    private String constructResolutionPrompt(String fullScreenOutput, String fullMethod) throws ExecutionException, InterruptedException {
-        return RESOLVE_FAIL_PROMPT_STRUCTURE.formatted(fullMethod, fullScreenOutput);
+    private String constructResolutionPrompt(String methodSig, String fullScreenOutput, String fullMethod) throws ExecutionException, InterruptedException {
+        return RESOLVE_FAIL_PROMPT_STRUCTURE.formatted(methodSig, fullMethod, fullScreenOutput);
     }
 
     private void logCLIResult(CLIProgramOutput resolveOut) {
@@ -213,7 +213,11 @@ public class DafnyExperiment {
         if (!problem.dafny().requires().isEmpty() && !problem.dafny().ensures().isEmpty())
             contract.append(", ");
         contract.append(problem.dafny().ensures().stream().map(a -> "ensures " + a).collect(Collectors.joining(", ")));
-        return String.format(INITIAL_PROMPT_STRUCTURE, problem.statement(), "method " + problem.dafny().methodSignature(), contract.toString());
+        String functionalCode = "";
+        if (problem.dafny().functionalCode() != null) {
+            functionalCode = "The contract uses the following dafny code:\n\n" + problem.dafny().functionalCode() + "\n\n";
+        }
+        return String.format(INITIAL_PROMPT_STRUCTURE, problem.statement(), "method " + problem.dafny().methodSignature(), contract.toString(), functionalCode);
     }
 
     private String generateResponse(String prompt) throws ExecutionException, InterruptedException {
@@ -243,6 +247,10 @@ public class DafnyExperiment {
 
     private String turnGenAIResponseToDafnyMethod(String response) {
         StringBuilder sb = new StringBuilder();
+        if (problem.dafny().functionalCode() != null) {
+            sb.append(problem.dafny().functionalCode());
+            sb.append("\n\n");
+        }
         sb.append("method ").append(problem.dafny().methodSignature()).append("\n");
         problem.dafny().requires().forEach(a -> sb.append("\t").append("requires ").append(a).append("\n"));
         problem.dafny().ensures().forEach(a -> sb.append("\t").append("ensures ").append(a).append("\n"));

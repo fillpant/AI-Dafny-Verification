@@ -4,6 +4,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public record DafnySpec(@SerializedName("method_signature") String methodSignature, List<String> requires,
+public record DafnySpec(@SerializedName("method_signature") String methodSignature,
+                        @SerializedName("functional_code") String functionalCode, List<String> requires,
                         List<String> ensures) {
 }

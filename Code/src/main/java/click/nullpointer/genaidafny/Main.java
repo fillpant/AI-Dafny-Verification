@@ -49,7 +49,7 @@ public class Main {
             if (!validateProblemList(problems)) {
                 LOG.severe("Program exiting due to failed validation.");
             }
-            processAllProblems(problems);
+            processAllProblems(problems[8]);
         }
     }
 
