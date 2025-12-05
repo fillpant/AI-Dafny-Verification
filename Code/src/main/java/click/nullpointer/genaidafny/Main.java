@@ -1,17 +1,27 @@
 package click.nullpointer.genaidafny;
 
 import click.nullpointer.genaidafny.common.utils.Utilities;
+import click.nullpointer.genaidafny.config.ConfigurationKeys;
 import click.nullpointer.genaidafny.dafny.DafnyProblem;
 import click.nullpointer.genaidafny.dafny.experiments.DafnyExperiment;
 import click.nullpointer.genaidafny.dafny.experiments.DafnyExperimentResult;
 import click.nullpointer.genaidafny.openai.completion.OpenAICompletionManager;
 import com.google.gson.Gson;
+import org.apache.commons.cli.CommandLine;
+import org.apache.commons.cli.CommandLineParser;
+import org.apache.commons.cli.DefaultParser;
+import org.apache.commons.cli.Options;
+import org.apache.commons.cli.ParseException;
 
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
+import java.util.Scanner;
 import java.util.function.Function;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -25,10 +35,11 @@ public class Main {
     private static final File PROBLEM_FILE = new File("resources/problems.json");
     private static final Gson GSON = new Gson();
     private static OpenAICompletionManager manager;
-
+    private static Map<ConfigurationKeys, String> config;
 
     public static void main(String... args) throws IOException {
-        boolean force = Arrays.stream(args).map(String::toLowerCase).anyMatch("--force"::equals);
+        config = Collections.unmodifiableMap(Objects.requireNonNull(parseAndConfirmConfiguration(args)));
+        LOG.fine("Configuration: " + config.entrySet().stream().map(e -> e.getKey() + (e.getValue() != null ? "=" + e.getValue() : "")).collect(Collectors.joining(",")));
         LOG.info("Initialising OpenAI Integration...");
         manager = new OpenAICompletionManager(System.getenv().get("OPENAI_KEY"), OPENAI_INTEGRATION_LOG_DIR);
         LOG.info("Reading problems...");
@@ -38,8 +49,54 @@ public class Main {
             if (!validateProblemList(problems)) {
                 LOG.severe("Program exiting due to failed validation.");
             }
-            processAllProblems(force, problems);
+            processAllProblems(problems);
         }
+    }
+
+
+    private static Map<ConfigurationKeys, String> parseAndConfirmConfiguration(String... args) {
+        try {
+            CommandLineParser commandLineParser = new DefaultParser();
+            Options options = new Options();
+            Arrays.stream(ConfigurationKeys.values()).forEach(a -> options.addOption(a.getOption()));
+            CommandLine cl = commandLineParser.parse(options, args);
+
+            Map<ConfigurationKeys, String> conf = new HashMap<>();
+            Scanner in = new Scanner(System.in);
+            for (ConfigurationKeys key : ConfigurationKeys.values()) {
+                if (cl.hasOption(key.getOption())) {
+                    if (key.requiresConfirmation() && !cl.hasOption(ConfigurationKeys.DO_NOT_PROMPT_CONFIRMATION.getOption())) {
+                        boolean confirm = stdinConfirmation(in, key.getConfirmationMessage());
+                        if (!confirm) {
+                            LOG.warning("Skipping option " + key.getOption().getKey() + " due to non-confirmation.");
+                            continue;
+                        }
+                    }
+                    String value = cl.getOptionValue(key.getOption());
+                    conf.put(key, value);
+
+                } else {
+                    conf.put(key, key.defaultValue());
+                }
+            }
+
+            return conf;
+        } catch (ParseException e) {
+            LOG.log(Level.SEVERE, "Failed to parse command line arguments", e);
+            return null;
+        }
+    }
+
+    private static boolean stdinConfirmation(Scanner in, String confirmationMessage) {
+        System.out.println(confirmationMessage);
+        String input;
+        do {
+            System.out.print("Continue? [y/N]: ");
+            input = in.nextLine();
+            if (input.isBlank())
+                input = "n";
+        } while (!input.equalsIgnoreCase("y") && !input.equalsIgnoreCase("n"));
+        return input.equalsIgnoreCase("y");
     }
 
     private static boolean validateProblemList(DafnyProblem... problems) {
@@ -75,10 +132,13 @@ public class Main {
         return valid;
     }
 
-    private static void processAllProblems(boolean force, DafnyProblem... problems) {
+    private static void processAllProblems(DafnyProblem... problems) {
         LOG.info("Processing " + problems.length + " problems.");
+        boolean force = getConfig().containsKey(ConfigurationKeys.FORCE_RERUN_EXPERIMENTS);
+        if (force)
+            LOG.warning("The force flag is set. All previously completed experiments will now be re-run, and previous results will be overwritten.");
         for (DafnyProblem problem : problems) {
-            LOG.info("Processing problem " + problem.name());
+            LOG.info("Processing problem '" + problem.name() + "'");
             DafnyExperiment gen = new DafnyExperiment(PROBLEM_DATA_DIR, problem, manager);
             if (!force) {
                 try {
@@ -93,5 +153,10 @@ public class Main {
             DafnyExperimentResult res = gen.execute();
             LOG.info("Experiment finished after " + res.resolutionAttempts() + " resolution and " + res.verificationAttempts() + " verification attempts, with result: " + res.outcome());
         }
+    }
+
+
+    public static Map<ConfigurationKeys, String> getConfig() {
+        return config;
     }
 }

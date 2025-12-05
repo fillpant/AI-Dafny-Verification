@@ -1,9 +1,14 @@
 package click.nullpointer.genaidafny.dafny.experiments;
 
+import click.nullpointer.genaidafny.Main;
 import click.nullpointer.genaidafny.common.utils.Utilities;
+import click.nullpointer.genaidafny.config.ConfigurationKeys;
 import click.nullpointer.genaidafny.dafny.CLIProgramOutput;
 import click.nullpointer.genaidafny.dafny.DafnyCLIIntegrator;
 import click.nullpointer.genaidafny.dafny.DafnyProblem;
+import click.nullpointer.genaidafny.dafny.experiments.cache.DafnyExperimentCache;
+import click.nullpointer.genaidafny.dafny.experiments.cache.DummyDafnyExperimentCache;
+import click.nullpointer.genaidafny.dafny.experiments.cache.IExperimentCache;
 import click.nullpointer.genaidafny.openai.completion.OpenAICompletionManager;
 import click.nullpointer.genaidafny.openai.completion.common.OpenAIMessage;
 import click.nullpointer.genaidafny.openai.completion.common.OpenAIMessageRole;
@@ -28,10 +33,10 @@ import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 public class DafnyExperiment {
-    private static final int MAX_GEN_AI_INTERACTIONS = 10;
+    private static final int MAX_GEN_AI_INTERACTIONS = Integer.parseInt(Main.getConfig().get(ConfigurationKeys.MAX_GEN_AI_INTERACTIONS));
     private static final String INITIAL_PROMPT_STRUCTURE = "You are given the following task to perform in Dafny: \"%s\". The signature should be: \"%s\". The method should respect the following contract: \"%s\". Produce and show only the Dafny body of this method, including the curly braces that surround it. Do not show the signature nor contract.";
-    private static final String RESOLVE_FAIL_PROMPT_STRUCTURE = "Consider the below dafny method: \n%s\n When using dafny resolve, the below error is emitted and resolve fails: \n%s\nCorrect the error by altering only the method body. Produce and show only the Dafny body, including the curly braces that surround it. Do not show the signature nor contract.";
-    private static final String VERIFY_FAIL_PROMPT_STRUCTURE = "Consider the below dafny method: \n%s\n When using dafny verify, the below error is emitted and verify fails: \n%s\nCorrect the error by altering only the method body. Produce and show only the Dafny body, including the curly braces that surround it. Do not show the signature nor contract.";
+    private static final String RESOLVE_FAIL_PROMPT_STRUCTURE = "Consider the below dafny method: \n\n%s\n\n When using dafny resolve, the below error is emitted and resolve fails: \n\n%s\n\nCorrect the error by altering only the method body. Produce and show only the Dafny body, including the curly braces that surround it. Do not show the signature nor contract.";
+    private static final String VERIFY_FAIL_PROMPT_STRUCTURE = "Consider the below dafny method: \n\n%s\n\n When using dafny verify, the below error is emitted and verify fails: \n\n%s\n\nCorrect the error by altering only the method body. Produce and show only the Dafny body, including the curly braces that surround it. Do not show the signature nor contract.";
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
     private static final JsonObject STRUCTURED_RESPONSE_JSON = GSON.fromJson("""
             {
@@ -55,7 +60,7 @@ public class DafnyExperiment {
     private final File problemDir;
     private final DafnyProblem problem;
     private final OpenAICompletionManager completionManager;
-    private final DafnyExperimentCache cache;
+    private final IExperimentCache cache;
     private final List<OpenAIMessage> genAIMessages = new ArrayList<>();
     private volatile DafnyExperimentState currentState = DafnyExperimentState.NOT_STARTED;
     private int resolutionAttempts = 0;
@@ -71,26 +76,26 @@ public class DafnyExperiment {
         this.log = Utilities.createLogger("Experiment '" + problem.name() + "'", new File(this.problemDir, "program_logs.log"));
         this.problem = problem;
         this.completionManager = completionManager;
-        this.cache = new DafnyExperimentCache(new File(problemDir, "caches.json"));
+        if (!Main.getConfig().containsKey(ConfigurationKeys.DISABLE_EXPERIMENT_CACHE))
+            this.cache = new DafnyExperimentCache(new File(problemDir, "caches.json"));
+        else
+            this.cache = new DummyDafnyExperimentCache();
         log.info("Experiment created.");
     }
 
     public DafnyExperimentResult execute() {
         if (currentState != DafnyExperimentState.NOT_STARTED)
             throw new IllegalStateException("Experiment is no longer runnable.");
-
         currentState = DafnyExperimentState.RUNNING;
         DafnyExperimentOutcome outcome = DafnyExperimentOutcome.SUCCESS;
         log.info("Experiment started.");
         try {
             String prompt = constructAIPrompt();
             log.info("Using initial prompt: " + prompt);
-
             while (genAIInteractions < MAX_GEN_AI_INTERACTIONS) {
                 log.info("Querrying GenAI...");
                 genAIInteractions++;
                 String aiMethodBody = generateResponse(prompt);
-
 
                 log.info("Converting GenAI response to method...");
                 String method = turnGenAIResponseToDafnyMethod(aiMethodBody);
@@ -106,9 +111,7 @@ public class DafnyExperiment {
                     prompt = constructResolutionPrompt(resolveOut.getFullScreenOutput(), method);
                     continue; //oops
                 }
-
                 log.info("Dafny resolution check passed.");
-
                 log.info("Calling dafny to verify the generated method...");
                 CLIProgramOutput verifyOut = DafnyCLIIntegrator.verify(new File(problemDir, "program.dfy"));
                 logCLIResult(resolveOut);

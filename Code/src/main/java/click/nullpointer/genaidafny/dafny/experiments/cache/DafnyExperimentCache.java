@@ -1,4 +1,4 @@
-package click.nullpointer.genaidafny.dafny.experiments;
+package click.nullpointer.genaidafny.dafny.experiments.cache;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.lang.ref.WeakReference;
 import java.nio.file.Files;
 
-public class DafnyExperimentCache {
+public class DafnyExperimentCache implements IExperimentCache {
     private static final Gson GSON = new Gson();
     private final File backing;
     private WeakReference<JsonObject> loadedCache;
