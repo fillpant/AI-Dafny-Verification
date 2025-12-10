@@ -32,7 +32,7 @@ public class Main {
     private static final File EXPERIMENT_LOG_FILE = new File("experiment_logs.log");
     private static final Logger LOG = Utilities.createLogger("Experiment Controller", EXPERIMENT_LOG_FILE);
     private static final File PROBLEM_DATA_DIR = new File("problem_data");
-    private static final File PROBLEM_FILE = new File("resources/problems.json");
+    private static final File DEFAULT_PROBLEM_FILE = new File("resources/problems.json");
     private static final Gson GSON = new Gson();
     private static OpenAICompletionManager manager;
     private static Map<ConfigurationKeys, String> config;
@@ -43,13 +43,14 @@ public class Main {
         LOG.info("Initialising OpenAI Integration...");
         manager = new OpenAICompletionManager(System.getenv().get("OPENAI_KEY"), OPENAI_INTEGRATION_LOG_DIR);
         LOG.info("Reading problems...");
-        try (FileReader fr = new FileReader(PROBLEM_FILE)) {
+        File problemFile = new File(config.get(ConfigurationKeys.INPUT_PROBLEM_FILE));
+        try (FileReader fr = new FileReader(problemFile)) {
             DafnyProblem[] problems = GSON.fromJson(fr, DafnyProblem[].class);
             LOG.info("Found " + problems.length + " problems.");
             if (!validateProblemList(problems)) {
                 LOG.severe("Program exiting due to failed validation.");
             }
-            processAllProblems(problems[8]);
+            processAllProblems(problems);
         }
     }
 
