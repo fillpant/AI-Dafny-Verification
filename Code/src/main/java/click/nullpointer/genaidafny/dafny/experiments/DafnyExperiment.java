@@ -116,7 +116,7 @@ public class DafnyExperiment {
                 log.info("Dafny resolution check passed.");
                 log.info("Calling dafny to verify the generated method...");
                 CLIProgramOutput verifyOut = DafnyCLIIntegrator.verify(new File(problemDir, "program.dfy"));
-                logCLIResult(resolveOut);
+                logCLIResult(verifyOut);
                 verificationAttempts++;
                 if (verifyOut.exitCode() != 0) {
                     log.warning("Failed to verify the generated method. Preparing GenAI prompt to fix...");
@@ -270,7 +270,7 @@ public class DafnyExperiment {
             log.info("Context is on, attaching " + context.size() + " previous messages in the request to GenAI.");
         }
         context.add(message);
-        OpenAICompletionRequest req = new OpenAICompletionRequest(OpenAITextModel.GPT_4O_MINI, context.toArray(new OpenAIMessage[0]));
+        OpenAICompletionRequest req = new OpenAICompletionRequest(OpenAITextModel.valueOf(Main.getConfig().get(ConfigurationKeys.GEN_AI_MODEL)), context.toArray(new OpenAIMessage[0]));
         req.setResponseFormat(new OpenAIStructuredResponseFormat(STRUCTURED_RESPONSE_JSON));
         int maxTokens = Integer.parseInt(Main.getConfig().get(ConfigurationKeys.MAX_GEN_AI_OUTPUT_TOKENS));
         if (maxTokens > 0) {
@@ -393,6 +393,19 @@ public class DafnyExperiment {
                 sb.append(u.message().getContent());
                 sb.append("\n\\end{lstlisting}\n");
             }
+        }
+        String prog = null;
+
+        try {
+            prog = Files.readString(new File(problemDir, "program.dfy").toPath());
+        } catch (IOException e) {
+            //Intentionally ignored.
+        }
+        if (prog != null) {
+            sb.append("\\section*{Final Program}\n");
+            sb.append("\\begin{lstlisting}\n");
+            sb.append(prog);
+            sb.append("\\end{lstlisting}\n");
         }
         sb.append("\\end{document}\n");
         return sb.toString();
