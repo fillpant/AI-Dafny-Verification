@@ -25,6 +25,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -34,7 +35,6 @@ import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 public class DafnyExperiment {
-    private static final int MAX_GEN_AI_INTERACTIONS = Integer.parseInt(Main.getConfig().get(ConfigurationKeys.MAX_GEN_AI_INTERACTIONS));
     private static final String INITIAL_PROMPT_STRUCTURE = "You are given the following task to perform in Dafny:\n\n%s\n\nThe signature should be:\n\n%s\n\nThe method should respect the following contract:\n\n%s\n\n%sProduce and show only the Dafny body of this method, including the curly braces that surround it. Do not show the signature nor contract.";
     private static final String RESOLVE_FAIL_PROMPT_STRUCTURE = "Consider the method \"%s\" shown below: \n\n%s\n\n When using dafny resolve, the below error is emitted and resolve fails: \n\n%s\n\nCorrect the error by altering only the method body. Produce and show only the Dafny body, including the curly braces that surround it. Do not show the signature nor contract.";
     private static final String VERIFY_FAIL_PROMPT_STRUCTURE = "Consider the method \"%s\" shown below: \n\n%s\n\n When using dafny verify, the below error is emitted and verify fails: \n\n%s\n\nCorrect the error by altering only the method body. Produce and show only the Dafny body, including the curly braces that surround it. Do not show the signature nor contract.";
@@ -90,10 +90,11 @@ public class DafnyExperiment {
         currentState = DafnyExperimentState.RUNNING;
         DafnyExperimentOutcome outcome = DafnyExperimentOutcome.SUCCESS;
         log.info("Experiment started.");
+        final int maxGenAIInteractions = Integer.parseInt(Main.getConfig().get(ConfigurationKeys.MAX_GEN_AI_INTERACTIONS));
         try {
             String prompt = constructAIPrompt();
             log.info("Using initial prompt: " + prompt);
-            while (genAIInteractions < MAX_GEN_AI_INTERACTIONS) {
+            while (genAIInteractions < maxGenAIInteractions) {
                 log.info("Querrying GenAI...");
                 genAIInteractions++;
                 String aiMethodBody = generateResponse(prompt);
@@ -125,7 +126,7 @@ public class DafnyExperiment {
                 log.info("Dafny verification check passed.");
                 break; //Poor code restructure.
             }
-            if (MAX_GEN_AI_INTERACTIONS >= genAIInteractions) {
+            if (maxGenAIInteractions <= genAIInteractions) {
                 log.warning("Experiment stopped due to too many GenAI interactions.");
             } else {
                 log.info("Experiment finished.");
@@ -139,7 +140,7 @@ public class DafnyExperiment {
         }
         //Infer outcome if not set to failure_internal_error.
         if (outcome == DafnyExperimentOutcome.SUCCESS) {
-            if (genAIInteractions >= MAX_GEN_AI_INTERACTIONS) {
+            if (genAIInteractions >= maxGenAIInteractions) {
                 outcome = verificationAttempts == 0 ? DafnyExperimentOutcome.FAILURE_RESOLVE : DafnyExperimentOutcome.FAILURE_VERIFY;
             }
         }
@@ -170,7 +171,7 @@ public class DafnyExperiment {
         pb.directory(texDir);
         pb.redirectErrorStream(true);
         Process process = pb.start();
-        Files.copy(process.getInputStream(), new File(texDir, "latex_output.log").toPath());
+        Files.copy(process.getInputStream(), new File(texDir, "latex_output.log").toPath(), StandardCopyOption.REPLACE_EXISTING);
         int code = process.waitFor();
         if (code == 0) {
             log.info("Compilation of experiment report tex file successful");
@@ -260,8 +261,22 @@ public class DafnyExperiment {
         log.fine("Constructing message for GenAI");
         OpenAIMessage message = new OpenAIMessage(OpenAIMessageRole.USER, prompt);
         genAIMessages.add(new TransactionUnion(message, null));
-        OpenAICompletionRequest req = new OpenAICompletionRequest(OpenAITextModel.GPT_4O_MINI, message);
+
+
+        List<OpenAIMessage> context = new ArrayList<>();
+        int ctxtSize = Integer.parseInt(Main.getConfig().get(ConfigurationKeys.MAX_CONTEXT_MESSAGES_COUNT));
+        if (ctxtSize > 0) {
+            context.addAll(genAIMessages.stream().limit(ctxtSize).map(TransactionUnion::message).toList());
+            log.info("Context is on, attaching " + context.size() + " previous messages in the request to GenAI.");
+        }
+        context.add(message);
+        OpenAICompletionRequest req = new OpenAICompletionRequest(OpenAITextModel.GPT_4O_MINI, context.toArray(new OpenAIMessage[0]));
         req.setResponseFormat(new OpenAIStructuredResponseFormat(STRUCTURED_RESPONSE_JSON));
+        int maxTokens = Integer.parseInt(Main.getConfig().get(ConfigurationKeys.MAX_GEN_AI_OUTPUT_TOKENS));
+        if (maxTokens > 0) {
+            log.fine("Setting max tokens to " + maxTokens);
+            req.setMaxCompletionTokens(maxTokens);
+        }
         log.fine("Using model " + req.getModel() + ". Awaiting response...");
         OpenAICompletionResponse oaiResp = completionManager.submitCompletion(req).get();
         OpenAIMessage responseMsg = oaiResp.choices().getFirst().message();
@@ -308,7 +323,7 @@ public class DafnyExperiment {
                 }
                 \\begin{document}
                 """);
-        sb.append("\\title{Experiment `").append(this.problem.name()).append("' Results}\n");
+        sb.append("\\title{Experiment `").append(escapeLatex(this.problem.name())).append("' Results}\n");
         sb.append("""
                 \\author{\\today}
                 \\date{}
@@ -361,9 +376,17 @@ public class DafnyExperiment {
                 sb.append("\\\\\\textbf{Usage: }").append(resp.usage().promptTokens()).append(" tokens in, and ").append(resp.usage().completionTokens()).append(" tokens out").append("\n");
                 if (u.message().getRefusal() != null)
                     sb.append("\\\\\\textbf{Refusal: }").append(escapeLatex(u.message().getRefusal())).append("\n");
+                String out;
+                try {
+                    JsonObject o = GSON.fromJson(u.message().getContent(), JsonObject.class);
+                    out = o.get("method_body").getAsString();
+                } catch (Exception e) {
+                    log.fine("Failed to parse GenAI response for LaTeX report generation. Dumping raw JSON");
+                    out = u.message().getContent();
+                    sb.append("\\textcolor{red}{\\textbf{The below is a raw response from GenAI that could not be parsed. It is likely that GenAI got 'stuck' in a loop and hit the pre-set token limit.}}\n");
+                }
                 sb.append("\\begin{lstlisting}\n");
-                JsonObject o = GSON.fromJson(u.message().getContent(), JsonObject.class);
-                sb.append(o.get("method_body").getAsString());
+                sb.append(out);
                 sb.append("\n\\end{lstlisting}\n");//TODO dafny annotation
             } else {
                 sb.append("\\begin{lstlisting}\n");

@@ -10,7 +10,9 @@ public enum ConfigurationKeys {
     MAX_GEN_AI_INTERACTIONS(Option.builder().longOpt("max-ai-interactions").desc("Max number of interactions between the program and GenAI, in each experiment.").type(Integer.class).hasArg().get(), "10"),
     DO_NOT_PROMPT_CONFIRMATION(Option.builder("y").longOpt("yes").desc("Do not prompt for confirmation though STDIN.").get()),
     INPUT_PROBLEM_FILE(Option.builder("i").longOpt("input-problem-file").desc("Input problem file path.").hasArg().type(String.class).converter(Converter.FILE).get(), "resources/problems.json", null),
-    DISABLE_LATEX_REPORT(Option.builder().longOpt("disable-latex-report").desc("Disable latex report creation for experiments.").get());;
+    MAX_GEN_AI_OUTPUT_TOKENS(Option.builder().longOpt("max-completion-tokens").desc("Max number of tokens GenAI is allowed to produce in an output before it cuts off (to prevent loong loops)").hasArg().type(Integer.class).get(), "10000"),
+    DISABLE_LATEX_REPORT(Option.builder().longOpt("disable-latex-report").desc("Disable latex report creation for experiments.").get()),
+    MAX_CONTEXT_MESSAGES_COUNT(Option.builder().longOpt("max-context-cnt").desc("Maximum number of previous messages to send on each GenAI request, for context. WARNING: grows very quickly, and costs.").hasArg().type(Integer.class).get(), "0");
     private final Option option;
     private final String defaultValue;
     private final String confirmationMessage;

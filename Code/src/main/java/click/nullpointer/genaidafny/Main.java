@@ -76,7 +76,8 @@ public class Main {
                     conf.put(key, value);
 
                 } else {
-                    conf.put(key, key.defaultValue());
+                    if (key.defaultValue() != null)//Null is set for boolean flags, which must not be added if not explicitly toggled.
+                        conf.put(key, key.defaultValue());
                 }
             }
 
