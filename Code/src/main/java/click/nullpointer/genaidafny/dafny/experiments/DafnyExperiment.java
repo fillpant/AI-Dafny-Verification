@@ -15,6 +15,7 @@ import click.nullpointer.genaidafny.openai.completion.common.OpenAIMessageRole;
 import click.nullpointer.genaidafny.openai.completion.common.OpenAITextModel;
 import click.nullpointer.genaidafny.openai.completion.requests.OpenAICompletionRequest;
 import click.nullpointer.genaidafny.openai.completion.requests.formats.OpenAIStructuredResponseFormat;
+import click.nullpointer.genaidafny.openai.completion.responses.OpenAICompletionResponse;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
@@ -61,7 +62,7 @@ public class DafnyExperiment {
     private final DafnyProblem problem;
     private final OpenAICompletionManager completionManager;
     private final IExperimentCache cache;
-    private final List<OpenAIMessage> genAIMessages = new ArrayList<>();
+    private final List<TransactionUnion> genAIMessages = new ArrayList<>();
     private volatile DafnyExperimentState currentState = DafnyExperimentState.NOT_STARTED;
     private int resolutionAttempts = 0;
     private int verificationAttempts = 0;
@@ -148,7 +149,36 @@ public class DafnyExperiment {
         } catch (IOException e) {
             log.log(Level.SEVERE, "Failed to save experiment result!", e);
         }
+        if (!Main.getConfig().containsKey(ConfigurationKeys.DISABLE_LATEX_REPORT)) {
+            String tex = experimentInfoToTex(result);
+            try {
+                saveAndCompileLaTeX(tex);
+            } catch (IOException | InterruptedException e) {
+                log.log(Level.SEVERE, "Failed to save and compile pdf report!", e);
+            }
+        }
         return result;
+    }
+
+    private void saveAndCompileLaTeX(String tex) throws IOException, InterruptedException {
+        File texDir = new File(problemDir, "tex");
+        texDir.mkdirs();
+        File texFile = new File(texDir, "experiment_output.tex");
+        Files.writeString(texFile.toPath(), tex);
+        ProcessBuilder pb = new ProcessBuilder("xelatex", "-interaction=nonstopmode", "-halt-on-error",
+                texFile.getName());
+        pb.directory(texDir);
+        pb.redirectErrorStream(true);
+        Process process = pb.start();
+        Files.copy(process.getInputStream(), new File(texDir, "latex_output.log").toPath());
+        int code = process.waitFor();
+        if (code == 0) {
+            log.info("Compilation of experiment report tex file successful");
+        } else {
+            log.log(Level.SEVERE, "Compilation of experiment report tex file failed. See log for details.");
+        }
+
+
     }
 
     /**
@@ -188,7 +218,8 @@ public class DafnyExperiment {
         try {
             saveExperimentFile("gen_ai_messages.json", GSON.toJson(genAIMessages));
             JsonArray arr = new JsonArray();
-            for (OpenAIMessage message : genAIMessages) {
+            for (TransactionUnion resp : genAIMessages) {
+                OpenAIMessage message = resp.message();
                 JsonObject obj = new JsonObject();
                 obj.addProperty("role", message.getRole().toString());
                 obj.addProperty("content", message.getContent());
@@ -228,14 +259,14 @@ public class DafnyExperiment {
         }
         log.fine("Constructing message for GenAI");
         OpenAIMessage message = new OpenAIMessage(OpenAIMessageRole.USER, prompt);
-        genAIMessages.add(message);
+        genAIMessages.add(new TransactionUnion(message, null));
         OpenAICompletionRequest req = new OpenAICompletionRequest(OpenAITextModel.GPT_4O_MINI, message);
         req.setResponseFormat(new OpenAIStructuredResponseFormat(STRUCTURED_RESPONSE_JSON));
         log.fine("Using model " + req.getModel() + ". Awaiting response...");
-        OpenAIMessage responseMsg = completionManager.submitCompletion(req)
-                .thenApply(a -> a.choices().getFirst().message())
-                .get();
-        genAIMessages.add(responseMsg);
+        OpenAICompletionResponse oaiResp = completionManager.submitCompletion(req).get();
+        OpenAIMessage responseMsg = oaiResp.choices().getFirst().message();
+
+        genAIMessages.add(new TransactionUnion(responseMsg, oaiResp));
         resp = responseMsg.getContent();
         log.fine("Got response with " + resp.length() + " characters.");
         JsonObject parsedResp = GSON.fromJson(resp, JsonObject.class);
@@ -256,6 +287,111 @@ public class DafnyExperiment {
         problem.dafny().ensures().forEach(a -> sb.append("\t").append("ensures ").append(a).append("\n"));
         sb.append(response);
         return sb.toString();
+    }
+
+    private String experimentInfoToTex(DafnyExperimentResult result) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("""
+                \\documentclass{article}
+                \\usepackage{lmodern}
+                \\usepackage{amsmath}
+                \\usepackage{listings}
+                \\usepackage{fullpage}
+                \\usepackage{parskip}
+                \\usepackage{xcolor}
+                \\lstset{
+                	basicstyle=\\ttfamily,
+                	columns=fullflexible,
+                	frame=single,
+                	breaklines=true,
+                	postbreak=\\mbox{\\textcolor{red}{$\\hookrightarrow$}\\space},
+                }
+                \\begin{document}
+                """);
+        sb.append("\\title{Experiment `").append(this.problem.name()).append("' Results}\n");
+        sb.append("""
+                \\author{\\today}
+                \\date{}
+                \\maketitle
+                """);
+        sb.append("\\textbf{Experiment outcome: }").append(escapeLatex(result.outcome().toString())).append("\n");
+        sb.append("\\\\\\textbf{Resolution attempts: }").append(result.resolutionAttempts()).append("\n");
+        sb.append("\\\\\\textbf{Verification attempts: }").append(result.verificationAttempts()).append("\n");
+        sb.append("\\section*{Problem Specification}\n");
+        sb.append("\\textbf{Problem name: }").append(escapeLatex(this.problem.name())).append("\n");
+        sb.append("\\\\\\textbf{Natural language statement: }").append(escapeLatex(this.problem.statement())).append("\n");
+        sb.append("\\\\\\textbf{Method signature: }").append(escapeLatex(this.problem.dafny().methodSignature())).append("\n");
+        if (problem.dafny().ensures() != null && !problem.dafny().ensures().isEmpty()) {
+            sb.append("\\subsection*{").append("Ensures").append("}\n");
+            sb.append("\\begin{itemize}\n");
+            for (String s : problem.dafny().ensures()) {
+                sb.append("\\item \\texttt{").append(escapeLatex(s)).append("}\n");
+            }
+            sb.append("\\end{itemize}\n");
+        }
+        if (problem.dafny().requires() != null && !problem.dafny().requires().isEmpty()) { //Nasty code dup... Oops.
+            sb.append("\\subsection*{").append("Requires").append("}\n");
+            sb.append("\\begin{itemize}\n");
+            for (String s : problem.dafny().requires()) {
+                sb.append("\\item \\texttt{").append(escapeLatex(s)).append("}\n");
+            }
+            sb.append("\\end{itemize}\n");
+        }
+        if (problem.dafny().functionalCode() != null) {
+            sb.append("\\subsection*{").append("Functional Code Given").append("}\n");
+            sb.append("\\begin{lstlisting}\n");
+            sb.append(problem.dafny().functionalCode()).append("\n");
+            sb.append("\\end{lstlisting}\n");
+        }
+
+        sb.append("\\clearpage\n");
+        sb.append("\\section*{GenAI interactions}\n");
+        sb.append("Below you will find all interactions between the `user' (program) and the `assistant' (OpenAI).\n");
+        for (TransactionUnion u : genAIMessages) {
+            OpenAIMessageRole role = u.message().getRole();
+            String title = role == OpenAIMessageRole.USER ? "Program $\\rightarrow$ GenAI" : "GenAI $\\rightarrow$ Program";
+            sb.append("\\subsection*{").append(title).append("}\n");
+            if (u.openAIResponseDetails() != null) {
+                OpenAICompletionResponse resp = u.openAIResponseDetails();
+                sb.append("\\textbf{System fingerprint: }").append(escapeLatex(resp.systemFingerprint())).append("\n");
+                sb.append("\\\\\\textbf{ID: }").append(resp.id()).append("\n");
+                sb.append("\\\\\\textbf{Model: }").append(escapeLatex(resp.model())).append("\n");
+                sb.append("\\\\\\textbf{Created at: }").append(resp.createdAt()).append("\n");
+                sb.append("\\\\\\textbf{Finish reason: }").append(escapeLatex(resp.choices().getFirst().finishReason())).append("\n");
+                sb.append("\\\\\\textbf{Usage: }").append(resp.usage().promptTokens()).append(" tokens in, and ").append(resp.usage().completionTokens()).append(" tokens out").append("\n");
+                if (u.message().getRefusal() != null)
+                    sb.append("\\\\\\textbf{Refusal: }").append(escapeLatex(u.message().getRefusal())).append("\n");
+                sb.append("\\begin{lstlisting}\n");
+                JsonObject o = GSON.fromJson(u.message().getContent(), JsonObject.class);
+                sb.append(o.get("method_body").getAsString());
+                sb.append("\n\\end{lstlisting}\n");//TODO dafny annotation
+            } else {
+                sb.append("\\begin{lstlisting}\n");
+                sb.append(u.message().getContent());
+                sb.append("\n\\end{lstlisting}\n");
+            }
+        }
+        sb.append("\\end{document}\n");
+        return sb.toString();
+    }
+
+    private String escapeLatex(String s) {
+        if (s == null || s.isEmpty()) return "";
+        StringBuilder sb = new StringBuilder(s.length() * 2);
+        for (int i = 0; i < s.length(); i++) {
+            char ch = s.charAt(i);
+            sb.append(switch (ch) {
+                case '\\' -> "\\textbackslash{}";
+                case '{', '}', '$', '%', '&', '#', '_' -> "\\" + ch;
+                case '^' -> "\\^{}";
+                case '~' -> "\\~{}";
+                default -> "" + ch;
+            });
+        }
+        return sb.toString();
+    }
+
+    private record TransactionUnion(OpenAIMessage message, OpenAICompletionResponse openAIResponseDetails) {
     }
 }
 

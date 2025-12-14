@@ -9,7 +9,8 @@ public enum ConfigurationKeys {
             .get(), null, "Forcing experiment re-run will overwrite previous results."),
     MAX_GEN_AI_INTERACTIONS(Option.builder().longOpt("max-ai-interactions").desc("Max number of interactions between the program and GenAI, in each experiment.").type(Integer.class).hasArg().get(), "10"),
     DO_NOT_PROMPT_CONFIRMATION(Option.builder("y").longOpt("yes").desc("Do not prompt for confirmation though STDIN.").get()),
-    INPUT_PROBLEM_FILE(Option.builder("i").longOpt("input-problem-file").desc("Input problem file path.").hasArg().type(String.class).converter(Converter.FILE).get(), "resources/problems.json", null);
+    INPUT_PROBLEM_FILE(Option.builder("i").longOpt("input-problem-file").desc("Input problem file path.").hasArg().type(String.class).converter(Converter.FILE).get(), "resources/problems.json", null),
+    DISABLE_LATEX_REPORT(Option.builder().longOpt("disable-latex-report").desc("Disable latex report creation for experiments.").get());;
     private final Option option;
     private final String defaultValue;
     private final String confirmationMessage;
