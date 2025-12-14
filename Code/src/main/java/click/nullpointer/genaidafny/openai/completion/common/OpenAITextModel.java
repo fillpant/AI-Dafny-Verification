@@ -2,10 +2,12 @@ package click.nullpointer.genaidafny.openai.completion.common;
 
 public enum OpenAITextModel {
         GPT_5_1("gpt-5.1"),
+        GPT_5_2("gpt-5.2"),
         GPT_5("gpt-5"),
         GPT_5_MINI("gpt-5-mini"),
         GPT_5_NANO("gpt-5-nano"),
         GPT_5_1_CHAT_LATEST("gpt-5.1-chat-latest"),
+        GPT_5_2_CHAT_LATEST("gpt-5.2-chat-latest"),
         GPT_5_CHAT_LATEST("gpt-5-chat-latest"),
         GPT_5_1_CODEX("gpt-5.1-codex"),
         GPT_5_CODEX("gpt-5-codex"),
