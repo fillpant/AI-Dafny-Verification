@@ -32,7 +32,6 @@ public class Main {
     private static final File EXPERIMENT_LOG_FILE = new File("experiment_logs.log");
     private static final Logger LOG = Utilities.createLogger("Experiment Controller", EXPERIMENT_LOG_FILE);
     private static final File PROBLEM_DATA_DIR = new File("problem_data");
-    private static final File DEFAULT_PROBLEM_FILE = new File("resources/problems.json");
     private static final Gson GSON = new Gson();
     private static OpenAICompletionManager manager;
     private static Map<ConfigurationKeys, String> config;
