@@ -142,6 +142,7 @@ public class DafnyExperiment {
     private int softFailedResolutions = 0; //fail because of warning
     private int resolutionAttempts = 0; //Total resolution attempts.
     private int verificationAttempts = 0;
+    private int methodsWithAssumeClauses = 0;
     private int genAIInteractions = 0;
     private EventTimer timer = new EventTimer();
 
@@ -205,7 +206,8 @@ public class DafnyExperiment {
                 log.info("Checking the method for the presence of the 'assume' keyword...");
                 //If, without comments and string literals the word assume appears, then it is reasonable to expect it's used as a keyword.
                 if (Utilities.lightStripCommentsAndStringsFromDafny(method).toLowerCase().contains("assume")) {
-                    log.severe("GenAI has produced code with one or more 'assume' keywords. Rejecting, and re-prompting to fix...");
+                    log.warning("GenAI has produced code with one or more 'assume' keywords. Rejecting, and re-prompting to fix...");
+                    methodsWithAssumeClauses++;
                     prompt = constructAssumePrompt(problem.dafny().methodSignature(), problem.statement(), method, contextEnabled);
                     timer.stopEvent("Iteration #" + iteration);
                     continue;
@@ -272,7 +274,7 @@ public class DafnyExperiment {
                 outcome = verificationAttempts == 0 ? DafnyExperimentOutcome.FAILURE_RESOLVE : DafnyExperimentOutcome.FAILURE_VERIFY;
             }
         }
-        DafnyExperimentResult result = new DafnyExperimentResult(outcome, verificationAttempts, resolutionAttempts, softFailedResolutions, hardFailedResolutions, timer);
+        DafnyExperimentResult result = new DafnyExperimentResult(outcome, verificationAttempts, resolutionAttempts, softFailedResolutions, hardFailedResolutions, methodsWithAssumeClauses, timer);
         try {
             saveExperimentFile("experiment_result.json", GSON.toJson(result));
         } catch (IOException e) {
