@@ -141,6 +141,7 @@ public class DafnyExperiment {
     private int hardFailedResolutions = 0; //fail because of error
     private int softFailedResolutions = 0; //fail because of warning
     private int resolutionAttempts = 0; //Total resolution attempts.
+    private int badResponses = 0; //Number of times GenAI returned no response (likely due to being caught in an infinite loop)
     private int verificationAttempts = 0;
     private int methodsWithAssumeClauses = 0;
     private int genAIInteractions = 0;
@@ -185,6 +186,7 @@ public class DafnyExperiment {
                 String aiMethodBody = generateResponse(prompt);
                 if (aiMethodBody == null) {
                     log.severe("Failed to aquire a method body from GenAI. Will re-try up to limit.");
+                    badResponses++;
                     timer.stopEvent("Iteration #" + iteration);
                     continue;
                 }
@@ -274,7 +276,9 @@ public class DafnyExperiment {
                 outcome = verificationAttempts == 0 ? DafnyExperimentOutcome.FAILURE_RESOLVE : DafnyExperimentOutcome.FAILURE_VERIFY;
             }
         }
-        DafnyExperimentResult result = new DafnyExperimentResult(outcome, verificationAttempts, resolutionAttempts, softFailedResolutions, hardFailedResolutions, methodsWithAssumeClauses, timer);
+
+
+        DafnyExperimentResult result = new DafnyExperimentResult(outcome, getUsageStats(), badResponses, verificationAttempts, resolutionAttempts, softFailedResolutions, hardFailedResolutions, methodsWithAssumeClauses, timer);
         try {
             saveExperimentFile("experiment_result.json", GSON.toJson(result));
         } catch (IOException e) {
@@ -291,26 +295,6 @@ public class DafnyExperiment {
         return result;
     }
 
-    private void saveAndCompileLaTeX(String tex) throws IOException, InterruptedException {
-        File texDir = new File(problemDir, "tex");
-        texDir.mkdirs();
-        File texFile = new File(texDir, "experiment_output.tex");
-        Files.writeString(texFile.toPath(), tex);
-        ProcessBuilder pb = new ProcessBuilder("xelatex", "-interaction=nonstopmode", "-halt-on-error",
-                texFile.getName());
-        pb.directory(texDir);
-        pb.redirectErrorStream(true);
-        Process process = pb.start();
-        Files.copy(process.getInputStream(), new File(texDir, "latex_output.log").toPath(), StandardCopyOption.REPLACE_EXISTING);
-        int code = process.waitFor();
-        if (code == 0) {
-            log.info("Compilation of experiment report tex file successful");
-        } else {
-            log.log(Level.SEVERE, "Compilation of experiment report tex file failed. See log for details.");
-        }
-
-
-    }
 
     /**
      * Returns the last {@link DafnyExperimentResult} that was stored to file.
@@ -326,6 +310,20 @@ public class DafnyExperiment {
         try (FileReader reader = new FileReader(resultFile)) {
             return GSON.fromJson(reader, DafnyExperimentResult.class);
         }
+    }
+
+    /**
+     * Get the usage statistics of the current experiment. This method will collate the data at the time it is being called.
+     * It is not recommended this method is called while the experiment is running, as its not threadsafe.
+     * Calling this method on a new experiment, will return 0.
+     *
+     * @return a {@link DafnyExperimentTokenUsage} instance with the usage values.
+     */
+    public DafnyExperimentTokenUsage getUsageStats() {
+        int tokensInput = genAIMessages.stream().filter(a -> a.openAIResponseDetails() != null).mapToInt(a -> a.openAIResponseDetails().usage().promptTokens()).sum();
+        int tokensOutput = genAIMessages.stream().filter(a -> a.openAIResponseDetails() != null).mapToInt(a -> a.openAIResponseDetails().usage().completionTokens()).sum();
+        int totalSum = genAIMessages.stream().filter(a -> a.openAIResponseDetails() != null).mapToInt(a -> a.openAIResponseDetails().usage().totalTokens()).sum();
+        return new DafnyExperimentTokenUsage(tokensInput, tokensOutput, totalSum);
     }
 
     private String constructAssumePrompt(String methodSig, String natLangStatement, String fullMethod, boolean contextEnabled) {
@@ -455,6 +453,27 @@ public class DafnyExperiment {
         return sb.toString();
     }
 
+    private void saveAndCompileLaTeX(String tex) throws IOException, InterruptedException {
+        File texDir = new File(problemDir, "tex");
+        texDir.mkdirs();
+        File texFile = new File(texDir, "experiment_output.tex");
+        Files.writeString(texFile.toPath(), tex);
+        ProcessBuilder pb = new ProcessBuilder("xelatex", "-interaction=nonstopmode", "-halt-on-error",
+                texFile.getName());
+        pb.directory(texDir);
+        pb.redirectErrorStream(true);
+        Process process = pb.start();
+        Files.copy(process.getInputStream(), new File(texDir, "latex_output.log").toPath(), StandardCopyOption.REPLACE_EXISTING);
+        int code = process.waitFor();
+        if (code == 0) {
+            log.info("Compilation of experiment report tex file successful");
+        } else {
+            log.log(Level.SEVERE, "Compilation of experiment report tex file failed. See log for details.");
+        }
+
+
+    }
+
     private String experimentInfoToTex(DafnyExperimentResult result) {
         StringBuilder sb = new StringBuilder();
         sb.append("""
@@ -481,7 +500,11 @@ public class DafnyExperiment {
                 \\maketitle
                 """);
         sb.append("\\textbf{Experiment outcome: }").append(escapeLatex(result.outcome().toString())).append("\n");
+        sb.append("\\\\\\textbf{Bad responses: }").append(result.badResponses()).append("\n");
+        sb.append("\\\\\\textbf{Responses containing}~\\texttt{assume}~\\textbf{: }").append(result.responsesWithAssume()).append("\n");
         sb.append("\\\\\\textbf{Resolution attempts: }").append(result.resolutionAttempts()).append("\n");
+        sb.append("\\\\\\textbf{Hard fails (resolution): }").append(result.hardFailedResolutions()).append("\n");
+        sb.append("\\\\\\textbf{Soft fails (resolution): }").append(result.softFailedResolutions()).append("\n");
         sb.append("\\\\\\textbf{Verification attempts: }").append(result.verificationAttempts()).append("\n");
         sb.append("\\section*{Problem Specification}\n");
         sb.append("\\textbf{Problem name: }").append(escapeLatex(this.problem.name())).append("\n");
@@ -559,13 +582,11 @@ public class DafnyExperiment {
             sb.append("\n\\end{lstlisting}\n");
         }
 
-        int tokensInput = genAIMessages.stream().filter(a -> a.openAIResponseDetails() != null).mapToInt(a -> a.openAIResponseDetails().usage().promptTokens()).sum();
-        int tokensOutput = genAIMessages.stream().filter(a -> a.openAIResponseDetails() != null).mapToInt(a -> a.openAIResponseDetails().usage().completionTokens()).sum();
-        int totalSum = genAIMessages.stream().filter(a -> a.openAIResponseDetails() != null).mapToInt(a -> a.openAIResponseDetails().usage().totalTokens()).sum();
+        DafnyExperimentTokenUsage usage = getUsageStats();
         sb.append("\\section*{").append("Total Token Usage").append("}\n");
-        sb.append("\\textbf{Input tokens: }").append(tokensInput).append("\n");
-        sb.append("\\\\\\textbf{Output tokens: }").append(tokensOutput).append("\n");
-        sb.append("\\\\\\textbf{Sum of `total tokens': }").append(totalSum).append("\n");
+        sb.append("\\textbf{Input tokens: }").append(usage.tokensInput()).append("\n");
+        sb.append("\\\\\\textbf{Output tokens: }").append(usage.tokensOutput()).append("\n");
+        sb.append("\\\\\\textbf{Sum of `total tokens': }").append(usage.tokensTotal()).append("\n");
 
 
         sb.append("\\section*{Experiment Timings}\n");
@@ -580,6 +601,7 @@ public class DafnyExperiment {
         sb.append("\\end{document}\n");
         return sb.toString();
     }
+
 
     private String escapeLatex(String s) {
         if (s == null || s.isEmpty()) return "";
