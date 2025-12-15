@@ -37,11 +37,80 @@ import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 public class DafnyExperiment {
-    private static final String INITIAL_PROMPT_STRUCTURE = "You are given the following task to perform in Dafny:\n\n%s\n\nThe signature should be:\n\n%s\n\nThe method should respect the following contract:\n\n%s\n\n%sProduce and show only the Dafny body of this method, including the curly braces that surround it. Do not show the signature nor contract. You must not use 'assume' anywhere in your code.";
-    private static final String RESOLVE_FAIL_PROMPT_STRUCTURE = "Consider the method \"%s\" shown below: \n\n%s\n\n When using dafny resolve, the below error is emitted and resolve fails: \n\n%s\n\nCorrect the error by altering only the method body. Produce and show only the Dafny body, including the curly braces that surround it. Do not show the signature nor contract. You must not use 'assume' anywhere in your code.";
-    private static final String VERIFY_FAIL_PROMPT_STRUCTURE = "Consider the method \"%s\" shown below: \n\n%s\n\n When using dafny verify, the below error is emitted and verify fails: \n\n%s\n\nCorrect the error by altering only the method body. Produce and show only the Dafny body, including the curly braces that surround it. Do not show the signature nor contract. You must not use 'assume' anywhere in your code.";
-    private static final String RESOLVE_FAIL_PROMPT_WITH_CONTEXT_STRUCTURE = "When using dafny resolve, the below error is emitted and resolve fails: \n\n%s\n\nCorrect the error by altering only the method body. Produce and show only the Dafny body, including the curly braces that surround it. Do not show the signature nor contract. You must not use 'assume' anywhere in your code.";
-    private static final String VERIFY_FAIL_PROMPT_WITH_CONTEXT_STRUCTURE = "When using dafny verify, the below error is emitted and verify fails: \n\n%s\n\nCorrect the error by altering only the method body. Produce and show only the Dafny body, including the curly braces that surround it. Do not show the signature nor contract. You must not use 'assume' anywhere in your code.";
+    private static final String INITIAL_PROMPT_STRUCTURE = """
+            You are given the following task to perform in Dafny:
+            
+            %s
+            
+            The signature should be:
+            
+            %s
+            
+            The method should respect the following contract:
+            
+            %s
+            
+            %sProduce and show only the Dafny body of this method, including the curly braces that surround it. Do not show the signature nor contract. You must not use 'assume' anywhere in your code.
+            """;
+    private static final String RESOLVE_FAIL_PROMPT_STRUCTURE = """
+            Consider the method "%s" shown below:
+            
+            %s
+            
+            This method was produced to satisfy the following task:
+            
+            %s
+            
+            When using dafny resolve, the below error is emitted and resolve fails:
+            
+            %s
+            
+            Correct the error by altering only the method body. Produce and show only the Dafny body, including the curly braces that surround it. Do not show the signature nor contract. You must not use 'assume' anywhere in your code.
+            """;
+
+    private static final String VERIFY_FAIL_PROMPT_STRUCTURE = """
+            Consider the method "%s" shown below:
+            
+            %s
+            
+            This method was produced to satisfy the following task:
+            
+            %s
+            
+            When using dafny verify, the below error is emitted and verify fails:
+            
+            %s
+            
+            Correct the error by altering only the method body. Produce and show only the Dafny body, including the curly braces that surround it. Do not show the signature nor contract. You must not use 'assume' anywhere in your code.
+            """;
+
+    private static final String ASSUME_FAIL_PROMPT_STRUCTURE = """
+            Consider the method "%s" shown below:
+            
+            %s
+            
+            This method was produced to satisfy the following task:
+            
+            %s
+            
+            The method makes use of 'assume'. Correct the method by altering only the method body, to not use 'assume'. Produce and show only the Dafny body, including the curly braces that surround it. Do not show the signature nor contract. You must not use 'assume' anywhere in your code.
+            """;
+    private static final String RESOLVE_FAIL_PROMPT_WITH_CONTEXT_STRUCTURE = """
+            When using dafny resolve, the below error is emitted and resolve fails:
+            
+            %s
+            
+            Correct the error by altering only the method body. Produce and show only the Dafny body, including the curly braces that surround it. Do not show the signature nor contract. You must not use 'assume' anywhere in your code.
+            """;
+    private static final String VERIFY_FAIL_PROMPT_WITH_CONTEXT_STRUCTURE = """
+            When using dafny verify, the below error is emitted and verify fails:
+            
+            %s
+            
+            Correct the error by altering only the method body. Produce and show only the Dafny body, including the curly braces that surround it. Do not show the signature nor contract. You must not use 'assume' anywhere in your code.
+            """;
+    private static final String ASSUME_FAIL_PROMPT_WITH_CONTEXT_STRUCTURE = "The method uses 'assume' in the code, but must not do so. Correct the error by altering only the method body. Produce and show only the Dafny body, including the curly braces that surround it. Do not show the signature nor contract. You must not use 'assume' anywhere in your code.";
+
 
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
     private static final JsonObject STRUCTURED_RESPONSE_JSON = GSON.fromJson("""
@@ -123,12 +192,6 @@ public class DafnyExperiment {
                 String method = turnGenAIResponseToDafnyMethod(aiMethodBody);
                 saveExperimentFile("program.dfy", method);//This is fine, we overwrite each time.
 
-                log.info("Calling dafny to resolve the generated method...");
-                //resolve. On fail, retry up to count, keep results in json array styore in resolve_result.json
-                CLIProgramOutput resolveOut = DafnyCLIIntegrator.resolve(new File(problemDir, "program.dfy"));
-                logCLIResult(resolveOut);
-                resolutionAttempts++;
-
                 //If the amount of messages to send in the context does contain the very first request, then we deem context to be 'enabled' for the purposes
                 //of prompt selection.
                 //If the context window has excluded the first prompt (request), then we must switch to the second line of defense, whereby the request
@@ -139,6 +202,21 @@ public class DafnyExperiment {
                 } else {
                     log.info("Context is limited beyond the amount of previous messages, or is disabled entirely. Treating any subsequent GenAI requests as needing the full method body in them.");
                 }
+                log.info("Checking the method for the presence of the 'assume' keyword...");
+                //If, without comments and string literals the word assume appears, then it is reasonable to expect it's used as a keyword.
+                if (Utilities.lightStripCommentsAndStringsFromDafny(method).toLowerCase().contains("assume")) {
+                    log.severe("GenAI has produced code with one or more 'assume' keywords. Rejecting, and re-prompting to fix...");
+                    prompt = constructAssumePrompt(problem.dafny().methodSignature(), problem.statement(), method, contextEnabled);
+                    timer.stopEvent("Iteration #" + iteration);
+                    continue;
+                }
+
+                log.info("Calling dafny to resolve the generated method...");
+                //resolve. On fail, retry up to count, keep results in json array styore in resolve_result.json
+                CLIProgramOutput resolveOut = DafnyCLIIntegrator.resolve(new File(problemDir, "program.dfy"));
+                logCLIResult(resolveOut);
+                resolutionAttempts++;
+
                 log.info("Calling dafny to resolve the generated method, but with warnings allowed...");
                 CLIProgramOutput resolveOutWithWarningsAllowd = DafnyCLIIntegrator.resolve(new File(problemDir, "program.dfy"), "--allow-warnings");
                 logCLIResult(resolveOutWithWarningsAllowd);
@@ -155,11 +233,10 @@ public class DafnyExperiment {
                 }
                 if (resolveOut.exitCode() != 0) {
                     log.warning("Treating resolution as failed for the generated method. Preparing GenAI prompt to fix...");
-                    prompt = constructResolutionPrompt(problem.dafny().methodSignature(), resolveOut.getFullScreenOutput(), method, contextEnabled);
+                    prompt = constructResolutionPrompt(problem.dafny().methodSignature(), problem.statement(), resolveOut.getFullScreenOutput(), method, contextEnabled);
                     timer.stopEvent("Iteration #" + iteration);
                     continue; //oops
                 }
-
 
                 log.info("Dafny resolution check passed.");
                 log.info("Calling dafny to verify the generated method...");
@@ -168,7 +245,7 @@ public class DafnyExperiment {
                 verificationAttempts++;
                 if (verifyOut.exitCode() != 0) {
                     log.warning("Failed to verify the generated method. Preparing GenAI prompt to fix...");
-                    prompt = constructVerificationPrompt(problem.dafny().methodSignature(), verifyOut.getFullScreenOutput(), method, contextEnabled);
+                    prompt = constructVerificationPrompt(problem.dafny().methodSignature(), problem.statement(), verifyOut.getFullScreenOutput(), method, contextEnabled);
                     timer.stopEvent("Iteration #" + iteration);
                     continue;
                 }
@@ -249,19 +326,27 @@ public class DafnyExperiment {
         }
     }
 
-    private String constructVerificationPrompt(String methodSig, String fullScreenOutput, String fullMethod, boolean contextEnabled) {
+    private String constructAssumePrompt(String methodSig, String natLangStatement, String fullMethod, boolean contextEnabled) {
         if (contextEnabled)
-            return VERIFY_FAIL_PROMPT_WITH_CONTEXT_STRUCTURE.formatted(fullScreenOutput);
+            return ASSUME_FAIL_PROMPT_WITH_CONTEXT_STRUCTURE;
         else
-            return VERIFY_FAIL_PROMPT_STRUCTURE.formatted(methodSig, fullMethod, fullScreenOutput);
+            return ASSUME_FAIL_PROMPT_STRUCTURE.formatted(methodSig, natLangStatement, fullMethod);
 
     }
 
-    private String constructResolutionPrompt(String methodSig, String fullScreenOutput, String fullMethod, boolean contextEnabled) {
+    private String constructVerificationPrompt(String methodSig, String natLangStatement, String fullScreenOutput, String fullMethod, boolean contextEnabled) {
+        if (contextEnabled)
+            return VERIFY_FAIL_PROMPT_WITH_CONTEXT_STRUCTURE.formatted(fullScreenOutput);
+        else
+            return VERIFY_FAIL_PROMPT_STRUCTURE.formatted(methodSig, natLangStatement, fullMethod, fullScreenOutput);
+
+    }
+
+    private String constructResolutionPrompt(String methodSig, String natLangStatement, String fullScreenOutput, String fullMethod, boolean contextEnabled) {
         if (contextEnabled)
             return RESOLVE_FAIL_PROMPT_WITH_CONTEXT_STRUCTURE.formatted(fullScreenOutput);
         else
-            return RESOLVE_FAIL_PROMPT_STRUCTURE.formatted(methodSig, fullMethod, fullScreenOutput);
+            return RESOLVE_FAIL_PROMPT_STRUCTURE.formatted(methodSig, natLangStatement, fullMethod, fullScreenOutput);
     }
 
     private void logCLIResult(CLIProgramOutput resolveOut) {
