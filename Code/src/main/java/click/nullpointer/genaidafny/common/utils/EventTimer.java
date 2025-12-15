@@ -15,7 +15,7 @@ public class EventTimer {
 
     public EventTimingRecord stopEvent(String name) {
         EventTimingRecord record = events.get(name);
-        if (record != null)
+        if (record == null)
             return null;
         record.setEndTimeMs(System.currentTimeMillis());
         lastKey = name;
