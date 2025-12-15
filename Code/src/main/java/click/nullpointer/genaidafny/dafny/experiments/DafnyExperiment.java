@@ -1,6 +1,7 @@
 package click.nullpointer.genaidafny.dafny.experiments;
 
 import click.nullpointer.genaidafny.Main;
+import click.nullpointer.genaidafny.common.utils.EventTimer;
 import click.nullpointer.genaidafny.common.utils.Utilities;
 import click.nullpointer.genaidafny.config.ConfigurationKeys;
 import click.nullpointer.genaidafny.dafny.CLIProgramOutput;
@@ -28,6 +29,7 @@ import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ExecutionException;
 import java.util.logging.Level;
@@ -35,9 +37,12 @@ import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 public class DafnyExperiment {
-    private static final String INITIAL_PROMPT_STRUCTURE = "You are given the following task to perform in Dafny:\n\n%s\n\nThe signature should be:\n\n%s\n\nThe method should respect the following contract:\n\n%s\n\n%sProduce and show only the Dafny body of this method, including the curly braces that surround it. Do not show the signature nor contract.";
-    private static final String RESOLVE_FAIL_PROMPT_STRUCTURE = "Consider the method \"%s\" shown below: \n\n%s\n\n When using dafny resolve, the below error is emitted and resolve fails: \n\n%s\n\nCorrect the error by altering only the method body. Produce and show only the Dafny body, including the curly braces that surround it. Do not show the signature nor contract.";
-    private static final String VERIFY_FAIL_PROMPT_STRUCTURE = "Consider the method \"%s\" shown below: \n\n%s\n\n When using dafny verify, the below error is emitted and verify fails: \n\n%s\n\nCorrect the error by altering only the method body. Produce and show only the Dafny body, including the curly braces that surround it. Do not show the signature nor contract.";
+    private static final String INITIAL_PROMPT_STRUCTURE = "You are given the following task to perform in Dafny:\n\n%s\n\nThe signature should be:\n\n%s\n\nThe method should respect the following contract:\n\n%s\n\n%sProduce and show only the Dafny body of this method, including the curly braces that surround it. Do not show the signature nor contract. You must not use 'assume' anywhere in your code.";
+    private static final String RESOLVE_FAIL_PROMPT_STRUCTURE = "Consider the method \"%s\" shown below: \n\n%s\n\n When using dafny resolve, the below error is emitted and resolve fails: \n\n%s\n\nCorrect the error by altering only the method body. Produce and show only the Dafny body, including the curly braces that surround it. Do not show the signature nor contract. You must not use 'assume' anywhere in your code.";
+    private static final String VERIFY_FAIL_PROMPT_STRUCTURE = "Consider the method \"%s\" shown below: \n\n%s\n\n When using dafny verify, the below error is emitted and verify fails: \n\n%s\n\nCorrect the error by altering only the method body. Produce and show only the Dafny body, including the curly braces that surround it. Do not show the signature nor contract. You must not use 'assume' anywhere in your code.";
+    private static final String RESOLVE_FAIL_PROMPT_WITH_CONTEXT_STRUCTURE = "When using dafny resolve, the below error is emitted and resolve fails: \n\n%s\n\nCorrect the error by altering only the method body. Produce and show only the Dafny body, including the curly braces that surround it. Do not show the signature nor contract. You must not use 'assume' anywhere in your code.";
+    private static final String VERIFY_FAIL_PROMPT_WITH_CONTEXT_STRUCTURE = "When using dafny verify, the below error is emitted and verify fails: \n\n%s\n\nCorrect the error by altering only the method body. Produce and show only the Dafny body, including the curly braces that surround it. Do not show the signature nor contract. You must not use 'assume' anywhere in your code.";
+
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
     private static final JsonObject STRUCTURED_RESPONSE_JSON = GSON.fromJson("""
             {
@@ -64,9 +69,12 @@ public class DafnyExperiment {
     private final IExperimentCache cache;
     private final List<TransactionUnion> genAIMessages = new ArrayList<>();
     private volatile DafnyExperimentState currentState = DafnyExperimentState.NOT_STARTED;
-    private int resolutionAttempts = 0;
+    private int hardFailedResolutions = 0; //fail because of error
+    private int softFailedResolutions = 0; //fail because of warning
+    private int resolutionAttempts = 0; //Total resolution attempts.
     private int verificationAttempts = 0;
     private int genAIInteractions = 0;
+    private EventTimer timer = new EventTimer();
 
     public DafnyExperiment(File rootDir, DafnyProblem problem, OpenAICompletionManager completionManager) {
         Objects.requireNonNull(rootDir);
@@ -87,17 +95,29 @@ public class DafnyExperiment {
     public DafnyExperimentResult execute() {
         if (currentState != DafnyExperimentState.NOT_STARTED)
             throw new IllegalStateException("Experiment is no longer runnable.");
+        timer.startEvent("Overall Experiment");
         currentState = DafnyExperimentState.RUNNING;
         DafnyExperimentOutcome outcome = DafnyExperimentOutcome.SUCCESS;
         log.info("Experiment started.");
         final int maxGenAIInteractions = Integer.parseInt(Main.getConfig().get(ConfigurationKeys.MAX_GEN_AI_INTERACTIONS));
         try {
+            int iteration = 0;
             String prompt = constructAIPrompt();
             log.info("Using initial prompt: " + prompt);
             while (genAIInteractions < maxGenAIInteractions) {
+                EventTimer.EventTimingRecord lastEvent = timer.getLastStoppedEvent();
+                if (lastEvent != null)
+                    log.info("Previous iteration lasted " + lastEvent.getDurationMs() + "ms");
+                iteration++;
+                timer.startEvent("Iteration #" + iteration);
                 log.info("Querrying GenAI...");
                 genAIInteractions++;
                 String aiMethodBody = generateResponse(prompt);
+                if (aiMethodBody == null) {
+                    log.severe("Failed to aquire a method body from GenAI. Will re-try up to limit.");
+                    timer.stopEvent("Iteration #" + iteration);
+                    continue;
+                }
 
                 log.info("Converting GenAI response to method...");
                 String method = turnGenAIResponseToDafnyMethod(aiMethodBody);
@@ -108,11 +128,39 @@ public class DafnyExperiment {
                 CLIProgramOutput resolveOut = DafnyCLIIntegrator.resolve(new File(problemDir, "program.dfy"));
                 logCLIResult(resolveOut);
                 resolutionAttempts++;
+
+                //If the amount of messages to send in the context does contain the very first request, then we deem context to be 'enabled' for the purposes
+                //of prompt selection.
+                //If the context window has excluded the first prompt (request), then we must switch to the second line of defense, whereby the request
+                // contains the full method previously provided.
+                boolean contextEnabled = Integer.parseInt(Main.getConfig().get(ConfigurationKeys.MAX_CONTEXT_MESSAGES_COUNT)) >= genAIMessages.size();
+                if (contextEnabled) {
+                    log.info("Context is treated as being fully enabled, meaning that subsequent prompts do not include the full code.");
+                } else {
+                    log.info("Context is limited beyond the amount of previous messages, or is disabled entirely. Treating any subsequent GenAI requests as needing the full method body in them.");
+                }
+                log.info("Calling dafny to resolve the generated method, but with warnings allowed...");
+                CLIProgramOutput resolveOutWithWarningsAllowd = DafnyCLIIntegrator.resolve(new File(problemDir, "program.dfy"), "--allow-warnings");
+                logCLIResult(resolveOutWithWarningsAllowd);
+                if (resolveOutWithWarningsAllowd.exitCode() == 0) {
+                    if (resolveOut.exitCode() != 0) {
+                        softFailedResolutions++;
+                        log.info("Resolution fails as a result of a warning, but passes with warnings disabled.");
+                    }
+                    if (resolveOut.exitCode() == 0)
+                        log.info("Resolution passes without warnings.");
+                } else {
+                    hardFailedResolutions++;
+                    log.info("Resolution fails as a result of an error.");
+                }
                 if (resolveOut.exitCode() != 0) {
-                    log.warning("Failed to resolve the generated method. Preparing GenAI prompt to fix...");
-                    prompt = constructResolutionPrompt(problem.dafny().methodSignature(), resolveOut.getFullScreenOutput(), method);
+                    log.warning("Treating resolution as failed for the generated method. Preparing GenAI prompt to fix...");
+                    prompt = constructResolutionPrompt(problem.dafny().methodSignature(), resolveOut.getFullScreenOutput(), method, contextEnabled);
+                    timer.stopEvent("Iteration #" + iteration);
                     continue; //oops
                 }
+
+
                 log.info("Dafny resolution check passed.");
                 log.info("Calling dafny to verify the generated method...");
                 CLIProgramOutput verifyOut = DafnyCLIIntegrator.verify(new File(problemDir, "program.dfy"));
@@ -120,10 +168,12 @@ public class DafnyExperiment {
                 verificationAttempts++;
                 if (verifyOut.exitCode() != 0) {
                     log.warning("Failed to verify the generated method. Preparing GenAI prompt to fix...");
-                    prompt = constructVerificationPrompt(problem.dafny().methodSignature(), verifyOut.getFullScreenOutput(), method);
+                    prompt = constructVerificationPrompt(problem.dafny().methodSignature(), verifyOut.getFullScreenOutput(), method, contextEnabled);
+                    timer.stopEvent("Iteration #" + iteration);
                     continue;
                 }
                 log.info("Dafny verification check passed.");
+                timer.stopEvent("Iteration #" + iteration);
                 break; //Poor code restructure.
             }
             if (maxGenAIInteractions <= genAIInteractions) {
@@ -135,6 +185,7 @@ public class DafnyExperiment {
             log.log(Level.SEVERE, "Experiment terminated exceptionally", e);
             outcome = DafnyExperimentOutcome.FAILURE_INTERNAL_ERROR;
         } finally {
+            timer.stopEvent("Overall Experiment");
             currentState = DafnyExperimentState.FINISHED;
             scilentGenAIMessageSave();
         }
@@ -144,7 +195,7 @@ public class DafnyExperiment {
                 outcome = verificationAttempts == 0 ? DafnyExperimentOutcome.FAILURE_RESOLVE : DafnyExperimentOutcome.FAILURE_VERIFY;
             }
         }
-        DafnyExperimentResult result = new DafnyExperimentResult(outcome, verificationAttempts, resolutionAttempts);
+        DafnyExperimentResult result = new DafnyExperimentResult(outcome, verificationAttempts, resolutionAttempts, softFailedResolutions, hardFailedResolutions, timer);
         try {
             saveExperimentFile("experiment_result.json", GSON.toJson(result));
         } catch (IOException e) {
@@ -198,12 +249,19 @@ public class DafnyExperiment {
         }
     }
 
-    private String constructVerificationPrompt(String methodSig, String fullScreenOutput, String fullMethod) {
-        return VERIFY_FAIL_PROMPT_STRUCTURE.formatted(methodSig, fullMethod, fullScreenOutput);
+    private String constructVerificationPrompt(String methodSig, String fullScreenOutput, String fullMethod, boolean contextEnabled) {
+        if (contextEnabled)
+            return VERIFY_FAIL_PROMPT_WITH_CONTEXT_STRUCTURE.formatted(fullScreenOutput);
+        else
+            return VERIFY_FAIL_PROMPT_STRUCTURE.formatted(methodSig, fullMethod, fullScreenOutput);
+
     }
 
-    private String constructResolutionPrompt(String methodSig, String fullScreenOutput, String fullMethod) throws ExecutionException, InterruptedException {
-        return RESOLVE_FAIL_PROMPT_STRUCTURE.formatted(methodSig, fullMethod, fullScreenOutput);
+    private String constructResolutionPrompt(String methodSig, String fullScreenOutput, String fullMethod, boolean contextEnabled) {
+        if (contextEnabled)
+            return RESOLVE_FAIL_PROMPT_WITH_CONTEXT_STRUCTURE.formatted(fullScreenOutput);
+        else
+            return RESOLVE_FAIL_PROMPT_STRUCTURE.formatted(methodSig, fullMethod, fullScreenOutput);
     }
 
     private void logCLIResult(CLIProgramOutput resolveOut) {
@@ -280,8 +338,14 @@ public class DafnyExperiment {
         log.fine("Using model " + req.getModel() + ". Awaiting response...");
         OpenAICompletionResponse oaiResp = completionManager.submitCompletion(req).get();
         OpenAIMessage responseMsg = oaiResp.choices().getFirst().message();
-
         genAIMessages.add(new TransactionUnion(responseMsg, oaiResp));
+        if (!oaiResp.choices().getFirst().finishReason().equalsIgnoreCase("stop")) {
+            String stop = oaiResp.choices().getFirst().finishReason();
+            log.severe("Model finished with non 'stop' reason: " + stop + ".");
+            scilentGenAIMessageSave();
+            return null;
+        }
+
         resp = responseMsg.getContent();
         log.fine("Got response with " + resp.length() + " characters.");
         JsonObject parsedResp = GSON.fromJson(resp, JsonObject.class);
@@ -383,7 +447,7 @@ public class DafnyExperiment {
                 } catch (Exception e) {
                     log.fine("Failed to parse GenAI response for LaTeX report generation. Dumping raw JSON");
                     out = u.message().getContent();
-                    sb.append("\\textcolor{red}{\\textbf{The below is a raw response from GenAI that could not be parsed. It is likely that GenAI got 'stuck' in a loop and hit the pre-set token limit.}}\n");
+                    sb.append("\\\\\\textcolor{red}{\\textbf{The below is a raw response from GenAI that could not be parsed. It is likely that GenAI got 'stuck' in a loop and hit the pre-set token limit (i.e., finish reason is 'length').}}\n");
                 }
                 sb.append("\\begin{lstlisting}\n");
                 sb.append(out);
@@ -405,8 +469,27 @@ public class DafnyExperiment {
             sb.append("\\section*{Final Program}\n");
             sb.append("\\begin{lstlisting}\n");
             sb.append(prog);
-            sb.append("\\end{lstlisting}\n");
+            sb.append("\n\\end{lstlisting}\n");
         }
+
+        int tokensInput = genAIMessages.stream().filter(a -> a.openAIResponseDetails() != null).mapToInt(a -> a.openAIResponseDetails().usage().promptTokens()).sum();
+        int tokensOutput = genAIMessages.stream().filter(a -> a.openAIResponseDetails() != null).mapToInt(a -> a.openAIResponseDetails().usage().completionTokens()).sum();
+        int totalSum = genAIMessages.stream().filter(a -> a.openAIResponseDetails() != null).mapToInt(a -> a.openAIResponseDetails().usage().totalTokens()).sum();
+        sb.append("\\section*{").append("Total Token Usage").append("}\n");
+        sb.append("\\textbf{Input tokens: }").append(tokensInput).append("\n");
+        sb.append("\\\\\\textbf{Output tokens: }").append(tokensOutput).append("\n");
+        sb.append("\\\\\\textbf{Sum of `total tokens': }").append(totalSum).append("\n");
+
+
+        sb.append("\\section*{Experiment Timings}\n");
+        for (Map.Entry<String, EventTimer.EventTimingRecord> r : timer.getEvents().entrySet())
+            sb.append("\\textbf{").append(escapeLatex(r.getKey())).append("} started at ")
+                    .append(r.getValue().getStartTimeMs()).append(", ended at ")
+                    .append(r.getValue().getEndTimeMs()).append(", lasting ")
+                    .append(r.getValue().getDurationMs())
+                    .append(String.format("ms (%.2f seconds)", r.getValue().getDurationMs() / 1000d))
+                    .append("\n\\\\");
+        sb.setLength(sb.length() - 2);//remove the last \\
         sb.append("\\end{document}\n");
         return sb.toString();
     }
