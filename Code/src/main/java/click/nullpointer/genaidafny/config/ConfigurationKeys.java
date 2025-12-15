@@ -14,7 +14,8 @@ public enum ConfigurationKeys {
     MAX_GEN_AI_OUTPUT_TOKENS(Option.builder().longOpt("max-completion-tokens").desc("Max number of tokens GenAI is allowed to produce in an output before it cuts off (to prevent loong loops)").hasArg().type(Integer.class).get(), "10000"),
     DISABLE_LATEX_REPORT(Option.builder().longOpt("disable-latex-report").desc("Disable latex report creation for experiments.").get()),
     MAX_CONTEXT_MESSAGES_COUNT(Option.builder().longOpt("max-context-cnt").desc("Maximum number of previous messages to send on each GenAI request, for context. WARNING: grows very quickly, and costs.").hasArg().type(Integer.class).get(), Integer.MAX_VALUE + ""),
-    GEN_AI_MODEL(Option.builder("m").longOpt("gen-ai-model").desc("The OpenAI model to use for experiments.").hasArg().type(OpenAITextModel.class).get(), OpenAITextModel.GPT_4O_MINI.toString());
+    GEN_AI_MODEL(Option.builder("m").longOpt("gen-ai-model").desc("The OpenAI model to use for experiments.").hasArg().type(OpenAITextModel.class).get(), OpenAITextModel.GPT_4O_MINI.toString()),
+    GEN_AI_REASONING_EFFORT(Option.builder().longOpt("gen-ai-reasoning-effort").desc("The reasoning effort value. Only applicable to reasoning models!").hasArg().get(), null);
     private final Option option;
     private final String defaultValue;
     private final String confirmationMessage;

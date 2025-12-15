@@ -1,7 +1,7 @@
 package click.nullpointer.genaidafny.openai.completion.requests;
 
-import click.nullpointer.genaidafny.openai.completion.common.OpenAITextModel;
 import click.nullpointer.genaidafny.openai.completion.common.OpenAIMessage;
+import click.nullpointer.genaidafny.openai.completion.common.OpenAITextModel;
 import click.nullpointer.genaidafny.openai.completion.requests.formats.OpenAIResponseFormat;
 import click.nullpointer.genaidafny.openai.completion.requests.formats.OpenAITextResponseFormat;
 import com.google.gson.annotations.SerializedName;
@@ -25,6 +25,8 @@ public class OpenAICompletionRequest {
     private Integer maxCompletionTokens;
     @SerializedName("presence_penalty")
     private Double presencePenalty;
+    @SerializedName("reasoning_effort")
+    private String reasoningEffort;
     @SerializedName("frequency_penalty")
     private Double frequencyPenalty;
     @SerializedName("response_format")
@@ -58,6 +60,16 @@ public class OpenAICompletionRequest {
 
     public void setModel(String model) {
         this.model = model;
+    }
+
+    public void setReasoningEffort(OpenAIReasoningModelEffort reasoningEffort) {
+        if (!OpenAITextModel.fromValue(model).isReasoning())
+            throw new IllegalArgumentException("reasoningEffort is not supported for non-reasoning model: " + model);
+        this.reasoningEffort = reasoningEffort.toString();
+    }
+
+    public OpenAIReasoningModelEffort getReasoningEffort() {
+        return OpenAIReasoningModelEffort.getByValue(reasoningEffort);
     }
 
     public Double getTemperature() {

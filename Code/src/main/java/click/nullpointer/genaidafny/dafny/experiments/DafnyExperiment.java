@@ -15,6 +15,7 @@ import click.nullpointer.genaidafny.openai.completion.common.OpenAIMessage;
 import click.nullpointer.genaidafny.openai.completion.common.OpenAIMessageRole;
 import click.nullpointer.genaidafny.openai.completion.common.OpenAITextModel;
 import click.nullpointer.genaidafny.openai.completion.requests.OpenAICompletionRequest;
+import click.nullpointer.genaidafny.openai.completion.requests.OpenAIReasoningModelEffort;
 import click.nullpointer.genaidafny.openai.completion.requests.formats.OpenAIStructuredResponseFormat;
 import click.nullpointer.genaidafny.openai.completion.responses.OpenAICompletionResponse;
 import com.google.gson.Gson;
@@ -323,7 +324,8 @@ public class DafnyExperiment {
         int tokensInput = genAIMessages.stream().filter(a -> a.openAIResponseDetails() != null).mapToInt(a -> a.openAIResponseDetails().usage().promptTokens()).sum();
         int tokensOutput = genAIMessages.stream().filter(a -> a.openAIResponseDetails() != null).mapToInt(a -> a.openAIResponseDetails().usage().completionTokens()).sum();
         int totalSum = genAIMessages.stream().filter(a -> a.openAIResponseDetails() != null).mapToInt(a -> a.openAIResponseDetails().usage().totalTokens()).sum();
-        return new DafnyExperimentTokenUsage(tokensInput, tokensOutput, totalSum);
+        int totalReasoning = genAIMessages.stream().filter(a -> a.openAIResponseDetails() != null).mapToInt(a -> a.openAIResponseDetails().usage().completionTokensDetails().reasoningTokens()).sum();
+        return new DafnyExperimentTokenUsage(tokensInput, tokensOutput, totalSum, totalReasoning);
     }
 
     private String constructAssumePrompt(String methodSig, String natLangStatement, String fullMethod, boolean contextEnabled) {
@@ -413,8 +415,22 @@ public class DafnyExperiment {
             log.info("Context is on, attaching " + context.size() + " previous messages in the request to GenAI.");
         }
         context.add(message);
-        OpenAICompletionRequest req = new OpenAICompletionRequest(OpenAITextModel.valueOf(Main.getConfig().get(ConfigurationKeys.GEN_AI_MODEL)), context.toArray(new OpenAIMessage[0]));
+        OpenAITextModel model = OpenAITextModel.valueOf(Main.getConfig().get(ConfigurationKeys.GEN_AI_MODEL));
+        OpenAIReasoningModelEffort effort = Main.getConfig().get(ConfigurationKeys.GEN_AI_REASONING_EFFORT) == null ? null : OpenAIReasoningModelEffort.valueOf(Main.getConfig().get(ConfigurationKeys.GEN_AI_REASONING_EFFORT));
+        OpenAICompletionRequest req = new OpenAICompletionRequest(model, context.toArray(new OpenAIMessage[0]));
         req.setResponseFormat(new OpenAIStructuredResponseFormat(STRUCTURED_RESPONSE_JSON));
+        if (effort != null) {
+            if (model.isReasoning()) {
+                req.setReasoningEffort(effort);
+            } else {
+                log.warning("Ignoring configured reasoning effort. Model chosen (" + model + ") is not a reasoning model.");
+            }
+        } else {
+            if (model.isReasoning()) {
+                req.setReasoningEffort(OpenAIReasoningModelEffort.MEDIUM);
+                log.info("A reasoning model is chosen, but no reasoning effort value is set. Setting reasoning to 'medium'");
+            }
+        }
         int maxTokens = Integer.parseInt(Main.getConfig().get(ConfigurationKeys.MAX_GEN_AI_OUTPUT_TOKENS));
         if (maxTokens > 0) {
             log.fine("Setting max tokens to " + maxTokens);
@@ -586,6 +602,7 @@ public class DafnyExperiment {
         sb.append("\\section*{").append("Total Token Usage").append("}\n");
         sb.append("\\textbf{Input tokens: }").append(usage.tokensInput()).append("\n");
         sb.append("\\\\\\textbf{Output tokens: }").append(usage.tokensOutput()).append("\n");
+        sb.append("\\\\\\textbf{Reasoning tokens: }").append(usage.totalReasoningTokens()).append("\n");
         sb.append("\\\\\\textbf{Sum of `total tokens': }").append(usage.tokensTotal()).append("\n");
 
 
