@@ -58,4 +58,53 @@ public class Utilities {
         }
         return logger;
     }
+
+
+    public static String lightStripCommentsAndStringsFromDafny(String input) {
+        if (input == null || input.isBlank())
+            return input;
+        //TODO: test propperly.
+        boolean inInlineComment = false;
+        int inMultilineComment = 0;
+        boolean inString = false;
+        StringBuilder out = new StringBuilder();
+        for (int i = 0; i < input.length(); i++) {
+            char prev = i == 0 ? 0 : input.charAt(i - 1);
+            char curr = input.charAt(i);
+            char next = i == input.length() - 1 ? 0 : input.charAt(i + 1);
+            if (curr == '"') {
+                inString = !inString;
+                continue;//Nasty, to skip closing "
+            }
+            if (inString) {
+                continue;//Nasty.
+            }
+
+            //Surely not foolproof, e.g., //abc/*abc*//, but what can you do
+            if (inMultilineComment != 0) {
+                //if we find a second code block in a multiline one, we increment counter.
+                if (curr == '/' && next == '*')
+                    inMultilineComment++;
+                else if (curr == '*' && next == '/' && prev != '/') {//accounts for /*/abc*/
+                    inMultilineComment--;
+                    //Nasty, but we need to skip the next /
+                    i++;
+                }
+            } else if (inInlineComment) {
+                if (curr == '\n') {
+                    inInlineComment = false;
+                }
+            } else { //not in multiline block (even nested)
+                if (curr == next && next == '/') {
+                    inInlineComment = true;
+                } else if (curr == '/' && next == '*') {
+                    inMultilineComment = 1;
+                } else {
+                    out.append(curr);
+                }
+            }
+        }
+        return out.toString();
+    }
+
 }
