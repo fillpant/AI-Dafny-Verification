@@ -2,7 +2,7 @@
   "problem_array": [
     {
       "name": "p5_1_a_smallest",
-      "nat_lang_statement": "Write method double that returns the smallest of the arguments.",
+      "nat_lang_statement": "Write a method that returns the smallest of the arguments.",
       "dafny": {
         "method_signature": "p5_1_a_smallest(x: real, y: real, z: real) returns (smallest: real)",
         "requires": [],
@@ -52,7 +52,7 @@
     },
     {
       "name": "p5_2_c_sorted",
-      "nat_lang_statement": "Write a method sorted returning true if the arguments are sorted, with the smallest one coming first.",
+      "nat_lang_statement": "Write a method returning true if the arguments are sorted, with the smallest one coming first.",
       "dafny": {
         "method_signature": "p5_2_c_sorted(x: real, y: real, z: real) returns (isSorted: bool)",
         "requires": [],
@@ -79,7 +79,7 @@
     },
     {
       "name": "p5_4_middle",
-      "nat_lang_statement": "Write a method that returns a string containing the middle character in str if the length of str is odd, or the two middle characters if the length is even. For example, middle(\"middle\") returns \"dd\".",
+      "nat_lang_statement": "Write a method that returns the middle character of a string if the length is odd, or the two middle characters if the length is even. For example, middle(\"middle\") returns \"dd\".",
       "dafny": {
         "method_signature": "p5_4_middle(str: seq<char>) returns (middleStr: seq<char>)",
         "requires": [
@@ -94,7 +94,7 @@
     },
     {
       "name": "p5_5_repeat",
-      "nat_lang_statement": "Write a method repeat that returns the string str repeated n times. For example, repeat(\"ho\", 3) returns \"hohoho\".",
+      "nat_lang_statement": "Write a method that returns a string repeated n times. For example, repeat(\"ho\", 3) returns \"hohoho\".",
       "dafny": {
         "method_signature": "p5_5_repeat(str: seq<char>, n: int) returns (repeatedStr: seq<char>)",
         "requires": [
@@ -109,7 +109,7 @@
     },
     {
       "name": "p5_6_countVowels",
-      "nat_lang_statement": "Write a method that returns a count of all vowels in the string str. Vowels are the letters a, e, i, o, and u, and their uppercase variants.",
+      "nat_lang_statement": "Write a method that returns the count of all vowels in a string. Vowels are the letters a, e, i, o, and u, and their uppercase variants.",
       "dafny": {
         "method_signature": "p5_6_countVowels(str: seq<char>) returns (vowelCount: int)",
         "requires": [],
@@ -124,7 +124,7 @@
     },
     {
       "name": "p5_7_countWords",
-      "nat_lang_statement": "Write a method countWords that returns a count of all words in the string str. Words are separated by spaces. For example, countWords(\"Mary had a little lamb\") should return 5.",
+      "nat_lang_statement": "Write a method that returns the count of all words in a string. Words are separated by spaces. For example, countWords(\"Mary had a little lamb\") should return 5.",
       "dafny": {
         "method_signature": "p5_7_countWords(str: seq<char>) returns (wordCount: int)",
         "requires": [],
@@ -138,7 +138,7 @@
     },
     {
       "name": "p5_8_scramble",
-      "nat_lang_statement": "Write a method scramble that constructs a scrambled version of string, randomly flipping two characters other than the first and last one.",
+      "nat_lang_statement": "Write a method that constructs a scrambled version of string, randomly flipping two characters other than the first and last ones.",
       "dafny": {
         "method_signature": "p5_8_word_scramble(word: string) returns (scrambled: string)",
         "requires": [
@@ -147,7 +147,7 @@
         "ensures": [
           "|word| == |scrambled|",
           "word[0] == scrambled[0]"
-          "word[|word|-1] == scrambled[|scrambled|-1]",
+          "word[|word| - 1] == scrambled[|scrambled| - 1]",
           "|word| >= 4 ==>  exists i, j :: 1 <= i < j <= |word| - 2 \n&& word[i] == scrambled[j]\n&& word[j] == scrambled[i]\n&& forall k:: 0 <= k <= |word| -1 ==> (k!=i && k!=j ==> word[k] == scrambled[k])",
         ],
         "functional_code": null
@@ -155,7 +155,7 @@
     },
     {
       "name": "p5_9_sphereVolume",
-      "nat_lang_statement": "Write a method sphereVolume that computes the volume of a sphere with radius r.",
+      "nat_lang_statement": "Write a method that computes the volume of a sphere given its radius.",
       "dafny": {
         "method_signature": "p5_9_sphereVolume(r: real) returns (volume: real)",
         "requires": [],
@@ -167,7 +167,7 @@
     },
     {
       "name": "p5_9_sphereSurface",
-      "nat_lang_statement": "Write a method sphereSurface that computes the surface of a sphere with radius r.",
+      "nat_lang_statement": "Write a method that computes the surface of a sphere given its radius.",
       "dafny": {
         "method_signature": "p5_9_sphereSurface(r: real) returns (surface_area: real)",
         "requires": [],
@@ -179,7 +179,7 @@
     },
     {
       "name": "p5_9_cylinderVolume",
-      "nat_lang_statement": "Write a method cylinderVolume that computes the volume of cylinder with a circular base with radius r and height h.",
+      "nat_lang_statement": "Write a method that computes the volume of a cylinder with a circular base, given radius and height.",
       "dafny": {
         "method_signature": "p5_9_cylinderVolume(r: real, h: real) returns (volume: real)",
         "requires": [],
@@ -191,7 +191,7 @@
     },
     {
       "name": "p5_9_cylinderSurface",
-      "nat_lang_statement": "Write a method public cylinderSurface that computes the surface of cylinder with a circular base with radius r and height h.",
+      "nat_lang_statement": "Write a method that computes the surface area of a cylinder with a circular base, given radius and height.",
       "dafny": {
         "method_signature": "p5_9_cylinderSurface(r: real, h: real) returns (surface_area: real)",
         "requires": [],
@@ -203,7 +203,7 @@
     },
     {
       "name": "p5_9_coneVolume",
-      "nat_lang_statement": "Write a method coneVolume that computes the volume of a cone with a circular base with radius r and height h.",
+      "nat_lang_statement": "Write a method that computes the volume of a cone with a circular base, given radius and height.",
       "dafny": {
         "method_signature": "p5_9_coneVolume(r: real, h: real) returns (volume: real)",
         "requires": [],
@@ -215,12 +215,12 @@
     },
     {
       "name": "p5_9_coneSurface",
-      "nat_lang_statement": "Write a method coneSurface that computes the surface of a cone with a circular base with radius r and height h.",
+      "nat_lang_statement": "Write a method that computes the surface area of a cone with a circular base, given radius and height.",
       "dafny": {
         "method_signature": "p5_9_coneSurface(r: real, h: real) returns (surface_area: real)",
         "requires": [],
         "ensures": [
-          "surface_area == 3.14159 * r * (r + Sqrt(h * h + r * r))"
+          "(-r + (surface_area / (3.14159 * r))) * (-r + (surface_area / (3.14159 * r))) == h * h + r * r"
         ],
         "functional_code": null
       }
