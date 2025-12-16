@@ -1,229 +1,226 @@
-{
-  "problem_array": [
-    {
-      "name": "p5_1_a_smallest",
-      "nat_lang_statement": "Write a method that returns the smallest of the arguments.",
-      "dafny": {
-        "method_signature": "p5_1_a_smallest(x: real, y: real, z: real) returns (smallest: real)",
-        "requires": [],
-        "ensures": [
-          "smallest <= x && smallest <= y && smallest <= z",
-          "smallest == x || smallest == y || smallest == z"
-        ],
-        "functional_code": null
-      }
-    },
-
-    {
-      "name": "p5_1_b_average",
-      "nat_lang_statement": "Write a method that returns the average of the arguments.",
-      "dafny": {
-        "method_signature": "p5_1_b_average(x: real, y: real, z: real) returns (average: real)",
-        "requires": [],
-        "ensures": [
-          "average == (x + y + z) / 3.0"
-        ],
-        "functional_code": null
-      }
-    },
-    {
-      "name": "p5_2_a_allTheSame",
-      "nat_lang_statement": "Write a method returning true if the arguments are all the same.",
-      "dafny": {
-        "method_signature": "p5_2_a_allTheSame(x: real, y: real, z: real) returns (allSame: bool)",
-        "requires": [],
-        "ensures": [
-          "allSame == (x == y && y == z)"
-        ],
-        "functional_code": null
-      }
-    },
-    {
-      "name": "p5_2_b_allDifferent",
-      "nat_lang_statement": "Write a method returning true if the arguments are all different.",
-      "dafny": {
-        "method_signature": "p5_2_b_allDifferent(x: real, y: real, z: real) returns (allDiff: bool)",
-        "requires": [],
-        "ensures": [
-          "allDiff == (x != y && y != z && x != z)"
-        ],
-        "functional_code": null
-      }
-    },
-    {
-      "name": "p5_2_c_sorted",
-      "nat_lang_statement": "Write a method returning true if the arguments are sorted, with the smallest one coming first.",
-      "dafny": {
-        "method_signature": "p5_2_c_sorted(x: real, y: real, z: real) returns (isSorted: bool)",
-        "requires": [],
-        "ensures": [
-          "isSorted == (x <= y && y <= z)"
-        ],
-        "functional_code": null
-      }
-    },
-    {
-      "name": "p5_3_firstDigit",
-      "nat_lang_statement": "Write a method returning the first digit of the argument.",
-      "dafny": {
-        "method_signature": "p5_3_firstDigit(n: int) returns (first: int)",
-        "requires": [
-          "0 <= n"
-        ],
-        "ensures": [
-          "0 <= first < 10",
-          "intToSeq(n)[0] == first"
-        ],
-        "functional_code": "function intToSeq(n: int) : seq<int>\n  requires n >= 0\n  ensures forall d :: d in intToSeq(n) ==> 0 <= d < 10\n{\n  if n < 10 then [n]\n  else intToSeq(n / 10) + [n % 10]\n}"
-      }
-    },
-    {
-      "name": "p5_4_middle",
-      "nat_lang_statement": "Write a method that returns the middle character of a string if the length is odd, or the two middle characters if the length is even. For example, middle(\"middle\") returns \"dd\".",
-      "dafny": {
-        "method_signature": "p5_4_middle(str: seq<char>) returns (middleStr: seq<char>)",
-        "requires": [
-          "0 < |str|"
-        ],
-        "ensures": [
-          "if |str| % 2 == 1 then |middleStr| == 1 else |middleStr| == 2",
-          "if |str| % 2 == 1 then middleStr[0] == str[|str| / 2] else middleStr == str[|str| / 2 - 1 .. |str| / 2]"
-        ],
-        "functional_code": null
-      }
-    },
-    {
-      "name": "p5_5_repeat",
-      "nat_lang_statement": "Write a method that returns a string repeated n times. For example, repeat(\"ho\", 3) returns \"hohoho\".",
-      "dafny": {
-        "method_signature": "p5_5_repeat(str: seq<char>, n: int) returns (repeatedStr: seq<char>)",
-        "requires": [
-          "n >= 0"
-        ],
-        "ensures": [
-          "|repeatedStr| == n * |str|",
-          "forall i :: 0 <= i < n ==> repeatedStr[i * |str| .. (i + 1) * |str| - 1 ] == str"
-        ],
-        "functional_code": null
-      }
-    },
-    {
-      "name": "p5_6_countVowels",
-      "nat_lang_statement": "Write a method that returns the count of all vowels in a string. Vowels are the letters a, e, i, o, and u, and their uppercase variants.",
-      "dafny": {
-        "method_signature": "p5_6_countVowels(str: seq<char>) returns (vowelCount: int)",
-        "requires": [],
-        "ensures": [
-          "vowelCount >= 0",
-          "vowelCount <= |str|",
-          "(forall c :: c in str ==> (c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u' || c == 'A' || c == 'E' || c == 'I' || c == 'O' || c == 'U')) ==> vowelCount == |str|",
-          "(forall c :: c in str ==> !(c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u' || c == 'A' || c == 'E' || c == 'I' || c == 'O' || c == 'U')) ==> vowelCount == 0"
-        ],
-        "functional_code": null
-      }
-    },
-    {
-      "name": "p5_7_countWords",
-      "nat_lang_statement": "Write a method that returns the count of all words in a string. Words are separated by spaces. For example, countWords(\"Mary had a little lamb\") should return 5.",
-      "dafny": {
-        "method_signature": "p5_7_countWords(str: seq<char>) returns (wordCount: int)",
-        "requires": [],
-        "ensures": [
-          "wordCount >= 0",
-          "if |str| == 0 then wordCount == 0 else wordCount >= 1",
-          "wordCount == count_space(str) + 1"
-        ],
-        "functional_code": "function count_space(str: seq<char>) : int\n{\n  if |str| == 0 then 0\n  else if str[0] == ' ' then 1 + count_space(str[1..])\n  else count_space(str[1..])\n}"
-      }
-    },
-    {
-      "name": "p5_8_scramble",
-      "nat_lang_statement": "Write a method that constructs a scrambled version of string, randomly flipping two characters other than the first and last ones.",
-      "dafny": {
-        "method_signature": "p5_8_word_scramble(word: string) returns (scrambled: string)",
-        "requires": [
-          "1 <= |word|"
-        ],
-        "ensures": [
-          "|word| == |scrambled|",
-          "word[0] == scrambled[0]"
-          "word[|word| - 1] == scrambled[|scrambled| - 1]",
-          "|word| >= 4 ==>  exists i, j :: 1 <= i < j <= |word| - 2 \n&& word[i] == scrambled[j]\n&& word[j] == scrambled[i]\n&& forall k:: 0 <= k <= |word| -1 ==> (k!=i && k!=j ==> word[k] == scrambled[k])",
-        ],
-        "functional_code": null
-      }
-    },
-    {
-      "name": "p5_9_sphereVolume",
-      "nat_lang_statement": "Write a method that computes the volume of a sphere given its radius.",
-      "dafny": {
-        "method_signature": "p5_9_sphereVolume(r: real) returns (volume: real)",
-        "requires": [],
-        "ensures": [
-          "volume == (4.0 / 3.0) * 3.14159 * r * r * r"
-        ],
-        "functional_code": null
-      }
-    },
-    {
-      "name": "p5_9_sphereSurface",
-      "nat_lang_statement": "Write a method that computes the surface of a sphere given its radius.",
-      "dafny": {
-        "method_signature": "p5_9_sphereSurface(r: real) returns (surface_area: real)",
-        "requires": [],
-        "ensures": [
-          "surface_area == 4.0 * 3.14159 * r * r"
-        ],
-        "functional_code": null
-      }
-    },
-    {
-      "name": "p5_9_cylinderVolume",
-      "nat_lang_statement": "Write a method that computes the volume of a cylinder with a circular base, given radius and height.",
-      "dafny": {
-        "method_signature": "p5_9_cylinderVolume(r: real, h: real) returns (volume: real)",
-        "requires": [],
-        "ensures": [
-          "volume == 3.14159 * r * r * h"
-        ],
-        "functional_code": null
-      }
-    },
-    {
-      "name": "p5_9_cylinderSurface",
-      "nat_lang_statement": "Write a method that computes the surface area of a cylinder with a circular base, given radius and height.",
-      "dafny": {
-        "method_signature": "p5_9_cylinderSurface(r: real, h: real) returns (surface_area: real)",
-        "requires": [],
-        "ensures": [
-          "surface_area == 2.0 * 3.14159 * r * (r + h)"
-        ],
-        "functional_code": null
-      }
-    },
-    {
-      "name": "p5_9_coneVolume",
-      "nat_lang_statement": "Write a method that computes the volume of a cone with a circular base, given radius and height.",
-      "dafny": {
-        "method_signature": "p5_9_coneVolume(r: real, h: real) returns (volume: real)",
-        "requires": [],
-        "ensures": [
-          "volume == (1.0 / 3.0) * 3.14159 * r * r * h"
-        ],
-        "functional_code": null
-      }
-    },
-    {
-      "name": "p5_9_coneSurface",
-      "nat_lang_statement": "Write a method that computes the surface area of a cone with a circular base, given radius and height.",
-      "dafny": {
-        "method_signature": "p5_9_coneSurface(r: real, h: real) returns (surface_area: real)",
-        "requires": [],
-        "ensures": [
-          "(-r + (surface_area / (3.14159 * r))) * (-r + (surface_area / (3.14159 * r))) == h * h + r * r"
-        ],
-        "functional_code": null
-      }
-    } 
-  ]
-}
+[
+  {
+    "name": "p5_1_a_smallest",
+    "nat_lang_statement": "Write a method that returns the smallest of the arguments.",
+    "dafny": {
+      "method_signature": "p5_1_a_smallest(x: real, y: real, z: real) returns (smallest: real)",
+      "requires": [],
+      "ensures": [
+        "smallest <= x && smallest <= y && smallest <= z",
+        "smallest == x || smallest == y || smallest == z"
+      ],
+      "functional_code": null
+    }
+  },
+  {
+    "name": "p5_1_b_average",
+    "nat_lang_statement": "Write a method that returns the average of the arguments.",
+    "dafny": {
+      "method_signature": "p5_1_b_average(x: real, y: real, z: real) returns (average: real)",
+      "requires": [],
+      "ensures": [
+        "average == (x + y + z) / 3.0"
+      ],
+      "functional_code": null
+    }
+  },
+  {
+    "name": "p5_2_a_allTheSame",
+    "nat_lang_statement": "Write a method returning true if the arguments are all the same.",
+    "dafny": {
+      "method_signature": "p5_2_a_allTheSame(x: real, y: real, z: real) returns (allSame: bool)",
+      "requires": [],
+      "ensures": [
+        "allSame == (x == y && y == z)"
+      ],
+      "functional_code": null
+    }
+  },
+  {
+    "name": "p5_2_b_allDifferent",
+    "nat_lang_statement": "Write a method returning true if the arguments are all different.",
+    "dafny": {
+      "method_signature": "p5_2_b_allDifferent(x: real, y: real, z: real) returns (allDiff: bool)",
+      "requires": [],
+      "ensures": [
+        "allDiff == (x != y && y != z && x != z)"
+      ],
+      "functional_code": null
+    }
+  },
+  {
+    "name": "p5_2_c_sorted",
+    "nat_lang_statement": "Write a method returning true if the arguments are sorted, with the smallest one coming first.",
+    "dafny": {
+      "method_signature": "p5_2_c_sorted(x: real, y: real, z: real) returns (isSorted: bool)",
+      "requires": [],
+      "ensures": [
+        "isSorted == (x <= y && y <= z)"
+      ],
+      "functional_code": null
+    }
+  },
+  {
+    "name": "p5_3_firstDigit",
+    "nat_lang_statement": "Write a method returning the first digit of the argument.",
+    "dafny": {
+      "method_signature": "p5_3_firstDigit(n: int) returns (first: int)",
+      "requires": [
+        "0 <= n"
+      ],
+      "ensures": [
+        "0 <= first < 10",
+        "intToSeq(n)[0] == first"
+      ],
+      "functional_code": "function intToSeq(n: int) : seq<int>\n  requires n >= 0\n  ensures forall d :: d in intToSeq(n) ==> 0 <= d < 10\n{\n  if n < 10 then [n]\n  else intToSeq(n / 10) + [n % 10]\n}"
+    }
+  },
+  {
+    "name": "p5_4_middle",
+    "nat_lang_statement": "Write a method that returns the middle character of a string if the length is odd, or the two middle characters if the length is even. For example, middle(\"middle\") returns \"dd\".",
+    "dafny": {
+      "method_signature": "p5_4_middle(str: seq<char>) returns (middleStr: seq<char>)",
+      "requires": [
+        "0 < |str|"
+      ],
+      "ensures": [
+        "if |str| % 2 == 1 then |middleStr| == 1 else |middleStr| == 2",
+        "if |str| % 2 == 1 then middleStr[0] == str[|str| / 2] else middleStr == str[|str| / 2 - 1 .. |str| / 2]"
+      ],
+      "functional_code": null
+    }
+  },
+  {
+    "name": "p5_5_repeat",
+    "nat_lang_statement": "Write a method that returns a string repeated n times. For example, repeat(\"ho\", 3) returns \"hohoho\".",
+    "dafny": {
+      "method_signature": "p5_5_repeat(str: seq<char>, n: int) returns (repeatedStr: seq<char>)",
+      "requires": [
+        "n >= 0"
+      ],
+      "ensures": [
+        "|repeatedStr| == n * |str|",
+        "forall i :: 0 <= i < n ==> repeatedStr[i * |str| .. (i + 1) * |str| - 1 ] == str"
+      ],
+      "functional_code": null
+    }
+  },
+  {
+    "name": "p5_6_countVowels",
+    "nat_lang_statement": "Write a method that returns the count of all vowels in a string. Vowels are the letters a, e, i, o, and u, and their uppercase variants.",
+    "dafny": {
+      "method_signature": "p5_6_countVowels(str: seq<char>) returns (vowelCount: int)",
+      "requires": [],
+      "ensures": [
+        "vowelCount >= 0",
+        "vowelCount <= |str|",
+        "(forall c :: c in str ==> (c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u' || c == 'A' || c == 'E' || c == 'I' || c == 'O' || c == 'U')) ==> vowelCount == |str|",
+        "(forall c :: c in str ==> !(c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u' || c == 'A' || c == 'E' || c == 'I' || c == 'O' || c == 'U')) ==> vowelCount == 0"
+      ],
+      "functional_code": null
+    }
+  },
+  {
+    "name": "p5_7_countWords",
+    "nat_lang_statement": "Write a method that returns the count of all words in a string. Words are separated by spaces. For example, countWords(\"Mary had a little lamb\") should return 5.",
+    "dafny": {
+      "method_signature": "p5_7_countWords(str: seq<char>) returns (wordCount: int)",
+      "requires": [],
+      "ensures": [
+        "wordCount >= 0",
+        "if |str| == 0 then wordCount == 0 else wordCount >= 1",
+        "wordCount == count_space(str) + 1"
+      ],
+      "functional_code": "function count_space(str: seq<char>) : int\n{\n  if |str| == 0 then 0\n  else if str[0] == ' ' then 1 + count_space(str[1..])\n  else count_space(str[1..])\n}"
+    }
+  },
+  {
+    "name": "p5_8_scramble",
+    "nat_lang_statement": "Write a method that constructs a scrambled version of string, randomly flipping two characters other than the first and last ones.",
+    "dafny": {
+      "method_signature": "p5_8_word_scramble(word: string) returns (scrambled: string)",
+      "requires": [
+        "1 <= |word|"
+      ],
+      "ensures": [
+        "|word| == |scrambled|",
+        "word[0] == scrambled[0]"
+        "word[|word| - 1] == scrambled[|scrambled| - 1]",
+        "|word| >= 4 ==>  exists i, j :: 1 <= i < j <= |word| - 2 \n&& word[i] == scrambled[j]\n&& word[j] == scrambled[i]\n&& forall k:: 0 <= k <= |word| -1 ==> (k!=i && k!=j ==> word[k] == scrambled[k])"
+      ],
+      "functional_code": null
+    }
+  },
+  {
+    "name": "p5_9_sphereVolume",
+    "nat_lang_statement": "Write a method that computes the volume of a sphere given its radius.",
+    "dafny": {
+      "method_signature": "p5_9_sphereVolume(r: real) returns (volume: real)",
+      "requires": [],
+      "ensures": [
+        "volume == (4.0 / 3.0) * 3.14159 * r * r * r"
+      ],
+      "functional_code": null
+    }
+  },
+  {
+    "name": "p5_9_sphereSurface",
+    "nat_lang_statement": "Write a method that computes the surface of a sphere given its radius.",
+    "dafny": {
+      "method_signature": "p5_9_sphereSurface(r: real) returns (surface_area: real)",
+      "requires": [],
+      "ensures": [
+        "surface_area == 4.0 * 3.14159 * r * r"
+      ],
+      "functional_code": null
+    }
+  },
+  {
+    "name": "p5_9_cylinderVolume",
+    "nat_lang_statement": "Write a method that computes the volume of a cylinder with a circular base, given radius and height.",
+    "dafny": {
+      "method_signature": "p5_9_cylinderVolume(r: real, h: real) returns (volume: real)",
+      "requires": [],
+      "ensures": [
+        "volume == 3.14159 * r * r * h"
+      ],
+      "functional_code": null
+    }
+  },
+  {
+    "name": "p5_9_cylinderSurface",
+    "nat_lang_statement": "Write a method that computes the surface area of a cylinder with a circular base, given radius and height.",
+    "dafny": {
+      "method_signature": "p5_9_cylinderSurface(r: real, h: real) returns (surface_area: real)",
+      "requires": [],
+      "ensures": [
+        "surface_area == 2.0 * 3.14159 * r * (r + h)"
+      ],
+      "functional_code": null
+    }
+  },
+  {
+    "name": "p5_9_coneVolume",
+    "nat_lang_statement": "Write a method that computes the volume of a cone with a circular base, given radius and height.",
+    "dafny": {
+      "method_signature": "p5_9_coneVolume(r: real, h: real) returns (volume: real)",
+      "requires": [],
+      "ensures": [
+        "volume == (1.0 / 3.0) * 3.14159 * r * r * h"
+      ],
+      "functional_code": null
+    }
+  },
+  {
+    "name": "p5_9_coneSurface",
+    "nat_lang_statement": "Write a method that computes the surface area of a cone with a circular base, given radius and height.",
+    "dafny": {
+      "method_signature": "p5_9_coneSurface(r: real, h: real) returns (surface_area: real)",
+      "requires": [],
+      "ensures": [
+        "(-r + (surface_area / (3.14159 * r))) * (-r + (surface_area / (3.14159 * r))) == h * h + r * r"
+      ],
+      "functional_code": null
+    }
+  }
+]

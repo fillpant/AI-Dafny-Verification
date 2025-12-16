@@ -81,7 +81,7 @@
       "method_signature": "p_1_7() returns (s : string)",
       "requires": [],
       "ensures": [
-        "s == \"  /////\\n +\"\"\"\"\"+\\n(| o o |)\\n |  ^  |\\n | ‘-’ |\\n +-----+\\n\""
+        "s == \"  /////\\n +\\\"\\\"\\\"\\\"\\\"+\\n(| o o |)\\n |  ^  |\\n | ‘-’ |\\n +-----+\\n\""
       ]
     }
   },
@@ -89,7 +89,7 @@
     "name": "p_1_8",
     "nat_lang_statement": "Write a method that returns an imitation of a Piet Mondrian painting. (Search the Internet if you are not familiar with his paintings.) Use character sequences such as @@@ or ::: to indicate different colors, and use - and | to form lines.",
     "dafny": {
-      "functional_code": "function mystring(s : string, n : int) : string\n{\n  if n == 0 then \"\" else s + mystring(s, n - 1)\n}",
+      "functional_code": "function mystring(s : string, n : nat): string\n{\n  if n == 0 then \"\" else s + mystring(s, n - 1)\n}",
       "method_signature": "p_1_8() returns (s : string)",
       "requires": [],
       "ensures": [
@@ -117,7 +117,7 @@
       "method_signature": "p_1_10() returns (s : string)",
       "requires": [],
       "ensures": [
-        "s == \"  /\\_/\\     /---\\\\n ( ‘ ’ )  / Hello \\\\n (  -  )  |  New  |\\n  | | |   \\ Coder /\\n (__|__)    \\----/\\n\""
+        "s == \"  /\\\\_/\\\\     /---\\\\\\n ( ' ' )  / Hello \\\\\\n (  -  )  |  New  |\\n  | | |   \\\\ Coder /\\n (__|__)    \\\\----/\\n\""
       ]
     }
   }

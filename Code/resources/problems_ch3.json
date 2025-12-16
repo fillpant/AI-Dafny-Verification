@@ -1,140 +1,138 @@
-{
-  "problem_array": [
-    {
-      "name": "P_3_1_classify_int",
-      "nat_lang_statement": "Write a method that takes an integer and returns whether it is negative, zero, or positive.",
-      "dafny": {
-        "method_signature": "P_3_1_classify_int (x:int) returns (s: string)",
-        "requires": [],
-        "ensures": [
-          "x == 0 ==> s == \"zero\"",
-          "x > 0 ==> s == \"positive\"",
-          "x < 0 ==> s == \"negative\""
-        ],
-        "functional_code": null
-      }
-    },
-    {
-      "name": "P_3_2_classify_real",
-      "nat_lang_statement": "Write a method that takes a floating point number and returns whether it is negative, zero, or positive. Add \"small\" if the absolute value of the number is less than 1, or \"large\" if it exceeds 1,000,000.",
-      "dafny": {
-        "method_signature": "P_3_2_classify_real (x:real) returns (s: string)",
-        "requires": [],
-        "ensures": [
-          "x == 0.0 ==> s == \"zero, small\"",
-          "1.0 > x > 0.0 ==> s == \"positive, small\"",
-          "1.0 <= x < 1000000.0 ==> s == \"positive\"",
-          "1.0 <= x < 1000000.0 ==> s == \"positive, large\"",
-          "0.0 > x > -1.0 ==> s == \"negative, small\"",
-          "-1.0 >= x > -1000000.0 ==> s == \"negative\"",
-          "-1000000.0 >= x ==> s == \"negative, large\""
-        ],
-        "functional_code": null
-      }
-    },
-    {
-      "name": "P_3_3_NumberOfDigits",
-      "nat_lang_statement": "Write a method that takes an integer and returns how many digits the number has, by checking whether the number is ≥ 10, ≥ 100, and so on. (Assume that all integers are less than ten billion.) If the number is negative, first multiply it with –1.",
-      "dafny": {
-        "method_signature": "P_3_3_NumberOfDigits (i:int) returns (n: nat)",
-        "requires": [
-          "10000000000 > i > -10000000000"
-        ],
-        "ensures": [
-          "i >= 0 ==> n == digits(i)",
-          "i < 0 ==> n == digits(-i)"
-        ],
-        "functional_code": "function digits (n:nat): nat\n{\n    if 0 <= n <= 9 then 1\n    else 1 + digits (n/10)\n}"
-      }
-    },
-    {
-      "name": "P_3_4_Classification",
-      "nat_lang_statement": "Write a method that takes three numbers and returns \"all the same\" if they are all the same, \"all different\" if they are all different, and \"neither\" otherwise.",
-      "dafny": {
-        "method_signature": "P_3_4_Classification (i:int, j: int, k: int) returns (s: string)",
-        "requires": [],
-        "ensures": [
-          "if i == j == k then s == \"all the same\" else if i != j && j!=k && i!=k then s == \"all different\" else s== \"neither\""
-        ],
-        "functional_code": null
-      }
-    },
-    {
-      "name": "P_3_5_Order",
-      "nat_lang_statement": "Write a method that takes three numbers and returns \"increasing\" if they are in increasing order, \"decreasing\" if they are in decreasing order, and \"neither\" otherwise. Here, \"increasing\" means \"strictly increasing\", with each value larger than its predecessor. The sequence 3 4 4 would not be considered increasing.",
-      "dafny": {
-        "method_signature": "P_3_5_Order (i:int, j: int, k: int) returns (s: string)",
-        "requires": [],
-        "ensures": [
-          "if i < j < k then s == \"increasing\" else if i > j && j > k then s == \"decreasing\" else s== \"neither\""
-        ],
-        "functional_code": null
-      }
-    },
-    {
-      "name": "P_3_6_ParametrizedOrder",
-      "nat_lang_statement": "Write a method that takes three numbers and returns \"increasing\" if they are in increasing order, \"decreasing\" if they are in decreasing order, and \"neither\" otherwise. A Boolean parameter triggers the method to be \"strict\" or \"lenient\". In lenient mode, the sequence 3 4 4 is increasing and the sequence 4 4 4 is both increasing and decreasing.",
-      "dafny": {
-        "method_signature": "P_3_6_ParametrizedOrder (i:int, j: int, k: int, strict: bool ) returns (s: string)",
-        "requires": [],
-        "ensures": [
-          "if strict then if i < j < k then s == \"increasing\" else if i > j && j > k then s == \"decreasing\" else s == \"neither\" else if i <= j <= k then if i == j == k then s == \"increasing and decreasing\" else s == \"increasing\" else if i >= j && j >= k then s == \"decreasing\" else s == \"neither\""
-        ],
-        "functional_code": null
-      }
-    },
-    {
-      "name": "P_3_7_Order",
-      "nat_lang_statement": "Write a method that takes three integers and returns \"in order\" if they are sorted in ascending or descending order, or \"not in order\" otherwise.",
-      "dafny": {
-        "method_signature": "P_3_7_Order (i:int, j: int, k: int) returns (s: string)",
-        "requires": [],
-        "ensures": [
-          "if (i < j < k) || (i > j > k) then s == \"in order\" else s == \"not in order\""
-        ],
-        "functional_code": null
-      }
-    },
-    {
-      "name": "P_3_8_TwoPairs",
-      "nat_lang_statement": "Write a method that takes four integers and returns \"two pairs\" if the input consists of two matching pairs (in some order) and \"not two pairs\" otherwise.",
-      "dafny": {
-        "method_signature": "P_3_8_TwoPairs (i:int, j: int, k: int, l: int) returns (s: string)",
-        "requires": [],
-        "ensures": [
-          "if (i==j && k==l) || (i==k && j==l) || (i==l && j==k) then s == \"two pairs\" else s == \"not two pairs\""
-        ],
-        "functional_code": null
-      }
-    },
-    {
-      "name": "P_3_9_temperature",
-      "nat_lang_statement": "Write a method that takes a temperature value and a letter C for Celsius or F for Fahrenheit. Return whether water is liquid, solid, or gaseous at the given temperature at sea level.",
-      "dafny": {
-        "method_signature": "P_3_9_temperature (t: real, c: char) returns (s: string)",
-        "requires": [
-          "(c == 'C' && t >= -273.15) || (c == 'F' && t >= -459.67)",
-          "c == 'C' || c == 'F'"
-        ],
-        "ensures": [
-          "if c == 'C' then if t < 0.0 then s == \"solid\" else if t == 0.0 then s == \"solid or liquid\" else if 0.0 < t < 100.0 then s == \"liquid\" else if t == 100.0 then s == \"liquid or gaseous\" else s == \"gaseous\" else if t < 32.0 then s == \"solid\" else if t == 32.0 then s == \"solid or liquid\" else if 32.0 < t < 212.0 then s == \"liquid\" else if t == 212.0 then s == \"liquid or gaseous\" else s == \"gaseous\""
-        ],
-        "functional_code": null
-      }
-    },
-    {
-      "name": "P_3_10_temperature_altitude",
-      "nat_lang_statement": "Write a method that takes a temperature value and the altitude in meters. Return whether water is liquid, solid, or gaseous at the given temperature. The boiling point of water drops by about one degree centigrade for every 300 meters of altitude.",
-      "dafny": {
-        "method_signature": "P_3_10_temperature_altitude (t: real, a: nat) returns (s: string)",
-        "requires": [
-          "t >= -273.15 && a <= 10000"
-        ],
-        "ensures": [
-          "if t < 0.0 then s == \"solid\" else if t == 0.0 then s == \"solid or liquid\" else if 0.0 < t < 100.0 - (a as real / 300.0) then s == \"liquid\" else if t == 100.0 - (a as real / 300.0) then s == \"liquid or gaseous\" else s == \"gaseous\""
-        ],
-        "functional_code": null
-      }
+[
+  {
+    "name": "P_3_1_classify_int",
+    "nat_lang_statement": "Write a method that takes an integer and returns whether it is negative, zero, or positive.",
+    "dafny": {
+      "method_signature": "P_3_1_classify_int (x:int) returns (s: string)",
+      "requires": [],
+      "ensures": [
+        "x == 0 ==> s == \"zero\"",
+        "x > 0 ==> s == \"positive\"",
+        "x < 0 ==> s == \"negative\""
+      ],
+      "functional_code": null
     }
-  ]
-}
+  },
+  {
+    "name": "P_3_2_classify_real",
+    "nat_lang_statement": "Write a method that takes a floating point number and returns whether it is negative, zero, or positive. Add \"small\" if the absolute value of the number is less than 1, or \"large\" if it exceeds 1,000,000.",
+    "dafny": {
+      "method_signature": "P_3_2_classify_real (x:real) returns (s: string)",
+      "requires": [],
+      "ensures": [
+        "x == 0.0 ==> s == \"zero, small\"",
+        "1.0 > x > 0.0 ==> s == \"positive, small\"",
+        "1.0 <= x < 1000000.0 ==> s == \"positive\"",
+        "1000000.0 <= x  ==> s == \"positive, large\"",
+        "0.0 > x > -1.0 ==> s == \"negative, small\"",
+        "-1.0 >= x > -1000000.0 ==> s == \"negative\"",
+        "-1000000.0 >= x ==> s == \"negative, large\""
+      ],
+      "functional_code": null
+    }
+  },
+  {
+    "name": "P_3_3_NumberOfDigits",
+    "nat_lang_statement": "Write a method that takes an integer and returns how many digits the number has, by checking whether the number is ≥ 10, ≥ 100, and so on. (Assume that all integers are less than ten billion.) If the number is negative, first multiply it with –1.",
+    "dafny": {
+      "method_signature": "P_3_3_NumberOfDigits (i:int) returns (n: nat)",
+      "requires": [
+        "10000000000 > i > -10000000000"
+      ],
+      "ensures": [
+        "i >= 0 ==> n == digits(i)",
+        "i < 0 ==> n == digits(-i)"
+      ],
+      "functional_code": "function digits (n:nat): nat\n{\n    if 0 <= n <= 9 then 1\n    else 1 + digits (n/10)\n}"
+    }
+  },
+  {
+    "name": "P_3_4_Classification",
+    "nat_lang_statement": "Write a method that takes three numbers and returns \"all the same\" if they are all the same, \"all different\" if they are all different, and \"neither\" otherwise.",
+    "dafny": {
+      "method_signature": "P_3_4_Classification (i:int, j: int, k: int) returns (s: string)",
+      "requires": [],
+      "ensures": [
+        "if i == j == k then s == \"all the same\" else if i != j && j!=k && i!=k then s == \"all different\" else s== \"neither\""
+      ],
+      "functional_code": null
+    }
+  },
+  {
+    "name": "P_3_5_Order",
+    "nat_lang_statement": "Write a method that takes three numbers and returns \"increasing\" if they are in increasing order, \"decreasing\" if they are in decreasing order, and \"neither\" otherwise. Here, \"increasing\" means \"strictly increasing\", with each value larger than its predecessor. The sequence 3 4 4 would not be considered increasing.",
+    "dafny": {
+      "method_signature": "P_3_5_Order (i:int, j: int, k: int) returns (s: string)",
+      "requires": [],
+      "ensures": [
+        "if i < j < k then s == \"increasing\" else if i > j && j > k then s == \"decreasing\" else s== \"neither\""
+      ],
+      "functional_code": null
+    }
+  },
+  {
+    "name": "P_3_6_ParametrizedOrder",
+    "nat_lang_statement": "Write a method that takes three numbers and returns \"increasing\" if they are in increasing order, \"decreasing\" if they are in decreasing order, and \"neither\" otherwise. A Boolean parameter triggers the method to be \"strict\" or \"lenient\". In lenient mode, the sequence 3 4 4 is increasing and the sequence 4 4 4 is both increasing and decreasing.",
+    "dafny": {
+      "method_signature": "P_3_6_ParametrizedOrder (i:int, j: int, k: int, strict: bool ) returns (s: string)",
+      "requires": [],
+      "ensures": [
+        "if strict then if i < j < k then s == \"increasing\" else if i > j && j > k then s == \"decreasing\" else s == \"neither\" else if i <= j <= k then if i == j == k then s == \"increasing and decreasing\" else s == \"increasing\" else if i >= j && j >= k then s == \"decreasing\" else s == \"neither\""
+      ],
+      "functional_code": null
+    }
+  },
+  {
+    "name": "P_3_7_Order",
+    "nat_lang_statement": "Write a method that takes three integers and returns \"in order\" if they are sorted in ascending or descending order, or \"not in order\" otherwise.",
+    "dafny": {
+      "method_signature": "P_3_7_Order (i:int, j: int, k: int) returns (s: string)",
+      "requires": [],
+      "ensures": [
+        "if (i < j < k) || (i > j > k) then s == \"in order\" else s == \"not in order\""
+      ],
+      "functional_code": null
+    }
+  },
+  {
+    "name": "P_3_8_TwoPairs",
+    "nat_lang_statement": "Write a method that takes four integers and returns \"two pairs\" if the input consists of two matching pairs (in some order) and \"not two pairs\" otherwise.",
+    "dafny": {
+      "method_signature": "P_3_8_TwoPairs (i:int, j: int, k: int, l: int) returns (s: string)",
+      "requires": [],
+      "ensures": [
+        "if (i==j && k==l) || (i==k && j==l) || (i==l && j==k) then s == \"two pairs\" else s == \"not two pairs\""
+      ],
+      "functional_code": null
+    }
+  },
+  {
+    "name": "P_3_9_temperature",
+    "nat_lang_statement": "Write a method that takes a temperature value and a letter C for Celsius or F for Fahrenheit. Return whether water is liquid, solid, or gaseous at the given temperature at sea level.",
+    "dafny": {
+      "method_signature": "P_3_9_temperature (t: real, c: char) returns (s: string)",
+      "requires": [
+        "(c == 'C' && t >= -273.15) || (c == 'F' && t >= -459.67)",
+        "c == 'C' || c == 'F'"
+      ],
+      "ensures": [
+        "if c == 'C' then if t < 0.0 then s == \"solid\" else if t == 0.0 then s == \"solid or liquid\" else if 0.0 < t < 100.0 then s == \"liquid\" else if t == 100.0 then s == \"liquid or gaseous\" else s == \"gaseous\" else if t < 32.0 then s == \"solid\" else if t == 32.0 then s == \"solid or liquid\" else if 32.0 < t < 212.0 then s == \"liquid\" else if t == 212.0 then s == \"liquid or gaseous\" else s == \"gaseous\""
+      ],
+      "functional_code": null
+    }
+  },
+  {
+    "name": "P_3_10_temperature_altitude",
+    "nat_lang_statement": "Write a method that takes a temperature value and the altitude in meters. Return whether water is liquid, solid, or gaseous at the given temperature. The boiling point of water drops by about one degree centigrade for every 300 meters of altitude.",
+    "dafny": {
+      "method_signature": "P_3_10_temperature_altitude (t: real, a: nat) returns (s: string)",
+      "requires": [
+        "t >= -273.15 && a <= 10000"
+      ],
+      "ensures": [
+        "if t < 0.0 then s == \"solid\" else if t == 0.0 then s == \"solid or liquid\" else if 0.0 < t < 100.0 - (a as real / 300.0) then s == \"liquid\" else if t == 100.0 - (a as real / 300.0) then s == \"liquid or gaseous\" else s == \"gaseous\""
+      ],
+      "functional_code": null
+    }
+  }
+]

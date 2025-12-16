@@ -1,273 +1,271 @@
-{
-  "problem_array": [
-    {
-      "name": "p6_1_process_array_even_indexed",
-      "nat_lang_statement": "Write a method that takes an array of ten integers and then returns every element at an even index.",
-      "dafny": {
-        "method_signature": "p6_1_process_array_even_indexed(arr: seq<int>) returns (even_indexed: seq<int>)",
-        "requires": [
-          "|arr| == 10"
-        ],
-        "ensures": [
-          "even_indexed == [arr[0], arr[2], arr[4], arr[6], arr[8]]"
-        ],
-        "functional_code": null
-      }
-    },
-    {
-      "name": "p6_1_process_array_every_even_element",
-      "nat_lang_statement": "Write a method that takes an array of ten integers and then returns every even element.",
-      "dafny": {
-        "method_signature": "p6_1_process_array_every_even_element(arr: seq<int>) returns (even_elements: seq<int>)",
-        "requires": [
-          "|arr| == 10"
-        ],
-        "ensures": [
-          "forall i :: 0 <= i < |arr| ==> arr[i] % 2 == 0 ==> exists j :: 0 <= j < |even_elements| && even_elements[j] == arr[i]"
-        ],
-        "functional_code": null
-      }
-    },
-    {
-      "name": "p6_1_process_array_reverse_order",
-      "nat_lang_statement": "Write a method that takes an array of ten integers and then returns all elements in reverse order.",
-      "dafny": {
-        "method_signature": "p6_1_process_array_reverse_order(arr: seq<int>) returns (reversed: seq<int>)",
-        "requires": [
-          "|arr| == 10"
-        ],
-        "ensures": [
-          "|reversed| == |arr|",
-          "forall i :: 0 <= i < |reversed| ==> reversed[i] == arr[|arr| - 1 - i]",
-        ],
-        "functional_code": null
-      }
-    },
-    {
-      "name": "p6_1_process_array_first_and_last",
-      "nat_lang_statement": "Write a method that takes an array of ten integers and then returns the first and last elements.",
-      "dafny": {
-        "method_signature": "p6_1_process_array_first_and_last(arr: seq<int>) returns (first_and_last: seq<int>)",
-        "requires": [
-          "|arr| == 10"
-        ],
-        "ensures": [
-          "first_and_last == [arr[0], arr[|arr| - 1]]"
-        ],
-        "functional_code": null
-      }
-    },
-    {
-      "name": "p6_2_a_swap_first_last",
-      "nat_lang_statement": "Write a method to swap the first and last elements in an array.",
-      "dafny": {
-        "method_signature": "p6_2_a_swap_first_last(arr: seq<int>) returns (result: seq<int>)",
-        "requires": [
-          "|arr| >= 2"
-        ],
-        "ensures": [
-          "|result| == |arr|",
-          "result[0] == arr[|arr| - 1]",
-          "result[|arr| - 1] == arr[0]",
-          "forall i :: 1 <= i < |arr| - 1 ==> result[i] == arr[i]"
-        ],
-        "functional_code": null
-      }
-    },
-    {
-      "name": "p6_2_b_shift_right",
-      "nat_lang_statement": "Write a method to shift all elements of an array by one to the right and move the last element into the first position. For example, [1, 4, 9, 16, 25] would be transformed into [25, 1, 4, 9, 16].",
-      "dafny": {
-        "method_signature": "p6_2_b_shift_right(arr: seq<int>) returns (result: seq<int>)",
-        "requires": [
-          "|arr| >= 1"
-        ],
-        "ensures": [
-          "|result| == |arr|",
-          "result[0] == arr[|arr| - 1]",
-          "forall i :: 1 <= i < |arr| ==> result[i] == arr[i - 1]"
-        ],
-        "functional_code": null
-      }
-    },
-    {
-      "name": "p6_2_c_replace_even_with_zero",
-      "nat_lang_statement": "Write a method to replace all even elements in an array with 0.",
-      "dafny": {
-        "method_signature": "p6_2_c_replace_even_with_zero(arr: seq<int>) returns (result: seq<int>)",
-        "requires": [],
-        "ensures": [
-          "|result| == |arr|",
-          "forall i :: 0 <= i < |arr| ==> (arr[i] % 2 == 0 ==> result[i] == 0) && (arr[i] % 2 != 0 ==> result[i] == arr[i])"
-        ],
-        "functional_code": null
-      }
-    },
-    {
-      "name": "p6_2_d_replace_with_larger_neighbor",
-      "nat_lang_statement": "Write a method to replace each element of an array, except the first and last, by the larger of its two neighbors.",
-      "dafny": {
-        "method_signature": "p6_2_d_replace_with_larger_neighbor(arr: seq<int>) returns (result: seq<int>)",
-        "requires": [
-          "|arr| >= 3"
-        ],
-        "ensures": [
-          "|result| == |arr|",
-          "result[0] == arr[0]",
-          "result[|arr| - 1] == arr[|arr| - 1]",
-          "forall i :: 1 <= i < |arr| - 1 ==> result[i] == if arr[i - 1] >= arr[i + 1] then arr[i - 1] else arr[i + 1]"
-        ],
-        "functional_code": null
-      }
-    },
-    {
-      "name": "p6_2_e_remove_middle",
-      "nat_lang_statement": "Write a method to remove the middle element of an array if the array length is odd, or the middle two elements if the length is even.",
-      "dafny": {
-        "method_signature": "p6_2_e_remove_middle(arr: seq<int>) returns (result: seq<int>)",
-        "requires": [
-          "|arr| >= 1"
-        ],
-        "ensures": [
-          "|result| == if |arr| % 2 == 1 then |arr| - 1 else |arr| - 2",
-          "|arr| % 2 == 1 ==> forall i :: 0 <= i < |arr| / 2 ==> result[i] == arr[i] && forall j :: |arr| / 2 <= j < |result| ==> result[j] == arr[j + 1]",
-          "|arr| % 2 == 0 ==> forall i :: 0 <= i < |arr| / 2 - 1 ==> result[i] == arr[i] && forall j :: |arr| / 2 - 1 <= j < |result| ==> result[j] == arr[j + 2]"
-        ],
-        "functional_code": null
-      }
-    },
-    {
-      "name": "p6_2_f_move_even_to_front",
-      "nat_lang_statement": "Write a method to move all even elements in an array to the front, otherwise preserving the order of the elements.",
-      "dafny": {
-        "method_signature": "p6_2_f_move_even_to_front(arr: seq<int>) returns (result: seq<int>)",
-        "requires": [],
-        "ensures": [
-          "|result| == |arr|",
-          "forall i, j :: 0 <= i < j < |result| && result[i] % 2 == 0 && result[j] % 2 != 0",
-          "forall i :: 0 <= i < |arr| ==> exists j :: 0 <= j < |result| && arr[i] == result[j]"
-        ],
-        "functional_code": null
-      }
-    },
-    {
-      "name": "p6_2_g_second_largest",
-      "nat_lang_statement": "Write a method to return the second-largest element in an array.",
-      "dafny": {
-        "method_signature": "p6_2_g_second_largest(arr: seq<int>) returns (second_largest: int)",
-        "requires": [
-          "|arr| >= 2"
-        ],
-        "ensures": [
-          "second_largest < find_largest(arr)",
-          "forall x :: x in arr ==> x < find_largest(arr) ==> x <= second_largest"
-        ],
-        "functional_code": "function find_largest(arr: seq<int>) : (ret : int)\n  requires |arr| >= 1\n  ensures forall x :: x in arr ==> x <= ret\n{\n  if |arr| == 1 then arr[0]\n  else \n    assert 2 <= |arr|;\n    var rest_largest := find_largest(arr[1..]);\n    var ret : int := if arr[0] >= rest_largest then arr[0] else rest_largest;\n    assert arr == [arr[0]] + arr[1..]; \n    ret \n} "
-      }
-    },
-    {
-      "name": "p6_2_h_is_sorted",
-      "nat_lang_statement": "Write a method to return true if the given array is currently sorted in increasing order.",
-      "dafny": {
-        "method_signature": "p6_2_h_is_sorted(arr: seq<int>) returns (isSorted: bool)",
-        "requires": [],
-        "ensures": [
-          "isSorted == (forall i :: 0 <= i < |arr| - 1 ==> arr[i] <= arr[i + 1])"
-        ],
-        "functional_code": null
-      }
-    },
-    {
-      "name": "p6_2_i_has_adjacent_duplicates",
-      "nat_lang_statement": "Write a method to return true if the given array contains two adjacent duplicate elements.",
-      "dafny": {
-        "method_signature": "p6_2_i_has_adjacent_duplicates(arr: seq<int>) returns (hasDuplicates: bool)",
-        "requires": [
-          "|arr| >= 2"
-        ],
-        "ensures": [
-          "hasDuplicates == (exists i :: 0 <= i < |arr| - 1 && arr[i] == arr[i + 1])",
-          "ensures 1 <= count_adajacent_duplicates(arr, 0) ==> hasDuplicates == true"
-        ],
-        "functional_code": "function count_adajacent_duplicates(arr: seq<int>, i: int) : int\n  requires 0 <= i < |arr| - 1\n  decreases |arr| - i\n{\n  if i + 1 == |arr| - 1 then if arr[i] == arr[i + 1] then 1 else 0\n  else if arr[i] == arr[i + 1] then 1 + count_adajacent_duplicates(arr, i + 1)\n  else count_adajacent_duplicates(arr, i + 1)\n} "
-      }
-    },
-    {
-      "name": "p6_2_j_has_duplicates",
-      "nat_lang_statement": "Write a method to return true if the given array contains duplicate elements (which need not be adjacent).",
-      "dafny": {
-        "method_signature": "p6_2_j_has_duplicates(arr: seq<int>) returns (hasDuplicates: bool)",
-        "requires": [
-          "|arr| >= 2"
-        ],
-        "ensures": [
-          "hasDuplicates == (exists i, j :: 0 <= i < j < |arr| && arr[i] == arr[j])"
-        ],
-        "functional_code": null
-      }
-    },
-    {
-      "name": "p6_4_sum_without_smallest",
-      "nat_lang_statement": "Write a method that computes the sum of an array of values, except for the smallest one, in a single loop. In the loop, update the sum and the smallest value. After the loop, return the difference.",
-      "dafny": {
-        "method_signature": "p6_4_sum_without_smallest(arr: seq<int>) returns (sum: int)",
-        "requires": [
-          "|arr| >= 1"
-        ],
-        "ensures": [
-          "sum == sum_array(arr) - find_smallest(arr)"
-        ],
-        "functional_code": "function find_smallest(arr: seq<int>) : (ret : int)\n  requires |arr| >= 1\n  ensures forall x :: x in arr ==> ret <= x \n{\n  if |arr| == 1 then arr[0]\n  else \n    assert 2 <= |arr|;\n    var rest_smallest := find_smallest(arr[1..]);\n    var ret : int := if arr[0] <= rest_smallest then arr[0] else rest_smallest;\n    assert arr == [arr[0]] + arr[1..]; \n    assert ret == if arr[0] <= rest_smallest then arr[0] else rest_smallest;\n    ret \n}\n\nfunction sum_array(arr: seq<int>) : int\n{\n  if |arr| == 0 then 0\n  else  arr[0] + sum_array(arr[1..])\n}"
-      }
-    },
-    {
-      "name": "p6_6_alternating_sum",
-      "nat_lang_statement": "Compute the alternating sum of all elements in an array. For example, if your method reads the input [1, 4, 9, 16, 9, 7, 4, 9, 11] then it computes 1 – 4 + 9 – 16 + 9 – 7 + 4 – 9 + 11 = –2.",
-      "dafny": {
-        "method_signature": "p6_6_alternating_sum(arr: seq<int>) returns (alt_sum: int)",
-        "requires": [],
-        "ensures": [
-          "alt_sum == sum_arrray(arr, 1)"
-        ],
-        "functional_code": "function sum_arrray(arr : seq<int>, i : int) : int\n{\n  if |arr| == 0 then 0\n  else arr[0] * i + sum_arrray(arr[1..], i * -1)\n}"
-      }
-    },
-    {
-      "name": "p6_7_reverse_array",
-      "nat_lang_statement": "Write a method that reverses the sequence of elements in an array. For example, if you call the method with the array [1, 4, 9, 16, 9, 7, 4, 9, 11] then the array is changed to [11, 9, 4, 7, 9, 16, 9, 4, 1].",
-      "dafny": {
-        "method_signature": "p6_7_reverse_array(arr: seq<int>) returns (reversed: seq<int>)",
-        "requires": [],
-        "ensures": [
-          "|reversed| == |arr|",
-          "forall i :: 0 <= i < |reversed| ==> reversed[i] == arr[|arr| - 1 - i]"
-        ],
-        "functional_code": null
-      }
-    },
-    {
-      "name": "p6_9_arrays_equal",
-      "nat_lang_statement": "Write a method that checks whether two arrays have the same elements in the same order.",
-      "dafny": {
-        "method_signature": "p6_9_arrays_equal(arr1: seq<int>, arr2: seq<int>) returns (areEqual: bool)",
-        "requires": [],
-        "ensures": [
-          "areEqual == (|arr1| == |arr2| && forall i :: 0 <= i < |arr1| ==> arr1[i] == arr2[i])"
-        ],
-        "functional_code": null
-      }
-    },
-    {
-      "name": "p6_10_same_set",
-      "nat_lang_statement": "Write a method that checks whether two arrays have the same elements in some order, ignoring duplicates.",
-      "dafny": {
-        "method_signature": "p6_10_same_set(arr1: seq<int>, arr2: seq<int>) returns (areSameSet: bool)",
-        "requires": [],
-        "ensures": [
-          "areSameSet == (array_to_set(arr1) == array_to_set(arr2))"
-        ],
-        "functional_code": "function array_to_set(arr: seq<int>) : set<int>\n{\n  if |arr| == 0 then {}\n  else {arr[0]} + array_to_set(arr[1..])\n}"
-      }
+[
+  {
+    "name": "p6_1_process_array_even_indexed",
+    "nat_lang_statement": "Write a method that takes an array of ten integers and then returns every element at an even index.",
+    "dafny": {
+      "method_signature": "p6_1_process_array_even_indexed(arr: seq<int>) returns (even_indexed: seq<int>)",
+      "requires": [
+        "|arr| == 10"
+      ],
+      "ensures": [
+        "even_indexed == [arr[0], arr[2], arr[4], arr[6], arr[8]]"
+      ],
+      "functional_code": null
     }
-  ]
-}
+  },
+  {
+    "name": "p6_1_process_array_every_even_element",
+    "nat_lang_statement": "Write a method that takes an array of ten integers and then returns every even element.",
+    "dafny": {
+      "method_signature": "p6_1_process_array_every_even_element(arr: seq<int>) returns (even_elements: seq<int>)",
+      "requires": [
+        "|arr| == 10"
+      ],
+      "ensures": [
+        "forall i :: 0 <= i < |arr| ==> arr[i] % 2 == 0 ==> exists j :: 0 <= j < |even_elements| && even_elements[j] == arr[i]"
+      ],
+      "functional_code": null
+    }
+  },
+  {
+    "name": "p6_1_process_array_reverse_order",
+    "nat_lang_statement": "Write a method that takes an array of ten integers and then returns all elements in reverse order.",
+    "dafny": {
+      "method_signature": "p6_1_process_array_reverse_order(arr: seq<int>) returns (reversed: seq<int>)",
+      "requires": [
+        "|arr| == 10"
+      ],
+      "ensures": [
+        "|reversed| == |arr|",
+        "forall i :: 0 <= i < |reversed| ==> reversed[i] == arr[|arr| - 1 - i]"
+      ],
+      "functional_code": null
+    }
+  },
+  {
+    "name": "p6_1_process_array_first_and_last",
+    "nat_lang_statement": "Write a method that takes an array of ten integers and then returns the first and last elements.",
+    "dafny": {
+      "method_signature": "p6_1_process_array_first_and_last(arr: seq<int>) returns (first_and_last: seq<int>)",
+      "requires": [
+        "|arr| == 10"
+      ],
+      "ensures": [
+        "first_and_last == [arr[0], arr[|arr| - 1]]"
+      ],
+      "functional_code": null
+    }
+  },
+  {
+    "name": "p6_2_a_swap_first_last",
+    "nat_lang_statement": "Write a method to swap the first and last elements in an array.",
+    "dafny": {
+      "method_signature": "p6_2_a_swap_first_last(arr: seq<int>) returns (result: seq<int>)",
+      "requires": [
+        "|arr| >= 2"
+      ],
+      "ensures": [
+        "|result| == |arr|",
+        "result[0] == arr[|arr| - 1]",
+        "result[|arr| - 1] == arr[0]",
+        "forall i :: 1 <= i < |arr| - 1 ==> result[i] == arr[i]"
+      ],
+      "functional_code": null
+    }
+  },
+  {
+    "name": "p6_2_b_shift_right",
+    "nat_lang_statement": "Write a method to shift all elements of an array by one to the right and move the last element into the first position. For example, [1, 4, 9, 16, 25] would be transformed into [25, 1, 4, 9, 16].",
+    "dafny": {
+      "method_signature": "p6_2_b_shift_right(arr: seq<int>) returns (result: seq<int>)",
+      "requires": [
+        "|arr| >= 1"
+      ],
+      "ensures": [
+        "|result| == |arr|",
+        "result[0] == arr[|arr| - 1]",
+        "forall i :: 1 <= i < |arr| ==> result[i] == arr[i - 1]"
+      ],
+      "functional_code": null
+    }
+  },
+  {
+    "name": "p6_2_c_replace_even_with_zero",
+    "nat_lang_statement": "Write a method to replace all even elements in an array with 0.",
+    "dafny": {
+      "method_signature": "p6_2_c_replace_even_with_zero(arr: seq<int>) returns (result: seq<int>)",
+      "requires": [],
+      "ensures": [
+        "|result| == |arr|",
+        "forall i :: 0 <= i < |arr| ==> (arr[i] % 2 == 0 ==> result[i] == 0) && (arr[i] % 2 != 0 ==> result[i] == arr[i])"
+      ],
+      "functional_code": null
+    }
+  },
+  {
+    "name": "p6_2_d_replace_with_larger_neighbor",
+    "nat_lang_statement": "Write a method to replace each element of an array, except the first and last, by the larger of its two neighbors.",
+    "dafny": {
+      "method_signature": "p6_2_d_replace_with_larger_neighbor(arr: seq<int>) returns (result: seq<int>)",
+      "requires": [
+        "|arr| >= 3"
+      ],
+      "ensures": [
+        "|result| == |arr|",
+        "result[0] == arr[0]",
+        "result[|arr| - 1] == arr[|arr| - 1]",
+        "forall i :: 1 <= i < |arr| - 1 ==> result[i] == if arr[i - 1] >= arr[i + 1] then arr[i - 1] else arr[i + 1]"
+      ],
+      "functional_code": null
+    }
+  },
+  {
+    "name": "p6_2_e_remove_middle",
+    "nat_lang_statement": "Write a method to remove the middle element of an array if the array length is odd, or the middle two elements if the length is even.",
+    "dafny": {
+      "method_signature": "p6_2_e_remove_middle(arr: seq<int>) returns (result: seq<int>)",
+      "requires": [
+        "|arr| >= 1"
+      ],
+      "ensures": [
+        "|result| == if |arr| % 2 == 1 then |arr| - 1 else |arr| - 2",
+        "|arr| % 2 == 1 ==> forall i :: 0 <= i < |arr| / 2 ==> result[i] == arr[i] && forall j :: |arr| / 2 <= j < |result| ==> result[j] == arr[j + 1]",
+        "|arr| % 2 == 0 ==> forall i :: 0 <= i < |arr| / 2 - 1 ==> result[i] == arr[i] && forall j :: |arr| / 2 - 1 <= j < |result| ==> result[j] == arr[j + 2]"
+      ],
+      "functional_code": null
+    }
+  },
+  {
+    "name": "p6_2_f_move_even_to_front",
+    "nat_lang_statement": "Write a method to move all even elements in an array to the front, otherwise preserving the order of the elements.",
+    "dafny": {
+      "method_signature": "p6_2_f_move_even_to_front(arr: seq<int>) returns (result: seq<int>)",
+      "requires": [],
+      "ensures": [
+        "|result| == |arr|",
+        "forall i, j :: 0 <= i < j < |result| && result[i] % 2 == 0 && result[j] % 2 != 0",
+        "forall i :: 0 <= i < |arr| ==> exists j :: 0 <= j < |result| && arr[i] == result[j]"
+      ],
+      "functional_code": null
+    }
+  },
+  {
+    "name": "p6_2_g_second_largest",
+    "nat_lang_statement": "Write a method to return the second-largest element in an array.",
+    "dafny": {
+      "method_signature": "p6_2_g_second_largest(arr: seq<int>) returns (second_largest: int)",
+      "requires": [
+        "|arr| >= 2"
+      ],
+      "ensures": [
+        "second_largest < find_largest(arr)",
+        "forall x :: x in arr ==> x < find_largest(arr) ==> x <= second_largest"
+      ],
+      "functional_code": "function find_largest(arr: seq<int>) : (ret : int)\n  requires |arr| >= 1\n  ensures forall x :: x in arr ==> x <= ret\n{\n  if |arr| == 1 then arr[0]\n  else \n    assert 2 <= |arr|;\n    var rest_largest := find_largest(arr[1..]);\n    var ret : int := if arr[0] >= rest_largest then arr[0] else rest_largest;\n    assert arr == [arr[0]] + arr[1..]; \n    ret \n} "
+    }
+  },
+  {
+    "name": "p6_2_h_is_sorted",
+    "nat_lang_statement": "Write a method to return true if the given array is currently sorted in increasing order.",
+    "dafny": {
+      "method_signature": "p6_2_h_is_sorted(arr: seq<int>) returns (isSorted: bool)",
+      "requires": [],
+      "ensures": [
+        "isSorted == (forall i :: 0 <= i < |arr| - 1 ==> arr[i] <= arr[i + 1])"
+      ],
+      "functional_code": null
+    }
+  },
+  {
+    "name": "p6_2_i_has_adjacent_duplicates",
+    "nat_lang_statement": "Write a method to return true if the given array contains two adjacent duplicate elements.",
+    "dafny": {
+      "method_signature": "p6_2_i_has_adjacent_duplicates(arr: seq<int>) returns (hasDuplicates: bool)",
+      "requires": [
+        "|arr| >= 2"
+      ],
+      "ensures": [
+        "hasDuplicates == (exists i :: 0 <= i < |arr| - 1 && arr[i] == arr[i + 1])",
+        "ensures 1 <= count_adajacent_duplicates(arr, 0) ==> hasDuplicates == true"
+      ],
+      "functional_code": "function count_adajacent_duplicates(arr: seq<int>, i: int) : int\n  requires 0 <= i < |arr| - 1\n  decreases |arr| - i\n{\n  if i + 1 == |arr| - 1 then if arr[i] == arr[i + 1] then 1 else 0\n  else if arr[i] == arr[i + 1] then 1 + count_adajacent_duplicates(arr, i + 1)\n  else count_adajacent_duplicates(arr, i + 1)\n} "
+    }
+  },
+  {
+    "name": "p6_2_j_has_duplicates",
+    "nat_lang_statement": "Write a method to return true if the given array contains duplicate elements (which need not be adjacent).",
+    "dafny": {
+      "method_signature": "p6_2_j_has_duplicates(arr: seq<int>) returns (hasDuplicates: bool)",
+      "requires": [
+        "|arr| >= 2"
+      ],
+      "ensures": [
+        "hasDuplicates == (exists i, j :: 0 <= i < j < |arr| && arr[i] == arr[j])"
+      ],
+      "functional_code": null
+    }
+  },
+  {
+    "name": "p6_4_sum_without_smallest",
+    "nat_lang_statement": "Write a method that computes the sum of an array of values, except for the smallest one, in a single loop. In the loop, update the sum and the smallest value. After the loop, return the difference.",
+    "dafny": {
+      "method_signature": "p6_4_sum_without_smallest(arr: seq<int>) returns (sum: int)",
+      "requires": [
+        "|arr| >= 1"
+      ],
+      "ensures": [
+        "sum == sum_array(arr) - find_smallest(arr)"
+      ],
+      "functional_code": "function find_smallest(arr: seq<int>) : (ret : int)\n  requires |arr| >= 1\n  ensures forall x :: x in arr ==> ret <= x \n{\n  if |arr| == 1 then arr[0]\n  else \n    assert 2 <= |arr|;\n    var rest_smallest := find_smallest(arr[1..]);\n    var ret : int := if arr[0] <= rest_smallest then arr[0] else rest_smallest;\n    assert arr == [arr[0]] + arr[1..]; \n    assert ret == if arr[0] <= rest_smallest then arr[0] else rest_smallest;\n    ret \n}\n\nfunction sum_array(arr: seq<int>) : int\n{\n  if |arr| == 0 then 0\n  else  arr[0] + sum_array(arr[1..])\n}"
+    }
+  },
+  {
+    "name": "p6_6_alternating_sum",
+    "nat_lang_statement": "Compute the alternating sum of all elements in an array. For example, if your method reads the input [1, 4, 9, 16, 9, 7, 4, 9, 11] then it computes 1 – 4 + 9 – 16 + 9 – 7 + 4 – 9 + 11 = –2.",
+    "dafny": {
+      "method_signature": "p6_6_alternating_sum(arr: seq<int>) returns (alt_sum: int)",
+      "requires": [],
+      "ensures": [
+        "alt_sum == sum_arrray(arr, 1)"
+      ],
+      "functional_code": "function sum_arrray(arr : seq<int>, i : int) : int\n{\n  if |arr| == 0 then 0\n  else arr[0] * i + sum_arrray(arr[1..], i * -1)\n}"
+    }
+  },
+  {
+    "name": "p6_7_reverse_array",
+    "nat_lang_statement": "Write a method that reverses the sequence of elements in an array. For example, if you call the method with the array [1, 4, 9, 16, 9, 7, 4, 9, 11] then the array is changed to [11, 9, 4, 7, 9, 16, 9, 4, 1].",
+    "dafny": {
+      "method_signature": "p6_7_reverse_array(arr: seq<int>) returns (reversed: seq<int>)",
+      "requires": [],
+      "ensures": [
+        "|reversed| == |arr|",
+        "forall i :: 0 <= i < |reversed| ==> reversed[i] == arr[|arr| - 1 - i]"
+      ],
+      "functional_code": null
+    }
+  },
+  {
+    "name": "p6_9_arrays_equal",
+    "nat_lang_statement": "Write a method that checks whether two arrays have the same elements in the same order.",
+    "dafny": {
+      "method_signature": "p6_9_arrays_equal(arr1: seq<int>, arr2: seq<int>) returns (areEqual: bool)",
+      "requires": [],
+      "ensures": [
+        "areEqual == (|arr1| == |arr2| && forall i :: 0 <= i < |arr1| ==> arr1[i] == arr2[i])"
+      ],
+      "functional_code": null
+    }
+  },
+  {
+    "name": "p6_10_same_set",
+    "nat_lang_statement": "Write a method that checks whether two arrays have the same elements in some order, ignoring duplicates.",
+    "dafny": {
+      "method_signature": "p6_10_same_set(arr1: seq<int>, arr2: seq<int>) returns (areSameSet: bool)",
+      "requires": [],
+      "ensures": [
+        "areSameSet == (array_to_set(arr1) == array_to_set(arr2))"
+      ],
+      "functional_code": "function array_to_set(arr: seq<int>) : set<int>\n{\n  if |arr| == 0 then {}\n  else {arr[0]} + array_to_set(arr[1..])\n}"
+    }
+  }
+]
