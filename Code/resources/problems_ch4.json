@@ -49,7 +49,6 @@
         "functional_code": "function sum_odd(a: int, b: int): int\ndecreases b - a\n{\n  if a > b then 0\n  else if a % 2 == 1 then a + sum_odd(a + 1, b)\n  else sum_odd(a + 1, b)\n}"
       }
     },
-
     {
       "name": "p4_1_e_sum_odd_digits",
       "nat_lang_statement": "Write a method with loops that computes the sum of all odd digits of an input. (For example, if the input is 32677, the sum would be 3 + 7 + 7 = 17.)",
