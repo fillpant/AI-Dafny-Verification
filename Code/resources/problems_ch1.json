@@ -1,0 +1,108 @@
+[
+  {
+    "name": "p_1_1",
+    "nat_lang_statement": "Write a method that returns the greeting \"Hugo\".",
+    "dafny": {
+      "functional_code": null,
+      "method_signature": "p_1_1() returns (s : string)",
+      "requires": [],
+      "ensures": ["s == \"Hugo\""]
+    }
+  },
+  {
+    "name": "p_1_2",
+    "nat_lang_statement": "Write a method that returns the sum of the first ten positive integers, 1 + 2 + ... + 10.",
+    "dafny": {
+      "functional_code": null,
+      "method_signature": "p_1_2() returns (i : int)",
+      "requires": [],
+      "ensures": ["i == (10 * 11) / 2"]
+    }
+  },
+  {
+    "name": "p_1_3",
+    "nat_lang_statement": "Write a method that returns the product of the first ten positive integers, 1 × 2 × ... × 10.",
+    "dafny": {
+      "functional_code": "function factorial(n : int) : int\n  decreases n\n{\n  if n <= 1 then 1 else n * factorial(n - 1)\n}",
+      "method_signature": "p_1_3() returns (i : int)",
+      "requires": [],
+      "ensures": ["i == factorial(10)"]
+    }
+  },
+  {
+    "name": "p_1_4",
+    "nat_lang_statement": "Write a method that returns the balance of an account after the first, second, and third year. The account has an initial balance of $1,000 and earns 5 percent interest per year.",
+    "dafny": {
+      "functional_code": null,
+      "method_signature": "p_1_4() returns (first : real, second : real, third : real)",
+      "requires": [],
+      "ensures": [
+        "first == 1000.0 + 1000.0 * 0.05",
+        "second == first + first * 0.05",
+        "third == second + second * 0.05"
+      ]
+    }
+  },
+  {
+    "name": "p_1_5",
+    "nat_lang_statement": "Write a method that returns the name Dave inside a box on the screen. Do your best to approximate lines with characters such as | - +.",
+    "dafny": {
+      "functional_code": null,
+      "method_signature": "p_1_5() returns (s : string)",
+      "requires": [],
+      "ensures": ["s == \"--------\\n| Dave |\\n--------\\n\""]
+    }
+  },
+  {
+    "name": "p_1_6",
+    "nat_lang_statement": "Write a method that returns the name Harry in large letters.",
+    "dafny": {
+      "functional_code": null,
+      "method_signature": "p_1_6() returns (s : string)",
+      "requires": [],
+      "ensures": ["s == \"*   *\\n*   *\\n*****\\n*   *\\n*   *\\n\""]
+    }
+  },
+  {
+    "name": "p_1_7",
+    "nat_lang_statement": "Write a method that returns a face in ASCII art.",
+    "dafny": {
+      "functional_code": null,
+      "method_signature": "p_1_7() returns (s : string)",
+      "requires": [],
+      "ensures": ["s == \" ///// \\n \\\"\\\"\\\"\\\"\\\" \\n+     +\""]
+    }
+  },
+  {
+    "name": "p_1_8",
+    "nat_lang_statement": "Write a method that returns an imitation of a Piet Mondrian painting. (Search the Internet if you are not familiar with his paintings.) Use character sequences such as @@@ or ::: to indicate different colors, and use - and | to form lines.",
+    "dafny": {
+      "functional_code": "function mystring(s : string, n : int) : string\n{\n  if n == 0 then \"\" else s + mystring(s, n - 1)\n}",
+      "method_signature": "p_1_8() returns (s : string)",
+      "requires": [],
+      "ensures": ["s == mystring(\"          !!!@@@@@@@@@@@@@@@@@@@@\\n\", 5)"]
+    }
+  },
+  {
+    "name": "p_1_9",
+    "nat_lang_statement": "Write a method that returns a house in ASCII art.",
+    "dafny": {
+      "functional_code": null,
+      "method_signature": "p_1_9() returns (s : string)",
+      "requires": [],
+      "ensures": ["s == \"   +    \\n  + +   \\n +   + \\n+-----+\\n\""]
+    }
+  },
+  {
+    "name": "p_1_10",
+    "nat_lang_statement": "Write a method that returns an animal speaking a greeting in ASCII art.",
+    "dafny": {
+      "functional_code": null,
+      "method_signature": "p_1_10() returns (s : string)",
+      "requires": [],
+      "ensures": [
+        "s == \" /\\\\_/\\\\    -----\\n( ` ' )  / Hello! \\\"\""
+      ]
+    }
+  }
+]
