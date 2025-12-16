@@ -138,6 +138,7 @@ public class DafnyExperiment {
     private final OpenAICompletionManager completionManager;
     private final IExperimentCache cache;
     private final List<TransactionUnion> genAIMessages = new ArrayList<>();
+    private final int maxTokensForExperiment;
     private volatile DafnyExperimentState currentState = DafnyExperimentState.NOT_STARTED;
     private int hardFailedResolutions = 0; //fail because of error
     private int softFailedResolutions = 0; //fail because of warning
@@ -146,12 +147,14 @@ public class DafnyExperiment {
     private int verificationAttempts = 0;
     private int methodsWithAssumeClauses = 0;
     private int genAIInteractions = 0;
+    private int totalTokens = 0;
     private EventTimer timer = new EventTimer();
 
     public DafnyExperiment(File rootDir, DafnyProblem problem, OpenAICompletionManager completionManager) {
         Objects.requireNonNull(rootDir);
         Objects.requireNonNull(problem);
         Objects.requireNonNull(completionManager);
+        this.maxTokensForExperiment = Integer.parseInt(Main.getConfig().get(ConfigurationKeys.MAX_TOTAL_TOKENS_PER_EXPERIMENT));
         this.problemDir = new File(rootDir, problem.getFileSafeName());
         this.problemDir.mkdirs();
         this.log = Utilities.createLogger("Experiment '" + problem.name() + "'", new File(this.problemDir, "program_logs.log"));
@@ -176,7 +179,8 @@ public class DafnyExperiment {
             int iteration = 0;
             String prompt = constructAIPrompt();
             log.info("Using initial prompt: " + prompt);
-            while (genAIInteractions < maxGenAIInteractions) {
+            while (genAIInteractions < maxGenAIInteractions && totalTokens < maxTokensForExperiment) {
+                log.info("There are " + (maxTokensForExperiment - totalTokens) + " left in the jar, for the rest of this experiment.");
                 EventTimer.EventTimingRecord lastEvent = timer.getLastStoppedEvent();
                 if (lastEvent != null)
                     log.info("Previous iteration lasted " + lastEvent.getDurationMs() + "ms");
@@ -237,6 +241,9 @@ public class DafnyExperiment {
                     log.info("Resolution fails as a result of an error.");
                 }
                 if (resolveOut.exitCode() != 0) {
+                    //If resolution fails with warnings, it will also fail without, hence this is the place for this check.
+                    if (outcome == DafnyExperimentOutcome.SUCCESS)
+                        outcome = DafnyExperimentOutcome.FAILURE_RESOLVE;
                     log.warning("Treating resolution as failed for the generated method. Preparing GenAI prompt to fix...");
                     prompt = constructResolutionPrompt(problem.dafny().methodSignature(), problem.statement(), resolveOut.getFullScreenOutput(), method, contextEnabled);
                     timer.stopEvent("Iteration #" + iteration);
@@ -249,10 +256,15 @@ public class DafnyExperiment {
                 logCLIResult(verifyOut);
                 verificationAttempts++;
                 if (verifyOut.exitCode() != 0) {
+                    //If the verification failed, indescriminatly set outcome
+                    outcome = DafnyExperimentOutcome.FAILURE_VERIFY;
                     log.warning("Failed to verify the generated method. Preparing GenAI prompt to fix...");
                     prompt = constructVerificationPrompt(problem.dafny().methodSignature(), problem.statement(), verifyOut.getFullScreenOutput(), method, contextEnabled);
                     timer.stopEvent("Iteration #" + iteration);
                     continue;
+                } else {
+                    //If A verification passes, then success overall.
+                    outcome = DafnyExperimentOutcome.SUCCESS;
                 }
                 log.info("Dafny verification check passed.");
                 timer.stopEvent("Iteration #" + iteration);
@@ -260,6 +272,8 @@ public class DafnyExperiment {
             }
             if (maxGenAIInteractions <= genAIInteractions) {
                 log.warning("Experiment stopped due to too many GenAI interactions.");
+            } else if (Integer.parseInt(Main.getConfig().get(ConfigurationKeys.MAX_TOTAL_TOKENS_PER_EXPERIMENT)) <= totalTokens) {
+                log.warning("Experiment stopped after using " + totalTokens + " tokens, which exceeds the limit specified. ");
             } else {
                 log.info("Experiment finished.");
             }
@@ -271,14 +285,6 @@ public class DafnyExperiment {
             currentState = DafnyExperimentState.FINISHED;
             scilentGenAIMessageSave();
         }
-        //Infer outcome if not set to failure_internal_error.
-        if (outcome == DafnyExperimentOutcome.SUCCESS) {
-            if (genAIInteractions >= maxGenAIInteractions) {
-                outcome = verificationAttempts == 0 ? DafnyExperimentOutcome.FAILURE_RESOLVE : DafnyExperimentOutcome.FAILURE_VERIFY;
-            }
-        }
-
-
         DafnyExperimentResult result = new DafnyExperimentResult(outcome, getUsageStats(), badResponses, verificationAttempts, resolutionAttempts, softFailedResolutions, hardFailedResolutions, methodsWithAssumeClauses, timer);
         try {
             saveExperimentFile("experiment_result.json", GSON.toJson(result));
@@ -392,7 +398,7 @@ public class DafnyExperiment {
         contract.append(problem.dafny().ensures().stream().map(a -> "ensures " + a).collect(Collectors.joining(", ")));
         String functionalCode = "";
         if (problem.dafny().functionalCode() != null) {
-            functionalCode = "The contract uses the following dafny code:\n\n" + problem.dafny().functionalCode() + "\n\n";
+            functionalCode = "The contract uses the following dafny code:\n\n" + problem.dafny().functionalCode() + "\n\nThese function(s) must not be used in your implementation of the method.\n\n";
         }
         return String.format(INITIAL_PROMPT_STRUCTURE, problem.statement(), "method " + problem.dafny().methodSignature(), contract.toString(), functionalCode);
     }
@@ -431,13 +437,18 @@ public class DafnyExperiment {
                 log.info("A reasoning model is chosen, but no reasoning effort value is set. Setting reasoning to 'medium'");
             }
         }
-        int maxTokens = Integer.parseInt(Main.getConfig().get(ConfigurationKeys.MAX_GEN_AI_OUTPUT_TOKENS));
+        //Take max tokens per request and max tokens for experiment
+        //Pick whatever's smallest.
+        int maxTokens = Math.min(Integer.parseInt(Main.getConfig().get(ConfigurationKeys.MAX_GEN_AI_OUTPUT_TOKENS)), maxTokensForExperiment);
+        //If the tokens alloted to this experiment are fewer than the max tokens per request, use those.
+        maxTokens = Math.min(maxTokensForExperiment - totalTokens, maxTokens);//How many left in the jar, versus
         if (maxTokens > 0) {
-            log.fine("Setting max tokens to " + maxTokens);
+            log.fine("Setting max tokens for the request to " + maxTokens);
             req.setMaxCompletionTokens(maxTokens);
         }
         log.fine("Using model " + req.getModel() + ". Awaiting response...");
         OpenAICompletionResponse oaiResp = completionManager.submitCompletion(req).get();
+        totalTokens += oaiResp.usage().totalTokens();
         OpenAIMessage responseMsg = oaiResp.choices().getFirst().message();
         genAIMessages.add(new TransactionUnion(responseMsg, oaiResp));
         if (!oaiResp.choices().getFirst().finishReason().equalsIgnoreCase("stop")) {
