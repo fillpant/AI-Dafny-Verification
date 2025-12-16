@@ -117,7 +117,7 @@
       "method_signature": "p_1_10() returns (s : string)",
       "requires": [],
       "ensures": [
-        "s == \" /\\_/\\     /---\\\n( ‘ ’ )  / Hello \\\n(  -  )  |  New  |\\n | | |   \\ Coder /\\n(__|__)    \\----/\\n\""
+        "s == \"  /\\_/\\     /---\\\\n ( ‘ ’ )  / Hello \\\\n (  -  )  |  New  |\\n  | | |   \\ Coder /\\n (__|__)    \\----/\\n\""
       ]
     }
   }
