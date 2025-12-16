@@ -25,7 +25,7 @@
   },
   {
     "name": "p_1_3",
-    "nat_lang_statement": "Write a method that returns the product of the first ten positive integers, 1 × 2 × ... × 10.",
+    "nat_lang_statement": "Write a method that returns the product of the first ten positive integers, 1 * 2 * ... * 10.",
     "dafny": {
       "functional_code": "function factorial(n : int) : int\n  decreases n\n{\n  if n <= 1 then 1 else n * factorial(n - 1)\n}",
       "method_signature": "p_1_3() returns (i : int)",
@@ -57,7 +57,7 @@
       "method_signature": "p_1_5() returns (s : string)",
       "requires": [],
       "ensures": [
-        "s == \"--------\\n| Dave |\\n--------\\n\""
+        "s == \"+------+\\n| Dave |\\n+------+\\n\""
       ]
     }
   },
@@ -69,7 +69,7 @@
       "method_signature": "p_1_6() returns (s : string)",
       "requires": [],
       "ensures": [
-        "s == \"*   *\\n*   *\\n*****\\n*   *\\n*   *\\n\""
+        "s == \"*   *      *      *****    *****    *     *\\n*   *     * *     *    *   *    *    *   *\\n*****    *   *    *****    *****      * *\\n*   *   *******   *    *   *    *      *\\n*   *  *       *  *     *  *     *     *\""
       ]
     }
   },
@@ -81,7 +81,7 @@
       "method_signature": "p_1_7() returns (s : string)",
       "requires": [],
       "ensures": [
-        "s == \" ///// \\n \\\"\\\"\\\"\\\"\\\" \\n+     +\""
+        "s == \"  /////\\n +\"\"\"\"\"+\\n(| o o |)\\n |  ^  |\\n | ‘-’ |\\n +-----+\\n\""
       ]
     }
   },
@@ -105,7 +105,7 @@
       "method_signature": "p_1_9() returns (s : string)",
       "requires": [],
       "ensures": [
-        "s == \"   +    \\n  + +   \\n +   + \\n+-----+\\n\""
+        "s == \"   +\\n  + +\\n +   +\\n+-----+\\n| .-. |\\n| | | |\\n+-+-+-+\\n\""
       ]
     }
   },
@@ -117,7 +117,7 @@
       "method_signature": "p_1_10() returns (s : string)",
       "requires": [],
       "ensures": [
-        "s == \" /\\\\_/\\\\    -----\\n( ` ' )  / Hello! \\\"\""
+        "s == \" /\\_/\\     /---\\\n( ‘ ’ )  / Hello \\\n(  -  )  |  New  |\\n | | |   \\ Coder /\\n(__|__)    \\----/\\n\""
       ]
     }
   }
