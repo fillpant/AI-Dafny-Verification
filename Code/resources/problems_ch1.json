@@ -6,7 +6,9 @@
       "functional_code": null,
       "method_signature": "p_1_1() returns (s : string)",
       "requires": [],
-      "ensures": ["s == \"Hugo\""]
+      "ensures": [
+        "s == \"Hugo\""
+      ]
     }
   },
   {
@@ -16,7 +18,9 @@
       "functional_code": null,
       "method_signature": "p_1_2() returns (i : int)",
       "requires": [],
-      "ensures": ["i == (10 * 11) / 2"]
+      "ensures": [
+        "i == (10 * 11) / 2"
+      ]
     }
   },
   {
@@ -26,7 +30,9 @@
       "functional_code": "function factorial(n : int) : int\n  decreases n\n{\n  if n <= 1 then 1 else n * factorial(n - 1)\n}",
       "method_signature": "p_1_3() returns (i : int)",
       "requires": [],
-      "ensures": ["i == factorial(10)"]
+      "ensures": [
+        "i == factorial(10)"
+      ]
     }
   },
   {
@@ -50,7 +56,9 @@
       "functional_code": null,
       "method_signature": "p_1_5() returns (s : string)",
       "requires": [],
-      "ensures": ["s == \"--------\\n| Dave |\\n--------\\n\""]
+      "ensures": [
+        "s == \"--------\\n| Dave |\\n--------\\n\""
+      ]
     }
   },
   {
@@ -60,7 +68,9 @@
       "functional_code": null,
       "method_signature": "p_1_6() returns (s : string)",
       "requires": [],
-      "ensures": ["s == \"*   *\\n*   *\\n*****\\n*   *\\n*   *\\n\""]
+      "ensures": [
+        "s == \"*   *\\n*   *\\n*****\\n*   *\\n*   *\\n\""
+      ]
     }
   },
   {
@@ -70,7 +80,9 @@
       "functional_code": null,
       "method_signature": "p_1_7() returns (s : string)",
       "requires": [],
-      "ensures": ["s == \" ///// \\n \\\"\\\"\\\"\\\"\\\" \\n+     +\""]
+      "ensures": [
+        "s == \" ///// \\n \\\"\\\"\\\"\\\"\\\" \\n+     +\""
+      ]
     }
   },
   {
@@ -80,7 +92,9 @@
       "functional_code": "function mystring(s : string, n : int) : string\n{\n  if n == 0 then \"\" else s + mystring(s, n - 1)\n}",
       "method_signature": "p_1_8() returns (s : string)",
       "requires": [],
-      "ensures": ["s == mystring(\"          !!!@@@@@@@@@@@@@@@@@@@@\\n\", 5)"]
+      "ensures": [
+        "s == mystring(\"          !!!@@@@@@@@@@@@@@@@@@@@\\n\", 5)"
+      ]
     }
   },
   {
@@ -90,7 +104,9 @@
       "functional_code": null,
       "method_signature": "p_1_9() returns (s : string)",
       "requires": [],
-      "ensures": ["s == \"   +    \\n  + +   \\n +   + \\n+-----+\\n\""]
+      "ensures": [
+        "s == \"   +    \\n  + +   \\n +   + \\n+-----+\\n\""
+      ]
     }
   },
   {
