@@ -59,7 +59,7 @@
         "ensures": [
           "sum == s_o_d(n)"
         ],
-        "functional_code": "function s_o_d(a: int): int\nrequires a >= 0\n {\n   if a == 0 then 0\n   else if a % 10 == 1 then a % 10 + s_o_d(a / 10)\n   else s_o_d(a / 10)\n }"
+        "functional_code": "function s_o_d(a: int): int\\nrequires a >= 0\\n{\\n  if a == 0 then 0\\n  else if a % 2 == 0 then s_o_d(a / 10)\\n  else a % 10 + s_o_d(a / 10)\\n}"
       }
     },
     {
@@ -188,7 +188,6 @@
         "functional_code": null
       }
     },
-
     {
       "name": "p4_4_month_with_highest_temperature",
       "nat_lang_statement": "Write a method that reads a sequence of twelve temperature values and returns the number of the month with the highest temperature.",
@@ -202,7 +201,6 @@
         "functional_code": null
       }
     },
-
     {
       "name": "p4_5_analyze_floats",
       "nat_lang_statement": "Write a method that takes a sequence of floatingpoint numbers and returns: - the average of the values. - the smallest of the values. - the largest of the values. - the range, that is the difference between the smallest and largest.",
@@ -225,7 +223,7 @@
 
     {
       "name": "p4_6_find_minimum",
-      "nat_lang_statement": "Write a method that finds the minimum value from a set of inputs into a method.",
+      "nat_lang_statement": "Write a method that finds the minimum value from a list of inputs into a method.",
       "dafny": {
         "method_signature": "p4_6_find_minimum(inputs: seq<int>) returns (min: int)",
         "requires": [
