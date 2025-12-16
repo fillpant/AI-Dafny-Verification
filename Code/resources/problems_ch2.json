@@ -42,7 +42,7 @@
     },
     {
       "name": "P_2_4_1_sum",
-      "nat_lang_statement": "Write a method that prompts the user for two integers and then returns the sum.",
+      "nat_lang_statement": "Write a method that takes two integers and then returns the sum.",
       "dafny": {
         "method_signature": "sum(x: int, y: int) returns (result:int)",
         "requires": [],
@@ -103,7 +103,7 @@
     },
     {
       "name": "2_4_6_max",
-      "nat_lang_statement": "Write a method that prompts the user for two integers and then returns the maximum (the larger of the two).",
+      "nat_lang_statement": "Write a method that takes two integers and then returns the maximum (the larger of the two).",
       "dafny": {
         "method_signature": "max(x: int, y: int) returns (result:int)",
         "requires": [],
@@ -116,7 +116,7 @@
     },
     {
       "name": "2_4_7_min",
-      "nat_lang_statement": "Write a method that prompts the user for two integers and then returns the minimum (the smaller of the two).",
+      "nat_lang_statement": "Write a method that takes two integers and then returns the minimum (the smaller of the two).",
       "dafny": {
         "method_signature": "min(x: int, y: int) returns (result:int)",
         "requires": [],
@@ -129,7 +129,7 @@
     },
     {
       "name": "2_6_convert",
-      "nat_lang_statement": "Write a method that prompts the user for a measurement in meters and then converts it to miles, feet, and inches.",
+      "nat_lang_statement": "Write a method that takes a measurement in meters and then converts it to miles, feet, and inches.",
       "dafny": {
         "method_signature": "convert(x: real) returns (miles: real, feet: real, inches: real)",
         "requires": [],
@@ -143,7 +143,7 @@
     },
     {
       "name": "2_7_circle_properties",
-      "nat_lang_statement": "Write a method that prompts the user for a radius and then returns the area and circumference of a circle with that radius and the volume and surface area of a sphere with that radius.",
+      "nat_lang_statement": "Write a method that takes a radius and then returns the area and circumference of a circle with that radius and the volume and surface area of a sphere with that radius.",
       "dafny": {
         "method_signature": "circle_properties(radius: real) returns (circumference: real, area: real, surface_area: real, volume: real)",
         "requires": [],
