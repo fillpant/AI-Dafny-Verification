@@ -146,7 +146,7 @@
         "|word| == |scrambled|",
         "word[0] == scrambled[0]",
         "word[|word| - 1] == scrambled[|scrambled| - 1]",
-        "|word| >= 4 ==>  exists i, j :: 1 <= i < j <= |word| - 2 \n&& word[i] == scrambled[j]\n&& word[j] == scrambled[i]\n&& forall k:: 0 <= k <= |word| -1 ==> (k!=i && k!=j ==> word[k] == scrambled[k])"
+        "|word| >= 4 ==>  exists i, j :: 1 <= i < j <= |word| - 2 && word[i] == scrambled[j] && word[j] == scrambled[i] && forall k:: 0 <= k <= |word| -1 ==> (k!=i && k!=j ==> word[k] == scrambled[k])"
       ],
       "functional_code": null
     }
