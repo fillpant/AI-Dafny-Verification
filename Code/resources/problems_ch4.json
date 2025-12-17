@@ -267,6 +267,25 @@
     }
   },
   {
+    "name": "p4_5_analyze_floats_alt",
+    "nat_lang_statement": "Write a method that takes a sequence of floatingpoint numbers and returns: - the average of the values. - the smallest of the values. - the largest of the values. - the range, that is the difference between the smallest and largest.",
+    "dafny": {
+      "method_signature": "p4_5_analyze_floats_alt(values: array<real>) returns (average: real, min: real, max: real, range: real)",
+      "requires": [
+        "0 < values.Length"
+      ],
+      "ensures": [
+        "average == (sum(values) / values.Length as real)",
+        "forall v :: v in values ==> min <= v",
+        "forall v :: v in values ==> max >= v",
+        "range == max - min",
+        "exists v :: v in values && min == v",
+        "exists v :: v in values && max == v"
+      ],
+      "functional_code": "function sum(values: array<real>): real\nrequires values.Length >= 1\nreads values\n{\n  sum_aux(values, values.Length - 1)\n}\n\nfunction sum_aux(values: array<real>, n : nat): real\nrequires values.Length >= 1\nrequires n < values.Length\nreads values\n{\n  if n == 0 then values[0]\n  else values[n] + sum_aux(values, n - 1)\n}\n"
+    }
+  },
+  {
     "name": "p4_6_find_minimum",
     "nat_lang_statement": "Write a method that finds the minimum value from a list of inputs into a method.",
     "dafny": {
