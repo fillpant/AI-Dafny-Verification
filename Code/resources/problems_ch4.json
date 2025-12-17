@@ -276,11 +276,11 @@
       ],
       "ensures": [
         "average == (sum(values) / values.Length as real)",
-        "forall v :: v in values ==> min <= v",
-        "forall v :: v in values ==> max >= v",
+        "forall v :: v in values[..] ==> min <= v",
+        "forall v :: v in values[..] ==> max >= v",
         "range == max - min",
-        "exists v :: v in values && min == v",
-        "exists v :: v in values && max == v"
+        "exists v :: v in values[..] && min == v",
+        "exists v :: v in values[..] && max == v"
       ],
       "functional_code": "function sum(values: array<real>): real\nrequires values.Length >= 1\nreads values\n{\n  sum_aux(values, values.Length - 1)\n}\n\nfunction sum_aux(values: array<real>, n : nat): real\nrequires values.Length >= 1\nrequires n < values.Length\nreads values\n{\n  if n == 0 then values[0]\n  else values[n] + sum_aux(values, n - 1)\n}\n"
     }
