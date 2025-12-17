@@ -104,10 +104,23 @@
       "method_signature": "p4_2_b_count_even_odd(inputs: seq<int>) returns (even_count: int, odd_count: int)",
       "requires": [],
       "ensures": [
+        "even_count == number_even(inputs[..])",
+        "odd_count == number_odd(inputs[..])"
+      ],
+      "functional_code": "function number_odd(s:seq<int>): int\n{ if s == [] then 0\n  else if s[0] % 2 == 1 then 1 + number_odd(s[1..])\n  else number_odd(s[1..])\n}\n\nfunction number_even (s:seq<int>): int\n{ if s == [] then 0\n  else if s[0] % 2 == 0 then 1 + number_even(s[1..])\n  else number_even(s[1..])\n}"
+    }
+  },
+  {
+    "name": "p4_2_b_count_even_odd_alt",
+    "nat_lang_statement": "Write a method that takes a sequence of integers and returns the number of even and odd inputs.",
+    "dafny": {
+      "method_signature": "p4_2_b_count_even_odd_alt(inputs: array<int>) returns (even_count: int, odd_count: int)",
+      "requires": [],
+      "ensures": [
         "even_count == number_even(inputs)",
         "odd_count == number_odd(inputs)"
       ],
-      "functional_code": "function number_odd(s:seq<int>): int\n{ if s == [] then 0\n  else if s[0] % 2 == 1 then 1 + number_odd(s[1..])\n  else number_odd(s[1..])\n}\n\nfunction number_even (s:seq<int>): int\n{ if s == [] then 0\n  else if s[0] % 2 == 0 then 1 + number_even(s[1..])\n  else number_even(s[1..])\n}"
+      "functional_code": "function number_odd(s:array<int>): int\n{ if s == [] then 0\n  else if s[0] % 2 == 1 then 1 + number_odd(s[1..])\n  else number_odd(s[1..])\n}\n\nfunction number_even (s:array<int>): int\n{ if s == [] then 0\n  else if s[0] % 2 == 0 then 1 + number_even(s[1..])\n  else number_even(s[1..])\n}"
     }
   },
   {
