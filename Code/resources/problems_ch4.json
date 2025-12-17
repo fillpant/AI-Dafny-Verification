@@ -280,7 +280,7 @@
         "forall i :: 0 <= i < values.Length ==> max >= values[i]",
         "range == max - min",
         "forall i :: 0 <= i < values.Length && min == values[i]",
-        "forall i :: 0 <= i < values.Length && max == values[i]",
+        "forall i :: 0 <= i < values.Length && max == values[i]"
       ],
       "functional_code": "function sum(values: array<real>): real\nrequires values.Length >= 1\nreads values\n{\n  sum_aux(values, values.Length - 1)\n}\n\nfunction sum_aux(values: array<real>, n : nat): real\nrequires values.Length >= 1\nrequires n < values.Length\nreads values\n{\n  if n == 0 then values[0]\n  else values[n] + sum_aux(values, n - 1)\n}\n"
     }
