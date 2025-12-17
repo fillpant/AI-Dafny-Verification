@@ -57,10 +57,10 @@
         "a >= 0"
       ],
       "ensures": [
-        "ensures sum >= 0",
-        "sum == s_o_d(n)"
+        "sum >= 0",
+        "sum == s_o_d(a)"
       ],
-      "functional_code": "function s_o_d(a: int): int\\nrequires a >= 0\\n{\\n  if a == 0 then 0\\n  else if a % 2 == 0 then s_o_d(a / 10)\\n  else a % 10 + s_o_d(a / 10)\\n}"
+      "functional_code": "function s_o_d(a: int): int\nrequires a >= 0\n{\n  if a == 0 then 0\n  else if a % 2 == 0 then s_o_d(a / 10)\n  else a % 10 + s_o_d(a / 10)\n}"
     }
   },
   {
