@@ -186,7 +186,7 @@
       ],
       "ensures": [
         "hasDuplicates == (exists i :: 0 <= i < |arr| - 1 && arr[i] == arr[i + 1])",
-        "ensures 1 <= count_adajacent_duplicates(arr, 0) ==> hasDuplicates == true"
+        "1 <= count_adajacent_duplicates(arr, 0) ==> hasDuplicates == true"
       ],
       "functional_code": "function count_adajacent_duplicates(arr: seq<int>, i: int) : int\n  requires 0 <= i < |arr| - 1\n  decreases |arr| - i\n{\n  if i + 1 == |arr| - 1 then if arr[i] == arr[i + 1] then 1 else 0\n  else if arr[i] == arr[i + 1] then 1 + count_adajacent_duplicates(arr, i + 1)\n  else count_adajacent_duplicates(arr, i + 1)\n} "
     }
