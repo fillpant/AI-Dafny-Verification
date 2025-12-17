@@ -52,9 +52,12 @@
     "name": "p4_1_e_sum_odd_digits",
     "nat_lang_statement": "Write a method with loops that computes the sum of all odd digits of an input. (For example, if the input is 32677, the sum would be 3 + 7 + 7 = 17.)",
     "dafny": {
-      "method_signature": "a >= 0",
-      "requires": [],
+      "method_signature": "p4_1_e_sum_odd_digits(a: int) returns (sum: int)",
+      "requires": [
+        "a >= 0"
+      ],
       "ensures": [
+        "ensures sum >= 0",
         "sum == s_o_d(n)"
       ],
       "functional_code": "function s_o_d(a: int): int\\nrequires a >= 0\\n{\\n  if a == 0 then 0\\n  else if a % 2 == 0 then s_o_d(a / 10)\\n  else a % 10 + s_o_d(a / 10)\\n}"
