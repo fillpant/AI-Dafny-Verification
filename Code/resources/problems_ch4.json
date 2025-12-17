@@ -81,6 +81,23 @@
     }
   },
   {
+    "name": "p4_2_a_min_max_alt",
+    "nat_lang_statement": "Write a method that takes a sequence of integers and returns the smallest and largest of the inputs.",
+    "dafny": {
+      "method_signature": "p4_2_a_min_max_alt(inputs: arr<int>) returns (min: int, max: int)",
+      "requires": [
+        "0 < inputs.Length"
+      ],
+      "ensures": [
+        "forall i :: 0 <= i < inputs.Length ==> min <= inputs[i]",
+        "forall i :: 0 <= i < inputs.Length ==> max >= inputs[i]",
+        "exists i :: 0 <= i < inputs.Length && min == inputs[i]",
+        "exists i :: 0 <= i < inputs.Length && max == inputs[i]"
+      ],
+      "functional_code": null
+    }
+  },
+  {
     "name": "p4_2_b_count_even_odd",
     "nat_lang_statement": "Write a method that takes a sequence of integers and returns the number of even and odd inputs.",
     "dafny": {
