@@ -84,7 +84,7 @@
     "name": "p4_2_a_min_max_alt",
     "nat_lang_statement": "Write a method that takes a sequence of integers and returns the smallest and largest of the inputs.",
     "dafny": {
-      "method_signature": "p4_2_a_min_max_alt(inputs: arr<int>) returns (min: int, max: int)",
+      "method_signature": "p4_2_a_min_max_alt(inputs: array<int>) returns (min: int, max: int)",
       "requires": [
         "0 < inputs.Length"
       ],
