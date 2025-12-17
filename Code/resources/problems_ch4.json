@@ -301,6 +301,21 @@
     }
   },
   {
+    "name": "p4_6_find_minimum_alt",
+    "nat_lang_statement": "Write a method that finds the minimum value from a list of inputs into a method.",
+    "dafny": {
+      "method_signature": "p4_6_find_minimum_alt(inputs: array<int>) returns (min: int)",
+      "requires": [
+        "0 < inputs.Length"
+      ],
+      "ensures": [
+        "forall i :: 0 <= i < inputs.Length ==> min <= inputs[i]",
+        "exists i :: 0 <= i < inputs.Length && min == inputs[i]"
+      ],
+      "functional_code": null
+    }
+  },
+  {
     "name": "p4_7_permute_string",
     "nat_lang_statement": "Write a method that randomly permutes the characters in a string.",
     "dafny": {
