@@ -1,0 +1,95 @@
+\documentclass{article}
+\usepackage{lmodern}
+\usepackage{amsmath}
+\usepackage{listings}
+\usepackage{fullpage}
+\usepackage{parskip}
+\usepackage{xcolor}
+\lstset{
+	basicstyle=\ttfamily,
+	columns=fullflexible,
+	frame=single,
+	breaklines=true,
+	postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},
+}
+\begin{document}
+\title{Experiment `P\_3\_5\_Order' Results}
+\author{\today}
+\date{}
+\maketitle
+\textbf{Experiment outcome: }SUCCESS
+\\\textbf{Bad responses: }0
+\\\textbf{Responses containing}~\texttt{assume}~\textbf{: }0
+\\\textbf{Resolution attempts: }1
+\\\textbf{Hard fails (resolution): }0
+\\\textbf{Soft fails (resolution): }0
+\\\textbf{Verification attempts: }1
+\section*{Problem Specification}
+\textbf{Problem name: }P\_3\_5\_Order
+\\\textbf{Natural language statement: }Write a method that takes three numbers and returns "increasing" if they are in increasing order, "decreasing" if they are in decreasing order, and "neither" otherwise. Here, "increasing" means "strictly increasing", with each value larger than its predecessor. The sequence 3 4 4 would not be considered increasing.
+\\\textbf{Method signature: }P\_3\_5\_Order (i:int, j: int, k: int) returns (s: string)
+\subsection*{Ensures}
+\begin{itemize}
+\item \texttt{if i < j < k then s == "increasing" else if i > j \&\& j > k then s == "decreasing" else s== "neither"}
+\end{itemize}
+\clearpage
+\section*{GenAI interactions}
+Below you will find all interactions between the `user' (program) and the `assistant' (OpenAI).
+\subsection*{Program $\rightarrow$ GenAI}
+\begin{lstlisting}
+You are given the following task to perform in Dafny:
+
+Write a method that takes three numbers and returns "increasing" if they are in increasing order, "decreasing" if they are in decreasing order, and "neither" otherwise. Here, "increasing" means "strictly increasing", with each value larger than its predecessor. The sequence 3 4 4 would not be considered increasing.
+
+The signature should be:
+
+method P_3_5_Order (i:int, j: int, k: int) returns (s: string)
+
+The method should respect the following contract:
+
+ensures if i < j < k then s == "increasing" else if i > j && j > k then s == "decreasing" else s== "neither"
+
+Produce and show only the Dafny body of this method, including the curly braces that surround it. Do not show the signature nor contract. You must not use 'assume' anywhere in your code.
+
+\end{lstlisting}
+\subsection*{GenAI $\rightarrow$ Program}
+\textbf{System fingerprint: }
+\\\textbf{ID: }chatcmpl-Co4Se0sHq29NHzjjJL3SUYHURJEG4
+\\\textbf{Model: }gpt-5.1-chat-latest
+\\\textbf{Created at: }1766049584
+\\\textbf{Finish reason: }stop
+\\\textbf{Usage: }438 tokens in, and 143 tokens out
+\begin{lstlisting}
+{
+  if i < j && j < k {
+    s := "increasing";
+  } else if i > j && j > k {
+    s := "decreasing";
+  } else {
+    s := "neither";
+  }
+}
+\end{lstlisting}
+\section*{Final Program}
+\begin{lstlisting}
+method P_3_5_Order (i:int, j: int, k: int) returns (s: string)
+	ensures if i < j < k then s == "increasing" else if i > j && j > k then s == "decreasing" else s== "neither"
+{
+  if i < j && j < k {
+    s := "increasing";
+  } else if i > j && j > k {
+    s := "decreasing";
+  } else {
+    s := "neither";
+  }
+}
+\end{lstlisting}
+\section*{Total Token Usage}
+\textbf{Input tokens: }438
+\\\textbf{Output tokens: }143
+\\\textbf{Reasoning tokens: }64
+\\\textbf{Sum of `total tokens': }581
+\section*{Experiment Timings}
+\textbf{Overall Experiment} started at 1766049586651, ended at 1766049590221, lasting 3570ms (3.57 seconds)
+\\\textbf{Iteration \#1} started at 1766049586651, ended at 1766049590221, lasting 3570ms (3.57 seconds)
+\end{document}

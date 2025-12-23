@@ -1,0 +1,11 @@
+Experiment,Outcome,Input tokens, Output tokens, Total reasoning tokens,Total tokens,Bad response cnt,Verification attempts,Resolution attempts,Soft-failed resolution cnt,Hard-failed resolution cnt,Responses with 'assume',Experiment time (ms),Iteration 1 time (ms),Iteration 2 time (ms),Iteration 3 time (ms),Iteration 4 time (ms),Iteration 5 time (ms),Iteration 6 time (ms),Iteration 7 time (ms),Iteration 8 time (ms)
+p_1_1,SUCCESS,232,29,0,261,0,1,1,0,0,0,3293,3289,,,,,,,
+p_1_10,SUCCESS,336,790,704,1126,0,1,1,0,0,0,9889,9889,,,,,,,
+p_1_2,SUCCESS,272,228,128,500,0,1,1,0,0,0,3841,3840,,,,,,,
+p_1_3,SUCCESS,374,374,320,748,0,1,1,0,0,0,5890,5889,,,,,,,
+p_1_4,SUCCESS,380,131,64,511,0,1,1,0,0,0,4427,4427,,,,,,,
+p_1_5,SUCCESS,286,106,64,392,0,1,1,0,0,0,4079,4078,,,,,,,
+p_1_6,SUCCESS,396,239,128,635,0,1,1,0,0,0,4277,4272,,,,,,,
+p_1_7,SUCCESS,296,196,128,492,0,1,1,0,0,0,4282,4282,,,,,,,
+p_1_8,SUCCESS,448,113,64,561,0,1,1,0,0,0,3657,3657,,,,,,,
+p_1_9,SUCCESS,292,127,64,419,0,1,1,0,0,0,2890,2890,,,,,,,

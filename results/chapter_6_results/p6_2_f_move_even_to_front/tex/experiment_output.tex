@@ -1,0 +1,436 @@
+\documentclass{article}
+\usepackage{lmodern}
+\usepackage{amsmath}
+\usepackage{listings}
+\usepackage{fullpage}
+\usepackage{parskip}
+\usepackage{xcolor}
+\lstset{
+	basicstyle=\ttfamily,
+	columns=fullflexible,
+	frame=single,
+	breaklines=true,
+	postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},
+}
+\begin{document}
+\title{Experiment `p6\_2\_f\_move\_even\_to\_front' Results}
+\author{\today}
+\date{}
+\maketitle
+\textbf{Experiment outcome: }FAILURE\_VERIFY
+\\\textbf{Bad responses: }0
+\\\textbf{Responses containing}~\texttt{assume}~\textbf{: }0
+\\\textbf{Resolution attempts: }8
+\\\textbf{Hard fails (resolution): }6
+\\\textbf{Soft fails (resolution): }0
+\\\textbf{Verification attempts: }2
+\section*{Problem Specification}
+\textbf{Problem name: }p6\_2\_f\_move\_even\_to\_front
+\\\textbf{Natural language statement: }Write a method to move all even elements in an array to the front, otherwise preserving the order of the elements.
+\\\textbf{Method signature: }p6\_2\_f\_move\_even\_to\_front(arr: seq<int>) returns (result: seq<int>)
+\subsection*{Ensures}
+\begin{itemize}
+\item \texttt{|result| == |arr|}
+\item \texttt{forall i, j :: 0 <= i < j < |result| \&\& result[i] \% 2 == 0 \&\& result[j] \% 2 != 0}
+\item \texttt{forall i :: 0 <= i < |arr| ==> exists j :: 0 <= j < |result| \&\& arr[i] == result[j]}
+\end{itemize}
+\clearpage
+\section*{GenAI interactions}
+Below you will find all interactions between the `user' (program) and the `assistant' (OpenAI).
+\subsection*{Program $\rightarrow$ GenAI}
+\begin{lstlisting}
+You are given the following task to perform in Dafny:
+
+Write a method to move all even elements in an array to the front, otherwise preserving the order of the elements.
+
+The signature should be:
+
+method p6_2_f_move_even_to_front(arr: seq<int>) returns (result: seq<int>)
+
+The method should respect the following contract:
+
+ensures |result| == |arr|, ensures forall i, j :: 0 <= i < j < |result| && result[i] % 2 == 0 && result[j] % 2 != 0, ensures forall i :: 0 <= i < |arr| ==> exists j :: 0 <= j < |result| && arr[i] == result[j]
+
+Produce and show only the Dafny body of this method, including the curly braces that surround it. Do not show the signature nor contract. You must not use 'assume' anywhere in your code.
+
+\end{lstlisting}
+\subsection*{GenAI $\rightarrow$ Program}
+\textbf{System fingerprint: }
+\\\textbf{ID: }chatcmpl-Co56sbl7J3kmrjeh8sBsG8ey48kU7
+\\\textbf{Model: }gpt-5.1-chat-latest
+\\\textbf{Created at: }1766052078
+\\\textbf{Finish reason: }stop
+\\\textbf{Usage: }418 tokens in, and 368 tokens out
+\begin{lstlisting}
+{
+  var evens: seq<int> := [];
+  var odds: seq<int> := [];
+  var i := 0;
+  while i < |arr|
+    invariant 0 <= i <= |arr|
+    invariant forall k :: 0 <= k < i && arr[k] % 2 == 0 ==> exists j :: 0 <= j < |evens| && evens[j] == arr[k]
+    invariant forall k :: 0 <= k < i && arr[k] % 2 != 0 ==> exists j :: 0 <= j < |odds| && odds[j] == arr[k]
+    invariant |evens| + |odds| == i
+  {
+    if arr[i] % 2 == 0 {
+      evens := evens + [arr[i]];
+    } else {
+      odds := odds + [arr[i]];
+    }
+    i := i + 1;
+  }
+  result := evens + odds;
+}
+\end{lstlisting}
+\subsection*{Program $\rightarrow$ GenAI}
+\begin{lstlisting}
+When using dafny verify, the below error is emitted and verify fails:
+
+problem_data/p6_2_f_move_even_to_front/program.dfy(5,0): Error: a postcondition could not be proved on this return path
+  |
+5 | {
+  | ^
+
+problem_data/p6_2_f_move_even_to_front/program.dfy(3,9): Related location: this is the postcondition that could not be proved
+  |
+3 | 	ensures forall i, j :: 0 <= i < j < |result| && result[i] % 2 == 0 && result[j] % 2 != 0
+  |          ^^^^^^
+
+problem_data/p6_2_f_move_even_to_front/program.dfy(5,0): Error: a postcondition could not be proved on this return path
+  |
+5 | {
+  | ^
+
+problem_data/p6_2_f_move_even_to_front/program.dfy(4,9): Related location: this is the postcondition that could not be proved
+  |
+4 | 	ensures forall i :: 0 <= i < |arr| ==> exists j :: 0 <= j < |result| && arr[i] == result[j]
+  |          ^^^^^^
+
+problem_data/p6_2_f_move_even_to_front/program.dfy(11,14): Error: this invariant could not be proved to be maintained by the loop
+ Related message: loop invariant violation
+   |
+11 |     invariant forall k :: 0 <= k < i && arr[k] % 2 == 0 ==> exists j :: 0 <= j < |evens| && evens[j] == arr[k]
+   |               ^^^^^^
+
+problem_data/p6_2_f_move_even_to_front/program.dfy(12,14): Error: this invariant could not be proved to be maintained by the loop
+ Related message: loop invariant violation
+   |
+12 |     invariant forall k :: 0 <= k < i && arr[k] % 2 != 0 ==> exists j :: 0 <= j < |odds| && odds[j] == arr[k]
+   |               ^^^^^^
+
+
+Dafny program verifier finished with 1 verified, 4 errors
+
+Correct the error by altering only the method body. Produce and show only the Dafny body, including the curly braces that surround it. Do not show the signature nor contract. You must not use 'assume' anywhere in your code.
+
+\end{lstlisting}
+\subsection*{GenAI $\rightarrow$ Program}
+\textbf{System fingerprint: }
+\\\textbf{ID: }chatcmpl-Co56xFor6ewDNEXMBviCC6NqDlZzM
+\\\textbf{Model: }gpt-5.1-chat-latest
+\\\textbf{Created at: }1766052083
+\\\textbf{Finish reason: }stop
+\\\textbf{Usage: }1490 tokens in, and 157 tokens out
+\begin{lstlisting}
+{
+  var evens := seq i | 0 <= i < |arr| && arr[i] % 2 == 0 :: arr[i];
+  var odds  := seq i | 0 <= i < |arr| && arr[i] % 2 != 0 :: arr[i];
+  result := evens + odds;
+}
+\end{lstlisting}
+\subsection*{Program $\rightarrow$ GenAI}
+\begin{lstlisting}
+When using dafny resolve, the below error is emitted and resolve fails:
+
+problem_data/p6_2_f_move_even_to_front/program.dfy(6,19): Error: openparen expected
+  |
+6 |   var evens := seq i | 0 <= i < |arr| && arr[i] % 2 == 0 :: arr[i];
+  |                    ^
+
+problem_data/p6_2_f_move_even_to_front/program.dfy(6,57): Error: comma expected
+  |
+6 |   var evens := seq i | 0 <= i < |arr| && arr[i] % 2 == 0 :: arr[i];
+  |                                                          ^
+
+problem_data/p6_2_f_move_even_to_front/program.dfy(7,19): Error: openparen expected
+  |
+7 |   var odds  := seq i | 0 <= i < |arr| && arr[i] % 2 != 0 :: arr[i];
+  |                    ^
+
+problem_data/p6_2_f_move_even_to_front/program.dfy(7,57): Error: comma expected
+  |
+7 |   var odds  := seq i | 0 <= i < |arr| && arr[i] % 2 != 0 :: arr[i];
+  |                                                          ^
+
+4 parse errors detected in program.dfy
+
+Correct the error by altering only the method body. Produce and show only the Dafny body, including the curly braces that surround it. Do not show the signature nor contract. You must not use 'assume' anywhere in your code.
+
+\end{lstlisting}
+\subsection*{GenAI $\rightarrow$ Program}
+\textbf{System fingerprint: }
+\\\textbf{ID: }chatcmpl-Co571e499UUFerCG3vFuOzdwHXLnf
+\\\textbf{Model: }gpt-5.1-chat-latest
+\\\textbf{Created at: }1766052087
+\\\textbf{Finish reason: }stop
+\\\textbf{Usage: }1725 tokens in, and 223 tokens out
+\begin{lstlisting}
+{
+  var evens := seq(i | 0 <= i < |arr| && arr[i] % 2 == 0) :: arr[i];
+  var odds  := seq(i | 0 <= i < |arr| && arr[i] % 2 != 0) :: arr[i];
+  result := evens + odds;
+}
+\end{lstlisting}
+\subsection*{Program $\rightarrow$ GenAI}
+\begin{lstlisting}
+When using dafny resolve, the below error is emitted and resolve fails:
+
+problem_data/p6_2_f_move_even_to_front/program.dfy(6,56): Error: comma expected
+  |
+6 |   var evens := seq(i | 0 <= i < |arr| && arr[i] % 2 == 0) :: arr[i];
+  |                                                         ^
+
+problem_data/p6_2_f_move_even_to_front/program.dfy(7,56): Error: comma expected
+  |
+7 |   var odds  := seq(i | 0 <= i < |arr| && arr[i] % 2 != 0) :: arr[i];
+  |                                                         ^
+
+2 parse errors detected in program.dfy
+
+Correct the error by altering only the method body. Produce and show only the Dafny body, including the curly braces that surround it. Do not show the signature nor contract. You must not use 'assume' anywhere in your code.
+
+\end{lstlisting}
+\subsection*{GenAI $\rightarrow$ Program}
+\textbf{System fingerprint: }
+\\\textbf{ID: }chatcmpl-Co574orCHXT48aUMTqf0k6uqHxw6X
+\\\textbf{Model: }gpt-5.1-chat-latest
+\\\textbf{Created at: }1766052090
+\\\textbf{Finish reason: }stop
+\\\textbf{Usage: }1895 tokens in, and 95 tokens out
+\begin{lstlisting}
+{
+  var evens := seq i | (0 <= i < |arr| && arr[i] % 2 == 0) :: arr[i];
+  var odds  := seq i | (0 <= i < |arr| && arr[i] % 2 != 0) :: arr[i];
+  result := evens + odds;
+}
+\end{lstlisting}
+\subsection*{Program $\rightarrow$ GenAI}
+\begin{lstlisting}
+When using dafny resolve, the below error is emitted and resolve fails:
+
+problem_data/p6_2_f_move_even_to_front/program.dfy(6,19): Error: openparen expected
+  |
+6 |   var evens := seq i | (0 <= i < |arr| && arr[i] % 2 == 0) :: arr[i];
+  |                    ^
+
+problem_data/p6_2_f_move_even_to_front/program.dfy(6,59): Error: comma expected
+  |
+6 |   var evens := seq i | (0 <= i < |arr| && arr[i] % 2 == 0) :: arr[i];
+  |                                                            ^
+
+problem_data/p6_2_f_move_even_to_front/program.dfy(7,19): Error: openparen expected
+  |
+7 |   var odds  := seq i | (0 <= i < |arr| && arr[i] % 2 != 0) :: arr[i];
+  |                    ^
+
+problem_data/p6_2_f_move_even_to_front/program.dfy(7,59): Error: comma expected
+  |
+7 |   var odds  := seq i | (0 <= i < |arr| && arr[i] % 2 != 0) :: arr[i];
+  |                                                            ^
+
+4 parse errors detected in program.dfy
+
+Correct the error by altering only the method body. Produce and show only the Dafny body, including the curly braces that surround it. Do not show the signature nor contract. You must not use 'assume' anywhere in your code.
+
+\end{lstlisting}
+\subsection*{GenAI $\rightarrow$ Program}
+\textbf{System fingerprint: }
+\\\textbf{ID: }chatcmpl-Co577ue7pLRJrjYmtEUOCN8olU8dY
+\\\textbf{Model: }gpt-5.1-chat-latest
+\\\textbf{Created at: }1766052093
+\\\textbf{Finish reason: }stop
+\\\textbf{Usage: }2451 tokens in, and 285 tokens out
+\begin{lstlisting}
+{
+  var evens := seq(i | 0 <= i < |arr| && arr[i] % 2 == 0) arr[i];
+  var odds  := seq(i | 0 <= i < |arr| && arr[i] % 2 != 0) arr[i];
+  result := evens + odds;
+}
+\end{lstlisting}
+\subsection*{Program $\rightarrow$ GenAI}
+\begin{lstlisting}
+When using dafny resolve, the below error is emitted and resolve fails:
+
+problem_data/p6_2_f_move_even_to_front/program.dfy(6,56): Error: comma expected
+  |
+6 |   var evens := seq(i | 0 <= i < |arr| && arr[i] % 2 == 0) arr[i];
+  |                                                         ^
+
+problem_data/p6_2_f_move_even_to_front/program.dfy(7,56): Error: comma expected
+  |
+7 |   var odds  := seq(i | 0 <= i < |arr| && arr[i] % 2 != 0) arr[i];
+  |                                                         ^
+
+2 parse errors detected in program.dfy
+
+Correct the error by altering only the method body. Produce and show only the Dafny body, including the curly braces that surround it. Do not show the signature nor contract. You must not use 'assume' anywhere in your code.
+
+\end{lstlisting}
+\subsection*{GenAI $\rightarrow$ Program}
+\textbf{System fingerprint: }
+\\\textbf{ID: }chatcmpl-Co57BM4EAZXwh7bhWTQazOpwXwbMC
+\\\textbf{Model: }gpt-5.1-chat-latest
+\\\textbf{Created at: }1766052097
+\\\textbf{Finish reason: }stop
+\\\textbf{Usage: }2611 tokens in, and 159 tokens out
+\begin{lstlisting}
+{
+  var evens := seq(i | 0 <= i < |arr| && arr[i] % 2 == 0) :: arr[i];
+  var odds  := seq(i | 0 <= i < |arr| && arr[i] % 2 != 0) :: arr[i];
+  result := evens + odds;
+}
+\end{lstlisting}
+\subsection*{Program $\rightarrow$ GenAI}
+\begin{lstlisting}
+When using dafny resolve, the below error is emitted and resolve fails:
+
+problem_data/p6_2_f_move_even_to_front/program.dfy(6,56): Error: comma expected
+  |
+6 |   var evens := seq(i | 0 <= i < |arr| && arr[i] % 2 == 0) :: arr[i];
+  |                                                         ^
+
+problem_data/p6_2_f_move_even_to_front/program.dfy(7,56): Error: comma expected
+  |
+7 |   var odds  := seq(i | 0 <= i < |arr| && arr[i] % 2 != 0) :: arr[i];
+  |                                                         ^
+
+2 parse errors detected in program.dfy
+
+Correct the error by altering only the method body. Produce and show only the Dafny body, including the curly braces that surround it. Do not show the signature nor contract. You must not use 'assume' anywhere in your code.
+
+\end{lstlisting}
+\subsection*{GenAI $\rightarrow$ Program}
+\textbf{System fingerprint: }
+\\\textbf{ID: }chatcmpl-Co57EqsZQIGhzhIWEHLFQpM9uLqNm
+\\\textbf{Model: }gpt-5.1-chat-latest
+\\\textbf{Created at: }1766052100
+\\\textbf{Finish reason: }stop
+\\\textbf{Usage: }2909 tokens in, and 285 tokens out
+\begin{lstlisting}
+{
+  var evens := seq(i | 0 <= i < |arr| && arr[i] % 2 == 0 :: arr[i]);
+  var odds  := seq(i | 0 <= i < |arr| && arr[i] % 2 != 0 :: arr[i]);
+  result := evens + odds;
+}
+\end{lstlisting}
+\subsection*{Program $\rightarrow$ GenAI}
+\begin{lstlisting}
+When using dafny resolve, the below error is emitted and resolve fails:
+
+problem_data/p6_2_f_move_even_to_front/program.dfy(6,57): Error: comma expected
+  |
+6 |   var evens := seq(i | 0 <= i < |arr| && arr[i] % 2 == 0 :: arr[i]);
+  |                                                          ^
+
+problem_data/p6_2_f_move_even_to_front/program.dfy(7,57): Error: comma expected
+  |
+7 |   var odds  := seq(i | 0 <= i < |arr| && arr[i] % 2 != 0 :: arr[i]);
+  |                                                          ^
+
+2 parse errors detected in program.dfy
+
+Correct the error by altering only the method body. Produce and show only the Dafny body, including the curly braces that surround it. Do not show the signature nor contract. You must not use 'assume' anywhere in your code.
+
+\end{lstlisting}
+\subsection*{GenAI $\rightarrow$ Program}
+\textbf{System fingerprint: }
+\\\textbf{ID: }chatcmpl-Co57IQ4ut0XKA5DOZhjnEPOUdzol1
+\\\textbf{Model: }gpt-5.1-chat-latest
+\\\textbf{Created at: }1766052104
+\\\textbf{Finish reason: }stop
+\\\textbf{Usage: }3199 tokens in, and 446 tokens out
+\begin{lstlisting}
+{
+  result := [];
+
+  var i := 0;
+  while i < |arr|
+    invariant 0 <= i <= |arr|
+    invariant |result| <= |arr|
+    invariant forall k :: 0 <= k < i && arr[k] % 2 == 0 ==> exists j :: 0 <= j < |result| && result[j] == arr[k]
+    invariant forall j :: 0 <= j < |result| ==> result[j] % 2 == 0
+  {
+    if arr[i] % 2 == 0 {
+      result := result + [arr[i]];
+    }
+    i := i + 1;
+  }
+
+  i := 0;
+  while i < |arr|
+    invariant 0 <= i <= |arr|
+    invariant |result| <= |arr|
+    invariant forall k :: 0 <= k < |arr| && arr[k] % 2 == 0 ==> exists j :: 0 <= j < |result| && result[j] == arr[k]
+    invariant forall k :: 0 <= k < i && arr[k] % 2 != 0 ==> exists j :: 0 <= j < |result| && result[j] == arr[k]
+    invariant forall j :: 0 <= j < |result| ==> (result[j] % 2 == 0 || (exists k :: 0 <= k < i && arr[k] == result[j]))
+  {
+    if arr[i] % 2 != 0 {
+      result := result + [arr[i]];
+    }
+    i := i + 1;
+  }
+}
+\end{lstlisting}
+\section*{Final Program}
+\begin{lstlisting}
+method p6_2_f_move_even_to_front(arr: seq<int>) returns (result: seq<int>)
+	ensures |result| == |arr|
+	ensures forall i, j :: 0 <= i < j < |result| && result[i] % 2 == 0 && result[j] % 2 != 0
+	ensures forall i :: 0 <= i < |arr| ==> exists j :: 0 <= j < |result| && arr[i] == result[j]
+{
+  result := [];
+
+  var i := 0;
+  while i < |arr|
+    invariant 0 <= i <= |arr|
+    invariant |result| <= |arr|
+    invariant forall k :: 0 <= k < i && arr[k] % 2 == 0 ==> exists j :: 0 <= j < |result| && result[j] == arr[k]
+    invariant forall j :: 0 <= j < |result| ==> result[j] % 2 == 0
+  {
+    if arr[i] % 2 == 0 {
+      result := result + [arr[i]];
+    }
+    i := i + 1;
+  }
+
+  i := 0;
+  while i < |arr|
+    invariant 0 <= i <= |arr|
+    invariant |result| <= |arr|
+    invariant forall k :: 0 <= k < |arr| && arr[k] % 2 == 0 ==> exists j :: 0 <= j < |result| && result[j] == arr[k]
+    invariant forall k :: 0 <= k < i && arr[k] % 2 != 0 ==> exists j :: 0 <= j < |result| && result[j] == arr[k]
+    invariant forall j :: 0 <= j < |result| ==> (result[j] % 2 == 0 || (exists k :: 0 <= k < i && arr[k] == result[j]))
+  {
+    if arr[i] % 2 != 0 {
+      result := result + [arr[i]];
+    }
+    i := i + 1;
+  }
+}
+\end{lstlisting}
+\section*{Total Token Usage}
+\textbf{Input tokens: }16698
+\\\textbf{Output tokens: }2018
+\\\textbf{Reasoning tokens: }832
+\\\textbf{Sum of `total tokens': }18716
+\section*{Experiment Timings}
+\textbf{Iteration \#8} started at 1766052105913, ended at 1766052112833, lasting 6920ms (6.92 seconds)
+\\\textbf{Overall Experiment} started at 1766052080038, ended at 1766052112833, lasting 32795ms (32.80 seconds)
+\\\textbf{Iteration \#4} started at 1766052092466, ended at 1766052095211, lasting 2745ms (2.75 seconds)
+\\\textbf{Iteration \#5} started at 1766052095211, ended at 1766052099378, lasting 4167ms (4.17 seconds)
+\\\textbf{Iteration \#6} started at 1766052099378, ended at 1766052102092, lasting 2714ms (2.71 seconds)
+\\\textbf{Iteration \#7} started at 1766052102092, ended at 1766052105913, lasting 3821ms (3.82 seconds)
+\\\textbf{Iteration \#1} started at 1766052080039, ended at 1766052085805, lasting 5766ms (5.77 seconds)
+\\\textbf{Iteration \#2} started at 1766052085805, ended at 1766052089096, lasting 3291ms (3.29 seconds)
+\\\textbf{Iteration \#3} started at 1766052089096, ended at 1766052092466, lasting 3370ms (3.37 seconds)
+\end{document}

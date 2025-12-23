@@ -1,0 +1,10 @@
+[
+  {
+    "role": "user",
+    "content": "You are given the following task to perform in Dafny:\n\nWrite a method that returns the average of the arguments.\n\nThe signature should be:\n\nmethod p5_1_b_average(x: real, y: real, z: real) returns (average: real)\n\nThe method should respect the following contract:\n\nensures average \u003d\u003d (x + y + z) / 3.0\n\nProduce and show only the Dafny body of this method, including the curly braces that surround it. Do not show the signature nor contract. You must not use \u0027assume\u0027 anywhere in your code.\n"
+  },
+  {
+    "role": "assistant",
+    "content": "{\"method_body\":\"{\\n  average :\u003d (x + y + z) / 3.0;\\n}\"}"
+  }
+]

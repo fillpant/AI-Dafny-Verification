@@ -1,0 +1,231 @@
+\documentclass{article}
+\usepackage{lmodern}
+\usepackage{amsmath}
+\usepackage{listings}
+\usepackage{fullpage}
+\usepackage{parskip}
+\usepackage{xcolor}
+\lstset{
+	basicstyle=\ttfamily,
+	columns=fullflexible,
+	frame=single,
+	breaklines=true,
+	postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},
+}
+\begin{document}
+\title{Experiment `p4\_8\_seperate\_lines' Results}
+\author{\today}
+\date{}
+\maketitle
+\textbf{Experiment outcome: }SUCCESS
+\\\textbf{Bad responses: }0
+\\\textbf{Responses containing}~\texttt{assume}~\textbf{: }0
+\\\textbf{Resolution attempts: }4
+\\\textbf{Hard fails (resolution): }1
+\\\textbf{Soft fails (resolution): }0
+\\\textbf{Verification attempts: }3
+\section*{Problem Specification}
+\textbf{Problem name: }p4\_8\_seperate\_lines
+\\\textbf{Natural language statement: }Write a method that reads a word and returns each character of the word on a separate line.
+\\\textbf{Method signature: }p4\_8\_seperate\_lines(s: string) returns (chars: string)
+\subsection*{Ensures}
+\begin{itemize}
+\item \texttt{|chars| == 2 * |s|}
+\item \texttt{forall i :: 0 <= i < |s| ==> i \% 2 == 1 ==> chars[i] == '\textbackslash{}n'}
+\item \texttt{forall i :: 0 <= i < |s| ==> i \% 2 == 0 ==> chars[i] == s[i / 2]}
+\end{itemize}
+\clearpage
+\section*{GenAI interactions}
+Below you will find all interactions between the `user' (program) and the `assistant' (OpenAI).
+\subsection*{Program $\rightarrow$ GenAI}
+\begin{lstlisting}
+You are given the following task to perform in Dafny:
+
+Write a method that reads a word and returns each character of the word on a separate line.
+
+The signature should be:
+
+method p4_8_seperate_lines(s: string) returns (chars: string)
+
+The method should respect the following contract:
+
+ensures |chars| == 2 * |s|, ensures forall i :: 0 <= i < |s| ==> i % 2 == 1 ==> chars[i] == '\n', ensures forall i :: 0 <= i < |s| ==> i % 2 == 0 ==> chars[i] == s[i / 2]
+
+Produce and show only the Dafny body of this method, including the curly braces that surround it. Do not show the signature nor contract. You must not use 'assume' anywhere in your code.
+
+\end{lstlisting}
+\subsection*{GenAI $\rightarrow$ Program}
+\textbf{System fingerprint: }
+\\\textbf{ID: }chatcmpl-Co4fAjg8EWSCRfVA8a4wA8uVSamrG
+\\\textbf{Model: }gpt-5.1-chat-latest
+\\\textbf{Created at: }1766050360
+\\\textbf{Finish reason: }stop
+\\\textbf{Usage: }386 tokens in, and 136 tokens out
+\begin{lstlisting}
+{
+  var res := "";
+  var i := 0;
+  while i < |s|
+    invariant 0 <= i <= |s|
+    invariant |res| == 2 * i
+    invariant forall k :: 0 <= k < i ==> res[2*k] == s[k] && res[2*k+1] == '\n'
+  {
+    res := res + s[i] + "\n";
+    i := i + 1;
+  }
+  chars := res;
+}
+\end{lstlisting}
+\subsection*{Program $\rightarrow$ GenAI}
+\begin{lstlisting}
+When using dafny resolve, the below error is emitted and resolve fails:
+
+problem_data/p4_8_seperate_lines/program.dfy(13,18): Error: sequence has type string which is incompatible with expected type seq<char> (element type char is incompatible with char)
+   |
+13 |     res := res + s[i] + "\n";
+   |                   ^
+
+1 resolution/type errors detected in program.dfy
+
+Correct the error by altering only the method body. Produce and show only the Dafny body, including the curly braces that surround it. Do not show the signature nor contract. You must not use 'assume' anywhere in your code.
+
+\end{lstlisting}
+\subsection*{GenAI $\rightarrow$ Program}
+\textbf{System fingerprint: }
+\\\textbf{ID: }chatcmpl-Co4fDqDiguA7TsUT8t1A9wP6puDZp
+\\\textbf{Model: }gpt-5.1-chat-latest
+\\\textbf{Created at: }1766050363
+\\\textbf{Finish reason: }stop
+\\\textbf{Usage: }618 tokens in, and 204 tokens out
+\begin{lstlisting}
+{
+  var res := "";
+  var i := 0;
+  while i < |s|
+    invariant 0 <= i <= |s|
+    invariant |res| == 2 * i
+    invariant forall k :: 0 <= k < i ==> res[2*k] == s[k] && res[2*k+1] == '\n'
+  {
+    res := res + s[i..i+1] + "\n";
+    i := i + 1;
+  }
+  chars := res;
+}
+\end{lstlisting}
+\subsection*{Program $\rightarrow$ GenAI}
+\begin{lstlisting}
+When using dafny verify, the below error is emitted and verify fails:
+
+problem_data/p4_8_seperate_lines/program.dfy(5,0): Error: a postcondition could not be proved on this return path
+  |
+5 | {
+  | ^
+
+problem_data/p4_8_seperate_lines/program.dfy(3,9): Related location: this is the postcondition that could not be proved
+  |
+3 | 	ensures forall i :: 0 <= i < |s| ==> i % 2 == 1 ==> chars[i] == '\n'
+  |          ^^^^^^
+
+
+Dafny program verifier finished with 1 verified, 1 error
+
+Correct the error by altering only the method body. Produce and show only the Dafny body, including the curly braces that surround it. Do not show the signature nor contract. You must not use 'assume' anywhere in your code.
+
+\end{lstlisting}
+\subsection*{GenAI $\rightarrow$ Program}
+\textbf{System fingerprint: }
+\\\textbf{ID: }chatcmpl-Co4fHVtYHsVL5bmHR0pARc94K8DmV
+\\\textbf{Model: }gpt-5.1-chat-latest
+\\\textbf{Created at: }1766050367
+\\\textbf{Finish reason: }stop
+\\\textbf{Usage: }1006 tokens in, and 695 tokens out
+\begin{lstlisting}
+{
+  var res := "";
+  var i := 0;
+  while i < |s|
+    invariant 0 <= i <= |s|
+    invariant |res| == 2 * i
+    invariant forall k :: 0 <= k < i ==> res[2*k] == s[k] && res[2*k+1] == '\n'
+  {
+    res := res + s[i..i+1] + "\n";
+    i := i + 1;
+  }
+
+  // Help Dafny prove the postcondition
+  assert forall j :: 0 <= j < |s| && j % 2 == 1 ==> res[j] == '\n';
+
+  chars := res;
+}
+\end{lstlisting}
+\subsection*{Program $\rightarrow$ GenAI}
+\begin{lstlisting}
+When using dafny verify, the below error is emitted and verify fails:
+
+problem_data/p4_8_seperate_lines/program.dfy(18,2): Error: assertion might not hold
+   |
+18 |   assert forall j :: 0 <= j < |s| && j % 2 == 1 ==> res[j] == '\n';
+   |   ^^^^^^
+
+
+Dafny program verifier finished with 1 verified, 1 error
+
+Correct the error by altering only the method body. Produce and show only the Dafny body, including the curly braces that surround it. Do not show the signature nor contract. You must not use 'assume' anywhere in your code.
+
+\end{lstlisting}
+\subsection*{GenAI $\rightarrow$ Program}
+\textbf{System fingerprint: }
+\\\textbf{ID: }chatcmpl-Co4fRppRiHUhuv8CO0kfPMAJOJu08
+\\\textbf{Model: }gpt-5.1-chat-latest
+\\\textbf{Created at: }1766050377
+\\\textbf{Finish reason: }stop
+\\\textbf{Usage: }1283 tokens in, and 414 tokens out
+\begin{lstlisting}
+{
+  var res := "";
+  var i := 0;
+  while i < |s|
+    invariant 0 <= i <= |s|
+    invariant |res| == 2 * i
+    invariant forall j :: 0 <= j < 2*i ==> j % 2 == 1 ==> res[j] == '\n'
+    invariant forall k :: 0 <= k < i ==> res[2*k] == s[k]
+  {
+    res := res + s[i..i+1] + "\n";
+    i := i + 1;
+  }
+  chars := res;
+}
+\end{lstlisting}
+\section*{Final Program}
+\begin{lstlisting}
+method p4_8_seperate_lines(s: string) returns (chars: string)
+	ensures |chars| == 2 * |s|
+	ensures forall i :: 0 <= i < |s| ==> i % 2 == 1 ==> chars[i] == '\n'
+	ensures forall i :: 0 <= i < |s| ==> i % 2 == 0 ==> chars[i] == s[i / 2]
+{
+  var res := "";
+  var i := 0;
+  while i < |s|
+    invariant 0 <= i <= |s|
+    invariant |res| == 2 * i
+    invariant forall j :: 0 <= j < 2*i ==> j % 2 == 1 ==> res[j] == '\n'
+    invariant forall k :: 0 <= k < i ==> res[2*k] == s[k]
+  {
+    res := res + s[i..i+1] + "\n";
+    i := i + 1;
+  }
+  chars := res;
+}
+\end{lstlisting}
+\section*{Total Token Usage}
+\textbf{Input tokens: }3293
+\\\textbf{Output tokens: }1449
+\\\textbf{Reasoning tokens: }832
+\\\textbf{Sum of `total tokens': }4742
+\section*{Experiment Timings}
+\textbf{Overall Experiment} started at 1766050362346, ended at 1766050385006, lasting 22660ms (22.66 seconds)
+\\\textbf{Iteration \#4} started at 1766050379169, ended at 1766050385006, lasting 5837ms (5.84 seconds)
+\\\textbf{Iteration \#1} started at 1766050362346, ended at 1766050365266, lasting 2920ms (2.92 seconds)
+\\\textbf{Iteration \#2} started at 1766050365266, ended at 1766050369400, lasting 4134ms (4.13 seconds)
+\\\textbf{Iteration \#3} started at 1766050369400, ended at 1766050379169, lasting 9769ms (9.77 seconds)
+\end{document}

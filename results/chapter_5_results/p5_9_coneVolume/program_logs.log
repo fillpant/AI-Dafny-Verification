@@ -1,0 +1,56 @@
+[18/12/25 09:52:15.490] [Experiment 'p5_9_coneVolume'] [INFO]: Experiment created.
+[18/12/25 09:52:15.490] [Experiment 'p5_9_coneVolume'] [INFO]: Experiment started.
+[18/12/25 09:52:15.490] [Experiment 'p5_9_coneVolume'] [INFO]: Using initial prompt: You are given the following task to perform in Dafny:
+
+Write a method that computes the volume of a cone with a circular base, given radius and height.
+
+The signature should be:
+
+method p5_9_coneVolume(r: real, h: real) returns (volume: real)
+
+The method should respect the following contract:
+
+ensures volume == (1.0 / 3.0) * 3.14159 * r * r * h
+
+Produce and show only the Dafny body of this method, including the curly braces that surround it. Do not show the signature nor contract. You must not use 'assume' anywhere in your code.
+
+[18/12/25 09:52:15.490] [Experiment 'p5_9_coneVolume'] [INFO]: There are 30000 left in the jar, for the rest of this experiment.
+[18/12/25 09:52:15.491] [Experiment 'p5_9_coneVolume'] [INFO]: Querrying GenAI...
+[18/12/25 09:52:15.491] [Experiment 'p5_9_coneVolume'] [FINE]: Constructing message for GenAI
+[18/12/25 09:52:15.491] [Experiment 'p5_9_coneVolume'] [INFO]: Context is on, attaching 1 previous messages in the request to GenAI.
+[18/12/25 09:52:15.491] [Experiment 'p5_9_coneVolume'] [INFO]: A reasoning model is chosen, but no reasoning effort value is set. Setting reasoning to 'medium'
+[18/12/25 09:52:15.491] [Experiment 'p5_9_coneVolume'] [FINE]: Setting max tokens for the request to 30000
+[18/12/25 09:52:15.491] [Experiment 'p5_9_coneVolume'] [FINE]: Using model gpt-5.1-chat-latest. Awaiting response...
+[18/12/25 09:52:17.243] [Experiment 'p5_9_coneVolume'] [FINE]: Got response with 70 characters.
+[18/12/25 09:52:17.243] [Experiment 'p5_9_coneVolume'] [FINE]: Saving gen_ai_messages.json
+[18/12/25 09:52:17.244] [Experiment 'p5_9_coneVolume'] [FINE]: Saved 1814 characters to file gen_ai_messages.json
+[18/12/25 09:52:17.244] [Experiment 'p5_9_coneVolume'] [FINE]: Saving gen_ai_messages_simple.json
+[18/12/25 09:52:17.244] [Experiment 'p5_9_coneVolume'] [FINE]: Saved 750 characters to file gen_ai_messages_simple.json
+[18/12/25 09:52:17.244] [Experiment 'p5_9_coneVolume'] [INFO]: Converting GenAI response to method...
+[18/12/25 09:52:17.244] [Experiment 'p5_9_coneVolume'] [FINE]: Saving program.dfy
+[18/12/25 09:52:17.244] [Experiment 'p5_9_coneVolume'] [FINE]: Saved 167 characters to file program.dfy
+[18/12/25 09:52:17.244] [Experiment 'p5_9_coneVolume'] [INFO]: Context is treated as being fully enabled, meaning that subsequent prompts do not include the full code.
+[18/12/25 09:52:17.244] [Experiment 'p5_9_coneVolume'] [INFO]: Checking the method for the presence of the 'assume' keyword...
+[18/12/25 09:52:17.244] [Experiment 'p5_9_coneVolume'] [INFO]: Calling dafny to resolve the generated method...
+[18/12/25 09:52:17.509] [Experiment 'p5_9_coneVolume'] [INFO]: Program exited with code 0
+[18/12/25 09:52:17.509] [Experiment 'p5_9_coneVolume'] [INFO]: Program stdout: 
+Dafny program verifier did not attempt verification
+[18/12/25 09:52:17.509] [Experiment 'p5_9_coneVolume'] [INFO]: Calling dafny to resolve the generated method, but with warnings allowed...
+[18/12/25 09:52:17.774] [Experiment 'p5_9_coneVolume'] [INFO]: Program exited with code 0
+[18/12/25 09:52:17.774] [Experiment 'p5_9_coneVolume'] [INFO]: Program stdout: 
+Dafny program verifier did not attempt verification
+[18/12/25 09:52:17.774] [Experiment 'p5_9_coneVolume'] [INFO]: Resolution passes without warnings.
+[18/12/25 09:52:17.774] [Experiment 'p5_9_coneVolume'] [INFO]: Dafny resolution check passed.
+[18/12/25 09:52:17.774] [Experiment 'p5_9_coneVolume'] [INFO]: Calling dafny to verify the generated method...
+[18/12/25 09:52:18.307] [Experiment 'p5_9_coneVolume'] [INFO]: Program exited with code 0
+[18/12/25 09:52:18.308] [Experiment 'p5_9_coneVolume'] [INFO]: Program stdout: 
+Dafny program verifier finished with 2 verified, 0 errors
+[18/12/25 09:52:18.308] [Experiment 'p5_9_coneVolume'] [INFO]: Dafny verification check passed.
+[18/12/25 09:52:18.308] [Experiment 'p5_9_coneVolume'] [INFO]: Experiment finished.
+[18/12/25 09:52:18.308] [Experiment 'p5_9_coneVolume'] [FINE]: Saving gen_ai_messages.json
+[18/12/25 09:52:18.308] [Experiment 'p5_9_coneVolume'] [FINE]: Saved 1814 characters to file gen_ai_messages.json
+[18/12/25 09:52:18.308] [Experiment 'p5_9_coneVolume'] [FINE]: Saving gen_ai_messages_simple.json
+[18/12/25 09:52:18.308] [Experiment 'p5_9_coneVolume'] [FINE]: Saved 750 characters to file gen_ai_messages_simple.json
+[18/12/25 09:52:18.309] [Experiment 'p5_9_coneVolume'] [FINE]: Saving experiment_result.json
+[18/12/25 09:52:18.309] [Experiment 'p5_9_coneVolume'] [FINE]: Saved 636 characters to file experiment_result.json
+[18/12/25 09:52:18.960] [Experiment 'p5_9_coneVolume'] [INFO]: Compilation of experiment report tex file successful

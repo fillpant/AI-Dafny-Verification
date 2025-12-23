@@ -1,0 +1,313 @@
+[18/12/25 09:16:39.676] [Experiment '2_8_rectangle_properties'] [INFO]: Experiment created.
+[18/12/25 09:16:39.676] [Experiment '2_8_rectangle_properties'] [INFO]: Experiment started.
+[18/12/25 09:16:39.676] [Experiment '2_8_rectangle_properties'] [INFO]: Using initial prompt: You are given the following task to perform in Dafny:
+
+Write a method that takes the lengths of the sides of a rectangle. Then return the area and perimeter of the rectangle and the length of the diagonal (use the Pythagorean theorem).
+
+The signature should be:
+
+method rectangle_properties(length: real, width: real) returns (area: real, perimeter: real, diagonal: real)
+
+The method should respect the following contract:
+
+ensures area == length * width, ensures perimeter == 2.0 * (length + width), ensures diagonal * diagonal == length * length + width * width
+
+Produce and show only the Dafny body of this method, including the curly braces that surround it. Do not show the signature nor contract. You must not use 'assume' anywhere in your code.
+
+[18/12/25 09:16:39.676] [Experiment '2_8_rectangle_properties'] [INFO]: There are 30000 left in the jar, for the rest of this experiment.
+[18/12/25 09:16:39.676] [Experiment '2_8_rectangle_properties'] [INFO]: Querrying GenAI...
+[18/12/25 09:16:39.676] [Experiment '2_8_rectangle_properties'] [FINE]: Constructing message for GenAI
+[18/12/25 09:16:39.676] [Experiment '2_8_rectangle_properties'] [INFO]: Context is on, attaching 1 previous messages in the request to GenAI.
+[18/12/25 09:16:39.676] [Experiment '2_8_rectangle_properties'] [INFO]: A reasoning model is chosen, but no reasoning effort value is set. Setting reasoning to 'medium'
+[18/12/25 09:16:39.677] [Experiment '2_8_rectangle_properties'] [FINE]: Setting max tokens for the request to 30000
+[18/12/25 09:16:39.677] [Experiment '2_8_rectangle_properties'] [FINE]: Using model gpt-5.1-chat-latest. Awaiting response...
+[18/12/25 09:16:41.958] [Experiment '2_8_rectangle_properties'] [FINE]: Got response with 143 characters.
+[18/12/25 09:16:41.958] [Experiment '2_8_rectangle_properties'] [FINE]: Saving gen_ai_messages.json
+[18/12/25 09:16:41.958] [Experiment '2_8_rectangle_properties'] [FINE]: Saved 2223 characters to file gen_ai_messages.json
+[18/12/25 09:16:41.959] [Experiment '2_8_rectangle_properties'] [FINE]: Saving gen_ai_messages_simple.json
+[18/12/25 09:16:41.959] [Experiment '2_8_rectangle_properties'] [FINE]: Saved 1072 characters to file gen_ai_messages_simple.json
+[18/12/25 09:16:41.959] [Experiment '2_8_rectangle_properties'] [INFO]: Converting GenAI response to method...
+[18/12/25 09:16:41.959] [Experiment '2_8_rectangle_properties'] [FINE]: Saving program.dfy
+[18/12/25 09:16:41.959] [Experiment '2_8_rectangle_properties'] [FINE]: Saved 371 characters to file program.dfy
+[18/12/25 09:16:41.959] [Experiment '2_8_rectangle_properties'] [INFO]: Context is treated as being fully enabled, meaning that subsequent prompts do not include the full code.
+[18/12/25 09:16:41.959] [Experiment '2_8_rectangle_properties'] [INFO]: Checking the method for the presence of the 'assume' keyword...
+[18/12/25 09:16:41.959] [Experiment '2_8_rectangle_properties'] [INFO]: Calling dafny to resolve the generated method...
+[18/12/25 09:16:42.218] [Experiment '2_8_rectangle_properties'] [SEVERE]: Program exited with code 2
+[18/12/25 09:16:42.218] [Experiment '2_8_rectangle_properties'] [SEVERE]: Program stdout: problem_data/2_8_rectangle_properties/program.dfy(8,14): Error: unresolved identifier: sqrt
+  |
+8 |   diagonal := sqrt(length * length + width * width);
+  |               ^^^^
+
+1 resolution/type errors detected in program.dfy
+[18/12/25 09:16:42.218] [Experiment '2_8_rectangle_properties'] [INFO]: Calling dafny to resolve the generated method, but with warnings allowed...
+[18/12/25 09:16:42.482] [Experiment '2_8_rectangle_properties'] [SEVERE]: Program exited with code 2
+[18/12/25 09:16:42.482] [Experiment '2_8_rectangle_properties'] [SEVERE]: Program stdout: problem_data/2_8_rectangle_properties/program.dfy(8,14): Error: unresolved identifier: sqrt
+  |
+8 |   diagonal := sqrt(length * length + width * width);
+  |               ^^^^
+
+1 resolution/type errors detected in program.dfy
+[18/12/25 09:16:42.482] [Experiment '2_8_rectangle_properties'] [INFO]: Resolution fails as a result of an error.
+[18/12/25 09:16:42.482] [Experiment '2_8_rectangle_properties'] [WARNING]: Treating resolution as failed for the generated method. Preparing GenAI prompt to fix...
+[18/12/25 09:16:42.482] [Experiment '2_8_rectangle_properties'] [INFO]: There are 29519 left in the jar, for the rest of this experiment.
+[18/12/25 09:16:42.482] [Experiment '2_8_rectangle_properties'] [INFO]: Previous iteration lasted 2806ms
+[18/12/25 09:16:42.482] [Experiment '2_8_rectangle_properties'] [INFO]: Querrying GenAI...
+[18/12/25 09:16:42.482] [Experiment '2_8_rectangle_properties'] [FINE]: Constructing message for GenAI
+[18/12/25 09:16:42.482] [Experiment '2_8_rectangle_properties'] [INFO]: Context is on, attaching 3 previous messages in the request to GenAI.
+[18/12/25 09:16:42.482] [Experiment '2_8_rectangle_properties'] [INFO]: A reasoning model is chosen, but no reasoning effort value is set. Setting reasoning to 'medium'
+[18/12/25 09:16:42.482] [Experiment '2_8_rectangle_properties'] [FINE]: Setting max tokens for the request to 29519
+[18/12/25 09:16:42.482] [Experiment '2_8_rectangle_properties'] [FINE]: Using model gpt-5.1-chat-latest. Awaiting response...
+[18/12/25 09:16:47.543] [Experiment '2_8_rectangle_properties'] [FINE]: Got response with 160 characters.
+[18/12/25 09:16:47.543] [Experiment '2_8_rectangle_properties'] [FINE]: Saving gen_ai_messages.json
+[18/12/25 09:16:47.543] [Experiment '2_8_rectangle_properties'] [FINE]: Saved 4233 characters to file gen_ai_messages.json
+[18/12/25 09:16:47.543] [Experiment '2_8_rectangle_properties'] [FINE]: Saving gen_ai_messages_simple.json
+[18/12/25 09:16:47.543] [Experiment '2_8_rectangle_properties'] [FINE]: Saved 1908 characters to file gen_ai_messages_simple.json
+[18/12/25 09:16:47.543] [Experiment '2_8_rectangle_properties'] [INFO]: Converting GenAI response to method...
+[18/12/25 09:16:47.543] [Experiment '2_8_rectangle_properties'] [FINE]: Saving program.dfy
+[18/12/25 09:16:47.544] [Experiment '2_8_rectangle_properties'] [FINE]: Saved 388 characters to file program.dfy
+[18/12/25 09:16:47.544] [Experiment '2_8_rectangle_properties'] [INFO]: Context is treated as being fully enabled, meaning that subsequent prompts do not include the full code.
+[18/12/25 09:16:47.544] [Experiment '2_8_rectangle_properties'] [INFO]: Checking the method for the presence of the 'assume' keyword...
+[18/12/25 09:16:47.544] [Experiment '2_8_rectangle_properties'] [INFO]: Calling dafny to resolve the generated method...
+[18/12/25 09:16:47.824] [Experiment '2_8_rectangle_properties'] [INFO]: Program exited with code 0
+[18/12/25 09:16:47.824] [Experiment '2_8_rectangle_properties'] [INFO]: Program stdout: 
+Dafny program verifier did not attempt verification
+[18/12/25 09:16:47.824] [Experiment '2_8_rectangle_properties'] [INFO]: Calling dafny to resolve the generated method, but with warnings allowed...
+[18/12/25 09:16:48.110] [Experiment '2_8_rectangle_properties'] [INFO]: Program exited with code 0
+[18/12/25 09:16:48.111] [Experiment '2_8_rectangle_properties'] [INFO]: Program stdout: 
+Dafny program verifier did not attempt verification
+[18/12/25 09:16:48.111] [Experiment '2_8_rectangle_properties'] [INFO]: Resolution passes without warnings.
+[18/12/25 09:16:48.111] [Experiment '2_8_rectangle_properties'] [INFO]: Dafny resolution check passed.
+[18/12/25 09:16:48.111] [Experiment '2_8_rectangle_properties'] [INFO]: Calling dafny to verify the generated method...
+[18/12/25 09:16:48.686] [Experiment '2_8_rectangle_properties'] [SEVERE]: Program exited with code 4
+[18/12/25 09:16:48.686] [Experiment '2_8_rectangle_properties'] [SEVERE]: Program stdout: problem_data/2_8_rectangle_properties/program.dfy(8,11): Error: cannot establish the existence of LHS values that satisfy the such-that predicate. Note, no trigger was found for the such-that predicate, which may be the reason the proof failed. To give a trigger explicitly, use the {:trigger} attribute. For more information, see the section on quantifier instantiation rules in the reference manual.
+  |
+8 |   diagonal :| diagonal * diagonal == length * length + width * width;
+  |            ^^
+
+
+Dafny program verifier finished with 0 verified, 1 error
+[18/12/25 09:16:48.686] [Experiment '2_8_rectangle_properties'] [WARNING]: Failed to verify the generated method. Preparing GenAI prompt to fix...
+[18/12/25 09:16:48.686] [Experiment '2_8_rectangle_properties'] [INFO]: There are 28649 left in the jar, for the rest of this experiment.
+[18/12/25 09:16:48.686] [Experiment '2_8_rectangle_properties'] [INFO]: Previous iteration lasted 6204ms
+[18/12/25 09:16:48.686] [Experiment '2_8_rectangle_properties'] [INFO]: Querrying GenAI...
+[18/12/25 09:16:48.686] [Experiment '2_8_rectangle_properties'] [FINE]: Constructing message for GenAI
+[18/12/25 09:16:48.686] [Experiment '2_8_rectangle_properties'] [INFO]: Context is on, attaching 5 previous messages in the request to GenAI.
+[18/12/25 09:16:48.686] [Experiment '2_8_rectangle_properties'] [INFO]: A reasoning model is chosen, but no reasoning effort value is set. Setting reasoning to 'medium'
+[18/12/25 09:16:48.686] [Experiment '2_8_rectangle_properties'] [FINE]: Setting max tokens for the request to 28649
+[18/12/25 09:16:48.686] [Experiment '2_8_rectangle_properties'] [FINE]: Using model gpt-5.1-chat-latest. Awaiting response...
+[18/12/25 09:16:52.402] [Experiment '2_8_rectangle_properties'] [FINE]: Got response with 191 characters.
+[18/12/25 09:16:52.402] [Experiment '2_8_rectangle_properties'] [FINE]: Saving gen_ai_messages.json
+[18/12/25 09:16:52.403] [Experiment '2_8_rectangle_properties'] [FINE]: Saved 6641 characters to file gen_ai_messages.json
+[18/12/25 09:16:52.403] [Experiment '2_8_rectangle_properties'] [FINE]: Saving gen_ai_messages_simple.json
+[18/12/25 09:16:52.403] [Experiment '2_8_rectangle_properties'] [FINE]: Saved 3110 characters to file gen_ai_messages_simple.json
+[18/12/25 09:16:52.403] [Experiment '2_8_rectangle_properties'] [INFO]: Converting GenAI response to method...
+[18/12/25 09:16:52.403] [Experiment '2_8_rectangle_properties'] [FINE]: Saving program.dfy
+[18/12/25 09:16:52.403] [Experiment '2_8_rectangle_properties'] [FINE]: Saved 419 characters to file program.dfy
+[18/12/25 09:16:52.403] [Experiment '2_8_rectangle_properties'] [INFO]: Context is treated as being fully enabled, meaning that subsequent prompts do not include the full code.
+[18/12/25 09:16:52.403] [Experiment '2_8_rectangle_properties'] [INFO]: Checking the method for the presence of the 'assume' keyword...
+[18/12/25 09:16:52.403] [Experiment '2_8_rectangle_properties'] [INFO]: Calling dafny to resolve the generated method...
+[18/12/25 09:16:52.589] [Experiment '2_8_rectangle_properties'] [SEVERE]: Program exited with code 2
+[18/12/25 09:16:52.589] [Experiment '2_8_rectangle_properties'] [SEVERE]: Program stdout: problem_data/2_8_rectangle_properties/program.dfy(8,14): Error: invalid UnaryExpression
+  |
+8 |   diagonal :| {:trigger diagonal * diagonal} diagonal * diagonal == length * length + width * width;
+  |               ^
+
+1 parse errors detected in program.dfy
+[18/12/25 09:16:52.589] [Experiment '2_8_rectangle_properties'] [INFO]: Calling dafny to resolve the generated method, but with warnings allowed...
+[18/12/25 09:16:52.784] [Experiment '2_8_rectangle_properties'] [SEVERE]: Program exited with code 2
+[18/12/25 09:16:52.784] [Experiment '2_8_rectangle_properties'] [SEVERE]: Program stdout: problem_data/2_8_rectangle_properties/program.dfy(8,14): Error: invalid UnaryExpression
+  |
+8 |   diagonal :| {:trigger diagonal * diagonal} diagonal * diagonal == length * length + width * width;
+  |               ^
+
+1 parse errors detected in program.dfy
+[18/12/25 09:16:52.784] [Experiment '2_8_rectangle_properties'] [INFO]: Resolution fails as a result of an error.
+[18/12/25 09:16:52.784] [Experiment '2_8_rectangle_properties'] [WARNING]: Treating resolution as failed for the generated method. Preparing GenAI prompt to fix...
+[18/12/25 09:16:52.784] [Experiment '2_8_rectangle_properties'] [INFO]: There are 27583 left in the jar, for the rest of this experiment.
+[18/12/25 09:16:52.784] [Experiment '2_8_rectangle_properties'] [INFO]: Previous iteration lasted 4098ms
+[18/12/25 09:16:52.784] [Experiment '2_8_rectangle_properties'] [INFO]: Querrying GenAI...
+[18/12/25 09:16:52.784] [Experiment '2_8_rectangle_properties'] [FINE]: Constructing message for GenAI
+[18/12/25 09:16:52.784] [Experiment '2_8_rectangle_properties'] [INFO]: Context is on, attaching 7 previous messages in the request to GenAI.
+[18/12/25 09:16:52.784] [Experiment '2_8_rectangle_properties'] [INFO]: A reasoning model is chosen, but no reasoning effort value is set. Setting reasoning to 'medium'
+[18/12/25 09:16:52.784] [Experiment '2_8_rectangle_properties'] [FINE]: Setting max tokens for the request to 27583
+[18/12/25 09:16:52.784] [Experiment '2_8_rectangle_properties'] [FINE]: Using model gpt-5.1-chat-latest. Awaiting response...
+[18/12/25 09:16:55.312] [Experiment '2_8_rectangle_properties'] [FINE]: Got response with 191 characters.
+[18/12/25 09:16:55.313] [Experiment '2_8_rectangle_properties'] [FINE]: Saving gen_ai_messages.json
+[18/12/25 09:16:55.313] [Experiment '2_8_rectangle_properties'] [FINE]: Saved 8749 characters to file gen_ai_messages.json
+[18/12/25 09:16:55.313] [Experiment '2_8_rectangle_properties'] [FINE]: Saving gen_ai_messages_simple.json
+[18/12/25 09:16:55.313] [Experiment '2_8_rectangle_properties'] [FINE]: Saved 4013 characters to file gen_ai_messages_simple.json
+[18/12/25 09:16:55.313] [Experiment '2_8_rectangle_properties'] [INFO]: Converting GenAI response to method...
+[18/12/25 09:16:55.313] [Experiment '2_8_rectangle_properties'] [FINE]: Saving program.dfy
+[18/12/25 09:16:55.314] [Experiment '2_8_rectangle_properties'] [FINE]: Saved 419 characters to file program.dfy
+[18/12/25 09:16:55.314] [Experiment '2_8_rectangle_properties'] [INFO]: Context is treated as being fully enabled, meaning that subsequent prompts do not include the full code.
+[18/12/25 09:16:55.314] [Experiment '2_8_rectangle_properties'] [INFO]: Checking the method for the presence of the 'assume' keyword...
+[18/12/25 09:16:55.314] [Experiment '2_8_rectangle_properties'] [INFO]: Calling dafny to resolve the generated method...
+[18/12/25 09:16:55.498] [Experiment '2_8_rectangle_properties'] [SEVERE]: Program exited with code 2
+[18/12/25 09:16:55.498] [Experiment '2_8_rectangle_properties'] [SEVERE]: Program stdout: problem_data/2_8_rectangle_properties/program.dfy(8,69): Error: invalid AssignStatement
+  |
+8 |   diagonal :| diagonal * diagonal == length * length + width * width {:trigger diagonal * diagonal};
+  |                                                                      ^
+
+1 parse errors detected in program.dfy
+[18/12/25 09:16:55.498] [Experiment '2_8_rectangle_properties'] [INFO]: Calling dafny to resolve the generated method, but with warnings allowed...
+[18/12/25 09:16:55.694] [Experiment '2_8_rectangle_properties'] [SEVERE]: Program exited with code 2
+[18/12/25 09:16:55.694] [Experiment '2_8_rectangle_properties'] [SEVERE]: Program stdout: problem_data/2_8_rectangle_properties/program.dfy(8,69): Error: invalid AssignStatement
+  |
+8 |   diagonal :| diagonal * diagonal == length * length + width * width {:trigger diagonal * diagonal};
+  |                                                                      ^
+
+1 parse errors detected in program.dfy
+[18/12/25 09:16:55.694] [Experiment '2_8_rectangle_properties'] [INFO]: Resolution fails as a result of an error.
+[18/12/25 09:16:55.694] [Experiment '2_8_rectangle_properties'] [WARNING]: Treating resolution as failed for the generated method. Preparing GenAI prompt to fix...
+[18/12/25 09:16:55.694] [Experiment '2_8_rectangle_properties'] [INFO]: There are 26517 left in the jar, for the rest of this experiment.
+[18/12/25 09:16:55.694] [Experiment '2_8_rectangle_properties'] [INFO]: Previous iteration lasted 2910ms
+[18/12/25 09:16:55.694] [Experiment '2_8_rectangle_properties'] [INFO]: Querrying GenAI...
+[18/12/25 09:16:55.694] [Experiment '2_8_rectangle_properties'] [FINE]: Constructing message for GenAI
+[18/12/25 09:16:55.695] [Experiment '2_8_rectangle_properties'] [INFO]: Context is on, attaching 9 previous messages in the request to GenAI.
+[18/12/25 09:16:55.695] [Experiment '2_8_rectangle_properties'] [INFO]: A reasoning model is chosen, but no reasoning effort value is set. Setting reasoning to 'medium'
+[18/12/25 09:16:55.695] [Experiment '2_8_rectangle_properties'] [FINE]: Setting max tokens for the request to 26517
+[18/12/25 09:16:55.695] [Experiment '2_8_rectangle_properties'] [FINE]: Using model gpt-5.1-chat-latest. Awaiting response...
+[18/12/25 09:16:59.336] [Experiment '2_8_rectangle_properties'] [FINE]: Got response with 146 characters.
+[18/12/25 09:16:59.336] [Experiment '2_8_rectangle_properties'] [FINE]: Saving gen_ai_messages.json
+[18/12/25 09:16:59.337] [Experiment '2_8_rectangle_properties'] [FINE]: Saved 10814 characters to file gen_ai_messages.json
+[18/12/25 09:16:59.337] [Experiment '2_8_rectangle_properties'] [FINE]: Saving gen_ai_messages_simple.json
+[18/12/25 09:16:59.337] [Experiment '2_8_rectangle_properties'] [FINE]: Saved 4921 characters to file gen_ai_messages_simple.json
+[18/12/25 09:16:59.337] [Experiment '2_8_rectangle_properties'] [INFO]: Converting GenAI response to method...
+[18/12/25 09:16:59.337] [Experiment '2_8_rectangle_properties'] [FINE]: Saving program.dfy
+[18/12/25 09:16:59.337] [Experiment '2_8_rectangle_properties'] [FINE]: Saved 374 characters to file program.dfy
+[18/12/25 09:16:59.337] [Experiment '2_8_rectangle_properties'] [INFO]: Context is treated as being fully enabled, meaning that subsequent prompts do not include the full code.
+[18/12/25 09:16:59.337] [Experiment '2_8_rectangle_properties'] [INFO]: Checking the method for the presence of the 'assume' keyword...
+[18/12/25 09:16:59.337] [Experiment '2_8_rectangle_properties'] [INFO]: Calling dafny to resolve the generated method...
+[18/12/25 09:16:59.528] [Experiment '2_8_rectangle_properties'] [SEVERE]: Program exited with code 2
+[18/12/25 09:16:59.528] [Experiment '2_8_rectangle_properties'] [SEVERE]: Program stdout: problem_data/2_8_rectangle_properties/program.dfy(8,49): Error: invalid UnaryExpression
+  |
+8 |   diagonal := (length * length + width * width) ** 0.5;
+  |                                                  ^
+
+1 parse errors detected in program.dfy
+[18/12/25 09:16:59.528] [Experiment '2_8_rectangle_properties'] [INFO]: Calling dafny to resolve the generated method, but with warnings allowed...
+[18/12/25 09:16:59.727] [Experiment '2_8_rectangle_properties'] [SEVERE]: Program exited with code 2
+[18/12/25 09:16:59.728] [Experiment '2_8_rectangle_properties'] [SEVERE]: Program stdout: problem_data/2_8_rectangle_properties/program.dfy(8,49): Error: invalid UnaryExpression
+  |
+8 |   diagonal := (length * length + width * width) ** 0.5;
+  |                                                  ^
+
+1 parse errors detected in program.dfy
+[18/12/25 09:16:59.728] [Experiment '2_8_rectangle_properties'] [INFO]: Resolution fails as a result of an error.
+[18/12/25 09:16:59.728] [Experiment '2_8_rectangle_properties'] [WARNING]: Treating resolution as failed for the generated method. Preparing GenAI prompt to fix...
+[18/12/25 09:16:59.728] [Experiment '2_8_rectangle_properties'] [INFO]: There are 25138 left in the jar, for the rest of this experiment.
+[18/12/25 09:16:59.728] [Experiment '2_8_rectangle_properties'] [INFO]: Previous iteration lasted 4034ms
+[18/12/25 09:16:59.728] [Experiment '2_8_rectangle_properties'] [INFO]: Querrying GenAI...
+[18/12/25 09:16:59.728] [Experiment '2_8_rectangle_properties'] [FINE]: Constructing message for GenAI
+[18/12/25 09:16:59.728] [Experiment '2_8_rectangle_properties'] [INFO]: Context is on, attaching 11 previous messages in the request to GenAI.
+[18/12/25 09:16:59.728] [Experiment '2_8_rectangle_properties'] [INFO]: A reasoning model is chosen, but no reasoning effort value is set. Setting reasoning to 'medium'
+[18/12/25 09:16:59.728] [Experiment '2_8_rectangle_properties'] [FINE]: Setting max tokens for the request to 25138
+[18/12/25 09:16:59.728] [Experiment '2_8_rectangle_properties'] [FINE]: Using model gpt-5.1-chat-latest. Awaiting response...
+[18/12/25 09:17:02.619] [Experiment '2_8_rectangle_properties'] [FINE]: Got response with 193 characters.
+[18/12/25 09:17:02.619] [Experiment '2_8_rectangle_properties'] [FINE]: Saving gen_ai_messages.json
+[18/12/25 09:17:02.619] [Experiment '2_8_rectangle_properties'] [FINE]: Saved 12913 characters to file gen_ai_messages.json
+[18/12/25 09:17:02.620] [Experiment '2_8_rectangle_properties'] [FINE]: Saving gen_ai_messages_simple.json
+[18/12/25 09:17:02.620] [Experiment '2_8_rectangle_properties'] [FINE]: Saved 5811 characters to file gen_ai_messages_simple.json
+[18/12/25 09:17:02.620] [Experiment '2_8_rectangle_properties'] [INFO]: Converting GenAI response to method...
+[18/12/25 09:17:02.620] [Experiment '2_8_rectangle_properties'] [FINE]: Saving program.dfy
+[18/12/25 09:17:02.620] [Experiment '2_8_rectangle_properties'] [FINE]: Saved 421 characters to file program.dfy
+[18/12/25 09:17:02.620] [Experiment '2_8_rectangle_properties'] [INFO]: Context is treated as being fully enabled, meaning that subsequent prompts do not include the full code.
+[18/12/25 09:17:02.620] [Experiment '2_8_rectangle_properties'] [INFO]: Checking the method for the presence of the 'assume' keyword...
+[18/12/25 09:17:02.620] [Experiment '2_8_rectangle_properties'] [INFO]: Calling dafny to resolve the generated method...
+[18/12/25 09:17:02.817] [Experiment '2_8_rectangle_properties'] [SEVERE]: Program exited with code 2
+[18/12/25 09:17:02.817] [Experiment '2_8_rectangle_properties'] [SEVERE]: Program stdout: problem_data/2_8_rectangle_properties/program.dfy(8,71): Error: invalid AssignStatement
+  |
+8 |   diagonal :| (diagonal * diagonal == length * length + width * width) {:trigger diagonal * diagonal};
+  |                                                                        ^
+
+1 parse errors detected in program.dfy
+[18/12/25 09:17:02.817] [Experiment '2_8_rectangle_properties'] [INFO]: Calling dafny to resolve the generated method, but with warnings allowed...
+[18/12/25 09:17:03.008] [Experiment '2_8_rectangle_properties'] [SEVERE]: Program exited with code 2
+[18/12/25 09:17:03.008] [Experiment '2_8_rectangle_properties'] [SEVERE]: Program stdout: problem_data/2_8_rectangle_properties/program.dfy(8,71): Error: invalid AssignStatement
+  |
+8 |   diagonal :| (diagonal * diagonal == length * length + width * width) {:trigger diagonal * diagonal};
+  |                                                                        ^
+
+1 parse errors detected in program.dfy
+[18/12/25 09:17:03.008] [Experiment '2_8_rectangle_properties'] [INFO]: Resolution fails as a result of an error.
+[18/12/25 09:17:03.008] [Experiment '2_8_rectangle_properties'] [WARNING]: Treating resolution as failed for the generated method. Preparing GenAI prompt to fix...
+[18/12/25 09:17:03.008] [Experiment '2_8_rectangle_properties'] [INFO]: There are 23636 left in the jar, for the rest of this experiment.
+[18/12/25 09:17:03.008] [Experiment '2_8_rectangle_properties'] [INFO]: Previous iteration lasted 3280ms
+[18/12/25 09:17:03.008] [Experiment '2_8_rectangle_properties'] [INFO]: Querrying GenAI...
+[18/12/25 09:17:03.008] [Experiment '2_8_rectangle_properties'] [FINE]: Constructing message for GenAI
+[18/12/25 09:17:03.008] [Experiment '2_8_rectangle_properties'] [INFO]: Context is on, attaching 13 previous messages in the request to GenAI.
+[18/12/25 09:17:03.008] [Experiment '2_8_rectangle_properties'] [INFO]: A reasoning model is chosen, but no reasoning effort value is set. Setting reasoning to 'medium'
+[18/12/25 09:17:03.008] [Experiment '2_8_rectangle_properties'] [FINE]: Setting max tokens for the request to 23636
+[18/12/25 09:17:03.008] [Experiment '2_8_rectangle_properties'] [FINE]: Using model gpt-5.1-chat-latest. Awaiting response...
+[18/12/25 09:17:05.248] [Experiment '2_8_rectangle_properties'] [FINE]: Got response with 195 characters.
+[18/12/25 09:17:05.249] [Experiment '2_8_rectangle_properties'] [FINE]: Saving gen_ai_messages.json
+[18/12/25 09:17:05.249] [Experiment '2_8_rectangle_properties'] [FINE]: Saved 15089 characters to file gen_ai_messages.json
+[18/12/25 09:17:05.249] [Experiment '2_8_rectangle_properties'] [FINE]: Saving gen_ai_messages_simple.json
+[18/12/25 09:17:05.249] [Experiment '2_8_rectangle_properties'] [FINE]: Saved 6777 characters to file gen_ai_messages_simple.json
+[18/12/25 09:17:05.249] [Experiment '2_8_rectangle_properties'] [INFO]: Converting GenAI response to method...
+[18/12/25 09:17:05.249] [Experiment '2_8_rectangle_properties'] [FINE]: Saving program.dfy
+[18/12/25 09:17:05.250] [Experiment '2_8_rectangle_properties'] [FINE]: Saved 423 characters to file program.dfy
+[18/12/25 09:17:05.250] [Experiment '2_8_rectangle_properties'] [INFO]: Context is treated as being fully enabled, meaning that subsequent prompts do not include the full code.
+[18/12/25 09:17:05.250] [Experiment '2_8_rectangle_properties'] [INFO]: Checking the method for the presence of the 'assume' keyword...
+[18/12/25 09:17:05.250] [Experiment '2_8_rectangle_properties'] [INFO]: Calling dafny to resolve the generated method...
+[18/12/25 09:17:05.436] [Experiment '2_8_rectangle_properties'] [SEVERE]: Program exited with code 2
+[18/12/25 09:17:05.437] [Experiment '2_8_rectangle_properties'] [SEVERE]: Program stdout: problem_data/2_8_rectangle_properties/program.dfy(8,14): Error: invalid UnaryExpression
+  |
+8 |   diagonal :| {:trigger (diagonal * diagonal)} (diagonal * diagonal == length * length + width * width);
+  |               ^
+
+1 parse errors detected in program.dfy
+[18/12/25 09:17:05.437] [Experiment '2_8_rectangle_properties'] [INFO]: Calling dafny to resolve the generated method, but with warnings allowed...
+[18/12/25 09:17:05.635] [Experiment '2_8_rectangle_properties'] [SEVERE]: Program exited with code 2
+[18/12/25 09:17:05.635] [Experiment '2_8_rectangle_properties'] [SEVERE]: Program stdout: problem_data/2_8_rectangle_properties/program.dfy(8,14): Error: invalid UnaryExpression
+  |
+8 |   diagonal :| {:trigger (diagonal * diagonal)} (diagonal * diagonal == length * length + width * width);
+  |               ^
+
+1 parse errors detected in program.dfy
+[18/12/25 09:17:05.635] [Experiment '2_8_rectangle_properties'] [INFO]: Resolution fails as a result of an error.
+[18/12/25 09:17:05.635] [Experiment '2_8_rectangle_properties'] [WARNING]: Treating resolution as failed for the generated method. Preparing GenAI prompt to fix...
+[18/12/25 09:17:05.635] [Experiment '2_8_rectangle_properties'] [INFO]: There are 21995 left in the jar, for the rest of this experiment.
+[18/12/25 09:17:05.635] [Experiment '2_8_rectangle_properties'] [INFO]: Previous iteration lasted 2627ms
+[18/12/25 09:17:05.635] [Experiment '2_8_rectangle_properties'] [INFO]: Querrying GenAI...
+[18/12/25 09:17:05.635] [Experiment '2_8_rectangle_properties'] [FINE]: Constructing message for GenAI
+[18/12/25 09:17:05.635] [Experiment '2_8_rectangle_properties'] [INFO]: Context is on, attaching 15 previous messages in the request to GenAI.
+[18/12/25 09:17:05.635] [Experiment '2_8_rectangle_properties'] [INFO]: A reasoning model is chosen, but no reasoning effort value is set. Setting reasoning to 'medium'
+[18/12/25 09:17:05.635] [Experiment '2_8_rectangle_properties'] [FINE]: Setting max tokens for the request to 21995
+[18/12/25 09:17:05.635] [Experiment '2_8_rectangle_properties'] [FINE]: Using model gpt-5.1-chat-latest. Awaiting response...
+[18/12/25 09:17:08.969] [Experiment '2_8_rectangle_properties'] [FINE]: Got response with 191 characters.
+[18/12/25 09:17:08.971] [Experiment '2_8_rectangle_properties'] [FINE]: Saving gen_ai_messages.json
+[18/12/25 09:17:08.971] [Experiment '2_8_rectangle_properties'] [FINE]: Saved 17203 characters to file gen_ai_messages.json
+[18/12/25 09:17:08.971] [Experiment '2_8_rectangle_properties'] [FINE]: Saving gen_ai_messages_simple.json
+[18/12/25 09:17:08.972] [Experiment '2_8_rectangle_properties'] [FINE]: Saved 7684 characters to file gen_ai_messages_simple.json
+[18/12/25 09:17:08.972] [Experiment '2_8_rectangle_properties'] [INFO]: Converting GenAI response to method...
+[18/12/25 09:17:08.972] [Experiment '2_8_rectangle_properties'] [FINE]: Saving program.dfy
+[18/12/25 09:17:08.972] [Experiment '2_8_rectangle_properties'] [FINE]: Saved 419 characters to file program.dfy
+[18/12/25 09:17:08.972] [Experiment '2_8_rectangle_properties'] [INFO]: Context is treated as being fully enabled, meaning that subsequent prompts do not include the full code.
+[18/12/25 09:17:08.972] [Experiment '2_8_rectangle_properties'] [INFO]: Checking the method for the presence of the 'assume' keyword...
+[18/12/25 09:17:08.972] [Experiment '2_8_rectangle_properties'] [INFO]: Calling dafny to resolve the generated method...
+[18/12/25 09:17:09.161] [Experiment '2_8_rectangle_properties'] [SEVERE]: Program exited with code 2
+[18/12/25 09:17:09.161] [Experiment '2_8_rectangle_properties'] [SEVERE]: Program stdout: problem_data/2_8_rectangle_properties/program.dfy(8,42): Error: invalid AssignStatement
+  |
+8 |   diagonal {:trigger diagonal * diagonal} :| diagonal * diagonal == length * length + width * width;
+  |                                           ^
+
+1 parse errors detected in program.dfy
+[18/12/25 09:17:09.161] [Experiment '2_8_rectangle_properties'] [INFO]: Calling dafny to resolve the generated method, but with warnings allowed...
+[18/12/25 09:17:09.360] [Experiment '2_8_rectangle_properties'] [SEVERE]: Program exited with code 2
+[18/12/25 09:17:09.361] [Experiment '2_8_rectangle_properties'] [SEVERE]: Program stdout: problem_data/2_8_rectangle_properties/program.dfy(8,42): Error: invalid AssignStatement
+  |
+8 |   diagonal {:trigger diagonal * diagonal} :| diagonal * diagonal == length * length + width * width;
+  |                                           ^
+
+1 parse errors detected in program.dfy
+[18/12/25 09:17:09.361] [Experiment '2_8_rectangle_properties'] [INFO]: Resolution fails as a result of an error.
+[18/12/25 09:17:09.361] [Experiment '2_8_rectangle_properties'] [WARNING]: Treating resolution as failed for the generated method. Preparing GenAI prompt to fix...
+[18/12/25 09:17:09.361] [Experiment '2_8_rectangle_properties'] [WARNING]: Experiment stopped due to too many GenAI interactions.
+[18/12/25 09:17:09.361] [Experiment '2_8_rectangle_properties'] [FINE]: Saving gen_ai_messages.json
+[18/12/25 09:17:09.361] [Experiment '2_8_rectangle_properties'] [FINE]: Saved 17203 characters to file gen_ai_messages.json
+[18/12/25 09:17:09.361] [Experiment '2_8_rectangle_properties'] [FINE]: Saving gen_ai_messages_simple.json
+[18/12/25 09:17:09.362] [Experiment '2_8_rectangle_properties'] [FINE]: Saved 7684 characters to file gen_ai_messages_simple.json
+[18/12/25 09:17:09.362] [Experiment '2_8_rectangle_properties'] [FINE]: Saving experiment_result.json
+[18/12/25 09:17:09.362] [Experiment '2_8_rectangle_properties'] [FINE]: Saved 1589 characters to file experiment_result.json
+[18/12/25 09:17:10.065] [Experiment '2_8_rectangle_properties'] [INFO]: Compilation of experiment report tex file successful

@@ -1,0 +1,10 @@
+[
+  {
+    "role": "user",
+    "content": "You are given the following task to perform in Dafny:\n\nWrite a method that returns an imitation of a Piet Mondrian painting. (Search the Internet if you are not familiar with his paintings.) Use character sequences such as @@@ or ::: to indicate different colors, and use - and | to form lines.\n\nThe signature should be:\n\nmethod p_1_8() returns (s : string)\n\nThe method should respect the following contract:\n\nensures s \u003d\u003d mystring(\"          !!!@@@@@@@@@@@@@@@@@@@@\\n\", 5)\n\nThe contract uses the following dafny code:\n\nfunction mystring(s : string, n : nat): string\n{\n  if n \u003d\u003d 0 then \"\" else s + mystring(s, n - 1)\n}\n\nThese function(s) must not be used in your implementation of the method.\n\nProduce and show only the Dafny body of this method, including the curly braces that surround it. Do not show the signature nor contract. You must not use \u0027assume\u0027 anywhere in your code.\n"
+  },
+  {
+    "role": "assistant",
+    "content": "{\"method_body\":\"{\\n  var line :\u003d \\\"          !!!@@@@@@@@@@@@@@@@@@@@\\\\n\\\";\\n  s :\u003d line + line + line + line + line;\\n}\"}"
+  }
+]

@@ -1,0 +1,18 @@
+Experiment,Outcome,Input tokens, Output tokens, Total reasoning tokens,Total tokens,Bad response cnt,Verification attempts,Resolution attempts,Soft-failed resolution cnt,Hard-failed resolution cnt,Responses with 'assume',Experiment time (ms),Iteration 1 time (ms),Iteration 2 time (ms),Iteration 3 time (ms),Iteration 4 time (ms),Iteration 5 time (ms),Iteration 6 time (ms),Iteration 7 time (ms),Iteration 8 time (ms)
+p5_1_a_smallest,SUCCESS,298,129,64,427,0,1,1,0,0,0,3953,3950,,,,,,,
+p5_1_b_average,SUCCESS,274,37,0,311,0,1,1,0,0,0,3011,3011,,,,,,,
+p5_2_a_allTheSame,SUCCESS,278,33,0,311,0,1,1,0,0,0,2873,2873,,,,,,,
+p5_2_b_allDifferent,SUCCESS,282,101,64,383,0,1,1,0,0,0,2800,2799,,,,,,,
+p5_2_c_sorted,SUCCESS,284,33,0,317,0,1,1,0,0,0,3423,3422,,,,,,,
+p5_3_firstDigit,SUCCESS,462,313,256,775,0,1,1,0,0,0,5898,5897,,,,,,,
+p5_4_middle,FAILURE_VERIFY,11151,2067,1408,13218,0,8,8,0,0,0,41682,3729,3295,4819,6701,7019,3637,6761,5721
+p5_5_repeat,FAILURE_VERIFY,16618,3471,2176,20089,0,7,8,1,0,0,111145,4789,31291,36089,3815,11237,9524,4322,10077
+p5_6_countVowels,FAILURE_VERIFY,18388,3169,1088,21557,0,2,8,0,6,0,44704,6293,6707,4740,4922,4872,6533,4118,6519
+p5_7_countWords,FAILURE_VERIFY,15900,2969,1216,18869,0,6,8,0,2,0,46922,5754,4951,7018,7381,5382,3751,6150,6535
+p5_8_scramble,SUCCESS,498,295,192,793,0,1,1,0,0,0,5323,5323,,,,,,,
+p5_9_coneSurface,FAILURE_VERIFY,8435,3330,2816,11765,0,1,8,0,7,0,45971,3089,2063,6558,8821,8184,7495,7363,2398
+p5_9_coneVolume,SUCCESS,306,47,0,353,0,1,1,0,0,0,2818,2817,,,,,,,
+p5_9_cylinderSurface,SUCCESS,302,43,0,345,0,1,1,0,0,0,2465,2465,,,,,,,
+p5_9_cylinderVolume,SUCCESS,284,100,64,384,0,1,1,0,0,0,3130,3130,,,,,,,
+p5_9_sphereSurface,SUCCESS,274,40,0,314,0,1,1,0,0,0,2479,2478,,,,,,,
+p5_9_sphereVolume,SUCCESS,286,47,0,333,0,1,1,0,0,0,2617,2617,,,,,,,

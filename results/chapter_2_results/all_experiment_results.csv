@@ -1,0 +1,15 @@
+Experiment,Outcome,Input tokens, Output tokens, Total reasoning tokens,Total tokens,Bad response cnt,Verification attempts,Resolution attempts,Soft-failed resolution cnt,Hard-failed resolution cnt,Responses with 'assume',Experiment time (ms),Iteration 1 time (ms),Iteration 2 time (ms),Iteration 3 time (ms),Iteration 4 time (ms),Iteration 5 time (ms),Iteration 6 time (ms),Iteration 7 time (ms),Iteration 8 time (ms)
+2_10_hybrid_car_cost,SUCCESS,452,113,64,565,0,1,1,0,0,0,3375,3374,,,,,,,
+2_4_6_max,SUCCESS,284,111,64,395,0,1,1,0,0,0,3009,3008,,,,,,,
+2_4_7_min,SUCCESS,284,111,64,395,0,1,1,0,0,0,3217,3217,,,,,,,
+2_6_convert,SUCCESS,322,121,64,443,0,1,1,0,0,0,5468,5467,,,,,,,
+2_7_circle_properties,SUCCESS,440,290,192,730,0,1,1,0,0,0,5524,5524,,,,,,,
+2_8_rectangle_properties,FAILURE_VERIFY,8248,1723,1216,9971,0,1,8,0,7,0,29685,2806,6204,4098,2910,4034,3280,2627,3726
+P_2_1_Letter_Dimensions,SUCCESS,346,226,128,572,0,1,1,0,0,0,5603,5602,,,,,,,
+P_2_2_Letter_perimeter,FAILURE_VERIFY,10468,3798,2880,14266,0,4,8,0,4,0,54537,6407,12027,11410,3386,2857,3208,9684,5556
+P_2_3_powerFunctions,SUCCESS,302,50,0,352,0,1,1,0,0,0,2592,2592,,,,,,,
+P_2_4_1_sum,SUCCESS,240,28,0,268,0,1,1,0,0,0,3240,3240,,,,,,,
+P_2_4_2_difference,SUCCESS,240,28,0,268,0,1,1,0,0,0,3115,3114,,,,,,,
+P_2_4_3_product,SUCCESS,240,92,64,332,0,1,1,0,0,0,3300,3300,,,,,,,
+P_2_4_4_avarage,SUCCESS,260,37,0,297,0,1,1,0,0,0,2522,2521,,,,,,,
+P_2_4_5_distance,SUCCESS,286,115,64,401,0,1,1,0,0,0,3283,3283,,,,,,,

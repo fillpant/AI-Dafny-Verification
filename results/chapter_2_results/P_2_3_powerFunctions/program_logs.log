@@ -1,0 +1,56 @@
+[18/12/25 09:15:57.585] [Experiment 'P_2_3_powerFunctions'] [INFO]: Experiment created.
+[18/12/25 09:15:57.586] [Experiment 'P_2_3_powerFunctions'] [INFO]: Experiment started.
+[18/12/25 09:15:57.586] [Experiment 'P_2_3_powerFunctions'] [INFO]: Using initial prompt: You are given the following task to perform in Dafny:
+
+Write a method that takes a number and returns its square, cube, and fourth power.
+
+The signature should be:
+
+method power_functions(x: int) returns (sq: int, cube : int, fourth: int)
+
+The method should respect the following contract:
+
+ensures sq == x * x, ensures cube == x * x * x, ensures fourth == x * x * x * x
+
+Produce and show only the Dafny body of this method, including the curly braces that surround it. Do not show the signature nor contract. You must not use 'assume' anywhere in your code.
+
+[18/12/25 09:15:57.586] [Experiment 'P_2_3_powerFunctions'] [INFO]: There are 30000 left in the jar, for the rest of this experiment.
+[18/12/25 09:15:57.586] [Experiment 'P_2_3_powerFunctions'] [INFO]: Querrying GenAI...
+[18/12/25 09:15:57.586] [Experiment 'P_2_3_powerFunctions'] [FINE]: Constructing message for GenAI
+[18/12/25 09:15:57.586] [Experiment 'P_2_3_powerFunctions'] [INFO]: Context is on, attaching 1 previous messages in the request to GenAI.
+[18/12/25 09:15:57.586] [Experiment 'P_2_3_powerFunctions'] [INFO]: A reasoning model is chosen, but no reasoning effort value is set. Setting reasoning to 'medium'
+[18/12/25 09:15:57.586] [Experiment 'P_2_3_powerFunctions'] [FINE]: Setting max tokens for the request to 30000
+[18/12/25 09:15:57.586] [Experiment 'P_2_3_powerFunctions'] [FINE]: Using model gpt-5.1-chat-latest. Awaiting response...
+[18/12/25 09:15:59.062] [Experiment 'P_2_3_powerFunctions'] [FINE]: Got response with 88 characters.
+[18/12/25 09:15:59.062] [Experiment 'P_2_3_powerFunctions'] [FINE]: Saving gen_ai_messages.json
+[18/12/25 09:15:59.065] [Experiment 'P_2_3_powerFunctions'] [FINE]: Saved 1918 characters to file gen_ai_messages.json
+[18/12/25 09:15:59.065] [Experiment 'P_2_3_powerFunctions'] [FINE]: Saving gen_ai_messages_simple.json
+[18/12/25 09:15:59.066] [Experiment 'P_2_3_powerFunctions'] [FINE]: Saved 824 characters to file gen_ai_messages_simple.json
+[18/12/25 09:15:59.066] [Experiment 'P_2_3_powerFunctions'] [INFO]: Converting GenAI response to method...
+[18/12/25 09:15:59.066] [Experiment 'P_2_3_powerFunctions'] [FINE]: Saving program.dfy
+[18/12/25 09:15:59.066] [Experiment 'P_2_3_powerFunctions'] [FINE]: Saved 221 characters to file program.dfy
+[18/12/25 09:15:59.066] [Experiment 'P_2_3_powerFunctions'] [INFO]: Context is treated as being fully enabled, meaning that subsequent prompts do not include the full code.
+[18/12/25 09:15:59.066] [Experiment 'P_2_3_powerFunctions'] [INFO]: Checking the method for the presence of the 'assume' keyword...
+[18/12/25 09:15:59.066] [Experiment 'P_2_3_powerFunctions'] [INFO]: Calling dafny to resolve the generated method...
+[18/12/25 09:15:59.348] [Experiment 'P_2_3_powerFunctions'] [INFO]: Program exited with code 0
+[18/12/25 09:15:59.348] [Experiment 'P_2_3_powerFunctions'] [INFO]: Program stdout: 
+Dafny program verifier did not attempt verification
+[18/12/25 09:15:59.348] [Experiment 'P_2_3_powerFunctions'] [INFO]: Calling dafny to resolve the generated method, but with warnings allowed...
+[18/12/25 09:15:59.618] [Experiment 'P_2_3_powerFunctions'] [INFO]: Program exited with code 0
+[18/12/25 09:15:59.618] [Experiment 'P_2_3_powerFunctions'] [INFO]: Program stdout: 
+Dafny program verifier did not attempt verification
+[18/12/25 09:15:59.618] [Experiment 'P_2_3_powerFunctions'] [INFO]: Resolution passes without warnings.
+[18/12/25 09:15:59.618] [Experiment 'P_2_3_powerFunctions'] [INFO]: Dafny resolution check passed.
+[18/12/25 09:15:59.618] [Experiment 'P_2_3_powerFunctions'] [INFO]: Calling dafny to verify the generated method...
+[18/12/25 09:16:00.178] [Experiment 'P_2_3_powerFunctions'] [INFO]: Program exited with code 0
+[18/12/25 09:16:00.178] [Experiment 'P_2_3_powerFunctions'] [INFO]: Program stdout: 
+Dafny program verifier finished with 1 verified, 0 errors
+[18/12/25 09:16:00.178] [Experiment 'P_2_3_powerFunctions'] [INFO]: Dafny verification check passed.
+[18/12/25 09:16:00.178] [Experiment 'P_2_3_powerFunctions'] [INFO]: Experiment finished.
+[18/12/25 09:16:00.178] [Experiment 'P_2_3_powerFunctions'] [FINE]: Saving gen_ai_messages.json
+[18/12/25 09:16:00.179] [Experiment 'P_2_3_powerFunctions'] [FINE]: Saved 1918 characters to file gen_ai_messages.json
+[18/12/25 09:16:00.179] [Experiment 'P_2_3_powerFunctions'] [FINE]: Saving gen_ai_messages_simple.json
+[18/12/25 09:16:00.180] [Experiment 'P_2_3_powerFunctions'] [FINE]: Saved 824 characters to file gen_ai_messages_simple.json
+[18/12/25 09:16:00.180] [Experiment 'P_2_3_powerFunctions'] [FINE]: Saving experiment_result.json
+[18/12/25 09:16:00.181] [Experiment 'P_2_3_powerFunctions'] [FINE]: Saved 636 characters to file experiment_result.json
+[18/12/25 09:16:00.843] [Experiment 'P_2_3_powerFunctions'] [INFO]: Compilation of experiment report tex file successful

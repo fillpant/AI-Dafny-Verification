@@ -1,0 +1,10 @@
+[
+  {
+    "role": "user",
+    "content": "You are given the following task to perform in Dafny:\n\nWrite a method that takes a sequence of integers and returns the smallest and largest of the inputs.\n\nThe signature should be:\n\nmethod p4_2_a_min_max(inputs: array\u003cint\u003e) returns (min: int, max: int)\n\nThe method should respect the following contract:\n\nrequires 0 \u003c inputs.Length, ensures forall i :: 0 \u003c\u003d i \u003c inputs.Length \u003d\u003d\u003e min \u003c\u003d inputs[i], ensures forall i :: 0 \u003c\u003d i \u003c inputs.Length \u003d\u003d\u003e max \u003e\u003d inputs[i], ensures exists i :: 0 \u003c\u003d i \u003c inputs.Length \u0026\u0026 min \u003d\u003d inputs[i], ensures exists i :: 0 \u003c\u003d i \u003c inputs.Length \u0026\u0026 max \u003d\u003d inputs[i]\n\nProduce and show only the Dafny body of this method, including the curly braces that surround it. Do not show the signature nor contract. You must not use \u0027assume\u0027 anywhere in your code.\n"
+  },
+  {
+    "role": "assistant",
+    "content": "{\"method_body\":\"{\\n  var i :\u003d 0;\\n  min :\u003d inputs[i];\\n  max :\u003d inputs[i];\\n  i :\u003d i + 1;\\n  while i \u003c inputs.Length\\n    invariant 1 \u003c\u003d i \u003c\u003d inputs.Length\\n    invariant forall j :: 0 \u003c\u003d j \u003c i \u003d\u003d\u003e min \u003c\u003d inputs[j]\\n    invariant forall j :: 0 \u003c\u003d j \u003c i \u003d\u003d\u003e max \u003e\u003d inputs[j]\\n    invariant exists j :: 0 \u003c\u003d j \u003c i \u0026\u0026 min \u003d\u003d inputs[j]\\n    invariant exists j :: 0 \u003c\u003d j \u003c i \u0026\u0026 max \u003d\u003d inputs[j]\\n  {\\n    if inputs[i] \u003c min {\\n      min :\u003d inputs[i];\\n    }\\n    if inputs[i] \u003e max {\\n      max :\u003d inputs[i];\\n    }\\n    i :\u003d i + 1;\\n  }\\n}\"}"
+  }
+]

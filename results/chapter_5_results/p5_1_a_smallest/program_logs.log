@@ -1,0 +1,56 @@
+[18/12/25 09:47:22.407] [Experiment 'p5_1_a_smallest'] [INFO]: Experiment created.
+[18/12/25 09:47:22.407] [Experiment 'p5_1_a_smallest'] [INFO]: Experiment started.
+[18/12/25 09:47:22.408] [Experiment 'p5_1_a_smallest'] [INFO]: Using initial prompt: You are given the following task to perform in Dafny:
+
+Write a method that returns the smallest of the arguments.
+
+The signature should be:
+
+method p5_1_a_smallest(x: real, y: real, z: real) returns (smallest: real)
+
+The method should respect the following contract:
+
+ensures smallest <= x && smallest <= y && smallest <= z, ensures smallest == x || smallest == y || smallest == z
+
+Produce and show only the Dafny body of this method, including the curly braces that surround it. Do not show the signature nor contract. You must not use 'assume' anywhere in your code.
+
+[18/12/25 09:47:22.410] [Experiment 'p5_1_a_smallest'] [INFO]: There are 30000 left in the jar, for the rest of this experiment.
+[18/12/25 09:47:22.410] [Experiment 'p5_1_a_smallest'] [INFO]: Querrying GenAI...
+[18/12/25 09:47:22.410] [Experiment 'p5_1_a_smallest'] [FINE]: Constructing message for GenAI
+[18/12/25 09:47:22.411] [Experiment 'p5_1_a_smallest'] [INFO]: Context is on, attaching 1 previous messages in the request to GenAI.
+[18/12/25 09:47:22.413] [Experiment 'p5_1_a_smallest'] [INFO]: A reasoning model is chosen, but no reasoning effort value is set. Setting reasoning to 'medium'
+[18/12/25 09:47:22.413] [Experiment 'p5_1_a_smallest'] [FINE]: Setting max tokens for the request to 30000
+[18/12/25 09:47:22.413] [Experiment 'p5_1_a_smallest'] [FINE]: Using model gpt-5.1-chat-latest. Awaiting response...
+[18/12/25 09:47:25.245] [Experiment 'p5_1_a_smallest'] [FINE]: Got response with 119 characters.
+[18/12/25 09:47:25.247] [Experiment 'p5_1_a_smallest'] [FINE]: Saving gen_ai_messages.json
+[18/12/25 09:47:25.249] [Experiment 'p5_1_a_smallest'] [FINE]: Saved 2082 characters to file gen_ai_messages.json
+[18/12/25 09:47:25.249] [Experiment 'p5_1_a_smallest'] [FINE]: Saving gen_ai_messages_simple.json
+[18/12/25 09:47:25.249] [Experiment 'p5_1_a_smallest'] [FINE]: Saved 935 characters to file gen_ai_messages_simple.json
+[18/12/25 09:47:25.250] [Experiment 'p5_1_a_smallest'] [INFO]: Converting GenAI response to method...
+[18/12/25 09:47:25.250] [Experiment 'p5_1_a_smallest'] [FINE]: Saving program.dfy
+[18/12/25 09:47:25.250] [Experiment 'p5_1_a_smallest'] [FINE]: Saved 281 characters to file program.dfy
+[18/12/25 09:47:25.250] [Experiment 'p5_1_a_smallest'] [INFO]: Context is treated as being fully enabled, meaning that subsequent prompts do not include the full code.
+[18/12/25 09:47:25.250] [Experiment 'p5_1_a_smallest'] [INFO]: Checking the method for the presence of the 'assume' keyword...
+[18/12/25 09:47:25.250] [Experiment 'p5_1_a_smallest'] [INFO]: Calling dafny to resolve the generated method...
+[18/12/25 09:47:25.526] [Experiment 'p5_1_a_smallest'] [INFO]: Program exited with code 0
+[18/12/25 09:47:25.526] [Experiment 'p5_1_a_smallest'] [INFO]: Program stdout: 
+Dafny program verifier did not attempt verification
+[18/12/25 09:47:25.526] [Experiment 'p5_1_a_smallest'] [INFO]: Calling dafny to resolve the generated method, but with warnings allowed...
+[18/12/25 09:47:25.800] [Experiment 'p5_1_a_smallest'] [INFO]: Program exited with code 0
+[18/12/25 09:47:25.800] [Experiment 'p5_1_a_smallest'] [INFO]: Program stdout: 
+Dafny program verifier did not attempt verification
+[18/12/25 09:47:25.800] [Experiment 'p5_1_a_smallest'] [INFO]: Resolution passes without warnings.
+[18/12/25 09:47:25.800] [Experiment 'p5_1_a_smallest'] [INFO]: Dafny resolution check passed.
+[18/12/25 09:47:25.800] [Experiment 'p5_1_a_smallest'] [INFO]: Calling dafny to verify the generated method...
+[18/12/25 09:47:26.360] [Experiment 'p5_1_a_smallest'] [INFO]: Program exited with code 0
+[18/12/25 09:47:26.360] [Experiment 'p5_1_a_smallest'] [INFO]: Program stdout: 
+Dafny program verifier finished with 1 verified, 0 errors
+[18/12/25 09:47:26.360] [Experiment 'p5_1_a_smallest'] [INFO]: Dafny verification check passed.
+[18/12/25 09:47:26.360] [Experiment 'p5_1_a_smallest'] [INFO]: Experiment finished.
+[18/12/25 09:47:26.360] [Experiment 'p5_1_a_smallest'] [FINE]: Saving gen_ai_messages.json
+[18/12/25 09:47:26.361] [Experiment 'p5_1_a_smallest'] [FINE]: Saved 2082 characters to file gen_ai_messages.json
+[18/12/25 09:47:26.361] [Experiment 'p5_1_a_smallest'] [FINE]: Saving gen_ai_messages_simple.json
+[18/12/25 09:47:26.361] [Experiment 'p5_1_a_smallest'] [FINE]: Saved 935 characters to file gen_ai_messages_simple.json
+[18/12/25 09:47:26.365] [Experiment 'p5_1_a_smallest'] [FINE]: Saving experiment_result.json
+[18/12/25 09:47:26.365] [Experiment 'p5_1_a_smallest'] [FINE]: Saved 638 characters to file experiment_result.json
+[18/12/25 09:47:27.115] [Experiment 'p5_1_a_smallest'] [INFO]: Compilation of experiment report tex file successful

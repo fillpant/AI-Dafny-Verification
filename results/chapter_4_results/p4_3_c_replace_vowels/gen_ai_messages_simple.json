@@ -1,0 +1,10 @@
+[
+  {
+    "role": "user",
+    "content": "You are given the following task to perform in Dafny:\n\nWrite a method that takes a string and returns the string, with all vowels replaced by an underscore.\n\nThe signature should be:\n\nmethod p4_3_c_replace_vowels(s: string) returns (result: string)\n\nThe method should respect the following contract:\n\nensures |result| \u003d\u003d |s|, ensures forall i :: 0 \u003c\u003d i \u003c |s| \u003d\u003d\u003e (if s[i] in [\u0027a\u0027,\u0027e\u0027,\u0027i\u0027,\u0027o\u0027,\u0027u\u0027,\u0027A\u0027,\u0027E\u0027,\u0027I\u0027,\u0027O\u0027,\u0027U\u0027] then result[i] \u003d\u003d \u0027_\u0027 else result[i] \u003d\u003d s[i])\n\nProduce and show only the Dafny body of this method, including the curly braces that surround it. Do not show the signature nor contract. You must not use \u0027assume\u0027 anywhere in your code.\n"
+  },
+  {
+    "role": "assistant",
+    "content": "{\"method_body\":\"{\\n  var arr :\u003d new char[|s|];\\n  var i :\u003d 0;\\n  while i \u003c |s|\\n    invariant 0 \u003c\u003d i \u003c\u003d |s|\\n    invariant forall j :: 0 \u003c\u003d j \u003c i \u003d\u003d\u003e (if s[j] \u003d\u003d \u0027a\u0027 || s[j] \u003d\u003d \u0027e\u0027 || s[j] \u003d\u003d \u0027i\u0027 || s[j] \u003d\u003d \u0027o\u0027 || s[j] \u003d\u003d \u0027u\u0027 || s[j] \u003d\u003d \u0027A\u0027 || s[j] \u003d\u003d \u0027E\u0027 || s[j] \u003d\u003d \u0027I\u0027 || s[j] \u003d\u003d \u0027O\u0027 || s[j] \u003d\u003d \u0027U\u0027 then arr[j] \u003d\u003d \u0027_\u0027 else arr[j] \u003d\u003d s[j])\\n  {\\n    var c :\u003d s[i];\\n    if c \u003d\u003d \u0027a\u0027 || c \u003d\u003d \u0027e\u0027 || c \u003d\u003d \u0027i\u0027 || c \u003d\u003d \u0027o\u0027 || c \u003d\u003d \u0027u\u0027 ||\\n       c \u003d\u003d \u0027A\u0027 || c \u003d\u003d \u0027E\u0027 || c \u003d\u003d \u0027I\u0027 || c \u003d\u003d \u0027O\u0027 || c \u003d\u003d \u0027U\u0027\\n    {\\n      arr[i] :\u003d \u0027_\u0027;\\n    } else {\\n      arr[i] :\u003d c;\\n    }\\n    i :\u003d i + 1;\\n  }\\n  result :\u003d arr[..];\\n}\"}"
+  }
+]

@@ -1,0 +1,83 @@
+\documentclass{article}
+\usepackage{lmodern}
+\usepackage{amsmath}
+\usepackage{listings}
+\usepackage{fullpage}
+\usepackage{parskip}
+\usepackage{xcolor}
+\lstset{
+	basicstyle=\ttfamily,
+	columns=fullflexible,
+	frame=single,
+	breaklines=true,
+	postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},
+}
+\begin{document}
+\title{Experiment `P\_2\_4\_4\_avarage' Results}
+\author{\today}
+\date{}
+\maketitle
+\textbf{Experiment outcome: }SUCCESS
+\\\textbf{Bad responses: }0
+\\\textbf{Responses containing}~\texttt{assume}~\textbf{: }0
+\\\textbf{Resolution attempts: }1
+\\\textbf{Hard fails (resolution): }0
+\\\textbf{Soft fails (resolution): }0
+\\\textbf{Verification attempts: }1
+\section*{Problem Specification}
+\textbf{Problem name: }P\_2\_4\_4\_avarage
+\\\textbf{Natural language statement: }Write a method that takes two integers and then returns the average.
+\\\textbf{Method signature: }average(x: int, y: int) returns (result:real)
+\subsection*{Ensures}
+\begin{itemize}
+\item \texttt{result == (x + y) as real / 2.0}
+\end{itemize}
+\clearpage
+\section*{GenAI interactions}
+Below you will find all interactions between the `user' (program) and the `assistant' (OpenAI).
+\subsection*{Program $\rightarrow$ GenAI}
+\begin{lstlisting}
+You are given the following task to perform in Dafny:
+
+Write a method that takes two integers and then returns the average.
+
+The signature should be:
+
+method average(x: int, y: int) returns (result:real)
+
+The method should respect the following contract:
+
+ensures result == (x + y) as real / 2.0
+
+Produce and show only the Dafny body of this method, including the curly braces that surround it. Do not show the signature nor contract. You must not use 'assume' anywhere in your code.
+
+\end{lstlisting}
+\subsection*{GenAI $\rightarrow$ Program}
+\textbf{System fingerprint: }
+\\\textbf{ID: }chatcmpl-Co4PCLULvG5PnH4NMhSIFUT9vXfVq
+\\\textbf{Model: }gpt-5.1-chat-latest
+\\\textbf{Created at: }1766049370
+\\\textbf{Finish reason: }stop
+\\\textbf{Usage: }260 tokens in, and 37 tokens out
+\begin{lstlisting}
+{
+  result := (x + y) as real / 2.0;
+}
+\end{lstlisting}
+\section*{Final Program}
+\begin{lstlisting}
+method average(x: int, y: int) returns (result:real)
+	ensures result == (x + y) as real / 2.0
+{
+  result := (x + y) as real / 2.0;
+}
+\end{lstlisting}
+\section*{Total Token Usage}
+\textbf{Input tokens: }260
+\\\textbf{Output tokens: }37
+\\\textbf{Reasoning tokens: }0
+\\\textbf{Sum of `total tokens': }297
+\section*{Experiment Timings}
+\textbf{Overall Experiment} started at 1766049372553, ended at 1766049375075, lasting 2522ms (2.52 seconds)
+\\\textbf{Iteration \#1} started at 1766049372554, ended at 1766049375075, lasting 2521ms (2.52 seconds)
+\end{document}

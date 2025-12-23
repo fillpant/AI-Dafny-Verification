@@ -1,0 +1,464 @@
+[18/12/25 09:28:59.126] [Experiment 'p4_2_d_adjacent_duplicates'] [INFO]: Experiment created.
+[18/12/25 09:28:59.126] [Experiment 'p4_2_d_adjacent_duplicates'] [INFO]: Experiment started.
+[18/12/25 09:28:59.126] [Experiment 'p4_2_d_adjacent_duplicates'] [INFO]: Using initial prompt: You are given the following task to perform in Dafny:
+
+Write a method that takes a sequence of integers and returns all adjacent duplicates. For example, if the input is [1, 3, 3, 4, 5, 5, 6, 6, 6, 2], the method should return [3, 5, 6].
+
+The signature should be:
+
+method p4_2_d_adjacent_duplicates(inputs: seq<int>) returns (duplicates: seq<int>)
+
+The method should respect the following contract:
+
+ensures forall d :: d in duplicates ==> d in inputs, ensures forall i :: 0 <= i < |inputs| - 1 && inputs[i] == inputs[i + 1] ==> inputs[i] in duplicates, ensures forall d :: d in duplicates ==> exists i :: 0 <= i < |inputs| - 1 && inputs[i] == inputs[i + 1] && inputs[i] == d, ensures forall d :: d in duplicates ==> exists i, j :: 0 <= i < j < |inputs| && contiguous_duplicates(inputs, i, j, d) == true
+
+The contract uses the following dafny code:
+
+function contiguous_duplicates(inputs: seq<int>, i : int, j : int, d : int) : (b : bool) 
+  requires 0 <= i < j < |inputs|
+  decreases j - i
+{
+  if i + 1 == j then inputs[i] == inputs[j] == d
+  else if inputs[i] == d then contiguous_duplicates(inputs, i + 1, j, d)
+  else false
+}
+
+These function(s) must not be used in your implementation of the method.
+
+Produce and show only the Dafny body of this method, including the curly braces that surround it. Do not show the signature nor contract. You must not use 'assume' anywhere in your code.
+
+[18/12/25 09:28:59.126] [Experiment 'p4_2_d_adjacent_duplicates'] [INFO]: There are 30000 left in the jar, for the rest of this experiment.
+[18/12/25 09:28:59.126] [Experiment 'p4_2_d_adjacent_duplicates'] [INFO]: Querrying GenAI...
+[18/12/25 09:28:59.126] [Experiment 'p4_2_d_adjacent_duplicates'] [FINE]: Constructing message for GenAI
+[18/12/25 09:28:59.126] [Experiment 'p4_2_d_adjacent_duplicates'] [INFO]: Context is on, attaching 1 previous messages in the request to GenAI.
+[18/12/25 09:28:59.126] [Experiment 'p4_2_d_adjacent_duplicates'] [INFO]: A reasoning model is chosen, but no reasoning effort value is set. Setting reasoning to 'medium'
+[18/12/25 09:28:59.126] [Experiment 'p4_2_d_adjacent_duplicates'] [FINE]: Setting max tokens for the request to 30000
+[18/12/25 09:28:59.126] [Experiment 'p4_2_d_adjacent_duplicates'] [FINE]: Using model gpt-5.1-chat-latest. Awaiting response...
+[18/12/25 09:29:02.699] [Experiment 'p4_2_d_adjacent_duplicates'] [FINE]: Got response with 761 characters.
+[18/12/25 09:29:02.699] [Experiment 'p4_2_d_adjacent_duplicates'] [FINE]: Saving gen_ai_messages.json
+[18/12/25 09:29:02.699] [Experiment 'p4_2_d_adjacent_duplicates'] [FINE]: Saved 4878 characters to file gen_ai_messages.json
+[18/12/25 09:29:02.699] [Experiment 'p4_2_d_adjacent_duplicates'] [FINE]: Saving gen_ai_messages_simple.json
+[18/12/25 09:29:02.700] [Experiment 'p4_2_d_adjacent_duplicates'] [FINE]: Saved 2851 characters to file gen_ai_messages_simple.json
+[18/12/25 09:29:02.700] [Experiment 'p4_2_d_adjacent_duplicates'] [INFO]: Converting GenAI response to method...
+[18/12/25 09:29:02.700] [Experiment 'p4_2_d_adjacent_duplicates'] [FINE]: Saving program.dfy
+[18/12/25 09:29:02.700] [Experiment 'p4_2_d_adjacent_duplicates'] [FINE]: Saved 1485 characters to file program.dfy
+[18/12/25 09:29:02.700] [Experiment 'p4_2_d_adjacent_duplicates'] [INFO]: Context is treated as being fully enabled, meaning that subsequent prompts do not include the full code.
+[18/12/25 09:29:02.700] [Experiment 'p4_2_d_adjacent_duplicates'] [INFO]: Checking the method for the presence of the 'assume' keyword...
+[18/12/25 09:29:02.700] [Experiment 'p4_2_d_adjacent_duplicates'] [INFO]: Calling dafny to resolve the generated method...
+[18/12/25 09:29:03.036] [Experiment 'p4_2_d_adjacent_duplicates'] [INFO]: Program exited with code 0
+[18/12/25 09:29:03.036] [Experiment 'p4_2_d_adjacent_duplicates'] [INFO]: Program stdout: 
+Dafny program verifier did not attempt verification
+[18/12/25 09:29:03.036] [Experiment 'p4_2_d_adjacent_duplicates'] [INFO]: Calling dafny to resolve the generated method, but with warnings allowed...
+[18/12/25 09:29:03.368] [Experiment 'p4_2_d_adjacent_duplicates'] [INFO]: Program exited with code 0
+[18/12/25 09:29:03.368] [Experiment 'p4_2_d_adjacent_duplicates'] [INFO]: Program stdout: 
+Dafny program verifier did not attempt verification
+[18/12/25 09:29:03.368] [Experiment 'p4_2_d_adjacent_duplicates'] [INFO]: Resolution passes without warnings.
+[18/12/25 09:29:03.368] [Experiment 'p4_2_d_adjacent_duplicates'] [INFO]: Dafny resolution check passed.
+[18/12/25 09:29:03.368] [Experiment 'p4_2_d_adjacent_duplicates'] [INFO]: Calling dafny to verify the generated method...
+[18/12/25 09:29:04.049] [Experiment 'p4_2_d_adjacent_duplicates'] [SEVERE]: Program exited with code 4
+[18/12/25 09:29:04.049] [Experiment 'p4_2_d_adjacent_duplicates'] [SEVERE]: Program stdout: problem_data/p4_2_d_adjacent_duplicates/program.dfy(15,0): Error: a postcondition could not be proved on this return path
+   |
+15 | {
+   | ^
+
+problem_data/p4_2_d_adjacent_duplicates/program.dfy(12,9): Related location: this is the postcondition that could not be proved
+   |
+12 | 	ensures forall i :: 0 <= i < |inputs| - 1 && inputs[i] == inputs[i + 1] ==> inputs[i] in duplicates
+   |          ^^^^^^
+
+problem_data/p4_2_d_adjacent_duplicates/program.dfy(15,0): Error: a postcondition could not be proved on this return path
+   |
+15 | {
+   | ^
+
+problem_data/p4_2_d_adjacent_duplicates/program.dfy(13,9): Related location: this is the postcondition that could not be proved
+   |
+13 | 	ensures forall d :: d in duplicates ==> exists i :: 0 <= i < |inputs| - 1 && inputs[i] == inputs[i + 1] && inputs[i] == d
+   |          ^^^^^^
+
+problem_data/p4_2_d_adjacent_duplicates/program.dfy(15,0): Error: a postcondition could not be proved on this return path
+   |
+15 | {
+   | ^
+
+problem_data/p4_2_d_adjacent_duplicates/program.dfy(14,9): Related location: this is the postcondition that could not be proved
+   |
+14 | 	ensures forall d :: d in duplicates ==> exists i, j :: 0 <= i < j < |inputs| && contiguous_duplicates(inputs, i, j, d) == true
+   |          ^^^^^^
+
+problem_data/p4_2_d_adjacent_duplicates/program.dfy(21,91): Error: index out of range
+   |
+21 |     invariant forall d :: d in duplicates ==> exists k :: 0 <= k < i && inputs[k] == inputs[k+1] && inputs[k] == d
+   |                                                                                            ^
+
+
+Dafny program verifier finished with 2 verified, 4 errors
+[18/12/25 09:29:04.049] [Experiment 'p4_2_d_adjacent_duplicates'] [WARNING]: Failed to verify the generated method. Preparing GenAI prompt to fix...
+[18/12/25 09:29:04.049] [Experiment 'p4_2_d_adjacent_duplicates'] [INFO]: There are 28929 left in the jar, for the rest of this experiment.
+[18/12/25 09:29:04.049] [Experiment 'p4_2_d_adjacent_duplicates'] [INFO]: Previous iteration lasted 4923ms
+[18/12/25 09:29:04.049] [Experiment 'p4_2_d_adjacent_duplicates'] [INFO]: Querrying GenAI...
+[18/12/25 09:29:04.049] [Experiment 'p4_2_d_adjacent_duplicates'] [FINE]: Constructing message for GenAI
+[18/12/25 09:29:04.049] [Experiment 'p4_2_d_adjacent_duplicates'] [INFO]: Context is on, attaching 3 previous messages in the request to GenAI.
+[18/12/25 09:29:04.049] [Experiment 'p4_2_d_adjacent_duplicates'] [INFO]: A reasoning model is chosen, but no reasoning effort value is set. Setting reasoning to 'medium'
+[18/12/25 09:29:04.049] [Experiment 'p4_2_d_adjacent_duplicates'] [FINE]: Setting max tokens for the request to 28929
+[18/12/25 09:29:04.049] [Experiment 'p4_2_d_adjacent_duplicates'] [FINE]: Using model gpt-5.1-chat-latest. Awaiting response...
+[18/12/25 09:29:08.065] [Experiment 'p4_2_d_adjacent_duplicates'] [FINE]: Got response with 778 characters.
+[18/12/25 09:29:08.065] [Experiment 'p4_2_d_adjacent_duplicates'] [FINE]: Saving gen_ai_messages.json
+[18/12/25 09:29:08.065] [Experiment 'p4_2_d_adjacent_duplicates'] [FINE]: Saved 10306 characters to file gen_ai_messages.json
+[18/12/25 09:29:08.065] [Experiment 'p4_2_d_adjacent_duplicates'] [FINE]: Saving gen_ai_messages_simple.json
+[18/12/25 09:29:08.065] [Experiment 'p4_2_d_adjacent_duplicates'] [FINE]: Saved 6232 characters to file gen_ai_messages_simple.json
+[18/12/25 09:29:08.065] [Experiment 'p4_2_d_adjacent_duplicates'] [INFO]: Converting GenAI response to method...
+[18/12/25 09:29:08.065] [Experiment 'p4_2_d_adjacent_duplicates'] [FINE]: Saving program.dfy
+[18/12/25 09:29:08.066] [Experiment 'p4_2_d_adjacent_duplicates'] [FINE]: Saved 1501 characters to file program.dfy
+[18/12/25 09:29:08.066] [Experiment 'p4_2_d_adjacent_duplicates'] [INFO]: Context is treated as being fully enabled, meaning that subsequent prompts do not include the full code.
+[18/12/25 09:29:08.066] [Experiment 'p4_2_d_adjacent_duplicates'] [INFO]: Checking the method for the presence of the 'assume' keyword...
+[18/12/25 09:29:08.066] [Experiment 'p4_2_d_adjacent_duplicates'] [INFO]: Calling dafny to resolve the generated method...
+[18/12/25 09:29:08.398] [Experiment 'p4_2_d_adjacent_duplicates'] [INFO]: Program exited with code 0
+[18/12/25 09:29:08.398] [Experiment 'p4_2_d_adjacent_duplicates'] [INFO]: Program stdout: 
+Dafny program verifier did not attempt verification
+[18/12/25 09:29:08.398] [Experiment 'p4_2_d_adjacent_duplicates'] [INFO]: Calling dafny to resolve the generated method, but with warnings allowed...
+[18/12/25 09:29:08.744] [Experiment 'p4_2_d_adjacent_duplicates'] [INFO]: Program exited with code 0
+[18/12/25 09:29:08.744] [Experiment 'p4_2_d_adjacent_duplicates'] [INFO]: Program stdout: 
+Dafny program verifier did not attempt verification
+[18/12/25 09:29:08.744] [Experiment 'p4_2_d_adjacent_duplicates'] [INFO]: Resolution passes without warnings.
+[18/12/25 09:29:08.744] [Experiment 'p4_2_d_adjacent_duplicates'] [INFO]: Dafny resolution check passed.
+[18/12/25 09:29:08.744] [Experiment 'p4_2_d_adjacent_duplicates'] [INFO]: Calling dafny to verify the generated method...
+[18/12/25 09:29:09.442] [Experiment 'p4_2_d_adjacent_duplicates'] [SEVERE]: Program exited with code 4
+[18/12/25 09:29:09.442] [Experiment 'p4_2_d_adjacent_duplicates'] [SEVERE]: Program stdout: problem_data/p4_2_d_adjacent_duplicates/program.dfy(15,0): Error: a postcondition could not be proved on this return path
+   |
+15 | {
+   | ^
+
+problem_data/p4_2_d_adjacent_duplicates/program.dfy(12,9): Related location: this is the postcondition that could not be proved
+   |
+12 | 	ensures forall i :: 0 <= i < |inputs| - 1 && inputs[i] == inputs[i + 1] ==> inputs[i] in duplicates
+   |          ^^^^^^
+
+problem_data/p4_2_d_adjacent_duplicates/program.dfy(15,0): Error: a postcondition could not be proved on this return path
+   |
+15 | {
+   | ^
+
+problem_data/p4_2_d_adjacent_duplicates/program.dfy(14,9): Related location: this is the postcondition that could not be proved
+   |
+14 | 	ensures forall d :: d in duplicates ==> exists i, j :: 0 <= i < j < |inputs| && contiguous_duplicates(inputs, i, j, d) == true
+   |          ^^^^^^
+
+problem_data/p4_2_d_adjacent_duplicates/program.dfy(20,21): Error: this loop invariant could not be proved on entry
+ Related message: loop invariant violation
+   |
+20 |     invariant 0 <= i <= |inputs| - 1
+   |                      ^^
+
+
+Dafny program verifier finished with 2 verified, 3 errors
+[18/12/25 09:29:09.442] [Experiment 'p4_2_d_adjacent_duplicates'] [WARNING]: Failed to verify the generated method. Preparing GenAI prompt to fix...
+[18/12/25 09:29:09.442] [Experiment 'p4_2_d_adjacent_duplicates'] [INFO]: There are 26895 left in the jar, for the rest of this experiment.
+[18/12/25 09:29:09.442] [Experiment 'p4_2_d_adjacent_duplicates'] [INFO]: Previous iteration lasted 5393ms
+[18/12/25 09:29:09.442] [Experiment 'p4_2_d_adjacent_duplicates'] [INFO]: Querrying GenAI...
+[18/12/25 09:29:09.442] [Experiment 'p4_2_d_adjacent_duplicates'] [FINE]: Constructing message for GenAI
+[18/12/25 09:29:09.442] [Experiment 'p4_2_d_adjacent_duplicates'] [INFO]: Context is on, attaching 5 previous messages in the request to GenAI.
+[18/12/25 09:29:09.442] [Experiment 'p4_2_d_adjacent_duplicates'] [INFO]: A reasoning model is chosen, but no reasoning effort value is set. Setting reasoning to 'medium'
+[18/12/25 09:29:09.442] [Experiment 'p4_2_d_adjacent_duplicates'] [FINE]: Setting max tokens for the request to 26895
+[18/12/25 09:29:09.442] [Experiment 'p4_2_d_adjacent_duplicates'] [FINE]: Using model gpt-5.1-chat-latest. Awaiting response...
+[18/12/25 09:29:13.146] [Experiment 'p4_2_d_adjacent_duplicates'] [FINE]: Got response with 774 characters.
+[18/12/25 09:29:13.146] [Experiment 'p4_2_d_adjacent_duplicates'] [FINE]: Saving gen_ai_messages.json
+[18/12/25 09:29:13.146] [Experiment 'p4_2_d_adjacent_duplicates'] [FINE]: Saved 15097 characters to file gen_ai_messages.json
+[18/12/25 09:29:13.146] [Experiment 'p4_2_d_adjacent_duplicates'] [FINE]: Saving gen_ai_messages_simple.json
+[18/12/25 09:29:13.147] [Experiment 'p4_2_d_adjacent_duplicates'] [FINE]: Saved 8980 characters to file gen_ai_messages_simple.json
+[18/12/25 09:29:13.147] [Experiment 'p4_2_d_adjacent_duplicates'] [INFO]: Converting GenAI response to method...
+[18/12/25 09:29:13.147] [Experiment 'p4_2_d_adjacent_duplicates'] [FINE]: Saving program.dfy
+[18/12/25 09:29:13.147] [Experiment 'p4_2_d_adjacent_duplicates'] [FINE]: Saved 1497 characters to file program.dfy
+[18/12/25 09:29:13.147] [Experiment 'p4_2_d_adjacent_duplicates'] [INFO]: Context is treated as being fully enabled, meaning that subsequent prompts do not include the full code.
+[18/12/25 09:29:13.147] [Experiment 'p4_2_d_adjacent_duplicates'] [INFO]: Checking the method for the presence of the 'assume' keyword...
+[18/12/25 09:29:13.147] [Experiment 'p4_2_d_adjacent_duplicates'] [INFO]: Calling dafny to resolve the generated method...
+[18/12/25 09:29:13.480] [Experiment 'p4_2_d_adjacent_duplicates'] [INFO]: Program exited with code 0
+[18/12/25 09:29:13.480] [Experiment 'p4_2_d_adjacent_duplicates'] [INFO]: Program stdout: 
+Dafny program verifier did not attempt verification
+[18/12/25 09:29:13.480] [Experiment 'p4_2_d_adjacent_duplicates'] [INFO]: Calling dafny to resolve the generated method, but with warnings allowed...
+[18/12/25 09:29:13.804] [Experiment 'p4_2_d_adjacent_duplicates'] [INFO]: Program exited with code 0
+[18/12/25 09:29:13.804] [Experiment 'p4_2_d_adjacent_duplicates'] [INFO]: Program stdout: 
+Dafny program verifier did not attempt verification
+[18/12/25 09:29:13.804] [Experiment 'p4_2_d_adjacent_duplicates'] [INFO]: Resolution passes without warnings.
+[18/12/25 09:29:13.804] [Experiment 'p4_2_d_adjacent_duplicates'] [INFO]: Dafny resolution check passed.
+[18/12/25 09:29:13.804] [Experiment 'p4_2_d_adjacent_duplicates'] [INFO]: Calling dafny to verify the generated method...
+[18/12/25 09:29:14.476] [Experiment 'p4_2_d_adjacent_duplicates'] [SEVERE]: Program exited with code 4
+[18/12/25 09:29:14.476] [Experiment 'p4_2_d_adjacent_duplicates'] [SEVERE]: Program stdout: problem_data/p4_2_d_adjacent_duplicates/program.dfy(15,0): Error: a postcondition could not be proved on this return path
+   |
+15 | {
+   | ^
+
+problem_data/p4_2_d_adjacent_duplicates/program.dfy(12,9): Related location: this is the postcondition that could not be proved
+   |
+12 | 	ensures forall i :: 0 <= i < |inputs| - 1 && inputs[i] == inputs[i + 1] ==> inputs[i] in duplicates
+   |          ^^^^^^
+
+problem_data/p4_2_d_adjacent_duplicates/program.dfy(15,0): Error: a postcondition could not be proved on this return path
+   |
+15 | {
+   | ^
+
+problem_data/p4_2_d_adjacent_duplicates/program.dfy(14,9): Related location: this is the postcondition that could not be proved
+   |
+14 | 	ensures forall d :: d in duplicates ==> exists i, j :: 0 <= i < j < |inputs| && contiguous_duplicates(inputs, i, j, d) == true
+   |          ^^^^^^
+
+
+Dafny program verifier finished with 2 verified, 2 errors
+[18/12/25 09:29:14.476] [Experiment 'p4_2_d_adjacent_duplicates'] [WARNING]: Failed to verify the generated method. Preparing GenAI prompt to fix...
+[18/12/25 09:29:14.477] [Experiment 'p4_2_d_adjacent_duplicates'] [INFO]: There are 24358 left in the jar, for the rest of this experiment.
+[18/12/25 09:29:14.477] [Experiment 'p4_2_d_adjacent_duplicates'] [INFO]: Previous iteration lasted 5035ms
+[18/12/25 09:29:14.477] [Experiment 'p4_2_d_adjacent_duplicates'] [INFO]: Querrying GenAI...
+[18/12/25 09:29:14.477] [Experiment 'p4_2_d_adjacent_duplicates'] [FINE]: Constructing message for GenAI
+[18/12/25 09:29:14.477] [Experiment 'p4_2_d_adjacent_duplicates'] [INFO]: Context is on, attaching 7 previous messages in the request to GenAI.
+[18/12/25 09:29:14.477] [Experiment 'p4_2_d_adjacent_duplicates'] [INFO]: A reasoning model is chosen, but no reasoning effort value is set. Setting reasoning to 'medium'
+[18/12/25 09:29:14.477] [Experiment 'p4_2_d_adjacent_duplicates'] [FINE]: Setting max tokens for the request to 24358
+[18/12/25 09:29:14.477] [Experiment 'p4_2_d_adjacent_duplicates'] [FINE]: Using model gpt-5.1-chat-latest. Awaiting response...
+[18/12/25 09:29:20.157] [Experiment 'p4_2_d_adjacent_duplicates'] [FINE]: Got response with 899 characters.
+[18/12/25 09:29:20.157] [Experiment 'p4_2_d_adjacent_duplicates'] [FINE]: Saving gen_ai_messages.json
+[18/12/25 09:29:20.157] [Experiment 'p4_2_d_adjacent_duplicates'] [FINE]: Saved 19959 characters to file gen_ai_messages.json
+[18/12/25 09:29:20.157] [Experiment 'p4_2_d_adjacent_duplicates'] [FINE]: Saving gen_ai_messages_simple.json
+[18/12/25 09:29:20.158] [Experiment 'p4_2_d_adjacent_duplicates'] [FINE]: Saved 11632 characters to file gen_ai_messages_simple.json
+[18/12/25 09:29:20.158] [Experiment 'p4_2_d_adjacent_duplicates'] [INFO]: Converting GenAI response to method...
+[18/12/25 09:29:20.158] [Experiment 'p4_2_d_adjacent_duplicates'] [FINE]: Saving program.dfy
+[18/12/25 09:29:20.158] [Experiment 'p4_2_d_adjacent_duplicates'] [FINE]: Saved 1621 characters to file program.dfy
+[18/12/25 09:29:20.158] [Experiment 'p4_2_d_adjacent_duplicates'] [INFO]: Context is treated as being fully enabled, meaning that subsequent prompts do not include the full code.
+[18/12/25 09:29:20.158] [Experiment 'p4_2_d_adjacent_duplicates'] [INFO]: Checking the method for the presence of the 'assume' keyword...
+[18/12/25 09:29:20.158] [Experiment 'p4_2_d_adjacent_duplicates'] [INFO]: Calling dafny to resolve the generated method...
+[18/12/25 09:29:20.496] [Experiment 'p4_2_d_adjacent_duplicates'] [SEVERE]: Program exited with code 2
+[18/12/25 09:29:20.496] [Experiment 'p4_2_d_adjacent_duplicates'] [SEVERE]: Program stdout: problem_data/p4_2_d_adjacent_duplicates/program.dfy(23,46): Warning: Could not find a trigger for this quantifier. Without a trigger, the quantifier may cause brittle verification. To silence this warning, add an explicit trigger using the {:trigger} attribute. For more information, see the section on quantifier instantiation rules in the reference manual.
+   |
+23 |     invariant forall d :: d in duplicates ==> exists k :: 0 <= k < |inputs| - 1 && contiguous_duplicates(inputs, k, k+1, d)
+   |                                               ^^^^^^
+
+Compilation failed because warnings were found and --allow-warnings is false
+[18/12/25 09:29:20.496] [Experiment 'p4_2_d_adjacent_duplicates'] [INFO]: Calling dafny to resolve the generated method, but with warnings allowed...
+[18/12/25 09:29:20.827] [Experiment 'p4_2_d_adjacent_duplicates'] [INFO]: Program exited with code 0
+[18/12/25 09:29:20.827] [Experiment 'p4_2_d_adjacent_duplicates'] [INFO]: Program stdout: problem_data/p4_2_d_adjacent_duplicates/program.dfy(23,46): Warning: Could not find a trigger for this quantifier. Without a trigger, the quantifier may cause brittle verification. To silence this warning, add an explicit trigger using the {:trigger} attribute. For more information, see the section on quantifier instantiation rules in the reference manual.
+   |
+23 |     invariant forall d :: d in duplicates ==> exists k :: 0 <= k < |inputs| - 1 && contiguous_duplicates(inputs, k, k+1, d)
+   |                                               ^^^^^^
+
+
+Dafny program verifier did not attempt verification
+[18/12/25 09:29:20.827] [Experiment 'p4_2_d_adjacent_duplicates'] [INFO]: Resolution fails as a result of a warning, but passes with warnings disabled.
+[18/12/25 09:29:20.827] [Experiment 'p4_2_d_adjacent_duplicates'] [WARNING]: Treating resolution as failed for the generated method. Preparing GenAI prompt to fix...
+[18/12/25 09:29:20.827] [Experiment 'p4_2_d_adjacent_duplicates'] [INFO]: There are 21136 left in the jar, for the rest of this experiment.
+[18/12/25 09:29:20.827] [Experiment 'p4_2_d_adjacent_duplicates'] [INFO]: Previous iteration lasted 6350ms
+[18/12/25 09:29:20.827] [Experiment 'p4_2_d_adjacent_duplicates'] [INFO]: Querrying GenAI...
+[18/12/25 09:29:20.827] [Experiment 'p4_2_d_adjacent_duplicates'] [FINE]: Constructing message for GenAI
+[18/12/25 09:29:20.827] [Experiment 'p4_2_d_adjacent_duplicates'] [INFO]: Context is on, attaching 9 previous messages in the request to GenAI.
+[18/12/25 09:29:20.827] [Experiment 'p4_2_d_adjacent_duplicates'] [INFO]: A reasoning model is chosen, but no reasoning effort value is set. Setting reasoning to 'medium'
+[18/12/25 09:29:20.827] [Experiment 'p4_2_d_adjacent_duplicates'] [FINE]: Setting max tokens for the request to 21136
+[18/12/25 09:29:20.827] [Experiment 'p4_2_d_adjacent_duplicates'] [FINE]: Using model gpt-5.1-chat-latest. Awaiting response...
+[18/12/25 09:29:24.276] [Experiment 'p4_2_d_adjacent_duplicates'] [FINE]: Got response with 774 characters.
+[18/12/25 09:29:24.276] [Experiment 'p4_2_d_adjacent_duplicates'] [FINE]: Saving gen_ai_messages.json
+[18/12/25 09:29:24.276] [Experiment 'p4_2_d_adjacent_duplicates'] [FINE]: Saved 24146 characters to file gen_ai_messages.json
+[18/12/25 09:29:24.276] [Experiment 'p4_2_d_adjacent_duplicates'] [FINE]: Saving gen_ai_messages_simple.json
+[18/12/25 09:29:24.277] [Experiment 'p4_2_d_adjacent_duplicates'] [FINE]: Saved 13774 characters to file gen_ai_messages_simple.json
+[18/12/25 09:29:24.277] [Experiment 'p4_2_d_adjacent_duplicates'] [INFO]: Converting GenAI response to method...
+[18/12/25 09:29:24.277] [Experiment 'p4_2_d_adjacent_duplicates'] [FINE]: Saving program.dfy
+[18/12/25 09:29:24.277] [Experiment 'p4_2_d_adjacent_duplicates'] [FINE]: Saved 1497 characters to file program.dfy
+[18/12/25 09:29:24.277] [Experiment 'p4_2_d_adjacent_duplicates'] [INFO]: Context is treated as being fully enabled, meaning that subsequent prompts do not include the full code.
+[18/12/25 09:29:24.277] [Experiment 'p4_2_d_adjacent_duplicates'] [INFO]: Checking the method for the presence of the 'assume' keyword...
+[18/12/25 09:29:24.277] [Experiment 'p4_2_d_adjacent_duplicates'] [INFO]: Calling dafny to resolve the generated method...
+[18/12/25 09:29:24.610] [Experiment 'p4_2_d_adjacent_duplicates'] [INFO]: Program exited with code 0
+[18/12/25 09:29:24.610] [Experiment 'p4_2_d_adjacent_duplicates'] [INFO]: Program stdout: 
+Dafny program verifier did not attempt verification
+[18/12/25 09:29:24.610] [Experiment 'p4_2_d_adjacent_duplicates'] [INFO]: Calling dafny to resolve the generated method, but with warnings allowed...
+[18/12/25 09:29:24.941] [Experiment 'p4_2_d_adjacent_duplicates'] [INFO]: Program exited with code 0
+[18/12/25 09:29:24.941] [Experiment 'p4_2_d_adjacent_duplicates'] [INFO]: Program stdout: 
+Dafny program verifier did not attempt verification
+[18/12/25 09:29:24.941] [Experiment 'p4_2_d_adjacent_duplicates'] [INFO]: Resolution passes without warnings.
+[18/12/25 09:29:24.941] [Experiment 'p4_2_d_adjacent_duplicates'] [INFO]: Dafny resolution check passed.
+[18/12/25 09:29:24.941] [Experiment 'p4_2_d_adjacent_duplicates'] [INFO]: Calling dafny to verify the generated method...
+[18/12/25 09:29:25.613] [Experiment 'p4_2_d_adjacent_duplicates'] [SEVERE]: Program exited with code 4
+[18/12/25 09:29:25.613] [Experiment 'p4_2_d_adjacent_duplicates'] [SEVERE]: Program stdout: problem_data/p4_2_d_adjacent_duplicates/program.dfy(15,0): Error: a postcondition could not be proved on this return path
+   |
+15 | {
+   | ^
+
+problem_data/p4_2_d_adjacent_duplicates/program.dfy(12,9): Related location: this is the postcondition that could not be proved
+   |
+12 | 	ensures forall i :: 0 <= i < |inputs| - 1 && inputs[i] == inputs[i + 1] ==> inputs[i] in duplicates
+   |          ^^^^^^
+
+problem_data/p4_2_d_adjacent_duplicates/program.dfy(15,0): Error: a postcondition could not be proved on this return path
+   |
+15 | {
+   | ^
+
+problem_data/p4_2_d_adjacent_duplicates/program.dfy(14,9): Related location: this is the postcondition that could not be proved
+   |
+14 | 	ensures forall d :: d in duplicates ==> exists i, j :: 0 <= i < j < |inputs| && contiguous_duplicates(inputs, i, j, d) == true
+   |          ^^^^^^
+
+
+Dafny program verifier finished with 2 verified, 2 errors
+[18/12/25 09:29:25.613] [Experiment 'p4_2_d_adjacent_duplicates'] [WARNING]: Failed to verify the generated method. Preparing GenAI prompt to fix...
+[18/12/25 09:29:25.613] [Experiment 'p4_2_d_adjacent_duplicates'] [INFO]: There are 17771 left in the jar, for the rest of this experiment.
+[18/12/25 09:29:25.613] [Experiment 'p4_2_d_adjacent_duplicates'] [INFO]: Previous iteration lasted 4786ms
+[18/12/25 09:29:25.613] [Experiment 'p4_2_d_adjacent_duplicates'] [INFO]: Querrying GenAI...
+[18/12/25 09:29:25.613] [Experiment 'p4_2_d_adjacent_duplicates'] [FINE]: Constructing message for GenAI
+[18/12/25 09:29:25.613] [Experiment 'p4_2_d_adjacent_duplicates'] [INFO]: Context is on, attaching 11 previous messages in the request to GenAI.
+[18/12/25 09:29:25.613] [Experiment 'p4_2_d_adjacent_duplicates'] [INFO]: A reasoning model is chosen, but no reasoning effort value is set. Setting reasoning to 'medium'
+[18/12/25 09:29:25.613] [Experiment 'p4_2_d_adjacent_duplicates'] [FINE]: Setting max tokens for the request to 17771
+[18/12/25 09:29:25.613] [Experiment 'p4_2_d_adjacent_duplicates'] [FINE]: Using model gpt-5.1-chat-latest. Awaiting response...
+[18/12/25 09:29:29.592] [Experiment 'p4_2_d_adjacent_duplicates'] [FINE]: Got response with 899 characters.
+[18/12/25 09:29:29.592] [Experiment 'p4_2_d_adjacent_duplicates'] [FINE]: Saving gen_ai_messages.json
+[18/12/25 09:29:29.593] [Experiment 'p4_2_d_adjacent_duplicates'] [FINE]: Saved 29009 characters to file gen_ai_messages.json
+[18/12/25 09:29:29.593] [Experiment 'p4_2_d_adjacent_duplicates'] [FINE]: Saving gen_ai_messages_simple.json
+[18/12/25 09:29:29.593] [Experiment 'p4_2_d_adjacent_duplicates'] [FINE]: Saved 16426 characters to file gen_ai_messages_simple.json
+[18/12/25 09:29:29.593] [Experiment 'p4_2_d_adjacent_duplicates'] [INFO]: Converting GenAI response to method...
+[18/12/25 09:29:29.593] [Experiment 'p4_2_d_adjacent_duplicates'] [FINE]: Saving program.dfy
+[18/12/25 09:29:29.593] [Experiment 'p4_2_d_adjacent_duplicates'] [FINE]: Saved 1621 characters to file program.dfy
+[18/12/25 09:29:29.593] [Experiment 'p4_2_d_adjacent_duplicates'] [INFO]: Context is treated as being fully enabled, meaning that subsequent prompts do not include the full code.
+[18/12/25 09:29:29.593] [Experiment 'p4_2_d_adjacent_duplicates'] [INFO]: Checking the method for the presence of the 'assume' keyword...
+[18/12/25 09:29:29.594] [Experiment 'p4_2_d_adjacent_duplicates'] [INFO]: Calling dafny to resolve the generated method...
+[18/12/25 09:29:29.935] [Experiment 'p4_2_d_adjacent_duplicates'] [SEVERE]: Program exited with code 2
+[18/12/25 09:29:29.936] [Experiment 'p4_2_d_adjacent_duplicates'] [SEVERE]: Program stdout: problem_data/p4_2_d_adjacent_duplicates/program.dfy(23,46): Warning: Could not find a trigger for this quantifier. Without a trigger, the quantifier may cause brittle verification. To silence this warning, add an explicit trigger using the {:trigger} attribute. For more information, see the section on quantifier instantiation rules in the reference manual.
+   |
+23 |     invariant forall d :: d in duplicates ==> exists k :: 0 <= k < |inputs| - 1 && contiguous_duplicates(inputs, k, k+1, d)
+   |                                               ^^^^^^
+
+Compilation failed because warnings were found and --allow-warnings is false
+[18/12/25 09:29:29.936] [Experiment 'p4_2_d_adjacent_duplicates'] [INFO]: Calling dafny to resolve the generated method, but with warnings allowed...
+[18/12/25 09:29:30.265] [Experiment 'p4_2_d_adjacent_duplicates'] [INFO]: Program exited with code 0
+[18/12/25 09:29:30.265] [Experiment 'p4_2_d_adjacent_duplicates'] [INFO]: Program stdout: problem_data/p4_2_d_adjacent_duplicates/program.dfy(23,46): Warning: Could not find a trigger for this quantifier. Without a trigger, the quantifier may cause brittle verification. To silence this warning, add an explicit trigger using the {:trigger} attribute. For more information, see the section on quantifier instantiation rules in the reference manual.
+   |
+23 |     invariant forall d :: d in duplicates ==> exists k :: 0 <= k < |inputs| - 1 && contiguous_duplicates(inputs, k, k+1, d)
+   |                                               ^^^^^^
+
+
+Dafny program verifier did not attempt verification
+[18/12/25 09:29:30.265] [Experiment 'p4_2_d_adjacent_duplicates'] [INFO]: Resolution fails as a result of a warning, but passes with warnings disabled.
+[18/12/25 09:29:30.265] [Experiment 'p4_2_d_adjacent_duplicates'] [WARNING]: Treating resolution as failed for the generated method. Preparing GenAI prompt to fix...
+[18/12/25 09:29:30.265] [Experiment 'p4_2_d_adjacent_duplicates'] [INFO]: There are 13668 left in the jar, for the rest of this experiment.
+[18/12/25 09:29:30.265] [Experiment 'p4_2_d_adjacent_duplicates'] [INFO]: Previous iteration lasted 4652ms
+[18/12/25 09:29:30.265] [Experiment 'p4_2_d_adjacent_duplicates'] [INFO]: Querrying GenAI...
+[18/12/25 09:29:30.265] [Experiment 'p4_2_d_adjacent_duplicates'] [FINE]: Constructing message for GenAI
+[18/12/25 09:29:30.265] [Experiment 'p4_2_d_adjacent_duplicates'] [INFO]: Context is on, attaching 13 previous messages in the request to GenAI.
+[18/12/25 09:29:30.265] [Experiment 'p4_2_d_adjacent_duplicates'] [INFO]: A reasoning model is chosen, but no reasoning effort value is set. Setting reasoning to 'medium'
+[18/12/25 09:29:30.265] [Experiment 'p4_2_d_adjacent_duplicates'] [FINE]: Setting max tokens for the request to 13668
+[18/12/25 09:29:30.265] [Experiment 'p4_2_d_adjacent_duplicates'] [FINE]: Using model gpt-5.1-chat-latest. Awaiting response...
+[18/12/25 09:29:35.169] [Experiment 'p4_2_d_adjacent_duplicates'] [FINE]: Got response with 774 characters.
+[18/12/25 09:29:35.169] [Experiment 'p4_2_d_adjacent_duplicates'] [FINE]: Saving gen_ai_messages.json
+[18/12/25 09:29:35.169] [Experiment 'p4_2_d_adjacent_duplicates'] [FINE]: Saved 33195 characters to file gen_ai_messages.json
+[18/12/25 09:29:35.169] [Experiment 'p4_2_d_adjacent_duplicates'] [FINE]: Saving gen_ai_messages_simple.json
+[18/12/25 09:29:35.170] [Experiment 'p4_2_d_adjacent_duplicates'] [FINE]: Saved 18568 characters to file gen_ai_messages_simple.json
+[18/12/25 09:29:35.170] [Experiment 'p4_2_d_adjacent_duplicates'] [INFO]: Converting GenAI response to method...
+[18/12/25 09:29:35.170] [Experiment 'p4_2_d_adjacent_duplicates'] [FINE]: Saving program.dfy
+[18/12/25 09:29:35.170] [Experiment 'p4_2_d_adjacent_duplicates'] [FINE]: Saved 1497 characters to file program.dfy
+[18/12/25 09:29:35.170] [Experiment 'p4_2_d_adjacent_duplicates'] [INFO]: Context is treated as being fully enabled, meaning that subsequent prompts do not include the full code.
+[18/12/25 09:29:35.170] [Experiment 'p4_2_d_adjacent_duplicates'] [INFO]: Checking the method for the presence of the 'assume' keyword...
+[18/12/25 09:29:35.170] [Experiment 'p4_2_d_adjacent_duplicates'] [INFO]: Calling dafny to resolve the generated method...
+[18/12/25 09:29:35.504] [Experiment 'p4_2_d_adjacent_duplicates'] [INFO]: Program exited with code 0
+[18/12/25 09:29:35.504] [Experiment 'p4_2_d_adjacent_duplicates'] [INFO]: Program stdout: 
+Dafny program verifier did not attempt verification
+[18/12/25 09:29:35.504] [Experiment 'p4_2_d_adjacent_duplicates'] [INFO]: Calling dafny to resolve the generated method, but with warnings allowed...
+[18/12/25 09:29:35.833] [Experiment 'p4_2_d_adjacent_duplicates'] [INFO]: Program exited with code 0
+[18/12/25 09:29:35.834] [Experiment 'p4_2_d_adjacent_duplicates'] [INFO]: Program stdout: 
+Dafny program verifier did not attempt verification
+[18/12/25 09:29:35.834] [Experiment 'p4_2_d_adjacent_duplicates'] [INFO]: Resolution passes without warnings.
+[18/12/25 09:29:35.834] [Experiment 'p4_2_d_adjacent_duplicates'] [INFO]: Dafny resolution check passed.
+[18/12/25 09:29:35.834] [Experiment 'p4_2_d_adjacent_duplicates'] [INFO]: Calling dafny to verify the generated method...
+[18/12/25 09:29:36.500] [Experiment 'p4_2_d_adjacent_duplicates'] [SEVERE]: Program exited with code 4
+[18/12/25 09:29:36.500] [Experiment 'p4_2_d_adjacent_duplicates'] [SEVERE]: Program stdout: problem_data/p4_2_d_adjacent_duplicates/program.dfy(15,0): Error: a postcondition could not be proved on this return path
+   |
+15 | {
+   | ^
+
+problem_data/p4_2_d_adjacent_duplicates/program.dfy(12,9): Related location: this is the postcondition that could not be proved
+   |
+12 | 	ensures forall i :: 0 <= i < |inputs| - 1 && inputs[i] == inputs[i + 1] ==> inputs[i] in duplicates
+   |          ^^^^^^
+
+problem_data/p4_2_d_adjacent_duplicates/program.dfy(15,0): Error: a postcondition could not be proved on this return path
+   |
+15 | {
+   | ^
+
+problem_data/p4_2_d_adjacent_duplicates/program.dfy(14,9): Related location: this is the postcondition that could not be proved
+   |
+14 | 	ensures forall d :: d in duplicates ==> exists i, j :: 0 <= i < j < |inputs| && contiguous_duplicates(inputs, i, j, d) == true
+   |          ^^^^^^
+
+
+Dafny program verifier finished with 2 verified, 2 errors
+[18/12/25 09:29:36.500] [Experiment 'p4_2_d_adjacent_duplicates'] [WARNING]: Failed to verify the generated method. Preparing GenAI prompt to fix...
+[18/12/25 09:29:36.500] [Experiment 'p4_2_d_adjacent_duplicates'] [INFO]: There are 9102 left in the jar, for the rest of this experiment.
+[18/12/25 09:29:36.500] [Experiment 'p4_2_d_adjacent_duplicates'] [INFO]: Previous iteration lasted 6235ms
+[18/12/25 09:29:36.500] [Experiment 'p4_2_d_adjacent_duplicates'] [INFO]: Querrying GenAI...
+[18/12/25 09:29:36.500] [Experiment 'p4_2_d_adjacent_duplicates'] [FINE]: Constructing message for GenAI
+[18/12/25 09:29:36.500] [Experiment 'p4_2_d_adjacent_duplicates'] [INFO]: Context is on, attaching 15 previous messages in the request to GenAI.
+[18/12/25 09:29:36.500] [Experiment 'p4_2_d_adjacent_duplicates'] [INFO]: A reasoning model is chosen, but no reasoning effort value is set. Setting reasoning to 'medium'
+[18/12/25 09:29:36.500] [Experiment 'p4_2_d_adjacent_duplicates'] [FINE]: Setting max tokens for the request to 9102
+[18/12/25 09:29:36.500] [Experiment 'p4_2_d_adjacent_duplicates'] [FINE]: Using model gpt-5.1-chat-latest. Awaiting response...
+[18/12/25 09:29:41.738] [Experiment 'p4_2_d_adjacent_duplicates'] [FINE]: Got response with 763 characters.
+[18/12/25 09:29:41.738] [Experiment 'p4_2_d_adjacent_duplicates'] [FINE]: Saving gen_ai_messages.json
+[18/12/25 09:29:41.739] [Experiment 'p4_2_d_adjacent_duplicates'] [FINE]: Saved 37706 characters to file gen_ai_messages.json
+[18/12/25 09:29:41.739] [Experiment 'p4_2_d_adjacent_duplicates'] [FINE]: Saving gen_ai_messages_simple.json
+[18/12/25 09:29:41.739] [Experiment 'p4_2_d_adjacent_duplicates'] [FINE]: Saved 21043 characters to file gen_ai_messages_simple.json
+[18/12/25 09:29:41.739] [Experiment 'p4_2_d_adjacent_duplicates'] [INFO]: Converting GenAI response to method...
+[18/12/25 09:29:41.739] [Experiment 'p4_2_d_adjacent_duplicates'] [FINE]: Saving program.dfy
+[18/12/25 09:29:41.739] [Experiment 'p4_2_d_adjacent_duplicates'] [FINE]: Saved 1486 characters to file program.dfy
+[18/12/25 09:29:41.739] [Experiment 'p4_2_d_adjacent_duplicates'] [INFO]: Context is treated as being fully enabled, meaning that subsequent prompts do not include the full code.
+[18/12/25 09:29:41.739] [Experiment 'p4_2_d_adjacent_duplicates'] [INFO]: Checking the method for the presence of the 'assume' keyword...
+[18/12/25 09:29:41.740] [Experiment 'p4_2_d_adjacent_duplicates'] [INFO]: Calling dafny to resolve the generated method...
+[18/12/25 09:29:42.068] [Experiment 'p4_2_d_adjacent_duplicates'] [INFO]: Program exited with code 0
+[18/12/25 09:29:42.068] [Experiment 'p4_2_d_adjacent_duplicates'] [INFO]: Program stdout: 
+Dafny program verifier did not attempt verification
+[18/12/25 09:29:42.068] [Experiment 'p4_2_d_adjacent_duplicates'] [INFO]: Calling dafny to resolve the generated method, but with warnings allowed...
+[18/12/25 09:29:42.399] [Experiment 'p4_2_d_adjacent_duplicates'] [INFO]: Program exited with code 0
+[18/12/25 09:29:42.399] [Experiment 'p4_2_d_adjacent_duplicates'] [INFO]: Program stdout: 
+Dafny program verifier did not attempt verification
+[18/12/25 09:29:42.399] [Experiment 'p4_2_d_adjacent_duplicates'] [INFO]: Resolution passes without warnings.
+[18/12/25 09:29:42.399] [Experiment 'p4_2_d_adjacent_duplicates'] [INFO]: Dafny resolution check passed.
+[18/12/25 09:29:42.399] [Experiment 'p4_2_d_adjacent_duplicates'] [INFO]: Calling dafny to verify the generated method...
+[18/12/25 09:29:43.073] [Experiment 'p4_2_d_adjacent_duplicates'] [SEVERE]: Program exited with code 4
+[18/12/25 09:29:43.073] [Experiment 'p4_2_d_adjacent_duplicates'] [SEVERE]: Program stdout: problem_data/p4_2_d_adjacent_duplicates/program.dfy(15,0): Error: a postcondition could not be proved on this return path
+   |
+15 | {
+   | ^
+
+problem_data/p4_2_d_adjacent_duplicates/program.dfy(12,9): Related location: this is the postcondition that could not be proved
+   |
+12 | 	ensures forall i :: 0 <= i < |inputs| - 1 && inputs[i] == inputs[i + 1] ==> inputs[i] in duplicates
+   |          ^^^^^^
+
+problem_data/p4_2_d_adjacent_duplicates/program.dfy(15,0): Error: a postcondition could not be proved on this return path
+   |
+15 | {
+   | ^
+
+problem_data/p4_2_d_adjacent_duplicates/program.dfy(13,9): Related location: this is the postcondition that could not be proved
+   |
+13 | 	ensures forall d :: d in duplicates ==> exists i :: 0 <= i < |inputs| - 1 && inputs[i] == inputs[i + 1] && inputs[i] == d
+   |          ^^^^^^
+
+problem_data/p4_2_d_adjacent_duplicates/program.dfy(15,0): Error: a postcondition could not be proved on this return path
+   |
+15 | {
+   | ^
+
+problem_data/p4_2_d_adjacent_duplicates/program.dfy(14,9): Related location: this is the postcondition that could not be proved
+   |
+14 | 	ensures forall d :: d in duplicates ==> exists i, j :: 0 <= i < j < |inputs| && contiguous_duplicates(inputs, i, j, d) == true
+   |          ^^^^^^
+
+problem_data/p4_2_d_adjacent_duplicates/program.dfy(22,91): Error: index out of range
+   |
+22 |     invariant forall d :: d in duplicates ==> exists k :: 0 <= k < i && inputs[k] == inputs[k+1] && inputs[k] == d
+   |                                                                                            ^
+
+
+Dafny program verifier finished with 2 verified, 4 errors
+[18/12/25 09:29:43.073] [Experiment 'p4_2_d_adjacent_duplicates'] [WARNING]: Failed to verify the generated method. Preparing GenAI prompt to fix...
+[18/12/25 09:29:43.073] [Experiment 'p4_2_d_adjacent_duplicates'] [WARNING]: Experiment stopped due to too many GenAI interactions.
+[18/12/25 09:29:43.073] [Experiment 'p4_2_d_adjacent_duplicates'] [FINE]: Saving gen_ai_messages.json
+[18/12/25 09:29:43.074] [Experiment 'p4_2_d_adjacent_duplicates'] [FINE]: Saved 37706 characters to file gen_ai_messages.json
+[18/12/25 09:29:43.074] [Experiment 'p4_2_d_adjacent_duplicates'] [FINE]: Saving gen_ai_messages_simple.json
+[18/12/25 09:29:43.074] [Experiment 'p4_2_d_adjacent_duplicates'] [FINE]: Saved 21043 characters to file gen_ai_messages_simple.json
+[18/12/25 09:29:43.075] [Experiment 'p4_2_d_adjacent_duplicates'] [FINE]: Saving experiment_result.json
+[18/12/25 09:29:43.075] [Experiment 'p4_2_d_adjacent_duplicates'] [FINE]: Saved 1590 characters to file experiment_result.json
+[18/12/25 09:29:43.866] [Experiment 'p4_2_d_adjacent_duplicates'] [INFO]: Compilation of experiment report tex file successful

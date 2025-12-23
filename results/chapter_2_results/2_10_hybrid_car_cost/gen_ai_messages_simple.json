@@ -1,0 +1,10 @@
+[
+  {
+    "role": "user",
+    "content": "You are given the following task to perform in Dafny:\n\nWrite a method that helps a person decide whether to buy a hybrid car. Your methods\u0027s inputs should be: the cost of a new car, the estimated miles driven per year, the estimated gas price, the efficiency in miles per gallon, the estimated resale value after 5 years. Compute the total cost of owning the car for five years.\n\nThe signature should be:\n\nmethod hybrid_car_cost(new_car_cost: real, miles_per_year: real, gas_price: real, mpg: real, resale_value: real) returns (total_cost: real)\n\nThe method should respect the following contract:\n\nrequires 0.0 \u003c mpg, ensures total_cost \u003d\u003d new_car_cost + (miles_per_year / mpg) * gas_price * 5.0 - resale_value\n\nProduce and show only the Dafny body of this method, including the curly braces that surround it. Do not show the signature nor contract. You must not use \u0027assume\u0027 anywhere in your code.\n"
+  },
+  {
+    "role": "assistant",
+    "content": "{\"method_body\":\"{\\n  total_cost :\u003d new_car_cost + (miles_per_year / mpg) * gas_price * 5.0 - resale_value;\\n}\"}"
+  }
+]

@@ -1,0 +1,70 @@
+This is XeTeX, Version 3.141592653-2.6-0.999995 (MiKTeX 24.1) (preloaded format=xelatex.fmt)
+ restricted \write18 enabled.
+entering extended mode
+(experiment_output.tex
+LaTeX2e <2023-11-01> patch level 1
+L3 programming layer <2024-02-13>
+(C:\Users\Filippos\AppData\Local\Programs\MiKTeX\tex/latex/base\article.cls
+Document Class: article 2023/05/17 v1.4n Standard LaTeX document class
+(C:\Users\Filippos\AppData\Local\Programs\MiKTeX\tex/latex/base\size10.clo))
+(C:\Users\Filippos\AppData\Local\Programs\MiKTeX\tex/latex/lm\lmodern.sty)
+(C:\Users\Filippos\AppData\Local\Programs\MiKTeX\tex/latex/amsmath\amsmath.sty
+For additional information on amsmath, use the `?' option.
+(C:\Users\Filippos\AppData\Local\Programs\MiKTeX\tex/latex/amsmath\amstext.sty
+(C:\Users\Filippos\AppData\Local\Programs\MiKTeX\tex/latex/amsmath\amsgen.sty))
+ (C:\Users\Filippos\AppData\Local\Programs\MiKTeX\tex/latex/amsmath\amsbsy.sty)
+ (C:\Users\Filippos\AppData\Local\Programs\MiKTeX\tex/latex/amsmath\amsopn.sty)
+)
+(C:\Users\Filippos\AppData\Local\Programs\MiKTeX\tex/latex/listings\listings.st
+y
+(C:\Users\Filippos\AppData\Local\Programs\MiKTeX\tex/latex/graphics\keyval.sty)
+
+(C:\Users\Filippos\AppData\Local\Programs\MiKTeX\tex/latex/listings\lstmisc.sty
+)
+(C:\Users\Filippos\AppData\Local\Programs\MiKTeX\tex/latex/listings\listings.cf
+g))
+(C:\Users\Filippos\AppData\Local\Programs\MiKTeX\tex/latex/preprint\fullpage.st
+y)
+(C:\Users\Filippos\AppData\Local\Programs\MiKTeX\tex/latex/parskip\parskip.sty
+(C:\Users\Filippos\AppData\Local\Programs\MiKTeX\tex/latex/kvoptions\kvoptions.
+sty
+(C:\Users\Filippos\AppData\Local\Programs\MiKTeX\tex/generic/ltxcmds\ltxcmds.st
+y)
+(C:\Users\Filippos\AppData\Local\Programs\MiKTeX\tex/latex/kvsetkeys\kvsetkeys.
+sty))
+(C:\Users\Filippos\AppData\Local\Programs\MiKTeX\tex/latex/etoolbox\etoolbox.st
+y))
+(C:\Users\Filippos\AppData\Local\Programs\MiKTeX\tex/latex/xcolor\xcolor.sty
+(C:\Users\Filippos\AppData\Local\Programs\MiKTeX\tex/latex/graphics-cfg\color.c
+fg)
+(C:\Users\Filippos\AppData\Local\Programs\MiKTeX\tex/latex/graphics-def\xetex.d
+ef)
+(C:\Users\Filippos\AppData\Local\Programs\MiKTeX\tex/latex/graphics\mathcolor.l
+tx))
+(C:\Users\Filippos\AppData\Local\Programs\MiKTeX\tex/latex/l3backend\l3backend-
+xetex.def)
+No file experiment_output.aux.
+(C:\Users\Filippos\AppData\Local\Programs\MiKTeX\tex/latex/base\ts1cmr.fd)
+(C:\Users\Filippos\AppData\Local\Programs\MiKTeX\tex/latex/lm\ot1lmr.fd)
+(C:\Users\Filippos\AppData\Local\Programs\MiKTeX\tex/latex/lm\omllmm.fd)
+(C:\Users\Filippos\AppData\Local\Programs\MiKTeX\tex/latex/lm\omslmsy.fd)
+(C:\Users\Filippos\AppData\Local\Programs\MiKTeX\tex/latex/lm\omxlmex.fd)
+Overfull \hbox (27.74498pt too wide) in paragraph at lines 33--34
+[]\TU/lmtt/m/n/10 if c == 'C' then if t < 0.0 then s == "solid" else if t == 0.
+0 then s == "solid or liquid"
+
+Overfull \hbox (32.99498pt too wide) in paragraph at lines 33--34
+\TU/lmtt/m/n/10 else if 0.0 < t < 100.0 then s == "liquid" else if t == 100.0 t
+hen s == "liquid or gaseous"
+
+Overfull \hbox (22.49498pt too wide) in paragraph at lines 33--34
+\TU/lmtt/m/n/10 else s == "gaseous" else if t < 32.0 then s == "solid" else if 
+t == 32.0 then s == "solid
+
+Overfull \hbox (32.99498pt too wide) in paragraph at lines 33--34
+\TU/lmtt/m/n/10 or liquid" else if 32.0 < t < 212.0 then s == "liquid" else if 
+t == 212.0 then s == "liquid
+[1] [2] [3] [4] (experiment_output.aux) )
+(see the transcript file for additional information)
+Output written on experiment_output.pdf (4 pages).
+Transcript written on experiment_output.log.

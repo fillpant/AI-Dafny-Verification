@@ -1,0 +1,91 @@
+\documentclass{article}
+\usepackage{lmodern}
+\usepackage{amsmath}
+\usepackage{listings}
+\usepackage{fullpage}
+\usepackage{parskip}
+\usepackage{xcolor}
+\lstset{
+	basicstyle=\ttfamily,
+	columns=fullflexible,
+	frame=single,
+	breaklines=true,
+	postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},
+}
+\begin{document}
+\title{Experiment `P\_2\_3\_powerFunctions' Results}
+\author{\today}
+\date{}
+\maketitle
+\textbf{Experiment outcome: }SUCCESS
+\\\textbf{Bad responses: }0
+\\\textbf{Responses containing}~\texttt{assume}~\textbf{: }0
+\\\textbf{Resolution attempts: }1
+\\\textbf{Hard fails (resolution): }0
+\\\textbf{Soft fails (resolution): }0
+\\\textbf{Verification attempts: }1
+\section*{Problem Specification}
+\textbf{Problem name: }P\_2\_3\_powerFunctions
+\\\textbf{Natural language statement: }Write a method that takes a number and returns its square, cube, and fourth power.
+\\\textbf{Method signature: }power\_functions(x: int) returns (sq: int, cube : int, fourth: int)
+\subsection*{Ensures}
+\begin{itemize}
+\item \texttt{sq == x * x}
+\item \texttt{cube == x * x * x}
+\item \texttt{fourth == x * x * x * x}
+\end{itemize}
+\clearpage
+\section*{GenAI interactions}
+Below you will find all interactions between the `user' (program) and the `assistant' (OpenAI).
+\subsection*{Program $\rightarrow$ GenAI}
+\begin{lstlisting}
+You are given the following task to perform in Dafny:
+
+Write a method that takes a number and returns its square, cube, and fourth power.
+
+The signature should be:
+
+method power_functions(x: int) returns (sq: int, cube : int, fourth: int)
+
+The method should respect the following contract:
+
+ensures sq == x * x, ensures cube == x * x * x, ensures fourth == x * x * x * x
+
+Produce and show only the Dafny body of this method, including the curly braces that surround it. Do not show the signature nor contract. You must not use 'assume' anywhere in your code.
+
+\end{lstlisting}
+\subsection*{GenAI $\rightarrow$ Program}
+\textbf{System fingerprint: }
+\\\textbf{ID: }chatcmpl-Co4OxJ0KZHNUX9G3qfJ2SYClpYVgI
+\\\textbf{Model: }gpt-5.1-chat-latest
+\\\textbf{Created at: }1766049355
+\\\textbf{Finish reason: }stop
+\\\textbf{Usage: }302 tokens in, and 50 tokens out
+\begin{lstlisting}
+{
+  sq := x * x;
+  cube := x * x * x;
+  fourth := x * x * x * x;
+}
+\end{lstlisting}
+\section*{Final Program}
+\begin{lstlisting}
+method power_functions(x: int) returns (sq: int, cube : int, fourth: int)
+	ensures sq == x * x
+	ensures cube == x * x * x
+	ensures fourth == x * x * x * x
+{
+  sq := x * x;
+  cube := x * x * x;
+  fourth := x * x * x * x;
+}
+\end{lstlisting}
+\section*{Total Token Usage}
+\textbf{Input tokens: }302
+\\\textbf{Output tokens: }50
+\\\textbf{Reasoning tokens: }0
+\\\textbf{Sum of `total tokens': }352
+\section*{Experiment Timings}
+\textbf{Overall Experiment} started at 1766049357586, ended at 1766049360178, lasting 2592ms (2.59 seconds)
+\\\textbf{Iteration \#1} started at 1766049357586, ended at 1766049360178, lasting 2592ms (2.59 seconds)
+\end{document}

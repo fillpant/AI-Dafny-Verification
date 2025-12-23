@@ -1,0 +1,666 @@
+\documentclass{article}
+\usepackage{lmodern}
+\usepackage{amsmath}
+\usepackage{listings}
+\usepackage{fullpage}
+\usepackage{parskip}
+\usepackage{xcolor}
+\lstset{
+	basicstyle=\ttfamily,
+	columns=fullflexible,
+	frame=single,
+	breaklines=true,
+	postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},
+}
+\begin{document}
+\title{Experiment `p4\_5\_analyze\_floats' Results}
+\author{\today}
+\date{}
+\maketitle
+\textbf{Experiment outcome: }FAILURE\_VERIFY
+\\\textbf{Bad responses: }0
+\\\textbf{Responses containing}~\texttt{assume}~\textbf{: }0
+\\\textbf{Resolution attempts: }8
+\\\textbf{Hard fails (resolution): }0
+\\\textbf{Soft fails (resolution): }1
+\\\textbf{Verification attempts: }7
+\section*{Problem Specification}
+\textbf{Problem name: }p4\_5\_analyze\_floats
+\\\textbf{Natural language statement: }Write a method that takes a sequence of floatingpoint numbers and returns: - the average of the values. - the smallest of the values. - the largest of the values. - the range, that is the difference between the smallest and largest.
+\\\textbf{Method signature: }p4\_5\_analyze\_floats(values: seq<real>) returns (average: real, min: real, max: real, range: real)
+\subsection*{Ensures}
+\begin{itemize}
+\item \texttt{average == (sum(values) / |values| as real)}
+\item \texttt{forall v :: v in values ==> min <= v}
+\item \texttt{forall v :: v in values ==> max >= v}
+\item \texttt{range == max - min}
+\item \texttt{exists v :: v in values \&\& min == v}
+\item \texttt{exists v :: v in values \&\& max == v}
+\end{itemize}
+\subsection*{Requires}
+\begin{itemize}
+\item \texttt{0 < |values|}
+\end{itemize}
+\subsection*{Functional Code Given}
+\begin{lstlisting}
+function sum(values: seq<real>): real
+{
+  if |values| == 0 then 0.0
+  else values[0] + sum(values[1..])
+}
+\end{lstlisting}
+\clearpage
+\section*{GenAI interactions}
+Below you will find all interactions between the `user' (program) and the `assistant' (OpenAI).
+\subsection*{Program $\rightarrow$ GenAI}
+\begin{lstlisting}
+You are given the following task to perform in Dafny:
+
+Write a method that takes a sequence of floatingpoint numbers and returns: - the average of the values. - the smallest of the values. - the largest of the values. - the range, that is the difference between the smallest and largest.
+
+The signature should be:
+
+method p4_5_analyze_floats(values: seq<real>) returns (average: real, min: real, max: real, range: real)
+
+The method should respect the following contract:
+
+requires 0 < |values|, ensures average == (sum(values) / |values| as real), ensures forall v :: v in values ==> min <= v, ensures forall v :: v in values ==> max >= v, ensures range == max - min, ensures exists v :: v in values && min == v, ensures exists v :: v in values && max == v
+
+The contract uses the following dafny code:
+
+function sum(values: seq<real>): real
+{
+  if |values| == 0 then 0.0
+  else values[0] + sum(values[1..])
+}
+
+These function(s) must not be used in your implementation of the method.
+
+Produce and show only the Dafny body of this method, including the curly braces that surround it. Do not show the signature nor contract. You must not use 'assume' anywhere in your code.
+
+\end{lstlisting}
+\subsection*{GenAI $\rightarrow$ Program}
+\textbf{System fingerprint: }
+\\\textbf{ID: }chatcmpl-Co4e6sDiKkkaL5GGvtVoYsP9xvswa
+\\\textbf{Model: }gpt-5.1-chat-latest
+\\\textbf{Created at: }1766050294
+\\\textbf{Finish reason: }stop
+\\\textbf{Usage: }614 tokens in, and 318 tokens out
+\begin{lstlisting}
+{
+  var s: real := 0.0;
+  min := values[0];
+  max := values[0];
+  var i: int := 0;
+  while i < |values|
+    invariant 0 <= i <= |values|
+    invariant s == sum(values[..i])
+    invariant forall v :: v in values[..i] ==> min <= v
+    invariant forall v :: v in values[..i] ==> max >= v
+    invariant (exists v :: v in values[..i] && min == v) || i == 0
+    invariant (exists v :: v in values[..i] && max == v) || i == 0
+  {
+    s := s + values[i];
+    if values[i] < min {
+      min := values[i];
+    }
+    if values[i] > max {
+      max := values[i];
+    }
+    i := i + 1;
+  }
+  average := s / (|values| as real);
+  range := max - min;
+}
+\end{lstlisting}
+\subsection*{Program $\rightarrow$ GenAI}
+\begin{lstlisting}
+When using dafny verify, the below error is emitted and verify fails:
+
+problem_data/p4_5_analyze_floats/program.dfy(15,0): Error: a postcondition could not be proved on this return path
+   |
+15 | {
+   | ^
+
+problem_data/p4_5_analyze_floats/program.dfy(9,17): Related location: this is the postcondition that could not be proved
+  |
+9 | 	ensures average == (sum(values) / |values| as real)
+  |                  ^^
+
+problem_data/p4_5_analyze_floats/program.dfy(15,0): Error: a postcondition could not be proved on this return path
+   |
+15 | {
+   | ^
+
+problem_data/p4_5_analyze_floats/program.dfy(10,9): Related location: this is the postcondition that could not be proved
+   |
+10 | 	ensures forall v :: v in values ==> min <= v
+   |          ^^^^^^
+
+problem_data/p4_5_analyze_floats/program.dfy(15,0): Error: a postcondition could not be proved on this return path
+   |
+15 | {
+   | ^
+
+problem_data/p4_5_analyze_floats/program.dfy(11,9): Related location: this is the postcondition that could not be proved
+   |
+11 | 	ensures forall v :: v in values ==> max >= v
+   |          ^^^^^^
+
+problem_data/p4_5_analyze_floats/program.dfy(25,57): Error: this invariant could not be proved to be maintained by the loop
+ Related message: loop invariant violation
+   |
+25 |     invariant (exists v :: v in values[..i] && min == v) || i == 0
+   |                                                          ^^
+
+problem_data/p4_5_analyze_floats/program.dfy(26,57): Error: this invariant could not be proved to be maintained by the loop
+ Related message: loop invariant violation
+   |
+26 |     invariant (exists v :: v in values[..i] && max == v) || i == 0
+   |                                                          ^^
+
+
+Dafny program verifier finished with 2 verified, 5 errors
+
+Correct the error by altering only the method body. Produce and show only the Dafny body, including the curly braces that surround it. Do not show the signature nor contract. You must not use 'assume' anywhere in your code.
+
+\end{lstlisting}
+\subsection*{GenAI $\rightarrow$ Program}
+\textbf{System fingerprint: }
+\\\textbf{ID: }chatcmpl-Co4eBj4Q1TNVbdljwZBLOmFxcSZdq
+\\\textbf{Model: }gpt-5.1-chat-latest
+\\\textbf{Created at: }1766050299
+\\\textbf{Finish reason: }stop
+\\\textbf{Usage: }1626 tokens in, and 250 tokens out
+\begin{lstlisting}
+{
+  var s: real := 0.0;
+  min := values[0];
+  max := values[0];
+  var i: int := 0;
+  while i < |values|
+    invariant 0 <= i <= |values|
+    invariant s == sum(values[..i])
+    invariant forall v :: v in values[..i] ==> min <= v
+    invariant forall v :: v in values[..i] ==> max >= v
+    invariant exists v :: v in values[..i] ==> min == v || i == 0
+    invariant exists v :: v in values[..i] ==> max == v || i == 0
+  {
+    s := s + values[i];
+    if values[i] < min {
+      min := values[i];
+    }
+    if values[i] > max {
+      max := values[i];
+    }
+    i := i + 1;
+  }
+  average := s / (|values| as real);
+  range := max - min;
+}
+\end{lstlisting}
+\subsection*{Program $\rightarrow$ GenAI}
+\begin{lstlisting}
+When using dafny resolve, the below error is emitted and resolve fails:
+
+problem_data/p4_5_analyze_floats/program.dfy(25,14): Warning: the quantifier has the form 'exists x :: A ==> B', which most often is a typo for 'exists x :: A && B'; if you think otherwise, rewrite as 'exists x :: (A ==> B)' or 'exists x :: !A || B' to suppress this warning
+   |
+25 |     invariant exists v :: v in values[..i] ==> min == v || i == 0
+   |               ^^^^^^
+
+problem_data/p4_5_analyze_floats/program.dfy(26,14): Warning: the quantifier has the form 'exists x :: A ==> B', which most often is a typo for 'exists x :: A && B'; if you think otherwise, rewrite as 'exists x :: (A ==> B)' or 'exists x :: !A || B' to suppress this warning
+   |
+26 |     invariant exists v :: v in values[..i] ==> max == v || i == 0
+   |               ^^^^^^
+
+Compilation failed because warnings were found and --allow-warnings is false
+
+Correct the error by altering only the method body. Produce and show only the Dafny body, including the curly braces that surround it. Do not show the signature nor contract. You must not use 'assume' anywhere in your code.
+
+\end{lstlisting}
+\subsection*{GenAI $\rightarrow$ Program}
+\textbf{System fingerprint: }
+\\\textbf{ID: }chatcmpl-Co4eFUj7kxC7TgCwADe1la8IwbUnn
+\\\textbf{Model: }gpt-5.1-chat-latest
+\\\textbf{Created at: }1766050303
+\\\textbf{Finish reason: }stop
+\\\textbf{Usage: }1956 tokens in, and 318 tokens out
+\begin{lstlisting}
+{
+  var s: real := 0.0;
+  min := values[0];
+  max := values[0];
+  var i: int := 0;
+  while i < |values|
+    invariant 0 <= i <= |values|
+    invariant s == sum(values[..i])
+    invariant forall v :: v in values[..i] ==> min <= v
+    invariant forall v :: v in values[..i] ==> max >= v
+    invariant (exists v :: v in values[..i] && min == v) || i == 0
+    invariant (exists v :: v in values[..i] && max == v) || i == 0
+  {
+    s := s + values[i];
+    if values[i] < min {
+      min := values[i];
+    }
+    if values[i] > max {
+      max := values[i];
+    }
+    i := i + 1;
+  }
+  average := s / (|values| as real);
+  range := max - min;
+}
+\end{lstlisting}
+\subsection*{Program $\rightarrow$ GenAI}
+\begin{lstlisting}
+When using dafny verify, the below error is emitted and verify fails:
+
+problem_data/p4_5_analyze_floats/program.dfy(15,0): Error: a postcondition could not be proved on this return path
+   |
+15 | {
+   | ^
+
+problem_data/p4_5_analyze_floats/program.dfy(9,17): Related location: this is the postcondition that could not be proved
+  |
+9 | 	ensures average == (sum(values) / |values| as real)
+  |                  ^^
+
+problem_data/p4_5_analyze_floats/program.dfy(15,0): Error: a postcondition could not be proved on this return path
+   |
+15 | {
+   | ^
+
+problem_data/p4_5_analyze_floats/program.dfy(10,9): Related location: this is the postcondition that could not be proved
+   |
+10 | 	ensures forall v :: v in values ==> min <= v
+   |          ^^^^^^
+
+problem_data/p4_5_analyze_floats/program.dfy(15,0): Error: a postcondition could not be proved on this return path
+   |
+15 | {
+   | ^
+
+problem_data/p4_5_analyze_floats/program.dfy(11,9): Related location: this is the postcondition that could not be proved
+   |
+11 | 	ensures forall v :: v in values ==> max >= v
+   |          ^^^^^^
+
+problem_data/p4_5_analyze_floats/program.dfy(25,57): Error: this invariant could not be proved to be maintained by the loop
+ Related message: loop invariant violation
+   |
+25 |     invariant (exists v :: v in values[..i] && min == v) || i == 0
+   |                                                          ^^
+
+problem_data/p4_5_analyze_floats/program.dfy(26,57): Error: this invariant could not be proved to be maintained by the loop
+ Related message: loop invariant violation
+   |
+26 |     invariant (exists v :: v in values[..i] && max == v) || i == 0
+   |                                                          ^^
+
+
+Dafny program verifier finished with 2 verified, 5 errors
+
+Correct the error by altering only the method body. Produce and show only the Dafny body, including the curly braces that surround it. Do not show the signature nor contract. You must not use 'assume' anywhere in your code.
+
+\end{lstlisting}
+\subsection*{GenAI $\rightarrow$ Program}
+\textbf{System fingerprint: }
+\\\textbf{ID: }chatcmpl-Co4eLK1XqWMrQTDgpQhESkB22BqPg
+\\\textbf{Model: }gpt-5.1-chat-latest
+\\\textbf{Created at: }1766050309
+\\\textbf{Finish reason: }stop
+\\\textbf{Usage: }2956 tokens in, and 299 tokens out
+\begin{lstlisting}
+{
+  var s: real := 0.0;
+  min := values[0];
+  max := values[0];
+  var i: int := 0;
+  while i < |values|
+    invariant 0 <= i <= |values|
+    invariant s == sum(values[..i])
+    invariant i == 0 ==> min == values[0]
+    invariant i == 0 ==> max == values[0]
+    invariant i > 0 ==> forall v :: v in values[..i] ==> min <= v
+    invariant i > 0 ==> forall v :: v in values[..i] ==> max >= v
+    invariant i > 0 ==> exists v :: v in values[..i] && min == v
+    invariant i > 0 ==> exists v :: v in values[..i] && max == v
+  {
+    s := s + values[i];
+    if i > 0 {
+      if values[i] < min {
+        min := values[i];
+      }
+      if values[i] > max {
+        max := values[i];
+      }
+    }
+    i := i + 1;
+  }
+  average := s / (|values| as real);
+  range := max - min;
+}
+\end{lstlisting}
+\subsection*{Program $\rightarrow$ GenAI}
+\begin{lstlisting}
+When using dafny verify, the below error is emitted and verify fails:
+
+problem_data/p4_5_analyze_floats/program.dfy(15,0): Error: a postcondition could not be proved on this return path
+   |
+15 | {
+   | ^
+
+problem_data/p4_5_analyze_floats/program.dfy(9,17): Related location: this is the postcondition that could not be proved
+  |
+9 | 	ensures average == (sum(values) / |values| as real)
+  |                  ^^
+
+problem_data/p4_5_analyze_floats/program.dfy(22,16): Error: this invariant could not be proved to be maintained by the loop
+ Related message: loop invariant violation
+   |
+22 |     invariant s == sum(values[..i])
+   |                 ^^
+
+problem_data/p4_5_analyze_floats/program.dfy(25,24): Error: this invariant could not be proved to be maintained by the loop
+ Related message: loop invariant violation
+   |
+25 |     invariant i > 0 ==> forall v :: v in values[..i] ==> min <= v
+   |                         ^^^^^^
+
+problem_data/p4_5_analyze_floats/program.dfy(26,24): Error: this invariant could not be proved to be maintained by the loop
+ Related message: loop invariant violation
+   |
+26 |     invariant i > 0 ==> forall v :: v in values[..i] ==> max >= v
+   |                         ^^^^^^
+
+problem_data/p4_5_analyze_floats/program.dfy(27,24): Error: this invariant could not be proved to be maintained by the loop
+ Related message: loop invariant violation
+   |
+27 |     invariant i > 0 ==> exists v :: v in values[..i] && min == v
+   |                         ^^^^^^
+
+
+Dafny program verifier finished with 2 verified, 5 errors
+
+Correct the error by altering only the method body. Produce and show only the Dafny body, including the curly braces that surround it. Do not show the signature nor contract. You must not use 'assume' anywhere in your code.
+
+\end{lstlisting}
+\subsection*{GenAI $\rightarrow$ Program}
+\textbf{System fingerprint: }
+\\\textbf{ID: }chatcmpl-Co4eQpZtmr5AwJWPSOsksp4jDeuv9
+\\\textbf{Model: }gpt-5.1-chat-latest
+\\\textbf{Created at: }1766050314
+\\\textbf{Finish reason: }stop
+\\\textbf{Usage: }3639 tokens in, and 234 tokens out
+\begin{lstlisting}
+{
+  var s: real := 0.0;
+  min := values[0];
+  max := values[0];
+  var i: int := 0;
+  while i < |values|
+    invariant 0 <= i <= |values|
+    invariant s == sum(values[..i])
+    invariant forall v :: v in values[..i] ==> min <= v
+    invariant forall v :: v in values[..i] ==> max >= v
+    invariant exists v :: v in values[..i] && min == v
+    invariant exists v :: v in values[..i] && max == v
+  {
+    s := s + values[i];
+    if values[i] < min {
+      min := values[i];
+    }
+    if values[i] > max {
+      max := values[i];
+    }
+    i := i + 1;
+  }
+  average := s / (|values| as real);
+  range := max - min;
+}
+\end{lstlisting}
+\subsection*{Program $\rightarrow$ GenAI}
+\begin{lstlisting}
+When using dafny verify, the below error is emitted and verify fails:
+
+problem_data/p4_5_analyze_floats/program.dfy(25,14): Error: this loop invariant could not be proved on entry
+ Related message: loop invariant violation
+   |
+25 |     invariant exists v :: v in values[..i] && min == v
+   |               ^^^^^^
+
+
+Dafny program verifier finished with 2 verified, 1 error
+
+Correct the error by altering only the method body. Produce and show only the Dafny body, including the curly braces that surround it. Do not show the signature nor contract. You must not use 'assume' anywhere in your code.
+
+\end{lstlisting}
+\subsection*{GenAI $\rightarrow$ Program}
+\textbf{System fingerprint: }
+\\\textbf{ID: }chatcmpl-Co4eUHuGFUMZlHOB39JePgyDeX2nt
+\\\textbf{Model: }gpt-5.1-chat-latest
+\\\textbf{Created at: }1766050318
+\\\textbf{Finish reason: }stop
+\\\textbf{Usage: }3713 tokens in, and 250 tokens out
+\begin{lstlisting}
+{
+  var s: real := 0.0;
+  min := values[0];
+  max := values[0];
+  var i: int := 0;
+  while i < |values|
+    invariant 0 <= i <= |values|
+    invariant s == sum(values[..i])
+    invariant forall v :: v in values[..i] ==> min <= v
+    invariant forall v :: v in values[..i] ==> max >= v
+    invariant i == 0 || exists v :: v in values[..i] && min == v
+    invariant i == 0 || exists v :: v in values[..i] && max == v
+  {
+    s := s + values[i];
+    if values[i] < min {
+      min := values[i];
+    }
+    if values[i] > max {
+      max := values[i];
+    }
+    i := i + 1;
+  }
+  average := s / (|values| as real);
+  range := max - min;
+}
+\end{lstlisting}
+\subsection*{Program $\rightarrow$ GenAI}
+\begin{lstlisting}
+When using dafny verify, the below error is emitted and verify fails:
+
+problem_data/p4_5_analyze_floats/program.dfy(15,0): Error: a postcondition could not be proved on this return path
+   |
+15 | {
+   | ^
+
+problem_data/p4_5_analyze_floats/program.dfy(9,17): Related location: this is the postcondition that could not be proved
+  |
+9 | 	ensures average == (sum(values) / |values| as real)
+  |                  ^^
+
+problem_data/p4_5_analyze_floats/program.dfy(15,0): Error: a postcondition could not be proved on this return path
+   |
+15 | {
+   | ^
+
+problem_data/p4_5_analyze_floats/program.dfy(10,9): Related location: this is the postcondition that could not be proved
+   |
+10 | 	ensures forall v :: v in values ==> min <= v
+   |          ^^^^^^
+
+problem_data/p4_5_analyze_floats/program.dfy(15,0): Error: a postcondition could not be proved on this return path
+   |
+15 | {
+   | ^
+
+problem_data/p4_5_analyze_floats/program.dfy(11,9): Related location: this is the postcondition that could not be proved
+   |
+11 | 	ensures forall v :: v in values ==> max >= v
+   |          ^^^^^^
+
+problem_data/p4_5_analyze_floats/program.dfy(25,21): Error: this invariant could not be proved to be maintained by the loop
+ Related message: loop invariant violation
+   |
+25 |     invariant i == 0 || exists v :: v in values[..i] && min == v
+   |                      ^^
+
+problem_data/p4_5_analyze_floats/program.dfy(26,21): Error: this invariant could not be proved to be maintained by the loop
+ Related message: loop invariant violation
+   |
+26 |     invariant i == 0 || exists v :: v in values[..i] && max == v
+   |                      ^^
+
+
+Dafny program verifier finished with 2 verified, 5 errors
+
+Correct the error by altering only the method body. Produce and show only the Dafny body, including the curly braces that surround it. Do not show the signature nor contract. You must not use 'assume' anywhere in your code.
+
+\end{lstlisting}
+\subsection*{GenAI $\rightarrow$ Program}
+\textbf{System fingerprint: }
+\\\textbf{ID: }chatcmpl-Co4eZQ0C6cCQXnopCS0Vv367WcL7w
+\\\textbf{Model: }gpt-5.1-chat-latest
+\\\textbf{Created at: }1766050323
+\\\textbf{Finish reason: }stop
+\\\textbf{Usage: }4859 tokens in, and 234 tokens out
+\begin{lstlisting}
+{
+  var s: real := 0.0;
+  min := values[0];
+  max := values[0];
+  var i: int := 0;
+  while i < |values|
+    invariant 0 <= i <= |values|
+    invariant s == sum(values[..i])
+    invariant forall v :: v in values[..i] ==> min <= v
+    invariant forall v :: v in values[..i] ==> max >= v
+    invariant exists v :: v in values[..i] && min == v
+    invariant exists v :: v in values[..i] && max == v
+  {
+    s := s + values[i];
+    if values[i] < min {
+      min := values[i];
+    }
+    if values[i] > max {
+      max := values[i];
+    }
+    i := i + 1;
+  }
+  average := s / (|values| as real);
+  range := max - min;
+}
+\end{lstlisting}
+\subsection*{Program $\rightarrow$ GenAI}
+\begin{lstlisting}
+When using dafny verify, the below error is emitted and verify fails:
+
+problem_data/p4_5_analyze_floats/program.dfy(25,14): Error: this loop invariant could not be proved on entry
+ Related message: loop invariant violation
+   |
+25 |     invariant exists v :: v in values[..i] && min == v
+   |               ^^^^^^
+
+
+Dafny program verifier finished with 2 verified, 1 error
+
+Correct the error by altering only the method body. Produce and show only the Dafny body, including the curly braces that surround it. Do not show the signature nor contract. You must not use 'assume' anywhere in your code.
+
+\end{lstlisting}
+\subsection*{GenAI $\rightarrow$ Program}
+\textbf{System fingerprint: }
+\\\textbf{ID: }chatcmpl-Co4ed3ApiXSQnaziWewuw5qNTo3Is
+\\\textbf{Model: }gpt-5.1-chat-latest
+\\\textbf{Created at: }1766050327
+\\\textbf{Finish reason: }stop
+\\\textbf{Usage: }4867 tokens in, and 314 tokens out
+\begin{lstlisting}
+{
+  var s: real := 0.0;
+  min := values[0];
+  max := values[0];
+  var i: int := 0;
+  while i < |values|
+    invariant 0 <= i <= |values|
+    invariant s == sum(values[..i])
+    invariant forall v :: v in values[..i] ==> min <= v
+    invariant forall v :: v in values[..i] ==> max >= v
+    invariant i == 0 || exists v :: v in values[..i] && min == v
+    invariant i == 0 || exists v :: v in values[..i] && max == v
+  {
+    s := s + values[i];
+    if values[i] < min {
+      min := values[i];
+    }
+    if values[i] > max {
+      max := values[i];
+    }
+    i := i + 1;
+  }
+  average := s / (|values| as real);
+  range := max - min;
+}
+\end{lstlisting}
+\section*{Final Program}
+\begin{lstlisting}
+function sum(values: seq<real>): real
+{
+  if |values| == 0 then 0.0
+  else values[0] + sum(values[1..])
+}
+
+method p4_5_analyze_floats(values: seq<real>) returns (average: real, min: real, max: real, range: real)
+	requires 0 < |values|
+	ensures average == (sum(values) / |values| as real)
+	ensures forall v :: v in values ==> min <= v
+	ensures forall v :: v in values ==> max >= v
+	ensures range == max - min
+	ensures exists v :: v in values && min == v
+	ensures exists v :: v in values && max == v
+{
+  var s: real := 0.0;
+  min := values[0];
+  max := values[0];
+  var i: int := 0;
+  while i < |values|
+    invariant 0 <= i <= |values|
+    invariant s == sum(values[..i])
+    invariant forall v :: v in values[..i] ==> min <= v
+    invariant forall v :: v in values[..i] ==> max >= v
+    invariant i == 0 || exists v :: v in values[..i] && min == v
+    invariant i == 0 || exists v :: v in values[..i] && max == v
+  {
+    s := s + values[i];
+    if values[i] < min {
+      min := values[i];
+    }
+    if values[i] > max {
+      max := values[i];
+    }
+    i := i + 1;
+  }
+  average := s / (|values| as real);
+  range := max - min;
+}
+\end{lstlisting}
+\section*{Total Token Usage}
+\textbf{Input tokens: }24230
+\\\textbf{Output tokens: }2217
+\\\textbf{Reasoning tokens: }192
+\\\textbf{Sum of `total tokens': }26447
+\section*{Experiment Timings}
+\textbf{Iteration \#8} started at 1766050329519, ended at 1766050334537, lasting 5018ms (5.02 seconds)
+\\\textbf{Overall Experiment} started at 1766050296192, ended at 1766050334537, lasting 38345ms (38.35 seconds)
+\\\textbf{Iteration \#4} started at 1766050311058, ended at 1766050316370, lasting 5312ms (5.31 seconds)
+\\\textbf{Iteration \#5} started at 1766050316370, ended at 1766050320738, lasting 4368ms (4.37 seconds)
+\\\textbf{Iteration \#6} started at 1766050320738, ended at 1766050325531, lasting 4793ms (4.79 seconds)
+\\\textbf{Iteration \#7} started at 1766050325531, ended at 1766050329519, lasting 3988ms (3.99 seconds)
+\\\textbf{Iteration \#1} started at 1766050296193, ended at 1766050301322, lasting 5129ms (5.13 seconds)
+\\\textbf{Iteration \#2} started at 1766050301322, ended at 1766050305596, lasting 4274ms (4.27 seconds)
+\\\textbf{Iteration \#3} started at 1766050305597, ended at 1766050311058, lasting 5461ms (5.46 seconds)
+\end{document}

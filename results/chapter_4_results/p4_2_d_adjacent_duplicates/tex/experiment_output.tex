@@ -1,0 +1,647 @@
+\documentclass{article}
+\usepackage{lmodern}
+\usepackage{amsmath}
+\usepackage{listings}
+\usepackage{fullpage}
+\usepackage{parskip}
+\usepackage{xcolor}
+\lstset{
+	basicstyle=\ttfamily,
+	columns=fullflexible,
+	frame=single,
+	breaklines=true,
+	postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},
+}
+\begin{document}
+\title{Experiment `p4\_2\_d\_adjacent\_duplicates' Results}
+\author{\today}
+\date{}
+\maketitle
+\textbf{Experiment outcome: }FAILURE\_VERIFY
+\\\textbf{Bad responses: }0
+\\\textbf{Responses containing}~\texttt{assume}~\textbf{: }0
+\\\textbf{Resolution attempts: }8
+\\\textbf{Hard fails (resolution): }0
+\\\textbf{Soft fails (resolution): }2
+\\\textbf{Verification attempts: }6
+\section*{Problem Specification}
+\textbf{Problem name: }p4\_2\_d\_adjacent\_duplicates
+\\\textbf{Natural language statement: }Write a method that takes a sequence of integers and returns all adjacent duplicates. For example, if the input is [1, 3, 3, 4, 5, 5, 6, 6, 6, 2], the method should return [3, 5, 6].
+\\\textbf{Method signature: }p4\_2\_d\_adjacent\_duplicates(inputs: seq<int>) returns (duplicates: seq<int>)
+\subsection*{Ensures}
+\begin{itemize}
+\item \texttt{forall d :: d in duplicates ==> d in inputs}
+\item \texttt{forall i :: 0 <= i < |inputs| - 1 \&\& inputs[i] == inputs[i + 1] ==> inputs[i] in duplicates}
+\item \texttt{forall d :: d in duplicates ==> exists i :: 0 <= i < |inputs| - 1 \&\& inputs[i] == inputs[i + 1] \&\& inputs[i] == d}
+\item \texttt{forall d :: d in duplicates ==> exists i, j :: 0 <= i < j < |inputs| \&\& contiguous\_duplicates(inputs, i, j, d) == true}
+\end{itemize}
+\subsection*{Functional Code Given}
+\begin{lstlisting}
+function contiguous_duplicates(inputs: seq<int>, i : int, j : int, d : int) : (b : bool) 
+  requires 0 <= i < j < |inputs|
+  decreases j - i
+{
+  if i + 1 == j then inputs[i] == inputs[j] == d
+  else if inputs[i] == d then contiguous_duplicates(inputs, i + 1, j, d)
+  else false
+}
+\end{lstlisting}
+\clearpage
+\section*{GenAI interactions}
+Below you will find all interactions between the `user' (program) and the `assistant' (OpenAI).
+\subsection*{Program $\rightarrow$ GenAI}
+\begin{lstlisting}
+You are given the following task to perform in Dafny:
+
+Write a method that takes a sequence of integers and returns all adjacent duplicates. For example, if the input is [1, 3, 3, 4, 5, 5, 6, 6, 6, 2], the method should return [3, 5, 6].
+
+The signature should be:
+
+method p4_2_d_adjacent_duplicates(inputs: seq<int>) returns (duplicates: seq<int>)
+
+The method should respect the following contract:
+
+ensures forall d :: d in duplicates ==> d in inputs, ensures forall i :: 0 <= i < |inputs| - 1 && inputs[i] == inputs[i + 1] ==> inputs[i] in duplicates, ensures forall d :: d in duplicates ==> exists i :: 0 <= i < |inputs| - 1 && inputs[i] == inputs[i + 1] && inputs[i] == d, ensures forall d :: d in duplicates ==> exists i, j :: 0 <= i < j < |inputs| && contiguous_duplicates(inputs, i, j, d) == true
+
+The contract uses the following dafny code:
+
+function contiguous_duplicates(inputs: seq<int>, i : int, j : int, d : int) : (b : bool) 
+  requires 0 <= i < j < |inputs|
+  decreases j - i
+{
+  if i + 1 == j then inputs[i] == inputs[j] == d
+  else if inputs[i] == d then contiguous_duplicates(inputs, i + 1, j, d)
+  else false
+}
+
+These function(s) must not be used in your implementation of the method.
+
+Produce and show only the Dafny body of this method, including the curly braces that surround it. Do not show the signature nor contract. You must not use 'assume' anywhere in your code.
+
+\end{lstlisting}
+\subsection*{GenAI $\rightarrow$ Program}
+\textbf{System fingerprint: }
+\\\textbf{ID: }chatcmpl-Co4bZZ0YxKQVdXFYLBtvzrkvMwRRk
+\\\textbf{Model: }gpt-5.1-chat-latest
+\\\textbf{Created at: }1766050137
+\\\textbf{Finish reason: }stop
+\\\textbf{Usage: }820 tokens in, and 251 tokens out
+\begin{lstlisting}
+{
+  duplicates := [];
+  var i := 0;
+  while i < |inputs| - 1
+    invariant 0 <= i <= |inputs|
+    invariant forall d :: d in duplicates ==> d in inputs
+    invariant forall d :: d in duplicates ==> exists k :: 0 <= k < i && inputs[k] == inputs[k+1] && inputs[k] == d
+  {
+    if inputs[i] == inputs[i+1] {
+      var d := inputs[i];
+      var found := false;
+      var j := 0;
+      while j < |duplicates|
+        invariant 0 <= j <= |duplicates|
+        invariant !found ==> forall k :: 0 <= k < j ==> duplicates[k] != d
+      {
+        if duplicates[j] == d {
+          found := true;
+        }
+        j := j + 1;
+      }
+      if !found {
+        duplicates := duplicates + [d];
+      }
+    }
+    i := i + 1;
+  }
+}
+\end{lstlisting}
+\subsection*{Program $\rightarrow$ GenAI}
+\begin{lstlisting}
+When using dafny verify, the below error is emitted and verify fails:
+
+problem_data/p4_2_d_adjacent_duplicates/program.dfy(15,0): Error: a postcondition could not be proved on this return path
+   |
+15 | {
+   | ^
+
+problem_data/p4_2_d_adjacent_duplicates/program.dfy(12,9): Related location: this is the postcondition that could not be proved
+   |
+12 | 	ensures forall i :: 0 <= i < |inputs| - 1 && inputs[i] == inputs[i + 1] ==> inputs[i] in duplicates
+   |          ^^^^^^
+
+problem_data/p4_2_d_adjacent_duplicates/program.dfy(15,0): Error: a postcondition could not be proved on this return path
+   |
+15 | {
+   | ^
+
+problem_data/p4_2_d_adjacent_duplicates/program.dfy(13,9): Related location: this is the postcondition that could not be proved
+   |
+13 | 	ensures forall d :: d in duplicates ==> exists i :: 0 <= i < |inputs| - 1 && inputs[i] == inputs[i + 1] && inputs[i] == d
+   |          ^^^^^^
+
+problem_data/p4_2_d_adjacent_duplicates/program.dfy(15,0): Error: a postcondition could not be proved on this return path
+   |
+15 | {
+   | ^
+
+problem_data/p4_2_d_adjacent_duplicates/program.dfy(14,9): Related location: this is the postcondition that could not be proved
+   |
+14 | 	ensures forall d :: d in duplicates ==> exists i, j :: 0 <= i < j < |inputs| && contiguous_duplicates(inputs, i, j, d) == true
+   |          ^^^^^^
+
+problem_data/p4_2_d_adjacent_duplicates/program.dfy(21,91): Error: index out of range
+   |
+21 |     invariant forall d :: d in duplicates ==> exists k :: 0 <= k < i && inputs[k] == inputs[k+1] && inputs[k] == d
+   |                                                                                            ^
+
+
+Dafny program verifier finished with 2 verified, 4 errors
+
+Correct the error by altering only the method body. Produce and show only the Dafny body, including the curly braces that surround it. Do not show the signature nor contract. You must not use 'assume' anywhere in your code.
+
+\end{lstlisting}
+\subsection*{GenAI $\rightarrow$ Program}
+\textbf{System fingerprint: }
+\\\textbf{ID: }chatcmpl-Co4beR9IW1f6d1mciMNXV3wMXjMYQ
+\\\textbf{Model: }gpt-5.1-chat-latest
+\\\textbf{Created at: }1766050142
+\\\textbf{Finish reason: }stop
+\\\textbf{Usage: }1710 tokens in, and 324 tokens out
+\begin{lstlisting}
+{
+  duplicates := [];
+
+  var i := 0;
+  while i < |inputs| - 1
+    invariant 0 <= i <= |inputs| - 1
+    invariant forall d :: d in duplicates ==> d in inputs
+    invariant forall d :: d in duplicates ==> exists k :: 0 <= k < |inputs| - 1 && inputs[k] == inputs[k+1] && inputs[k] == d
+  {
+    if inputs[i] == inputs[i+1] {
+      var d := inputs[i];
+      var found := false;
+      var j := 0;
+      while j < |duplicates|
+        invariant 0 <= j <= |duplicates|
+        invariant !found ==> forall k :: 0 <= k < j ==> duplicates[k] != d
+      {
+        if duplicates[j] == d {
+          found := true;
+        }
+        j := j + 1;
+      }
+      if !found {
+        duplicates := duplicates + [d];
+      }
+    }
+    i := i + 1;
+  }
+}
+\end{lstlisting}
+\subsection*{Program $\rightarrow$ GenAI}
+\begin{lstlisting}
+When using dafny verify, the below error is emitted and verify fails:
+
+problem_data/p4_2_d_adjacent_duplicates/program.dfy(15,0): Error: a postcondition could not be proved on this return path
+   |
+15 | {
+   | ^
+
+problem_data/p4_2_d_adjacent_duplicates/program.dfy(12,9): Related location: this is the postcondition that could not be proved
+   |
+12 | 	ensures forall i :: 0 <= i < |inputs| - 1 && inputs[i] == inputs[i + 1] ==> inputs[i] in duplicates
+   |          ^^^^^^
+
+problem_data/p4_2_d_adjacent_duplicates/program.dfy(15,0): Error: a postcondition could not be proved on this return path
+   |
+15 | {
+   | ^
+
+problem_data/p4_2_d_adjacent_duplicates/program.dfy(14,9): Related location: this is the postcondition that could not be proved
+   |
+14 | 	ensures forall d :: d in duplicates ==> exists i, j :: 0 <= i < j < |inputs| && contiguous_duplicates(inputs, i, j, d) == true
+   |          ^^^^^^
+
+problem_data/p4_2_d_adjacent_duplicates/program.dfy(20,21): Error: this loop invariant could not be proved on entry
+ Related message: loop invariant violation
+   |
+20 |     invariant 0 <= i <= |inputs| - 1
+   |                      ^^
+
+
+Dafny program verifier finished with 2 verified, 3 errors
+
+Correct the error by altering only the method body. Produce and show only the Dafny body, including the curly braces that surround it. Do not show the signature nor contract. You must not use 'assume' anywhere in your code.
+
+\end{lstlisting}
+\subsection*{GenAI $\rightarrow$ Program}
+\textbf{System fingerprint: }
+\\\textbf{ID: }chatcmpl-Co4bjmvuXH4MzFImipdRv8EsKPCFN
+\\\textbf{Model: }gpt-5.1-chat-latest
+\\\textbf{Created at: }1766050147
+\\\textbf{Finish reason: }stop
+\\\textbf{Usage: }2216 tokens in, and 321 tokens out
+\begin{lstlisting}
+{
+  duplicates := [];
+
+  var i := 0;
+  while i < |inputs| - 1
+    invariant 0 <= i <= |inputs|
+    invariant forall d :: d in duplicates ==> d in inputs
+    invariant forall d :: d in duplicates ==> exists k :: 0 <= k < |inputs| - 1 && inputs[k] == inputs[k+1] && inputs[k] == d
+  {
+    if inputs[i] == inputs[i+1] {
+      var d := inputs[i];
+      var found := false;
+      var j := 0;
+      while j < |duplicates|
+        invariant 0 <= j <= |duplicates|
+        invariant !found ==> forall k :: 0 <= k < j ==> duplicates[k] != d
+      {
+        if duplicates[j] == d {
+          found := true;
+        }
+        j := j + 1;
+      }
+      if !found {
+        duplicates := duplicates + [d];
+      }
+    }
+    i := i + 1;
+  }
+}
+\end{lstlisting}
+\subsection*{Program $\rightarrow$ GenAI}
+\begin{lstlisting}
+When using dafny verify, the below error is emitted and verify fails:
+
+problem_data/p4_2_d_adjacent_duplicates/program.dfy(15,0): Error: a postcondition could not be proved on this return path
+   |
+15 | {
+   | ^
+
+problem_data/p4_2_d_adjacent_duplicates/program.dfy(12,9): Related location: this is the postcondition that could not be proved
+   |
+12 | 	ensures forall i :: 0 <= i < |inputs| - 1 && inputs[i] == inputs[i + 1] ==> inputs[i] in duplicates
+   |          ^^^^^^
+
+problem_data/p4_2_d_adjacent_duplicates/program.dfy(15,0): Error: a postcondition could not be proved on this return path
+   |
+15 | {
+   | ^
+
+problem_data/p4_2_d_adjacent_duplicates/program.dfy(14,9): Related location: this is the postcondition that could not be proved
+   |
+14 | 	ensures forall d :: d in duplicates ==> exists i, j :: 0 <= i < j < |inputs| && contiguous_duplicates(inputs, i, j, d) == true
+   |          ^^^^^^
+
+
+Dafny program verifier finished with 2 verified, 2 errors
+
+Correct the error by altering only the method body. Produce and show only the Dafny body, including the curly braces that surround it. Do not show the signature nor contract. You must not use 'assume' anywhere in your code.
+
+\end{lstlisting}
+\subsection*{GenAI $\rightarrow$ Program}
+\textbf{System fingerprint: }
+\\\textbf{ID: }chatcmpl-Co4boORSdKMgY0zHk9TvVmu7darSG
+\\\textbf{Model: }gpt-5.1-chat-latest
+\\\textbf{Created at: }1766050152
+\\\textbf{Finish reason: }stop
+\\\textbf{Usage: }2736 tokens in, and 486 tokens out
+\begin{lstlisting}
+{
+  duplicates := [];
+
+  var i := 0;
+  while i < |inputs| - 1
+    invariant 0 <= i <= |inputs|
+    invariant forall d :: d in duplicates ==> d in inputs
+    invariant forall d :: d in duplicates ==> exists k :: 0 <= k < |inputs| - 1 && inputs[k] == inputs[k+1] && inputs[k] == d
+    invariant forall d :: d in duplicates ==> exists k :: 0 <= k < |inputs| - 1 && contiguous_duplicates(inputs, k, k+1, d)
+  {
+    if inputs[i] == inputs[i+1] {
+      var d := inputs[i];
+      var found := false;
+      var j := 0;
+      while j < |duplicates|
+        invariant 0 <= j <= |duplicates|
+        invariant !found ==> forall k :: 0 <= k < j ==> duplicates[k] != d
+      {
+        if duplicates[j] == d {
+          found := true;
+        }
+        j := j + 1;
+      }
+      if !found {
+        duplicates := duplicates + [d];
+      }
+    }
+    i := i + 1;
+  }
+}
+\end{lstlisting}
+\subsection*{Program $\rightarrow$ GenAI}
+\begin{lstlisting}
+When using dafny resolve, the below error is emitted and resolve fails:
+
+problem_data/p4_2_d_adjacent_duplicates/program.dfy(23,46): Warning: Could not find a trigger for this quantifier. Without a trigger, the quantifier may cause brittle verification. To silence this warning, add an explicit trigger using the {:trigger} attribute. For more information, see the section on quantifier instantiation rules in the reference manual.
+   |
+23 |     invariant forall d :: d in duplicates ==> exists k :: 0 <= k < |inputs| - 1 && contiguous_duplicates(inputs, k, k+1, d)
+   |                                               ^^^^^^
+
+Compilation failed because warnings were found and --allow-warnings is false
+
+Correct the error by altering only the method body. Produce and show only the Dafny body, including the curly braces that surround it. Do not show the signature nor contract. You must not use 'assume' anywhere in your code.
+
+\end{lstlisting}
+\subsection*{GenAI $\rightarrow$ Program}
+\textbf{System fingerprint: }
+\\\textbf{ID: }chatcmpl-Co4bvPpche52ZdIlgyl1Yo7e37PGN
+\\\textbf{Model: }gpt-5.1-chat-latest
+\\\textbf{Created at: }1766050159
+\\\textbf{Finish reason: }stop
+\\\textbf{Usage: }3108 tokens in, and 257 tokens out
+\begin{lstlisting}
+{
+  duplicates := [];
+
+  var i := 0;
+  while i < |inputs| - 1
+    invariant 0 <= i <= |inputs|
+    invariant forall d :: d in duplicates ==> d in inputs
+    invariant forall d :: d in duplicates ==> exists k :: 0 <= k < |inputs| - 1 && inputs[k] == inputs[k+1] && inputs[k] == d
+  {
+    if inputs[i] == inputs[i+1] {
+      var d := inputs[i];
+      var found := false;
+      var j := 0;
+      while j < |duplicates|
+        invariant 0 <= j <= |duplicates|
+        invariant !found ==> forall k :: 0 <= k < j ==> duplicates[k] != d
+      {
+        if duplicates[j] == d {
+          found := true;
+        }
+        j := j + 1;
+      }
+      if !found {
+        duplicates := duplicates + [d];
+      }
+    }
+    i := i + 1;
+  }
+}
+\end{lstlisting}
+\subsection*{Program $\rightarrow$ GenAI}
+\begin{lstlisting}
+When using dafny verify, the below error is emitted and verify fails:
+
+problem_data/p4_2_d_adjacent_duplicates/program.dfy(15,0): Error: a postcondition could not be proved on this return path
+   |
+15 | {
+   | ^
+
+problem_data/p4_2_d_adjacent_duplicates/program.dfy(12,9): Related location: this is the postcondition that could not be proved
+   |
+12 | 	ensures forall i :: 0 <= i < |inputs| - 1 && inputs[i] == inputs[i + 1] ==> inputs[i] in duplicates
+   |          ^^^^^^
+
+problem_data/p4_2_d_adjacent_duplicates/program.dfy(15,0): Error: a postcondition could not be proved on this return path
+   |
+15 | {
+   | ^
+
+problem_data/p4_2_d_adjacent_duplicates/program.dfy(14,9): Related location: this is the postcondition that could not be proved
+   |
+14 | 	ensures forall d :: d in duplicates ==> exists i, j :: 0 <= i < j < |inputs| && contiguous_duplicates(inputs, i, j, d) == true
+   |          ^^^^^^
+
+
+Dafny program verifier finished with 2 verified, 2 errors
+
+Correct the error by altering only the method body. Produce and show only the Dafny body, including the curly braces that surround it. Do not show the signature nor contract. You must not use 'assume' anywhere in your code.
+
+\end{lstlisting}
+\subsection*{GenAI $\rightarrow$ Program}
+\textbf{System fingerprint: }
+\\\textbf{ID: }chatcmpl-Co4bzjtKkrx0cyASawhh62biEtWgD
+\\\textbf{Model: }gpt-5.1-chat-latest
+\\\textbf{Created at: }1766050163
+\\\textbf{Finish reason: }stop
+\\\textbf{Usage: }3809 tokens in, and 294 tokens out
+\begin{lstlisting}
+{
+  duplicates := [];
+
+  var i := 0;
+  while i < |inputs| - 1
+    invariant 0 <= i <= |inputs|
+    invariant forall d :: d in duplicates ==> d in inputs
+    invariant forall d :: d in duplicates ==> exists k :: 0 <= k < |inputs| - 1 && inputs[k] == inputs[k+1] && inputs[k] == d
+    invariant forall d :: d in duplicates ==> exists k :: 0 <= k < |inputs| - 1 && contiguous_duplicates(inputs, k, k+1, d)
+  {
+    if inputs[i] == inputs[i+1] {
+      var d := inputs[i];
+      var found := false;
+      var j := 0;
+      while j < |duplicates|
+        invariant 0 <= j <= |duplicates|
+        invariant !found ==> forall k :: 0 <= k < j ==> duplicates[k] != d
+      {
+        if duplicates[j] == d {
+          found := true;
+        }
+        j := j + 1;
+      }
+      if !found {
+        duplicates := duplicates + [d];
+      }
+    }
+    i := i + 1;
+  }
+}
+\end{lstlisting}
+\subsection*{Program $\rightarrow$ GenAI}
+\begin{lstlisting}
+When using dafny resolve, the below error is emitted and resolve fails:
+
+problem_data/p4_2_d_adjacent_duplicates/program.dfy(23,46): Warning: Could not find a trigger for this quantifier. Without a trigger, the quantifier may cause brittle verification. To silence this warning, add an explicit trigger using the {:trigger} attribute. For more information, see the section on quantifier instantiation rules in the reference manual.
+   |
+23 |     invariant forall d :: d in duplicates ==> exists k :: 0 <= k < |inputs| - 1 && contiguous_duplicates(inputs, k, k+1, d)
+   |                                               ^^^^^^
+
+Compilation failed because warnings were found and --allow-warnings is false
+
+Correct the error by altering only the method body. Produce and show only the Dafny body, including the curly braces that surround it. Do not show the signature nor contract. You must not use 'assume' anywhere in your code.
+
+\end{lstlisting}
+\subsection*{GenAI $\rightarrow$ Program}
+\textbf{System fingerprint: }
+\\\textbf{ID: }chatcmpl-Co4c4iwgLv259JkZIgwzsM2x0JWVO
+\\\textbf{Model: }gpt-5.1-chat-latest
+\\\textbf{Created at: }1766050168
+\\\textbf{Finish reason: }stop
+\\\textbf{Usage: }4181 tokens in, and 385 tokens out
+\begin{lstlisting}
+{
+  duplicates := [];
+
+  var i := 0;
+  while i < |inputs| - 1
+    invariant 0 <= i <= |inputs|
+    invariant forall d :: d in duplicates ==> d in inputs
+    invariant forall d :: d in duplicates ==> exists k :: 0 <= k < |inputs| - 1 && inputs[k] == inputs[k+1] && inputs[k] == d
+  {
+    if inputs[i] == inputs[i+1] {
+      var d := inputs[i];
+      var found := false;
+      var j := 0;
+      while j < |duplicates|
+        invariant 0 <= j <= |duplicates|
+        invariant !found ==> forall k :: 0 <= k < j ==> duplicates[k] != d
+      {
+        if duplicates[j] == d {
+          found := true;
+        }
+        j := j + 1;
+      }
+      if !found {
+        duplicates := duplicates + [d];
+      }
+    }
+    i := i + 1;
+  }
+}
+\end{lstlisting}
+\subsection*{Program $\rightarrow$ GenAI}
+\begin{lstlisting}
+When using dafny verify, the below error is emitted and verify fails:
+
+problem_data/p4_2_d_adjacent_duplicates/program.dfy(15,0): Error: a postcondition could not be proved on this return path
+   |
+15 | {
+   | ^
+
+problem_data/p4_2_d_adjacent_duplicates/program.dfy(12,9): Related location: this is the postcondition that could not be proved
+   |
+12 | 	ensures forall i :: 0 <= i < |inputs| - 1 && inputs[i] == inputs[i + 1] ==> inputs[i] in duplicates
+   |          ^^^^^^
+
+problem_data/p4_2_d_adjacent_duplicates/program.dfy(15,0): Error: a postcondition could not be proved on this return path
+   |
+15 | {
+   | ^
+
+problem_data/p4_2_d_adjacent_duplicates/program.dfy(14,9): Related location: this is the postcondition that could not be proved
+   |
+14 | 	ensures forall d :: d in duplicates ==> exists i, j :: 0 <= i < j < |inputs| && contiguous_duplicates(inputs, i, j, d) == true
+   |          ^^^^^^
+
+
+Dafny program verifier finished with 2 verified, 2 errors
+
+Correct the error by altering only the method body. Produce and show only the Dafny body, including the curly braces that surround it. Do not show the signature nor contract. You must not use 'assume' anywhere in your code.
+
+\end{lstlisting}
+\subsection*{GenAI $\rightarrow$ Program}
+\textbf{System fingerprint: }
+\\\textbf{ID: }chatcmpl-Co4cAcAV4HWtAdD2bHQEB2GiQCJtk
+\\\textbf{Model: }gpt-5.1-chat-latest
+\\\textbf{Created at: }1766050174
+\\\textbf{Finish reason: }stop
+\\\textbf{Usage: }4882 tokens in, and 380 tokens out
+\begin{lstlisting}
+{
+  duplicates := [];
+
+  var i := 0;
+  while i < |inputs| - 1
+    invariant 0 <= i <= |inputs|
+    invariant forall d :: d in duplicates ==> d in inputs
+    invariant forall d :: d in duplicates ==> exists k :: 0 <= k < i && inputs[k] == inputs[k+1] && inputs[k] == d
+  {
+    if inputs[i] == inputs[i+1] {
+      var d := inputs[i];
+      var found := false;
+      var j := 0;
+      while j < |duplicates|
+        invariant 0 <= j <= |duplicates|
+        invariant !found ==> forall k :: 0 <= k < j ==> duplicates[k] != d
+      {
+        if duplicates[j] == d {
+          found := true;
+        }
+        j := j + 1;
+      }
+      if !found {
+        duplicates := duplicates + [d];
+      }
+    }
+    i := i + 1;
+  }
+}
+\end{lstlisting}
+\section*{Final Program}
+\begin{lstlisting}
+function contiguous_duplicates(inputs: seq<int>, i : int, j : int, d : int) : (b : bool) 
+  requires 0 <= i < j < |inputs|
+  decreases j - i
+{
+  if i + 1 == j then inputs[i] == inputs[j] == d
+  else if inputs[i] == d then contiguous_duplicates(inputs, i + 1, j, d)
+  else false
+}
+
+method p4_2_d_adjacent_duplicates(inputs: seq<int>) returns (duplicates: seq<int>)
+	ensures forall d :: d in duplicates ==> d in inputs
+	ensures forall i :: 0 <= i < |inputs| - 1 && inputs[i] == inputs[i + 1] ==> inputs[i] in duplicates
+	ensures forall d :: d in duplicates ==> exists i :: 0 <= i < |inputs| - 1 && inputs[i] == inputs[i + 1] && inputs[i] == d
+	ensures forall d :: d in duplicates ==> exists i, j :: 0 <= i < j < |inputs| && contiguous_duplicates(inputs, i, j, d) == true
+{
+  duplicates := [];
+
+  var i := 0;
+  while i < |inputs| - 1
+    invariant 0 <= i <= |inputs|
+    invariant forall d :: d in duplicates ==> d in inputs
+    invariant forall d :: d in duplicates ==> exists k :: 0 <= k < i && inputs[k] == inputs[k+1] && inputs[k] == d
+  {
+    if inputs[i] == inputs[i+1] {
+      var d := inputs[i];
+      var found := false;
+      var j := 0;
+      while j < |duplicates|
+        invariant 0 <= j <= |duplicates|
+        invariant !found ==> forall k :: 0 <= k < j ==> duplicates[k] != d
+      {
+        if duplicates[j] == d {
+          found := true;
+        }
+        j := j + 1;
+      }
+      if !found {
+        duplicates := duplicates + [d];
+      }
+    }
+    i := i + 1;
+  }
+}
+\end{lstlisting}
+\section*{Total Token Usage}
+\textbf{Input tokens: }23462
+\\\textbf{Output tokens: }2698
+\\\textbf{Reasoning tokens: }576
+\\\textbf{Sum of `total tokens': }26160
+\section*{Experiment Timings}
+\textbf{Iteration \#8} started at 1766050176500, ended at 1766050183073, lasting 6573ms (6.57 seconds)
+\\\textbf{Overall Experiment} started at 1766050139126, ended at 1766050183073, lasting 43947ms (43.95 seconds)
+\\\textbf{Iteration \#4} started at 1766050154477, ended at 1766050160827, lasting 6350ms (6.35 seconds)
+\\\textbf{Iteration \#5} started at 1766050160827, ended at 1766050165613, lasting 4786ms (4.79 seconds)
+\\\textbf{Iteration \#6} started at 1766050165613, ended at 1766050170265, lasting 4652ms (4.65 seconds)
+\\\textbf{Iteration \#7} started at 1766050170265, ended at 1766050176500, lasting 6235ms (6.24 seconds)
+\\\textbf{Iteration \#1} started at 1766050139126, ended at 1766050144049, lasting 4923ms (4.92 seconds)
+\\\textbf{Iteration \#2} started at 1766050144049, ended at 1766050149442, lasting 5393ms (5.39 seconds)
+\\\textbf{Iteration \#3} started at 1766050149442, ended at 1766050154477, lasting 5035ms (5.04 seconds)
+\end{document}

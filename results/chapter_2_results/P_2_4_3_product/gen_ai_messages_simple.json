@@ -1,0 +1,10 @@
+[
+  {
+    "role": "user",
+    "content": "You are given the following task to perform in Dafny:\n\nWrite a method that takes two integers and then returns the product.\n\nThe signature should be:\n\nmethod product(x: int, y: int) returns (result:int)\n\nThe method should respect the following contract:\n\nensures result \u003d\u003d x * y\n\nProduce and show only the Dafny body of this method, including the curly braces that surround it. Do not show the signature nor contract. You must not use \u0027assume\u0027 anywhere in your code.\n"
+  },
+  {
+    "role": "assistant",
+    "content": "{\"method_body\":\"{\\n  result :\u003d x * y;\\n}\"}"
+  }
+]

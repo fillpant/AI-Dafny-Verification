@@ -1,0 +1,99 @@
+\documentclass{article}
+\usepackage{lmodern}
+\usepackage{amsmath}
+\usepackage{listings}
+\usepackage{fullpage}
+\usepackage{parskip}
+\usepackage{xcolor}
+\lstset{
+	basicstyle=\ttfamily,
+	columns=fullflexible,
+	frame=single,
+	breaklines=true,
+	postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},
+}
+\begin{document}
+\title{Experiment `p4\_1\_b\_sum\_squares' Results}
+\author{\today}
+\date{}
+\maketitle
+\textbf{Experiment outcome: }SUCCESS
+\\\textbf{Bad responses: }0
+\\\textbf{Responses containing}~\texttt{assume}~\textbf{: }0
+\\\textbf{Resolution attempts: }1
+\\\textbf{Hard fails (resolution): }0
+\\\textbf{Soft fails (resolution): }0
+\\\textbf{Verification attempts: }1
+\section*{Problem Specification}
+\textbf{Problem name: }p4\_1\_b\_sum\_squares
+\\\textbf{Natural language statement: }Write a method with loops that computes the sum of all squares between 1 and 100 (inclusive).
+\\\textbf{Method signature: }p4\_1\_b\_sum\_squares() returns (sum: int)
+\subsection*{Ensures}
+\begin{itemize}
+\item \texttt{sum == 338350}
+\end{itemize}
+\clearpage
+\section*{GenAI interactions}
+Below you will find all interactions between the `user' (program) and the `assistant' (OpenAI).
+\subsection*{Program $\rightarrow$ GenAI}
+\begin{lstlisting}
+You are given the following task to perform in Dafny:
+
+Write a method with loops that computes the sum of all squares between 1 and 100 (inclusive).
+
+The signature should be:
+
+method p4_1_b_sum_squares() returns (sum: int)
+
+The method should respect the following contract:
+
+ensures sum == 338350
+
+Produce and show only the Dafny body of this method, including the curly braces that surround it. Do not show the signature nor contract. You must not use 'assume' anywhere in your code.
+
+\end{lstlisting}
+\subsection*{GenAI $\rightarrow$ Program}
+\textbf{System fingerprint: }
+\\\textbf{ID: }chatcmpl-Co4ZPwAkfPxiredh96rK4mwn9c9GP
+\\\textbf{Model: }gpt-5.1-chat-latest
+\\\textbf{Created at: }1766050003
+\\\textbf{Finish reason: }stop
+\\\textbf{Usage: }258 tokens in, and 107 tokens out
+\begin{lstlisting}
+{
+  var i := 1;
+  sum := 0;
+  while i <= 100
+    invariant 1 <= i <= 101
+    invariant sum == (i - 1) * i * (2 * (i - 1) + 1) / 6
+  {
+    sum := sum + i * i;
+    i := i + 1;
+  }
+}
+\end{lstlisting}
+\section*{Final Program}
+\begin{lstlisting}
+method p4_1_b_sum_squares() returns (sum: int)
+	ensures sum == 338350
+{
+  var i := 1;
+  sum := 0;
+  while i <= 100
+    invariant 1 <= i <= 101
+    invariant sum == (i - 1) * i * (2 * (i - 1) + 1) / 6
+  {
+    sum := sum + i * i;
+    i := i + 1;
+  }
+}
+\end{lstlisting}
+\section*{Total Token Usage}
+\textbf{Input tokens: }258
+\\\textbf{Output tokens: }107
+\\\textbf{Reasoning tokens: }0
+\\\textbf{Sum of `total tokens': }365
+\section*{Experiment Timings}
+\textbf{Overall Experiment} started at 1766050005554, ended at 1766050009036, lasting 3482ms (3.48 seconds)
+\\\textbf{Iteration \#1} started at 1766050005554, ended at 1766050009036, lasting 3482ms (3.48 seconds)
+\end{document}

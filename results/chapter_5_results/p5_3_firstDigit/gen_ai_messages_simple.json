@@ -1,0 +1,10 @@
+[
+  {
+    "role": "user",
+    "content": "You are given the following task to perform in Dafny:\n\nWrite a method returning the first digit of the argument.\n\nThe signature should be:\n\nmethod p5_3_firstDigit(n: int) returns (first: int)\n\nThe method should respect the following contract:\n\nrequires 0 \u003c\u003d n, ensures 0 \u003c\u003d first \u003c 10, ensures intToSeq(n)[0] \u003d\u003d first\n\nThe contract uses the following dafny code:\n\nfunction intToSeq(n: int) : seq\u003cint\u003e\n  requires n \u003e\u003d 0\n  ensures forall d :: d in intToSeq(n) \u003d\u003d\u003e 0 \u003c\u003d d \u003c 10\n{\n  if n \u003c 10 then [n]\n  else intToSeq(n / 10) + [n % 10]\n}\n\nThese function(s) must not be used in your implementation of the method.\n\nProduce and show only the Dafny body of this method, including the curly braces that surround it. Do not show the signature nor contract. You must not use \u0027assume\u0027 anywhere in your code.\n"
+  },
+  {
+    "role": "assistant",
+    "content": "{\"method_body\":\"{\\n  if n \u003c 10 {\\n    first :\u003d n;\\n  } else {\\n    first :\u003d p5_3_firstDigit(n / 10);\\n  }\\n}\"}"
+  }
+]

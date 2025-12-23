@@ -1,0 +1,18 @@
+[
+  {
+    "role": "user",
+    "content": "You are given the following task to perform in Dafny:\n\nWrite a method that takes a floating point number and returns whether it is negative, zero, or positive. Add \"small\" if the absolute value of the number is less than 1, or \"large\" if it exceeds 1,000,000.\n\nThe signature should be:\n\nmethod P_3_2_classify_real (x:real) returns (s: string)\n\nThe method should respect the following contract:\n\nensures x \u003d\u003d 0.0 \u003d\u003d\u003e s \u003d\u003d \"zero, small\", ensures 1.0 \u003e x \u003e 0.0 \u003d\u003d\u003e s \u003d\u003d \"positive, small\", ensures 1.0 \u003c\u003d x \u003c 1000000.0 \u003d\u003d\u003e s \u003d\u003d \"positive\", ensures 1000000.0 \u003c\u003d x  \u003d\u003d\u003e s \u003d\u003d \"positive, large\", ensures 0.0 \u003e x \u003e -1.0 \u003d\u003d\u003e s \u003d\u003d \"negative, small\", ensures -1.0 \u003e\u003d x \u003e -1000000.0 \u003d\u003d\u003e s \u003d\u003d \"negative\", ensures -1000000.0 \u003e\u003d x \u003d\u003d\u003e s \u003d\u003d \"negative, large\"\n\nProduce and show only the Dafny body of this method, including the curly braces that surround it. Do not show the signature nor contract. You must not use \u0027assume\u0027 anywhere in your code.\n"
+  },
+  {
+    "role": "assistant",
+    "content": "{\"method_body\":\"{\\n  if x \u003d\u003d 0.0 then\\n    s :\u003d \\\"zero, small\\\"\\n  else if x \u003e 0.0 then\\n    if x \u003c 1.0 then\\n      s :\u003d \\\"positive, small\\\"\\n    else if x \u003c 1000000.0 then\\n      s :\u003d \\\"positive\\\"\\n    else\\n      s :\u003d \\\"positive, large\\\"\\n  else\\n    if x \u003e -1.0 then\\n      s :\u003d \\\"negative, small\\\"\\n    else if x \u003e -1000000.0 then\\n      s :\u003d \\\"negative\\\"\\n    else\\n      s :\u003d \\\"negative, large\\\"\\n}\"}"
+  },
+  {
+    "role": "user",
+    "content": "When using dafny resolve, the below error is emitted and resolve fails:\n\nproblem_data/P_3_2_classify_real/program.dfy(10,14): Error: lbrace expected\n   |\n10 |   if x \u003d\u003d 0.0 then\n   |               ^\n\n1 parse errors detected in program.dfy\n\nCorrect the error by altering only the method body. Produce and show only the Dafny body, including the curly braces that surround it. Do not show the signature nor contract. You must not use \u0027assume\u0027 anywhere in your code.\n"
+  },
+  {
+    "role": "assistant",
+    "content": "{\"method_body\":\"{\\n  if x \u003d\u003d 0.0 {\\n    s :\u003d \\\"zero, small\\\";\\n  } else if x \u003e 0.0 {\\n    if x \u003c 1.0 {\\n      s :\u003d \\\"positive, small\\\";\\n    } else if x \u003c 1000000.0 {\\n      s :\u003d \\\"positive\\\";\\n    } else {\\n      s :\u003d \\\"positive, large\\\";\\n    }\\n  } else {\\n    if x \u003e -1.0 {\\n      s :\u003d \\\"negative, small\\\";\\n    } else if x \u003e -1000000.0 {\\n      s :\u003d \\\"negative\\\";\\n    } else {\\n      s :\u003d \\\"negative, large\\\";\\n    }\\n  }\\n}\"}"
+  }
+]

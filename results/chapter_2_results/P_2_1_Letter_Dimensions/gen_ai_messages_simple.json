@@ -1,0 +1,10 @@
+[
+  {
+    "role": "user",
+    "content": "You are given the following task to perform in Dafny:\n\nWrite a method that computes and returns the dimensions of a letter-size (8.5 x 11 inches) sheet of paper in millimeters. There are 25.4 millimeters per inch. Use constants and comments in your method.\n\nThe signature should be:\n\nmethod letter_dimensions() returns (width:real, height:real)\n\nThe method should respect the following contract:\n\nensures width \u003d\u003d 8.5 * 25.4, ensures height \u003d\u003d 11.0 * 25.4\n\nProduce and show only the Dafny body of this method, including the curly braces that surround it. Do not show the signature nor contract. You must not use \u0027assume\u0027 anywhere in your code.\n"
+  },
+  {
+    "role": "assistant",
+    "content": "{\"method_body\":\"{\\n  // millimeters per inch\\n  var INCH_MM :\u003d 25.4;\\n  // letter size in inches\\n  var WIDTH_IN :\u003d 8.5;\\n  var HEIGHT_IN :\u003d 11.0;\\n  // compute dimensions in millimeters\\n  width :\u003d WIDTH_IN * INCH_MM;\\n  height :\u003d HEIGHT_IN * INCH_MM;\\n}\"}"
+  }
+]

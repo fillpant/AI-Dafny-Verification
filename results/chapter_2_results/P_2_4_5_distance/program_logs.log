@@ -1,0 +1,56 @@
+[18/12/25 09:16:15.725] [Experiment 'P_2_4_5_distance'] [INFO]: Experiment created.
+[18/12/25 09:16:15.725] [Experiment 'P_2_4_5_distance'] [INFO]: Experiment started.
+[18/12/25 09:16:15.725] [Experiment 'P_2_4_5_distance'] [INFO]: Using initial prompt: You are given the following task to perform in Dafny:
+
+Write a method that takes two integers and then returns the distance (absolute value of the difference).
+
+The signature should be:
+
+method distance(x: int, y: int) returns (result:int)
+
+The method should respect the following contract:
+
+ensures result >= 0, ensures if x >= y then result == x - y else result == y - x
+
+Produce and show only the Dafny body of this method, including the curly braces that surround it. Do not show the signature nor contract. You must not use 'assume' anywhere in your code.
+
+[18/12/25 09:16:15.725] [Experiment 'P_2_4_5_distance'] [INFO]: There are 30000 left in the jar, for the rest of this experiment.
+[18/12/25 09:16:15.725] [Experiment 'P_2_4_5_distance'] [INFO]: Querrying GenAI...
+[18/12/25 09:16:15.725] [Experiment 'P_2_4_5_distance'] [FINE]: Constructing message for GenAI
+[18/12/25 09:16:15.725] [Experiment 'P_2_4_5_distance'] [INFO]: Context is on, attaching 1 previous messages in the request to GenAI.
+[18/12/25 09:16:15.725] [Experiment 'P_2_4_5_distance'] [INFO]: A reasoning model is chosen, but no reasoning effort value is set. Setting reasoning to 'medium'
+[18/12/25 09:16:15.725] [Experiment 'P_2_4_5_distance'] [FINE]: Setting max tokens for the request to 30000
+[18/12/25 09:16:15.725] [Experiment 'P_2_4_5_distance'] [FINE]: Using model gpt-5.1-chat-latest. Awaiting response...
+[18/12/25 09:16:17.908] [Experiment 'P_2_4_5_distance'] [FINE]: Got response with 98 characters.
+[18/12/25 09:16:17.908] [Experiment 'P_2_4_5_distance'] [FINE]: Saving gen_ai_messages.json
+[18/12/25 09:16:17.909] [Experiment 'P_2_4_5_distance'] [FINE]: Saved 1966 characters to file gen_ai_messages.json
+[18/12/25 09:16:17.909] [Experiment 'P_2_4_5_distance'] [FINE]: Saving gen_ai_messages_simple.json
+[18/12/25 09:16:17.909] [Experiment 'P_2_4_5_distance'] [FINE]: Saved 853 characters to file gen_ai_messages_simple.json
+[18/12/25 09:16:17.909] [Experiment 'P_2_4_5_distance'] [INFO]: Converting GenAI response to method...
+[18/12/25 09:16:17.909] [Experiment 'P_2_4_5_distance'] [FINE]: Saving program.dfy
+[18/12/25 09:16:17.910] [Experiment 'P_2_4_5_distance'] [FINE]: Saved 209 characters to file program.dfy
+[18/12/25 09:16:17.910] [Experiment 'P_2_4_5_distance'] [INFO]: Context is treated as being fully enabled, meaning that subsequent prompts do not include the full code.
+[18/12/25 09:16:17.910] [Experiment 'P_2_4_5_distance'] [INFO]: Checking the method for the presence of the 'assume' keyword...
+[18/12/25 09:16:17.910] [Experiment 'P_2_4_5_distance'] [INFO]: Calling dafny to resolve the generated method...
+[18/12/25 09:16:18.182] [Experiment 'P_2_4_5_distance'] [INFO]: Program exited with code 0
+[18/12/25 09:16:18.182] [Experiment 'P_2_4_5_distance'] [INFO]: Program stdout: 
+Dafny program verifier did not attempt verification
+[18/12/25 09:16:18.182] [Experiment 'P_2_4_5_distance'] [INFO]: Calling dafny to resolve the generated method, but with warnings allowed...
+[18/12/25 09:16:18.455] [Experiment 'P_2_4_5_distance'] [INFO]: Program exited with code 0
+[18/12/25 09:16:18.455] [Experiment 'P_2_4_5_distance'] [INFO]: Program stdout: 
+Dafny program verifier did not attempt verification
+[18/12/25 09:16:18.455] [Experiment 'P_2_4_5_distance'] [INFO]: Resolution passes without warnings.
+[18/12/25 09:16:18.455] [Experiment 'P_2_4_5_distance'] [INFO]: Dafny resolution check passed.
+[18/12/25 09:16:18.455] [Experiment 'P_2_4_5_distance'] [INFO]: Calling dafny to verify the generated method...
+[18/12/25 09:16:19.008] [Experiment 'P_2_4_5_distance'] [INFO]: Program exited with code 0
+[18/12/25 09:16:19.008] [Experiment 'P_2_4_5_distance'] [INFO]: Program stdout: 
+Dafny program verifier finished with 1 verified, 0 errors
+[18/12/25 09:16:19.008] [Experiment 'P_2_4_5_distance'] [INFO]: Dafny verification check passed.
+[18/12/25 09:16:19.008] [Experiment 'P_2_4_5_distance'] [INFO]: Experiment finished.
+[18/12/25 09:16:19.008] [Experiment 'P_2_4_5_distance'] [FINE]: Saving gen_ai_messages.json
+[18/12/25 09:16:19.008] [Experiment 'P_2_4_5_distance'] [FINE]: Saved 1966 characters to file gen_ai_messages.json
+[18/12/25 09:16:19.008] [Experiment 'P_2_4_5_distance'] [FINE]: Saving gen_ai_messages_simple.json
+[18/12/25 09:16:19.009] [Experiment 'P_2_4_5_distance'] [FINE]: Saved 853 characters to file gen_ai_messages_simple.json
+[18/12/25 09:16:19.009] [Experiment 'P_2_4_5_distance'] [FINE]: Saving experiment_result.json
+[18/12/25 09:16:19.009] [Experiment 'P_2_4_5_distance'] [FINE]: Saved 638 characters to file experiment_result.json
+[18/12/25 09:16:19.763] [Experiment 'P_2_4_5_distance'] [INFO]: Compilation of experiment report tex file successful

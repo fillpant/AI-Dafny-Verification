@@ -1,0 +1,20 @@
+Experiment,Outcome,Input tokens, Output tokens, Total reasoning tokens,Total tokens,Bad response cnt,Verification attempts,Resolution attempts,Soft-failed resolution cnt,Hard-failed resolution cnt,Responses with 'assume',Experiment time (ms),Iteration 1 time (ms),Iteration 2 time (ms),Iteration 3 time (ms),Iteration 4 time (ms),Iteration 5 time (ms),Iteration 6 time (ms),Iteration 7 time (ms),Iteration 8 time (ms)
+p6_10_same_set,SUCCESS,4175,1354,512,5529,0,2,4,0,2,0,21908,4586,4863,4562,7897,,,,
+p6_1_process_array_even_indexed,SUCCESS,326,48,0,374,0,1,1,0,0,0,2886,2885,,,,,,,
+p6_1_process_array_every_even_element,SUCCESS,6303,1716,1024,8019,0,4,6,0,2,0,29690,3863,2032,7272,5471,7207,3845,,
+p6_1_process_array_first_and_last,SUCCESS,310,41,0,351,0,1,1,0,0,0,2814,2814,,,,,,,
+p6_1_process_array_reverse_order,SUCCESS,7774,1444,1024,9218,0,1,7,0,6,0,25483,2602,2973,2608,3245,3428,4466,6159,
+p6_2_a_swap_first_last,SUCCESS,380,181,128,561,0,1,1,0,0,0,3799,3799,,,,,,,
+p6_2_b_shift_right,SUCCESS,444,116,64,560,0,1,1,0,0,0,3609,3609,,,,,,,
+p6_2_c_replace_even_with_zero,SUCCESS,5660,1146,704,6806,0,1,6,0,5,0,22299,2538,2864,3175,3601,2186,7934,,
+p6_2_d_replace_with_larger_neighbor,SUCCESS,9191,1696,1024,10887,0,1,6,0,5,0,26434,4619,2867,3697,3129,5457,6665,,
+p6_2_e_remove_middle,SUCCESS,596,180,64,776,0,1,1,0,0,0,4059,4059,,,,,,,
+p6_2_f_move_even_to_front,FAILURE_VERIFY,16698,2018,832,18716,0,2,8,0,6,0,32795,5766,3291,3370,2745,4167,2714,3821,6920
+p6_2_g_second_largest,FAILURE_VERIFY,22751,3343,1216,26094,0,8,8,0,0,0,53937,5487,8423,8054,6813,6434,6937,5896,5891
+p6_2_h_is_sorted,FAILURE_VERIFY,11221,1836,832,13057,0,8,8,0,0,0,36351,4981,4105,4094,5805,3687,6179,3515,3985
+p6_2_i_has_adjacent_duplicates,FAILURE_VERIFY,15301,2031,896,17332,0,8,8,0,0,0,38128,5102,5567,4020,5264,5413,4508,5496,2757
+p6_2_j_has_duplicates,SUCCESS,10335,2935,1728,13270,0,7,7,0,0,0,44834,6218,5040,7447,5045,4243,7268,9573,
+p6_4_sum_without_smallest,FAILURE_VERIFY,19586,2352,960,21938,0,8,8,0,0,0,43516,3475,4179,5131,4389,7498,6062,5212,7570
+p6_6_alternating_sum,SUCCESS,8798,1892,1088,10690,0,6,6,0,0,0,36721,7807,3314,6869,5031,4342,9357,,
+p6_7_reverse_array,SUCCESS,1127,496,320,1623,0,1,2,0,1,0,8876,2472,6403,,,,,,
+p6_9_arrays_equal,SUCCESS,330,141,64,471,0,1,1,0,0,0,3861,3860,,,,,,,

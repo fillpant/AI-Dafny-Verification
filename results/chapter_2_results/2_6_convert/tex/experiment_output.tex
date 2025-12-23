@@ -1,0 +1,91 @@
+\documentclass{article}
+\usepackage{lmodern}
+\usepackage{amsmath}
+\usepackage{listings}
+\usepackage{fullpage}
+\usepackage{parskip}
+\usepackage{xcolor}
+\lstset{
+	basicstyle=\ttfamily,
+	columns=fullflexible,
+	frame=single,
+	breaklines=true,
+	postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},
+}
+\begin{document}
+\title{Experiment `2\_6\_convert' Results}
+\author{\today}
+\date{}
+\maketitle
+\textbf{Experiment outcome: }SUCCESS
+\\\textbf{Bad responses: }0
+\\\textbf{Responses containing}~\texttt{assume}~\textbf{: }0
+\\\textbf{Resolution attempts: }1
+\\\textbf{Hard fails (resolution): }0
+\\\textbf{Soft fails (resolution): }0
+\\\textbf{Verification attempts: }1
+\section*{Problem Specification}
+\textbf{Problem name: }2\_6\_convert
+\\\textbf{Natural language statement: }Write a method that takes a measurement in meters and then converts it to miles, feet, and inches.
+\\\textbf{Method signature: }convert(x: real) returns (miles: real, feet: real, inches: real)
+\subsection*{Ensures}
+\begin{itemize}
+\item \texttt{x / 0.000621371 == miles}
+\item \texttt{x / 3.28084 == feet}
+\item \texttt{x / 39.3701 == inches}
+\end{itemize}
+\clearpage
+\section*{GenAI interactions}
+Below you will find all interactions between the `user' (program) and the `assistant' (OpenAI).
+\subsection*{Program $\rightarrow$ GenAI}
+\begin{lstlisting}
+You are given the following task to perform in Dafny:
+
+Write a method that takes a measurement in meters and then converts it to miles, feet, and inches.
+
+The signature should be:
+
+method convert(x: real) returns (miles: real, feet: real, inches: real)
+
+The method should respect the following contract:
+
+ensures x / 0.000621371 == miles, ensures x / 3.28084 == feet, ensures x / 39.3701 == inches
+
+Produce and show only the Dafny body of this method, including the curly braces that surround it. Do not show the signature nor contract. You must not use 'assume' anywhere in your code.
+
+\end{lstlisting}
+\subsection*{GenAI $\rightarrow$ Program}
+\textbf{System fingerprint: }
+\\\textbf{ID: }chatcmpl-Co4PRfsmbq1BnJSanMHjkeqduG3qs
+\\\textbf{Model: }gpt-5.1-chat-latest
+\\\textbf{Created at: }1766049385
+\\\textbf{Finish reason: }stop
+\\\textbf{Usage: }322 tokens in, and 121 tokens out
+\begin{lstlisting}
+{
+  miles := x / 0.000621371;
+  feet := x / 3.28084;
+  inches := x / 39.3701;
+}
+\end{lstlisting}
+\section*{Final Program}
+\begin{lstlisting}
+method convert(x: real) returns (miles: real, feet: real, inches: real)
+	ensures x / 0.000621371 == miles
+	ensures x / 3.28084 == feet
+	ensures x / 39.3701 == inches
+{
+  miles := x / 0.000621371;
+  feet := x / 3.28084;
+  inches := x / 39.3701;
+}
+\end{lstlisting}
+\section*{Total Token Usage}
+\textbf{Input tokens: }322
+\\\textbf{Output tokens: }121
+\\\textbf{Reasoning tokens: }64
+\\\textbf{Sum of `total tokens': }443
+\section*{Experiment Timings}
+\textbf{Overall Experiment} started at 1766049387283, ended at 1766049392751, lasting 5468ms (5.47 seconds)
+\\\textbf{Iteration \#1} started at 1766049387283, ended at 1766049392750, lasting 5467ms (5.47 seconds)
+\end{document}

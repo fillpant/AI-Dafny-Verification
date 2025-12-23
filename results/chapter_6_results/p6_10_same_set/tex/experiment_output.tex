@@ -1,0 +1,319 @@
+\documentclass{article}
+\usepackage{lmodern}
+\usepackage{amsmath}
+\usepackage{listings}
+\usepackage{fullpage}
+\usepackage{parskip}
+\usepackage{xcolor}
+\lstset{
+	basicstyle=\ttfamily,
+	columns=fullflexible,
+	frame=single,
+	breaklines=true,
+	postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},
+}
+\begin{document}
+\title{Experiment `p6\_10\_same\_set' Results}
+\author{\today}
+\date{}
+\maketitle
+\textbf{Experiment outcome: }SUCCESS
+\\\textbf{Bad responses: }0
+\\\textbf{Responses containing}~\texttt{assume}~\textbf{: }0
+\\\textbf{Resolution attempts: }4
+\\\textbf{Hard fails (resolution): }2
+\\\textbf{Soft fails (resolution): }0
+\\\textbf{Verification attempts: }2
+\section*{Problem Specification}
+\textbf{Problem name: }p6\_10\_same\_set
+\\\textbf{Natural language statement: }Write a method that checks whether two arrays have the same elements in some order, ignoring duplicates.
+\\\textbf{Method signature: }p6\_10\_same\_set(arr1: seq<int>, arr2: seq<int>) returns (areSameSet: bool)
+\subsection*{Ensures}
+\begin{itemize}
+\item \texttt{areSameSet == (array\_to\_set(arr1) == array\_to\_set(arr2))}
+\end{itemize}
+\subsection*{Functional Code Given}
+\begin{lstlisting}
+function array_to_set(arr: seq<int>) : set<int>
+{
+  if |arr| == 0 then {}
+  else {arr[0]} + array_to_set(arr[1..])
+}
+\end{lstlisting}
+\clearpage
+\section*{GenAI interactions}
+Below you will find all interactions between the `user' (program) and the `assistant' (OpenAI).
+\subsection*{Program $\rightarrow$ GenAI}
+\begin{lstlisting}
+You are given the following task to perform in Dafny:
+
+Write a method that checks whether two arrays have the same elements in some order, ignoring duplicates.
+
+The signature should be:
+
+method p6_10_same_set(arr1: seq<int>, arr2: seq<int>) returns (areSameSet: bool)
+
+The method should respect the following contract:
+
+ensures areSameSet == (array_to_set(arr1) == array_to_set(arr2))
+
+The contract uses the following dafny code:
+
+function array_to_set(arr: seq<int>) : set<int>
+{
+  if |arr| == 0 then {}
+  else {arr[0]} + array_to_set(arr[1..])
+}
+
+These function(s) must not be used in your implementation of the method.
+
+Produce and show only the Dafny body of this method, including the curly braces that surround it. Do not show the signature nor contract. You must not use 'assume' anywhere in your code.
+
+\end{lstlisting}
+\subsection*{GenAI $\rightarrow$ Program}
+\textbf{System fingerprint: }
+\\\textbf{ID: }chatcmpl-Co5BoQdBVPh5OMIn0eHxUIvOAgQcC
+\\\textbf{Model: }gpt-5.1-chat-latest
+\\\textbf{Created at: }1766052384
+\\\textbf{Finish reason: }stop
+\\\textbf{Usage: }430 tokens in, and 269 tokens out
+\begin{lstlisting}
+{
+  var s1: set<int> := {};
+  var i := 0;
+  while i < |arr1|
+    invariant 0 <= i <= |arr1|
+    invariant s1 == set arr1[0..i]
+  {
+    s1 := s1 + {arr1[i]};
+    i := i + 1;
+  }
+
+  var s2: set<int> := {};
+  var j := 0;
+  while j < |arr2|
+    invariant 0 <= j <= |arr2|
+    invariant s2 == set arr2[0..j]
+  {
+    s2 := s2 + {arr2[j]};
+    j := j + 1;
+  }
+
+  areSameSet := (s1 == s2);
+}
+\end{lstlisting}
+\subsection*{Program $\rightarrow$ GenAI}
+\begin{lstlisting}
+When using dafny resolve, the below error is emitted and resolve fails:
+
+problem_data/p6_10_same_set/program.dfy(14,28): Error: invalid WhileStmt
+   |
+14 |     invariant s1 == set arr1[0..i]
+   |                             ^
+
+1 parse errors detected in program.dfy
+
+Correct the error by altering only the method body. Produce and show only the Dafny body, including the curly braces that surround it. Do not show the signature nor contract. You must not use 'assume' anywhere in your code.
+
+\end{lstlisting}
+\subsection*{GenAI $\rightarrow$ Program}
+\textbf{System fingerprint: }
+\\\textbf{ID: }chatcmpl-Co5BsOJVraMx7Hgp0l5ZMjIMwEnR2
+\\\textbf{Model: }gpt-5.1-chat-latest
+\\\textbf{Created at: }1766052388
+\\\textbf{Finish reason: }stop
+\\\textbf{Usage: }671 tokens in, and 335 tokens out
+\begin{lstlisting}
+{
+  var s1: set<int> := {};
+  var i := 0;
+  while i < |arr1|
+    invariant 0 <= i <= |arr1|
+    invariant s1 == set(arr1[0..i])
+  {
+    s1 := s1 + {arr1[i]};
+    i := i + 1;
+  }
+
+  var s2: set<int> := {};
+  var j := 0;
+  while j < |arr2|
+    invariant 0 <= j <= |arr2|
+    invariant s2 == set(arr2[0..j])
+  {
+    s2 := s2 + {arr2[j]};
+    j := j + 1;
+  }
+
+  areSameSet := (s1 == s2);
+}
+\end{lstlisting}
+\subsection*{Program $\rightarrow$ GenAI}
+\begin{lstlisting}
+When using dafny resolve, the below error is emitted and resolve fails:
+
+problem_data/p6_10_same_set/program.dfy(14,23): Error: invalid Ident
+   |
+14 |     invariant s1 == set(arr1[0..i])
+   |                        ^
+
+problem_data/p6_10_same_set/program.dfy(15,2): Error: invalid Suffix
+   |
+15 |   {
+   |   ^
+
+problem_data/p6_10_same_set/program.dfy(14,23): Error: missing semicolon at end of statement
+   |
+14 |     invariant s1 == set(arr1[0..i])
+   |                        ^^^^^^^^^^^^
+
+problem_data/p6_10_same_set/program.dfy(24,23): Error: invalid Ident
+   |
+24 |     invariant s2 == set(arr2[0..j])
+   |                        ^
+
+problem_data/p6_10_same_set/program.dfy(25,2): Error: invalid Suffix
+   |
+25 |   {
+   |   ^
+
+problem_data/p6_10_same_set/program.dfy(24,23): Error: missing semicolon at end of statement
+   |
+24 |     invariant s2 == set(arr2[0..j])
+   |                        ^^^^^^^^^^^^
+
+6 parse errors detected in program.dfy
+
+Correct the error by altering only the method body. Produce and show only the Dafny body, including the curly braces that surround it. Do not show the signature nor contract. You must not use 'assume' anywhere in your code.
+
+\end{lstlisting}
+\subsection*{GenAI $\rightarrow$ Program}
+\textbf{System fingerprint: }
+\\\textbf{ID: }chatcmpl-Co5BxEkaJdL1WJipBXwCEsvD4ykUz
+\\\textbf{Model: }gpt-5.1-chat-latest
+\\\textbf{Created at: }1766052393
+\\\textbf{Finish reason: }stop
+\\\textbf{Usage: }1411 tokens in, and 219 tokens out
+\begin{lstlisting}
+{
+  var s1: set<int> := {};
+  var i := 0;
+  while i < |arr1|
+    invariant 0 <= i <= |arr1|
+    invariant s1 == set k:int | 0 <= k < i :: arr1[k]
+  {
+    s1 := s1 + {arr1[i]};
+    i := i + 1;
+  }
+
+  var s2: set<int> := {};
+  var j := 0;
+  while j < |arr2|
+    invariant 0 <= j <= |arr2|
+    invariant s2 == set k:int | 0 <= k < j :: arr2[k]
+  {
+    s2 := s2 + {arr2[j]};
+    j := j + 1;
+  }
+
+  areSameSet := (s1 == s2);
+}
+\end{lstlisting}
+\subsection*{Program $\rightarrow$ GenAI}
+\begin{lstlisting}
+When using dafny verify, the below error is emitted and verify fails:
+
+problem_data/p6_10_same_set/program.dfy(9,0): Error: a postcondition could not be proved on this return path
+  |
+9 | {
+  | ^
+
+problem_data/p6_10_same_set/program.dfy(8,20): Related location: this is the postcondition that could not be proved
+  |
+8 | 	ensures areSameSet == (array_to_set(arr1) == array_to_set(arr2))
+  |                     ^^
+
+
+Dafny program verifier finished with 1 verified, 1 error
+
+Correct the error by altering only the method body. Produce and show only the Dafny body, including the curly braces that surround it. Do not show the signature nor contract. You must not use 'assume' anywhere in your code.
+
+\end{lstlisting}
+\subsection*{GenAI $\rightarrow$ Program}
+\textbf{System fingerprint: }
+\\\textbf{ID: }chatcmpl-Co5C2u5ASx9cZ0xPtodefqeRZc3qN
+\\\textbf{Model: }gpt-5.1-chat-latest
+\\\textbf{Created at: }1766052398
+\\\textbf{Finish reason: }stop
+\\\textbf{Usage: }1663 tokens in, and 531 tokens out
+\begin{lstlisting}
+{
+  var s1: set<int> := {};
+  var i := |arr1|;
+  while i > 0
+    invariant 0 <= i <= |arr1|
+    invariant s1 == array_to_set(arr1[i..])
+  {
+    s1 := s1 + {arr1[i-1]};
+    i := i - 1;
+  }
+
+  var s2: set<int> := {};
+  var j := |arr2|;
+  while j > 0
+    invariant 0 <= j <= |arr2|
+    invariant s2 == array_to_set(arr2[j..])
+  {
+    s2 := s2 + {arr2[j-1]};
+    j := j - 1;
+  }
+
+  areSameSet := (s1 == s2);
+}
+\end{lstlisting}
+\section*{Final Program}
+\begin{lstlisting}
+function array_to_set(arr: seq<int>) : set<int>
+{
+  if |arr| == 0 then {}
+  else {arr[0]} + array_to_set(arr[1..])
+}
+
+method p6_10_same_set(arr1: seq<int>, arr2: seq<int>) returns (areSameSet: bool)
+	ensures areSameSet == (array_to_set(arr1) == array_to_set(arr2))
+{
+  var s1: set<int> := {};
+  var i := |arr1|;
+  while i > 0
+    invariant 0 <= i <= |arr1|
+    invariant s1 == array_to_set(arr1[i..])
+  {
+    s1 := s1 + {arr1[i-1]};
+    i := i - 1;
+  }
+
+  var s2: set<int> := {};
+  var j := |arr2|;
+  while j > 0
+    invariant 0 <= j <= |arr2|
+    invariant s2 == array_to_set(arr2[j..])
+  {
+    s2 := s2 + {arr2[j-1]};
+    j := j - 1;
+  }
+
+  areSameSet := (s1 == s2);
+}
+\end{lstlisting}
+\section*{Total Token Usage}
+\textbf{Input tokens: }4175
+\\\textbf{Output tokens: }1354
+\\\textbf{Reasoning tokens: }512
+\\\textbf{Sum of `total tokens': }5529
+\section*{Experiment Timings}
+\textbf{Overall Experiment} started at 1766052385892, ended at 1766052407800, lasting 21908ms (21.91 seconds)
+\\\textbf{Iteration \#4} started at 1766052399903, ended at 1766052407800, lasting 7897ms (7.90 seconds)
+\\\textbf{Iteration \#1} started at 1766052385892, ended at 1766052390478, lasting 4586ms (4.59 seconds)
+\\\textbf{Iteration \#2} started at 1766052390478, ended at 1766052395341, lasting 4863ms (4.86 seconds)
+\\\textbf{Iteration \#3} started at 1766052395341, ended at 1766052399903, lasting 4562ms (4.56 seconds)
+\end{document}

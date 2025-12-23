@@ -1,0 +1,83 @@
+\documentclass{article}
+\usepackage{lmodern}
+\usepackage{amsmath}
+\usepackage{listings}
+\usepackage{fullpage}
+\usepackage{parskip}
+\usepackage{xcolor}
+\lstset{
+	basicstyle=\ttfamily,
+	columns=fullflexible,
+	frame=single,
+	breaklines=true,
+	postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},
+}
+\begin{document}
+\title{Experiment `p\_1\_5' Results}
+\author{\today}
+\date{}
+\maketitle
+\textbf{Experiment outcome: }SUCCESS
+\\\textbf{Bad responses: }0
+\\\textbf{Responses containing}~\texttt{assume}~\textbf{: }0
+\\\textbf{Resolution attempts: }1
+\\\textbf{Hard fails (resolution): }0
+\\\textbf{Soft fails (resolution): }0
+\\\textbf{Verification attempts: }1
+\section*{Problem Specification}
+\textbf{Problem name: }p\_1\_5
+\\\textbf{Natural language statement: }Write a method that returns the name Dave inside a box on the screen. Do your best to approximate lines with characters such as | - +.
+\\\textbf{Method signature: }p\_1\_5() returns (s : string)
+\subsection*{Ensures}
+\begin{itemize}
+\item \texttt{s == "+------+\textbackslash{}n| Dave |\textbackslash{}n+------+\textbackslash{}n"}
+\end{itemize}
+\clearpage
+\section*{GenAI interactions}
+Below you will find all interactions between the `user' (program) and the `assistant' (OpenAI).
+\subsection*{Program $\rightarrow$ GenAI}
+\begin{lstlisting}
+You are given the following task to perform in Dafny:
+
+Write a method that returns the name Dave inside a box on the screen. Do your best to approximate lines with characters such as | - +.
+
+The signature should be:
+
+method p_1_5() returns (s : string)
+
+The method should respect the following contract:
+
+ensures s == "+------+\n| Dave |\n+------+\n"
+
+Produce and show only the Dafny body of this method, including the curly braces that surround it. Do not show the signature nor contract. You must not use 'assume' anywhere in your code.
+
+\end{lstlisting}
+\subsection*{GenAI $\rightarrow$ Program}
+\textbf{System fingerprint: }
+\\\textbf{ID: }chatcmpl-Co4Ly2EE7UcPQdUrNnUrc9PPtZXq9
+\\\textbf{Model: }gpt-5.1-chat-latest
+\\\textbf{Created at: }1766049170
+\\\textbf{Finish reason: }stop
+\\\textbf{Usage: }286 tokens in, and 106 tokens out
+\begin{lstlisting}
+{
+  s := "+------+\n| Dave |\n+------+\n";
+}
+\end{lstlisting}
+\section*{Final Program}
+\begin{lstlisting}
+method p_1_5() returns (s : string)
+	ensures s == "+------+\n| Dave |\n+------+\n"
+{
+  s := "+------+\n| Dave |\n+------+\n";
+}
+\end{lstlisting}
+\section*{Total Token Usage}
+\textbf{Input tokens: }286
+\\\textbf{Output tokens: }106
+\\\textbf{Reasoning tokens: }64
+\\\textbf{Sum of `total tokens': }392
+\section*{Experiment Timings}
+\textbf{Overall Experiment} started at 1766049171097, ended at 1766049175176, lasting 4079ms (4.08 seconds)
+\\\textbf{Iteration \#1} started at 1766049171098, ended at 1766049175176, lasting 4078ms (4.08 seconds)
+\end{document}

@@ -1,0 +1,22 @@
+Experiment,Outcome,Input tokens, Output tokens, Total reasoning tokens,Total tokens,Bad response cnt,Verification attempts,Resolution attempts,Soft-failed resolution cnt,Hard-failed resolution cnt,Responses with 'assume',Experiment time (ms),Iteration 1 time (ms),Iteration 2 time (ms),Iteration 3 time (ms),Iteration 4 time (ms),Iteration 5 time (ms),Iteration 6 time (ms),Iteration 7 time (ms),Iteration 8 time (ms)
+p4_10_count_vowels,FAILURE_VERIFY,22175,3382,1024,25557,0,7,8,0,1,0,48705,5408,7081,4354,5642,9535,5062,6327,5295
+p4_1_a_sum_even_numbers,SUCCESS,841,783,576,1624,0,2,2,0,0,0,13103,7274,5828,,,,,,
+p4_1_b_sum_squares,SUCCESS,258,107,0,365,0,1,1,0,0,0,3482,3482,,,,,,,
+p4_1_c_powers_of_two,SUCCESS,2208,666,192,2874,0,2,3,0,1,0,13557,3534,5742,4281,,,,,
+p4_1_d_sum_odd_numbers,FAILURE_VERIFY,12950,1773,832,14723,0,8,8,0,0,0,35687,3743,6202,4272,3555,4038,3705,5559,4612
+p4_1_e_sum_odd_digits,SUCCESS,510,438,320,948,0,1,1,0,0,0,6839,6838,,,,,,,
+p4_2_a_min_max,SUCCESS,402,197,0,599,0,1,1,0,0,0,5038,5038,,,,,,,
+p4_2_b_count_even_odd,FAILURE_VERIFY,19259,1928,640,21187,0,7,8,1,0,0,39015,5063,4966,3232,3763,5011,7134,5145,4700
+p4_2_c_cumulative_totals,SUCCESS,5294,1475,640,6769,0,5,5,0,0,0,24788,4928,3700,7233,4080,4847,,,
+p4_2_d_adjacent_duplicates,FAILURE_VERIFY,23462,2698,576,26160,0,6,8,2,0,0,43947,4923,5393,5035,6350,4786,4652,6235,6573
+p4_3_a_extract_uppercase,SUCCESS,998,440,128,1438,0,1,2,0,1,0,8594,4162,4432,,,,,,
+p4_3_b_every_second_letter,FAILURE_VERIFY,12575,2327,1280,14902,0,8,8,0,0,0,41559,3593,6215,4312,4515,5545,8313,4510,4556
+p4_3_c_replace_vowels,SUCCESS,374,422,128,796,0,1,1,0,0,0,6782,6782,,,,,,,
+p4_3_d_count_vowels,FAILURE_VERIFY,20674,2531,448,23205,0,6,8,1,1,0,41315,3309,3975,6047,4546,6290,5588,6551,5009
+p4_3_e_positions_of_vowels,SUCCESS,420,334,128,754,0,1,1,0,0,0,6115,6114,,,,,,,
+p4_4_month_with_highest_temperature,SUCCESS,342,158,0,500,0,1,1,0,0,0,3622,3622,,,,,,,
+p4_5_analyze_floats,FAILURE_VERIFY,24230,2217,192,26447,0,7,8,1,0,0,38345,5129,4274,5461,5312,4368,4793,3988,5018
+p4_6_find_minimum,SUCCESS,1932,535,128,2467,0,2,3,1,0,0,12323,3774,3731,4816,,,,,
+p4_7_permute_string,SUCCESS,3174,788,192,3962,0,2,3,0,1,0,13411,4416,6515,2480,,,,,
+p4_8_seperate_lines,SUCCESS,3293,1449,832,4742,0,3,4,0,1,0,22660,2920,4134,9769,5837,,,,
+p4_9_reverse_string,SUCCESS,1109,395,128,1504,0,1,2,1,0,0,7244,4006,3237,,,,,,

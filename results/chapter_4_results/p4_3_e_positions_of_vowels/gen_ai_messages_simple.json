@@ -1,0 +1,10 @@
+[
+  {
+    "role": "user",
+    "content": "You are given the following task to perform in Dafny:\n\nWrite a method that takes a string and returns the positions of all vowels in the string.\n\nThe signature should be:\n\nmethod p4_3_e_positions_of_vowels(s: string) returns (positions: seq\u003cint\u003e)\n\nThe method should respect the following contract:\n\nensures forall p :: p in positions \u003d\u003d\u003e 0 \u003c\u003d p \u003c |s| \u0026\u0026 s[p] in [\u0027a\u0027,\u0027e\u0027,\u0027i\u0027,\u0027o\u0027,\u0027u\u0027,\u0027A\u0027,\u0027E\u0027,\u0027I\u0027,\u0027O\u0027,\u0027U\u0027], ensures forall i :: 0 \u003c\u003d i \u003c |s| \u0026\u0026 s[i] in [\u0027a\u0027,\u0027e\u0027,\u0027i\u0027,\u0027o\u0027,\u0027u\u0027,\u0027A\u0027,\u0027E\u0027,\u0027I\u0027,\u0027O\u0027,\u0027U\u0027] \u003d\u003d\u003e i in positions\n\nProduce and show only the Dafny body of this method, including the curly braces that surround it. Do not show the signature nor contract. You must not use \u0027assume\u0027 anywhere in your code.\n"
+  },
+  {
+    "role": "assistant",
+    "content": "{\"method_body\":\"{\\n  var r: seq\u003cint\u003e :\u003d [];\\n  var i :\u003d 0;\\n  while i \u003c |s|\\n    invariant 0 \u003c\u003d i \u003c\u003d |s|\\n    invariant forall p :: p in r \u003d\u003d\u003e 0 \u003c\u003d p \u003c i \u0026\u0026 s[p] in [\u0027a\u0027,\u0027e\u0027,\u0027i\u0027,\u0027o\u0027,\u0027u\u0027,\u0027A\u0027,\u0027E\u0027,\u0027I\u0027,\u0027O\u0027,\u0027U\u0027]\\n    invariant forall j :: 0 \u003c\u003d j \u003c i \u0026\u0026 s[j] in [\u0027a\u0027,\u0027e\u0027,\u0027i\u0027,\u0027o\u0027,\u0027u\u0027,\u0027A\u0027,\u0027E\u0027,\u0027I\u0027,\u0027O\u0027,\u0027U\u0027] \u003d\u003d\u003e j in r\\n  {\\n    if s[i] in [\u0027a\u0027,\u0027e\u0027,\u0027i\u0027,\u0027o\u0027,\u0027u\u0027,\u0027A\u0027,\u0027E\u0027,\u0027I\u0027,\u0027O\u0027,\u0027U\u0027] {\\n      r :\u003d r + [i];\\n    }\\n    i :\u003d i + 1;\\n  }\\n  positions :\u003d r;\\n}\"}"
+  }
+]

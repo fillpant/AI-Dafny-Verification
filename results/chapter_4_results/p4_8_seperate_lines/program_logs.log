@@ -1,0 +1,173 @@
+[18/12/25 09:32:42.346] [Experiment 'p4_8_seperate_lines'] [INFO]: Experiment created.
+[18/12/25 09:32:42.346] [Experiment 'p4_8_seperate_lines'] [INFO]: Experiment started.
+[18/12/25 09:32:42.346] [Experiment 'p4_8_seperate_lines'] [INFO]: Using initial prompt: You are given the following task to perform in Dafny:
+
+Write a method that reads a word and returns each character of the word on a separate line.
+
+The signature should be:
+
+method p4_8_seperate_lines(s: string) returns (chars: string)
+
+The method should respect the following contract:
+
+ensures |chars| == 2 * |s|, ensures forall i :: 0 <= i < |s| ==> i % 2 == 1 ==> chars[i] == '\n', ensures forall i :: 0 <= i < |s| ==> i % 2 == 0 ==> chars[i] == s[i / 2]
+
+Produce and show only the Dafny body of this method, including the curly braces that surround it. Do not show the signature nor contract. You must not use 'assume' anywhere in your code.
+
+[18/12/25 09:32:42.346] [Experiment 'p4_8_seperate_lines'] [INFO]: There are 30000 left in the jar, for the rest of this experiment.
+[18/12/25 09:32:42.346] [Experiment 'p4_8_seperate_lines'] [INFO]: Querrying GenAI...
+[18/12/25 09:32:42.346] [Experiment 'p4_8_seperate_lines'] [FINE]: Constructing message for GenAI
+[18/12/25 09:32:42.346] [Experiment 'p4_8_seperate_lines'] [INFO]: Context is on, attaching 1 previous messages in the request to GenAI.
+[18/12/25 09:32:42.346] [Experiment 'p4_8_seperate_lines'] [INFO]: A reasoning model is chosen, but no reasoning effort value is set. Setting reasoning to 'medium'
+[18/12/25 09:32:42.346] [Experiment 'p4_8_seperate_lines'] [FINE]: Setting max tokens for the request to 30000
+[18/12/25 09:32:42.346] [Experiment 'p4_8_seperate_lines'] [FINE]: Using model gpt-5.1-chat-latest. Awaiting response...
+[18/12/25 09:32:44.719] [Experiment 'p4_8_seperate_lines'] [FINE]: Got response with 293 characters.
+[18/12/25 09:32:44.719] [Experiment 'p4_8_seperate_lines'] [FINE]: Saving gen_ai_messages.json
+[18/12/25 09:32:44.720] [Experiment 'p4_8_seperate_lines'] [FINE]: Saved 2808 characters to file gen_ai_messages.json
+[18/12/25 09:32:44.720] [Experiment 'p4_8_seperate_lines'] [FINE]: Saving gen_ai_messages_simple.json
+[18/12/25 09:32:44.720] [Experiment 'p4_8_seperate_lines'] [FINE]: Saved 1373 characters to file gen_ai_messages_simple.json
+[18/12/25 09:32:44.720] [Experiment 'p4_8_seperate_lines'] [INFO]: Converting GenAI response to method...
+[18/12/25 09:32:44.720] [Experiment 'p4_8_seperate_lines'] [FINE]: Saving program.dfy
+[18/12/25 09:32:44.720] [Experiment 'p4_8_seperate_lines'] [FINE]: Saved 491 characters to file program.dfy
+[18/12/25 09:32:44.720] [Experiment 'p4_8_seperate_lines'] [INFO]: Context is treated as being fully enabled, meaning that subsequent prompts do not include the full code.
+[18/12/25 09:32:44.720] [Experiment 'p4_8_seperate_lines'] [INFO]: Checking the method for the presence of the 'assume' keyword...
+[18/12/25 09:32:44.720] [Experiment 'p4_8_seperate_lines'] [INFO]: Calling dafny to resolve the generated method...
+[18/12/25 09:32:44.989] [Experiment 'p4_8_seperate_lines'] [SEVERE]: Program exited with code 2
+[18/12/25 09:32:44.989] [Experiment 'p4_8_seperate_lines'] [SEVERE]: Program stdout: problem_data/p4_8_seperate_lines/program.dfy(13,18): Error: sequence has type string which is incompatible with expected type seq<char> (element type char is incompatible with char)
+   |
+13 |     res := res + s[i] + "\n";
+   |                   ^
+
+1 resolution/type errors detected in program.dfy
+[18/12/25 09:32:44.989] [Experiment 'p4_8_seperate_lines'] [INFO]: Calling dafny to resolve the generated method, but with warnings allowed...
+[18/12/25 09:32:45.266] [Experiment 'p4_8_seperate_lines'] [SEVERE]: Program exited with code 2
+[18/12/25 09:32:45.266] [Experiment 'p4_8_seperate_lines'] [SEVERE]: Program stdout: problem_data/p4_8_seperate_lines/program.dfy(13,18): Error: sequence has type string which is incompatible with expected type seq<char> (element type char is incompatible with char)
+   |
+13 |     res := res + s[i] + "\n";
+   |                   ^
+
+1 resolution/type errors detected in program.dfy
+[18/12/25 09:32:45.266] [Experiment 'p4_8_seperate_lines'] [INFO]: Resolution fails as a result of an error.
+[18/12/25 09:32:45.266] [Experiment 'p4_8_seperate_lines'] [WARNING]: Treating resolution as failed for the generated method. Preparing GenAI prompt to fix...
+[18/12/25 09:32:45.266] [Experiment 'p4_8_seperate_lines'] [INFO]: There are 29478 left in the jar, for the rest of this experiment.
+[18/12/25 09:32:45.266] [Experiment 'p4_8_seperate_lines'] [INFO]: Previous iteration lasted 2920ms
+[18/12/25 09:32:45.266] [Experiment 'p4_8_seperate_lines'] [INFO]: Querrying GenAI...
+[18/12/25 09:32:45.266] [Experiment 'p4_8_seperate_lines'] [FINE]: Constructing message for GenAI
+[18/12/25 09:32:45.266] [Experiment 'p4_8_seperate_lines'] [INFO]: Context is on, attaching 3 previous messages in the request to GenAI.
+[18/12/25 09:32:45.266] [Experiment 'p4_8_seperate_lines'] [INFO]: A reasoning model is chosen, but no reasoning effort value is set. Setting reasoning to 'medium'
+[18/12/25 09:32:45.266] [Experiment 'p4_8_seperate_lines'] [FINE]: Setting max tokens for the request to 29478
+[18/12/25 09:32:45.266] [Experiment 'p4_8_seperate_lines'] [FINE]: Using model gpt-5.1-chat-latest. Awaiting response...
+[18/12/25 09:32:48.133] [Experiment 'p4_8_seperate_lines'] [FINE]: Got response with 298 characters.
+[18/12/25 09:32:48.133] [Experiment 'p4_8_seperate_lines'] [FINE]: Saving gen_ai_messages.json
+[18/12/25 09:32:48.134] [Experiment 'p4_8_seperate_lines'] [FINE]: Saved 5437 characters to file gen_ai_messages.json
+[18/12/25 09:32:48.134] [Experiment 'p4_8_seperate_lines'] [FINE]: Saving gen_ai_messages_simple.json
+[18/12/25 09:32:48.134] [Experiment 'p4_8_seperate_lines'] [FINE]: Saved 2561 characters to file gen_ai_messages_simple.json
+[18/12/25 09:32:48.134] [Experiment 'p4_8_seperate_lines'] [INFO]: Converting GenAI response to method...
+[18/12/25 09:32:48.134] [Experiment 'p4_8_seperate_lines'] [FINE]: Saving program.dfy
+[18/12/25 09:32:48.134] [Experiment 'p4_8_seperate_lines'] [FINE]: Saved 496 characters to file program.dfy
+[18/12/25 09:32:48.134] [Experiment 'p4_8_seperate_lines'] [INFO]: Context is treated as being fully enabled, meaning that subsequent prompts do not include the full code.
+[18/12/25 09:32:48.134] [Experiment 'p4_8_seperate_lines'] [INFO]: Checking the method for the presence of the 'assume' keyword...
+[18/12/25 09:32:48.134] [Experiment 'p4_8_seperate_lines'] [INFO]: Calling dafny to resolve the generated method...
+[18/12/25 09:32:48.445] [Experiment 'p4_8_seperate_lines'] [INFO]: Program exited with code 0
+[18/12/25 09:32:48.445] [Experiment 'p4_8_seperate_lines'] [INFO]: Program stdout: 
+Dafny program verifier did not attempt verification
+[18/12/25 09:32:48.445] [Experiment 'p4_8_seperate_lines'] [INFO]: Calling dafny to resolve the generated method, but with warnings allowed...
+[18/12/25 09:32:48.763] [Experiment 'p4_8_seperate_lines'] [INFO]: Program exited with code 0
+[18/12/25 09:32:48.763] [Experiment 'p4_8_seperate_lines'] [INFO]: Program stdout: 
+Dafny program verifier did not attempt verification
+[18/12/25 09:32:48.763] [Experiment 'p4_8_seperate_lines'] [INFO]: Resolution passes without warnings.
+[18/12/25 09:32:48.763] [Experiment 'p4_8_seperate_lines'] [INFO]: Dafny resolution check passed.
+[18/12/25 09:32:48.763] [Experiment 'p4_8_seperate_lines'] [INFO]: Calling dafny to verify the generated method...
+[18/12/25 09:32:49.400] [Experiment 'p4_8_seperate_lines'] [SEVERE]: Program exited with code 4
+[18/12/25 09:32:49.400] [Experiment 'p4_8_seperate_lines'] [SEVERE]: Program stdout: problem_data/p4_8_seperate_lines/program.dfy(5,0): Error: a postcondition could not be proved on this return path
+  |
+5 | {
+  | ^
+
+problem_data/p4_8_seperate_lines/program.dfy(3,9): Related location: this is the postcondition that could not be proved
+  |
+3 | 	ensures forall i :: 0 <= i < |s| ==> i % 2 == 1 ==> chars[i] == '\n'
+  |          ^^^^^^
+
+
+Dafny program verifier finished with 1 verified, 1 error
+[18/12/25 09:32:49.400] [Experiment 'p4_8_seperate_lines'] [WARNING]: Failed to verify the generated method. Preparing GenAI prompt to fix...
+[18/12/25 09:32:49.400] [Experiment 'p4_8_seperate_lines'] [INFO]: There are 28656 left in the jar, for the rest of this experiment.
+[18/12/25 09:32:49.400] [Experiment 'p4_8_seperate_lines'] [INFO]: Previous iteration lasted 4134ms
+[18/12/25 09:32:49.400] [Experiment 'p4_8_seperate_lines'] [INFO]: Querrying GenAI...
+[18/12/25 09:32:49.400] [Experiment 'p4_8_seperate_lines'] [FINE]: Constructing message for GenAI
+[18/12/25 09:32:49.400] [Experiment 'p4_8_seperate_lines'] [INFO]: Context is on, attaching 5 previous messages in the request to GenAI.
+[18/12/25 09:32:49.400] [Experiment 'p4_8_seperate_lines'] [INFO]: A reasoning model is chosen, but no reasoning effort value is set. Setting reasoning to 'medium'
+[18/12/25 09:32:49.400] [Experiment 'p4_8_seperate_lines'] [FINE]: Setting max tokens for the request to 28656
+[18/12/25 09:32:49.400] [Experiment 'p4_8_seperate_lines'] [FINE]: Using model gpt-5.1-chat-latest. Awaiting response...
+[18/12/25 09:32:57.914] [Experiment 'p4_8_seperate_lines'] [FINE]: Got response with 413 characters.
+[18/12/25 09:32:57.914] [Experiment 'p4_8_seperate_lines'] [FINE]: Saving gen_ai_messages.json
+[18/12/25 09:32:57.915] [Experiment 'p4_8_seperate_lines'] [FINE]: Saved 8625 characters to file gen_ai_messages.json
+[18/12/25 09:32:57.915] [Experiment 'p4_8_seperate_lines'] [FINE]: Saving gen_ai_messages_simple.json
+[18/12/25 09:32:57.915] [Experiment 'p4_8_seperate_lines'] [FINE]: Saved 4114 characters to file gen_ai_messages_simple.json
+[18/12/25 09:32:57.915] [Experiment 'p4_8_seperate_lines'] [INFO]: Converting GenAI response to method...
+[18/12/25 09:32:57.915] [Experiment 'p4_8_seperate_lines'] [FINE]: Saving program.dfy
+[18/12/25 09:32:57.916] [Experiment 'p4_8_seperate_lines'] [FINE]: Saved 606 characters to file program.dfy
+[18/12/25 09:32:57.916] [Experiment 'p4_8_seperate_lines'] [INFO]: Context is treated as being fully enabled, meaning that subsequent prompts do not include the full code.
+[18/12/25 09:32:57.916] [Experiment 'p4_8_seperate_lines'] [INFO]: Checking the method for the presence of the 'assume' keyword...
+[18/12/25 09:32:57.916] [Experiment 'p4_8_seperate_lines'] [INFO]: Calling dafny to resolve the generated method...
+[18/12/25 09:32:58.231] [Experiment 'p4_8_seperate_lines'] [INFO]: Program exited with code 0
+[18/12/25 09:32:58.231] [Experiment 'p4_8_seperate_lines'] [INFO]: Program stdout: 
+Dafny program verifier did not attempt verification
+[18/12/25 09:32:58.231] [Experiment 'p4_8_seperate_lines'] [INFO]: Calling dafny to resolve the generated method, but with warnings allowed...
+[18/12/25 09:32:58.541] [Experiment 'p4_8_seperate_lines'] [INFO]: Program exited with code 0
+[18/12/25 09:32:58.541] [Experiment 'p4_8_seperate_lines'] [INFO]: Program stdout: 
+Dafny program verifier did not attempt verification
+[18/12/25 09:32:58.541] [Experiment 'p4_8_seperate_lines'] [INFO]: Resolution passes without warnings.
+[18/12/25 09:32:58.541] [Experiment 'p4_8_seperate_lines'] [INFO]: Dafny resolution check passed.
+[18/12/25 09:32:58.541] [Experiment 'p4_8_seperate_lines'] [INFO]: Calling dafny to verify the generated method...
+[18/12/25 09:32:59.169] [Experiment 'p4_8_seperate_lines'] [SEVERE]: Program exited with code 4
+[18/12/25 09:32:59.169] [Experiment 'p4_8_seperate_lines'] [SEVERE]: Program stdout: problem_data/p4_8_seperate_lines/program.dfy(18,2): Error: assertion might not hold
+   |
+18 |   assert forall j :: 0 <= j < |s| && j % 2 == 1 ==> res[j] == '\n';
+   |   ^^^^^^
+
+
+Dafny program verifier finished with 1 verified, 1 error
+[18/12/25 09:32:59.169] [Experiment 'p4_8_seperate_lines'] [WARNING]: Failed to verify the generated method. Preparing GenAI prompt to fix...
+[18/12/25 09:32:59.169] [Experiment 'p4_8_seperate_lines'] [INFO]: There are 26955 left in the jar, for the rest of this experiment.
+[18/12/25 09:32:59.169] [Experiment 'p4_8_seperate_lines'] [INFO]: Previous iteration lasted 9769ms
+[18/12/25 09:32:59.169] [Experiment 'p4_8_seperate_lines'] [INFO]: Querrying GenAI...
+[18/12/25 09:32:59.169] [Experiment 'p4_8_seperate_lines'] [FINE]: Constructing message for GenAI
+[18/12/25 09:32:59.169] [Experiment 'p4_8_seperate_lines'] [INFO]: Context is on, attaching 7 previous messages in the request to GenAI.
+[18/12/25 09:32:59.169] [Experiment 'p4_8_seperate_lines'] [INFO]: A reasoning model is chosen, but no reasoning effort value is set. Setting reasoning to 'medium'
+[18/12/25 09:32:59.169] [Experiment 'p4_8_seperate_lines'] [FINE]: Setting max tokens for the request to 26955
+[18/12/25 09:32:59.169] [Experiment 'p4_8_seperate_lines'] [FINE]: Using model gpt-5.1-chat-latest. Awaiting response...
+[18/12/25 09:33:03.775] [Experiment 'p4_8_seperate_lines'] [FINE]: Got response with 350 characters.
+[18/12/25 09:33:03.776] [Experiment 'p4_8_seperate_lines'] [FINE]: Saving gen_ai_messages.json
+[18/12/25 09:33:03.776] [Experiment 'p4_8_seperate_lines'] [FINE]: Saved 11443 characters to file gen_ai_messages.json
+[18/12/25 09:33:03.776] [Experiment 'p4_8_seperate_lines'] [FINE]: Saving gen_ai_messages_simple.json
+[18/12/25 09:33:03.776] [Experiment 'p4_8_seperate_lines'] [FINE]: Saved 5390 characters to file gen_ai_messages_simple.json
+[18/12/25 09:33:03.776] [Experiment 'p4_8_seperate_lines'] [INFO]: Converting GenAI response to method...
+[18/12/25 09:33:03.776] [Experiment 'p4_8_seperate_lines'] [FINE]: Saving program.dfy
+[18/12/25 09:33:03.776] [Experiment 'p4_8_seperate_lines'] [FINE]: Saved 547 characters to file program.dfy
+[18/12/25 09:33:03.776] [Experiment 'p4_8_seperate_lines'] [INFO]: Context is treated as being fully enabled, meaning that subsequent prompts do not include the full code.
+[18/12/25 09:33:03.776] [Experiment 'p4_8_seperate_lines'] [INFO]: Checking the method for the presence of the 'assume' keyword...
+[18/12/25 09:33:03.776] [Experiment 'p4_8_seperate_lines'] [INFO]: Calling dafny to resolve the generated method...
+[18/12/25 09:33:04.093] [Experiment 'p4_8_seperate_lines'] [INFO]: Program exited with code 0
+[18/12/25 09:33:04.093] [Experiment 'p4_8_seperate_lines'] [INFO]: Program stdout: 
+Dafny program verifier did not attempt verification
+[18/12/25 09:33:04.093] [Experiment 'p4_8_seperate_lines'] [INFO]: Calling dafny to resolve the generated method, but with warnings allowed...
+[18/12/25 09:33:04.403] [Experiment 'p4_8_seperate_lines'] [INFO]: Program exited with code 0
+[18/12/25 09:33:04.403] [Experiment 'p4_8_seperate_lines'] [INFO]: Program stdout: 
+Dafny program verifier did not attempt verification
+[18/12/25 09:33:04.403] [Experiment 'p4_8_seperate_lines'] [INFO]: Resolution passes without warnings.
+[18/12/25 09:33:04.403] [Experiment 'p4_8_seperate_lines'] [INFO]: Dafny resolution check passed.
+[18/12/25 09:33:04.403] [Experiment 'p4_8_seperate_lines'] [INFO]: Calling dafny to verify the generated method...
+[18/12/25 09:33:05.006] [Experiment 'p4_8_seperate_lines'] [INFO]: Program exited with code 0
+[18/12/25 09:33:05.006] [Experiment 'p4_8_seperate_lines'] [INFO]: Program stdout: 
+Dafny program verifier finished with 2 verified, 0 errors
+[18/12/25 09:33:05.006] [Experiment 'p4_8_seperate_lines'] [INFO]: Dafny verification check passed.
+[18/12/25 09:33:05.006] [Experiment 'p4_8_seperate_lines'] [INFO]: Experiment finished.
+[18/12/25 09:33:05.006] [Experiment 'p4_8_seperate_lines'] [FINE]: Saving gen_ai_messages.json
+[18/12/25 09:33:05.007] [Experiment 'p4_8_seperate_lines'] [FINE]: Saved 11443 characters to file gen_ai_messages.json
+[18/12/25 09:33:05.007] [Experiment 'p4_8_seperate_lines'] [FINE]: Saving gen_ai_messages_simple.json
+[18/12/25 09:33:05.007] [Experiment 'p4_8_seperate_lines'] [FINE]: Saved 5390 characters to file gen_ai_messages_simple.json
+[18/12/25 09:33:05.007] [Experiment 'p4_8_seperate_lines'] [FINE]: Saving experiment_result.json
+[18/12/25 09:33:05.007] [Experiment 'p4_8_seperate_lines'] [FINE]: Saved 1045 characters to file experiment_result.json
+[18/12/25 09:33:05.664] [Experiment 'p4_8_seperate_lines'] [INFO]: Compilation of experiment report tex file successful

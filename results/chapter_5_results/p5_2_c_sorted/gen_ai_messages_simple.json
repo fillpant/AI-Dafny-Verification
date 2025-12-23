@@ -1,0 +1,10 @@
+[
+  {
+    "role": "user",
+    "content": "You are given the following task to perform in Dafny:\n\nWrite a method returning true if the arguments are sorted, with the smallest one coming first.\n\nThe signature should be:\n\nmethod p5_2_c_sorted(x: real, y: real, z: real) returns (isSorted: bool)\n\nThe method should respect the following contract:\n\nensures isSorted \u003d\u003d (x \u003c\u003d y \u0026\u0026 y \u003c\u003d z)\n\nProduce and show only the Dafny body of this method, including the curly braces that surround it. Do not show the signature nor contract. You must not use \u0027assume\u0027 anywhere in your code.\n"
+  },
+  {
+    "role": "assistant",
+    "content": "{\"method_body\":\"{\\n  isSorted :\u003d x \u003c\u003d y \u0026\u0026 y \u003c\u003d z;\\n}\"}"
+  }
+]

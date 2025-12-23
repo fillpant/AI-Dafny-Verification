@@ -1,0 +1,83 @@
+\documentclass{article}
+\usepackage{lmodern}
+\usepackage{amsmath}
+\usepackage{listings}
+\usepackage{fullpage}
+\usepackage{parskip}
+\usepackage{xcolor}
+\lstset{
+	basicstyle=\ttfamily,
+	columns=fullflexible,
+	frame=single,
+	breaklines=true,
+	postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},
+}
+\begin{document}
+\title{Experiment `p5\_2\_c\_sorted' Results}
+\author{\today}
+\date{}
+\maketitle
+\textbf{Experiment outcome: }SUCCESS
+\\\textbf{Bad responses: }0
+\\\textbf{Responses containing}~\texttt{assume}~\textbf{: }0
+\\\textbf{Resolution attempts: }1
+\\\textbf{Hard fails (resolution): }0
+\\\textbf{Soft fails (resolution): }0
+\\\textbf{Verification attempts: }1
+\section*{Problem Specification}
+\textbf{Problem name: }p5\_2\_c\_sorted
+\\\textbf{Natural language statement: }Write a method returning true if the arguments are sorted, with the smallest one coming first.
+\\\textbf{Method signature: }p5\_2\_c\_sorted(x: real, y: real, z: real) returns (isSorted: bool)
+\subsection*{Ensures}
+\begin{itemize}
+\item \texttt{isSorted == (x <= y \&\& y <= z)}
+\end{itemize}
+\clearpage
+\section*{GenAI interactions}
+Below you will find all interactions between the `user' (program) and the `assistant' (OpenAI).
+\subsection*{Program $\rightarrow$ GenAI}
+\begin{lstlisting}
+You are given the following task to perform in Dafny:
+
+Write a method returning true if the arguments are sorted, with the smallest one coming first.
+
+The signature should be:
+
+method p5_2_c_sorted(x: real, y: real, z: real) returns (isSorted: bool)
+
+The method should respect the following contract:
+
+ensures isSorted == (x <= y && y <= z)
+
+Produce and show only the Dafny body of this method, including the curly braces that surround it. Do not show the signature nor contract. You must not use 'assume' anywhere in your code.
+
+\end{lstlisting}
+\subsection*{GenAI $\rightarrow$ Program}
+\textbf{System fingerprint: }
+\\\textbf{ID: }chatcmpl-Co4tcAKLT7PRgnyoK9BmvXS1F68jI
+\\\textbf{Model: }gpt-5.1-chat-latest
+\\\textbf{Created at: }1766051256
+\\\textbf{Finish reason: }stop
+\\\textbf{Usage: }284 tokens in, and 33 tokens out
+\begin{lstlisting}
+{
+  isSorted := x <= y && y <= z;
+}
+\end{lstlisting}
+\section*{Final Program}
+\begin{lstlisting}
+method p5_2_c_sorted(x: real, y: real, z: real) returns (isSorted: bool)
+	ensures isSorted == (x <= y && y <= z)
+{
+  isSorted := x <= y && y <= z;
+}
+\end{lstlisting}
+\section*{Total Token Usage}
+\textbf{Input tokens: }284
+\\\textbf{Output tokens: }33
+\\\textbf{Reasoning tokens: }0
+\\\textbf{Sum of `total tokens': }317
+\section*{Experiment Timings}
+\textbf{Overall Experiment} started at 1766051257825, ended at 1766051261248, lasting 3423ms (3.42 seconds)
+\\\textbf{Iteration \#1} started at 1766051257826, ended at 1766051261248, lasting 3422ms (3.42 seconds)
+\end{document}

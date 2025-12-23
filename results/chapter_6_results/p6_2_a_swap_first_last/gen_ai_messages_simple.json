@@ -1,0 +1,10 @@
+[
+  {
+    "role": "user",
+    "content": "You are given the following task to perform in Dafny:\n\nWrite a method to swap the first and last elements in an array.\n\nThe signature should be:\n\nmethod p6_2_a_swap_first_last(arr: seq\u003cint\u003e) returns (result: seq\u003cint\u003e)\n\nThe method should respect the following contract:\n\nrequires |arr| \u003e\u003d 2, ensures |result| \u003d\u003d |arr|, ensures result[0] \u003d\u003d arr[|arr| - 1], ensures result[|arr| - 1] \u003d\u003d arr[0], ensures forall i :: 1 \u003c\u003d i \u003c |arr| - 1 \u003d\u003d\u003e result[i] \u003d\u003d arr[i]\n\nProduce and show only the Dafny body of this method, including the curly braces that surround it. Do not show the signature nor contract. You must not use \u0027assume\u0027 anywhere in your code.\n"
+  },
+  {
+    "role": "assistant",
+    "content": "{\"method_body\":\"{\\n  result :\u003d [arr[|arr| - 1]] + arr[1..|arr| - 1] + [arr[0]];\\n}\"}"
+  }
+]

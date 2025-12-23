@@ -1,0 +1,83 @@
+\documentclass{article}
+\usepackage{lmodern}
+\usepackage{amsmath}
+\usepackage{listings}
+\usepackage{fullpage}
+\usepackage{parskip}
+\usepackage{xcolor}
+\lstset{
+	basicstyle=\ttfamily,
+	columns=fullflexible,
+	frame=single,
+	breaklines=true,
+	postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},
+}
+\begin{document}
+\title{Experiment `p5\_9\_cylinderSurface' Results}
+\author{\today}
+\date{}
+\maketitle
+\textbf{Experiment outcome: }SUCCESS
+\\\textbf{Bad responses: }0
+\\\textbf{Responses containing}~\texttt{assume}~\textbf{: }0
+\\\textbf{Resolution attempts: }1
+\\\textbf{Hard fails (resolution): }0
+\\\textbf{Soft fails (resolution): }0
+\\\textbf{Verification attempts: }1
+\section*{Problem Specification}
+\textbf{Problem name: }p5\_9\_cylinderSurface
+\\\textbf{Natural language statement: }Write a method that computes the surface area of a cylinder with a circular base, given radius and height.
+\\\textbf{Method signature: }p5\_9\_cylinderSurface(r: real, h: real) returns (surface\_area: real)
+\subsection*{Ensures}
+\begin{itemize}
+\item \texttt{surface\_area == 2.0 * 3.14159 * r * (r + h)}
+\end{itemize}
+\clearpage
+\section*{GenAI interactions}
+Below you will find all interactions between the `user' (program) and the `assistant' (OpenAI).
+\subsection*{Program $\rightarrow$ GenAI}
+\begin{lstlisting}
+You are given the following task to perform in Dafny:
+
+Write a method that computes the surface area of a cylinder with a circular base, given radius and height.
+
+The signature should be:
+
+method p5_9_cylinderSurface(r: real, h: real) returns (surface_area: real)
+
+The method should respect the following contract:
+
+ensures surface_area == 2.0 * 3.14159 * r * (r + h)
+
+Produce and show only the Dafny body of this method, including the curly braces that surround it. Do not show the signature nor contract. You must not use 'assume' anywhere in your code.
+
+\end{lstlisting}
+\subsection*{GenAI $\rightarrow$ Program}
+\textbf{System fingerprint: }
+\\\textbf{ID: }chatcmpl-Co4y2AZAprfoMdGRfHIba6no2xHGQ
+\\\textbf{Model: }gpt-5.1-chat-latest
+\\\textbf{Created at: }1766051530
+\\\textbf{Finish reason: }stop
+\\\textbf{Usage: }302 tokens in, and 43 tokens out
+\begin{lstlisting}
+{
+  surface_area := 2.0 * 3.14159 * r * (r + h);
+}
+\end{lstlisting}
+\section*{Final Program}
+\begin{lstlisting}
+method p5_9_cylinderSurface(r: real, h: real) returns (surface_area: real)
+	ensures surface_area == 2.0 * 3.14159 * r * (r + h)
+{
+  surface_area := 2.0 * 3.14159 * r * (r + h);
+}
+\end{lstlisting}
+\section*{Total Token Usage}
+\textbf{Input tokens: }302
+\\\textbf{Output tokens: }43
+\\\textbf{Reasoning tokens: }0
+\\\textbf{Sum of `total tokens': }345
+\section*{Experiment Timings}
+\textbf{Overall Experiment} started at 1766051532405, ended at 1766051534870, lasting 2465ms (2.47 seconds)
+\\\textbf{Iteration \#1} started at 1766051532405, ended at 1766051534870, lasting 2465ms (2.47 seconds)
+\end{document}

@@ -1,0 +1,10 @@
+[
+  {
+    "role": "user",
+    "content": "You are given the following task to perform in Dafny:\n\nWrite a method that computes the surface area of a cylinder with a circular base, given radius and height.\n\nThe signature should be:\n\nmethod p5_9_cylinderSurface(r: real, h: real) returns (surface_area: real)\n\nThe method should respect the following contract:\n\nensures surface_area \u003d\u003d 2.0 * 3.14159 * r * (r + h)\n\nProduce and show only the Dafny body of this method, including the curly braces that surround it. Do not show the signature nor contract. You must not use \u0027assume\u0027 anywhere in your code.\n"
+  },
+  {
+    "role": "assistant",
+    "content": "{\"method_body\":\"{\\n  surface_area :\u003d 2.0 * 3.14159 * r * (r + h);\\n}\"}"
+  }
+]

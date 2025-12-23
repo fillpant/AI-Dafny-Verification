@@ -1,0 +1,18 @@
+[
+  {
+    "role": "user",
+    "content": "You are given the following task to perform in Dafny:\n\nWrite a method with loops that computes the sum of all even numbers between 2 and 100 (inclusive).\n\nThe signature should be:\n\nmethod p4_1_a_sum_even_numbers() returns (sum: int)\n\nThe method should respect the following contract:\n\nensures sum \u003d\u003d 2550\n\nProduce and show only the Dafny body of this method, including the curly braces that surround it. Do not show the signature nor contract. You must not use \u0027assume\u0027 anywhere in your code.\n"
+  },
+  {
+    "role": "assistant",
+    "content": "{\"method_body\":\"{\\n  var i :\u003d 2;\\n  sum :\u003d 0;\\n  while i \u003c\u003d 100\\n    invariant 2 \u003c\u003d i \u003c\u003d 102\\n    invariant sum \u003d\u003d ((i - 2) * i) / 4\\n  {\\n    sum :\u003d sum + i;\\n    i :\u003d i + 2;\\n  }\\n}\"}"
+  },
+  {
+    "role": "user",
+    "content": "When using dafny verify, the below error is emitted and verify fails:\n\nproblem_data/p4_1_a_sum_even_numbers/program.dfy(3,0): Error: a postcondition could not be proved on this return path\n  |\n3 | {\n  | ^\n\nproblem_data/p4_1_a_sum_even_numbers/program.dfy(2,13): Related location: this is the postcondition that could not be proved\n  |\n2 | \tensures sum \u003d\u003d 2550\n  |              ^^\n\n\nDafny program verifier finished with 0 verified, 1 error\n\nCorrect the error by altering only the method body. Produce and show only the Dafny body, including the curly braces that surround it. Do not show the signature nor contract. You must not use \u0027assume\u0027 anywhere in your code.\n"
+  },
+  {
+    "role": "assistant",
+    "content": "{\"method_body\":\"{\\n  var i :\u003d 2;\\n  sum :\u003d 0;\\n  while i \u003c\u003d 100\\n    invariant i % 2 \u003d\u003d 0\\n    invariant 2 \u003c\u003d i \u003c\u003d 102\\n    invariant sum \u003d\u003d ((i - 2) / 2) * (((i - 2) / 2) + 1)\\n  {\\n    sum :\u003d sum + i;\\n    i :\u003d i + 2;\\n  }\\n}\"}"
+  }
+]

@@ -1,0 +1,223 @@
+\documentclass{article}
+\usepackage{lmodern}
+\usepackage{amsmath}
+\usepackage{listings}
+\usepackage{fullpage}
+\usepackage{parskip}
+\usepackage{xcolor}
+\lstset{
+	basicstyle=\ttfamily,
+	columns=fullflexible,
+	frame=single,
+	breaklines=true,
+	postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},
+}
+\begin{document}
+\title{Experiment `p4\_1\_c\_powers\_of\_two' Results}
+\author{\today}
+\date{}
+\maketitle
+\textbf{Experiment outcome: }SUCCESS
+\\\textbf{Bad responses: }0
+\\\textbf{Responses containing}~\texttt{assume}~\textbf{: }0
+\\\textbf{Resolution attempts: }3
+\\\textbf{Hard fails (resolution): }1
+\\\textbf{Soft fails (resolution): }0
+\\\textbf{Verification attempts: }2
+\section*{Problem Specification}
+\textbf{Problem name: }p4\_1\_c\_powers\_of\_two
+\\\textbf{Natural language statement: }Write a method with loops that computes all powers of 2 from 2\^{}0 up to 2\^{}20.
+\\\textbf{Method signature: }p4\_1\_c\_powers\_of\_two() returns (powers: seq<int>)
+\subsection*{Ensures}
+\begin{itemize}
+\item \texttt{|powers| == 21}
+\item \texttt{forall i :: 0 <= i < |powers| ==> powers[i] == pow(2, i)}
+\end{itemize}
+\subsection*{Functional Code Given}
+\begin{lstlisting}
+function pow(base: int, exp: int): int
+  requires  0 <= exp
+  decreases exp
+{
+  if exp == 0 then 1 else base * pow(base, exp - 1)
+}
+\end{lstlisting}
+\clearpage
+\section*{GenAI interactions}
+Below you will find all interactions between the `user' (program) and the `assistant' (OpenAI).
+\subsection*{Program $\rightarrow$ GenAI}
+\begin{lstlisting}
+You are given the following task to perform in Dafny:
+
+Write a method with loops that computes all powers of 2 from 2^0 up to 2^20.
+
+The signature should be:
+
+method p4_1_c_powers_of_two() returns (powers: seq<int>)
+
+The method should respect the following contract:
+
+ensures |powers| == 21, ensures forall i :: 0 <= i < |powers| ==> powers[i] == pow(2, i)
+
+The contract uses the following dafny code:
+
+function pow(base: int, exp: int): int
+  requires  0 <= exp
+  decreases exp
+{
+  if exp == 0 then 1 else base * pow(base, exp - 1)
+}
+
+These function(s) must not be used in your implementation of the method.
+
+Produce and show only the Dafny body of this method, including the curly braces that surround it. Do not show the signature nor contract. You must not use 'assume' anywhere in your code.
+
+\end{lstlisting}
+\subsection*{GenAI $\rightarrow$ Program}
+\textbf{System fingerprint: }
+\\\textbf{ID: }chatcmpl-Co4ZTgqw85F6Ctgz5Z0clsiQ5mgFm
+\\\textbf{Model: }gpt-5.1-chat-latest
+\\\textbf{Created at: }1766050007
+\\\textbf{Finish reason: }stop
+\\\textbf{Usage: }458 tokens in, and 202 tokens out
+\begin{lstlisting}
+{
+  var res: seq<int> := [];
+  var cur: int := 1;
+  var i: int := 0;
+  while i <= 20
+    invariant 0 <= i <= 21
+    invariant |res| == i
+    invariant forall k :: 0 <= k < i ==> res[k] == (1 << k)
+  {
+    res := res + [cur];
+    cur := cur * 2;
+    i := i + 1;
+  }
+  powers := res;
+}
+\end{lstlisting}
+\subsection*{Program $\rightarrow$ GenAI}
+\begin{lstlisting}
+When using dafny resolve, the below error is emitted and resolve fails:
+
+problem_data/p4_1_c_powers_of_two/program.dfy(18,54): Error: type of << must be a bitvector type (instead got int)
+   |
+18 |     invariant forall k :: 0 <= k < i ==> res[k] == (1 << k)
+   |                                                       ^^
+
+1 resolution/type errors detected in program.dfy
+
+Correct the error by altering only the method body. Produce and show only the Dafny body, including the curly braces that surround it. Do not show the signature nor contract. You must not use 'assume' anywhere in your code.
+
+\end{lstlisting}
+\subsection*{GenAI $\rightarrow$ Program}
+\textbf{System fingerprint: }
+\\\textbf{ID: }chatcmpl-Co4ZXNJ2y2FVDnuhi9WA1M4GFkEr9
+\\\textbf{Model: }gpt-5.1-chat-latest
+\\\textbf{Created at: }1766050011
+\\\textbf{Finish reason: }stop
+\\\textbf{Usage: }660 tokens in, and 314 tokens out
+\begin{lstlisting}
+{
+  var res: seq<int> := [];
+  var cur: int := 1;
+  var i: int := 0;
+  while i <= 20
+    invariant 0 <= i <= 21
+    invariant |res| == i
+    invariant forall k :: 0 <= k < i ==> (k == 0 ==> res[k] == 1) && (k > 0 ==> res[k] == 2 * res[k-1])
+    invariant cur == (if i == 0 then 1 else 2 * res[i-1])
+  {
+    res := res + [cur];
+    cur := cur * 2;
+    i := i + 1;
+  }
+  powers := res;
+}
+\end{lstlisting}
+\subsection*{Program $\rightarrow$ GenAI}
+\begin{lstlisting}
+When using dafny verify, the below error is emitted and verify fails:
+
+problem_data/p4_1_c_powers_of_two/program.dfy(11,0): Error: a postcondition could not be proved on this return path
+   |
+11 | {
+   | ^
+
+problem_data/p4_1_c_powers_of_two/program.dfy(10,9): Related location: this is the postcondition that could not be proved
+   |
+10 | 	ensures forall i :: 0 <= i < |powers| ==> powers[i] == pow(2, i)
+   |          ^^^^^^
+
+
+Dafny program verifier finished with 2 verified, 1 error
+
+Correct the error by altering only the method body. Produce and show only the Dafny body, including the curly braces that surround it. Do not show the signature nor contract. You must not use 'assume' anywhere in your code.
+
+\end{lstlisting}
+\subsection*{GenAI $\rightarrow$ Program}
+\textbf{System fingerprint: }
+\\\textbf{ID: }chatcmpl-Co4ZdK6t6hmf23msuhiwXa0DP4CJs
+\\\textbf{Model: }gpt-5.1-chat-latest
+\\\textbf{Created at: }1766050017
+\\\textbf{Finish reason: }stop
+\\\textbf{Usage: }1090 tokens in, and 150 tokens out
+\begin{lstlisting}
+{
+  var res: seq<int> := [];
+  var cur: int := 1;
+  var i: int := 0;
+  while i <= 20
+    invariant 0 <= i <= 21
+    invariant |res| == i
+    invariant cur == pow(2, i)
+    invariant forall k :: 0 <= k < i ==> res[k] == pow(2, k)
+  {
+    res := res + [cur];
+    cur := cur * 2;
+    i := i + 1;
+  }
+  powers := res;
+}
+\end{lstlisting}
+\section*{Final Program}
+\begin{lstlisting}
+function pow(base: int, exp: int): int
+  requires  0 <= exp
+  decreases exp
+{
+  if exp == 0 then 1 else base * pow(base, exp - 1)
+}
+
+method p4_1_c_powers_of_two() returns (powers: seq<int>)
+	ensures |powers| == 21
+	ensures forall i :: 0 <= i < |powers| ==> powers[i] == pow(2, i)
+{
+  var res: seq<int> := [];
+  var cur: int := 1;
+  var i: int := 0;
+  while i <= 20
+    invariant 0 <= i <= 21
+    invariant |res| == i
+    invariant cur == pow(2, i)
+    invariant forall k :: 0 <= k < i ==> res[k] == pow(2, k)
+  {
+    res := res + [cur];
+    cur := cur * 2;
+    i := i + 1;
+  }
+  powers := res;
+}
+\end{lstlisting}
+\section*{Total Token Usage}
+\textbf{Input tokens: }2208
+\\\textbf{Output tokens: }666
+\\\textbf{Reasoning tokens: }192
+\\\textbf{Sum of `total tokens': }2874
+\section*{Experiment Timings}
+\textbf{Overall Experiment} started at 1766050009776, ended at 1766050023333, lasting 13557ms (13.56 seconds)
+\\\textbf{Iteration \#1} started at 1766050009776, ended at 1766050013310, lasting 3534ms (3.53 seconds)
+\\\textbf{Iteration \#2} started at 1766050013310, ended at 1766050019052, lasting 5742ms (5.74 seconds)
+\\\textbf{Iteration \#3} started at 1766050019052, ended at 1766050023333, lasting 4281ms (4.28 seconds)
+\end{document}

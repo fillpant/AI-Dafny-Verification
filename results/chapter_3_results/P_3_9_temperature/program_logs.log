@@ -1,0 +1,56 @@
+[18/12/25 09:20:04.627] [Experiment 'P_3_9_temperature'] [INFO]: Experiment created.
+[18/12/25 09:20:04.627] [Experiment 'P_3_9_temperature'] [INFO]: Experiment started.
+[18/12/25 09:20:04.627] [Experiment 'P_3_9_temperature'] [INFO]: Using initial prompt: You are given the following task to perform in Dafny:
+
+Write a method that takes a temperature value and a letter C for Celsius or F for Fahrenheit. Return whether water is liquid, solid, or gaseous at the given temperature at sea level.
+
+The signature should be:
+
+method P_3_9_temperature (t: real, c: char) returns (s: string)
+
+The method should respect the following contract:
+
+requires (c == 'C' && t >= -273.15) || (c == 'F' && t >= -459.67), requires c == 'C' || c == 'F', ensures if c == 'C' then if t < 0.0 then s == "solid" else if t == 0.0 then s == "solid or liquid" else if 0.0 < t < 100.0 then s == "liquid" else if t == 100.0 then s == "liquid or gaseous" else s == "gaseous" else if t < 32.0 then s == "solid" else if t == 32.0 then s == "solid or liquid" else if 32.0 < t < 212.0 then s == "liquid" else if t == 212.0 then s == "liquid or gaseous" else s == "gaseous"
+
+Produce and show only the Dafny body of this method, including the curly braces that surround it. Do not show the signature nor contract. You must not use 'assume' anywhere in your code.
+
+[18/12/25 09:20:04.627] [Experiment 'P_3_9_temperature'] [INFO]: There are 30000 left in the jar, for the rest of this experiment.
+[18/12/25 09:20:04.627] [Experiment 'P_3_9_temperature'] [INFO]: Querrying GenAI...
+[18/12/25 09:20:04.627] [Experiment 'P_3_9_temperature'] [FINE]: Constructing message for GenAI
+[18/12/25 09:20:04.627] [Experiment 'P_3_9_temperature'] [INFO]: Context is on, attaching 1 previous messages in the request to GenAI.
+[18/12/25 09:20:04.627] [Experiment 'P_3_9_temperature'] [INFO]: A reasoning model is chosen, but no reasoning effort value is set. Setting reasoning to 'medium'
+[18/12/25 09:20:04.627] [Experiment 'P_3_9_temperature'] [FINE]: Setting max tokens for the request to 30000
+[18/12/25 09:20:04.627] [Experiment 'P_3_9_temperature'] [FINE]: Using model gpt-5.1-chat-latest. Awaiting response...
+[18/12/25 09:20:11.139] [Experiment 'P_3_9_temperature'] [FINE]: Got response with 578 characters.
+[18/12/25 09:20:11.139] [Experiment 'P_3_9_temperature'] [FINE]: Saving gen_ai_messages.json
+[18/12/25 09:20:11.141] [Experiment 'P_3_9_temperature'] [FINE]: Saved 4069 characters to file gen_ai_messages.json
+[18/12/25 09:20:11.141] [Experiment 'P_3_9_temperature'] [FINE]: Saving gen_ai_messages_simple.json
+[18/12/25 09:20:11.141] [Experiment 'P_3_9_temperature'] [FINE]: Saved 2304 characters to file gen_ai_messages_simple.json
+[18/12/25 09:20:11.141] [Experiment 'P_3_9_temperature'] [INFO]: Converting GenAI response to method...
+[18/12/25 09:20:11.141] [Experiment 'P_3_9_temperature'] [FINE]: Saving program.dfy
+[18/12/25 09:20:11.142] [Experiment 'P_3_9_temperature'] [FINE]: Saved 1082 characters to file program.dfy
+[18/12/25 09:20:11.142] [Experiment 'P_3_9_temperature'] [INFO]: Context is treated as being fully enabled, meaning that subsequent prompts do not include the full code.
+[18/12/25 09:20:11.142] [Experiment 'P_3_9_temperature'] [INFO]: Checking the method for the presence of the 'assume' keyword...
+[18/12/25 09:20:11.142] [Experiment 'P_3_9_temperature'] [INFO]: Calling dafny to resolve the generated method...
+[18/12/25 09:20:11.426] [Experiment 'P_3_9_temperature'] [INFO]: Program exited with code 0
+[18/12/25 09:20:11.427] [Experiment 'P_3_9_temperature'] [INFO]: Program stdout: 
+Dafny program verifier did not attempt verification
+[18/12/25 09:20:11.427] [Experiment 'P_3_9_temperature'] [INFO]: Calling dafny to resolve the generated method, but with warnings allowed...
+[18/12/25 09:20:11.707] [Experiment 'P_3_9_temperature'] [INFO]: Program exited with code 0
+[18/12/25 09:20:11.707] [Experiment 'P_3_9_temperature'] [INFO]: Program stdout: 
+Dafny program verifier did not attempt verification
+[18/12/25 09:20:11.707] [Experiment 'P_3_9_temperature'] [INFO]: Resolution passes without warnings.
+[18/12/25 09:20:11.707] [Experiment 'P_3_9_temperature'] [INFO]: Dafny resolution check passed.
+[18/12/25 09:20:11.707] [Experiment 'P_3_9_temperature'] [INFO]: Calling dafny to verify the generated method...
+[18/12/25 09:20:12.281] [Experiment 'P_3_9_temperature'] [INFO]: Program exited with code 0
+[18/12/25 09:20:12.281] [Experiment 'P_3_9_temperature'] [INFO]: Program stdout: 
+Dafny program verifier finished with 1 verified, 0 errors
+[18/12/25 09:20:12.281] [Experiment 'P_3_9_temperature'] [INFO]: Dafny verification check passed.
+[18/12/25 09:20:12.281] [Experiment 'P_3_9_temperature'] [INFO]: Experiment finished.
+[18/12/25 09:20:12.281] [Experiment 'P_3_9_temperature'] [FINE]: Saving gen_ai_messages.json
+[18/12/25 09:20:12.281] [Experiment 'P_3_9_temperature'] [FINE]: Saved 4069 characters to file gen_ai_messages.json
+[18/12/25 09:20:12.281] [Experiment 'P_3_9_temperature'] [FINE]: Saving gen_ai_messages_simple.json
+[18/12/25 09:20:12.282] [Experiment 'P_3_9_temperature'] [FINE]: Saved 2304 characters to file gen_ai_messages_simple.json
+[18/12/25 09:20:12.282] [Experiment 'P_3_9_temperature'] [FINE]: Saving experiment_result.json
+[18/12/25 09:20:12.282] [Experiment 'P_3_9_temperature'] [FINE]: Saved 640 characters to file experiment_result.json
+[18/12/25 09:20:13.030] [Experiment 'P_3_9_temperature'] [INFO]: Compilation of experiment report tex file successful

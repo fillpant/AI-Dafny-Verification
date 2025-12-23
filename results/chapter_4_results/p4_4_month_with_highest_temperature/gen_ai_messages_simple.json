@@ -1,0 +1,10 @@
+[
+  {
+    "role": "user",
+    "content": "You are given the following task to perform in Dafny:\n\nWrite a method that reads a sequence of twelve temperature values and returns the number of the month with the highest temperature.\n\nThe signature should be:\n\nmethod p4_5_month_with_highest_temperature(inputs: seq\u003creal\u003e) returns (hottest: int)\n\nThe method should respect the following contract:\n\nrequires |inputs| \u003d\u003d 12, ensures 1 \u003c\u003d hottest \u003c\u003d 12, ensures forall i :: 0 \u003c\u003d i \u003c\u003d |inputs|-1 \u003d\u003d\u003e inputs[hottest-1] \u003e\u003d inputs[i]\n\nProduce and show only the Dafny body of this method, including the curly braces that surround it. Do not show the signature nor contract. You must not use \u0027assume\u0027 anywhere in your code.\n"
+  },
+  {
+    "role": "assistant",
+    "content": "{\"method_body\":\"{\\n  var maxIndex :\u003d 0;\\n  var maxVal :\u003d inputs[0];\\n  var i :\u003d 1;\\n  while i \u003c 12\\n    invariant 1 \u003c\u003d i \u003c\u003d 12\\n    invariant 0 \u003c\u003d maxIndex \u003c i\\n    invariant maxVal \u003d\u003d inputs[maxIndex]\\n    invariant forall j :: 0 \u003c\u003d j \u003c i \u003d\u003d\u003e maxVal \u003e\u003d inputs[j]\\n  {\\n    if inputs[i] \u003e maxVal {\\n      maxVal :\u003d inputs[i];\\n      maxIndex :\u003d i;\\n    }\\n    i :\u003d i + 1;\\n  }\\n  hottest :\u003d maxIndex + 1;\\n}\"}"
+  }
+]

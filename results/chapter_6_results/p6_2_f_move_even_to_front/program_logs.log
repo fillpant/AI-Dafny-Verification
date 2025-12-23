@@ -1,0 +1,479 @@
+[18/12/25 10:01:20.038] [Experiment 'p6_2_f_move_even_to_front'] [INFO]: Experiment created.
+[18/12/25 10:01:20.038] [Experiment 'p6_2_f_move_even_to_front'] [INFO]: Experiment started.
+[18/12/25 10:01:20.038] [Experiment 'p6_2_f_move_even_to_front'] [INFO]: Using initial prompt: You are given the following task to perform in Dafny:
+
+Write a method to move all even elements in an array to the front, otherwise preserving the order of the elements.
+
+The signature should be:
+
+method p6_2_f_move_even_to_front(arr: seq<int>) returns (result: seq<int>)
+
+The method should respect the following contract:
+
+ensures |result| == |arr|, ensures forall i, j :: 0 <= i < j < |result| && result[i] % 2 == 0 && result[j] % 2 != 0, ensures forall i :: 0 <= i < |arr| ==> exists j :: 0 <= j < |result| && arr[i] == result[j]
+
+Produce and show only the Dafny body of this method, including the curly braces that surround it. Do not show the signature nor contract. You must not use 'assume' anywhere in your code.
+
+[18/12/25 10:01:20.039] [Experiment 'p6_2_f_move_even_to_front'] [INFO]: There are 30000 left in the jar, for the rest of this experiment.
+[18/12/25 10:01:20.039] [Experiment 'p6_2_f_move_even_to_front'] [INFO]: Querrying GenAI...
+[18/12/25 10:01:20.039] [Experiment 'p6_2_f_move_even_to_front'] [FINE]: Constructing message for GenAI
+[18/12/25 10:01:20.039] [Experiment 'p6_2_f_move_even_to_front'] [INFO]: Context is on, attaching 1 previous messages in the request to GenAI.
+[18/12/25 10:01:20.039] [Experiment 'p6_2_f_move_even_to_front'] [INFO]: A reasoning model is chosen, but no reasoning effort value is set. Setting reasoning to 'medium'
+[18/12/25 10:01:20.039] [Experiment 'p6_2_f_move_even_to_front'] [FINE]: Setting max tokens for the request to 30000
+[18/12/25 10:01:20.039] [Experiment 'p6_2_f_move_even_to_front'] [FINE]: Using model gpt-5.1-chat-latest. Awaiting response...
+[18/12/25 10:01:24.565] [Experiment 'p6_2_f_move_even_to_front'] [FINE]: Got response with 572 characters.
+[18/12/25 10:01:24.565] [Experiment 'p6_2_f_move_even_to_front'] [FINE]: Saving gen_ai_messages.json
+[18/12/25 10:01:24.565] [Experiment 'p6_2_f_move_even_to_front'] [FINE]: Saved 3699 characters to file gen_ai_messages.json
+[18/12/25 10:01:24.565] [Experiment 'p6_2_f_move_even_to_front'] [FINE]: Saving gen_ai_messages_simple.json
+[18/12/25 10:01:24.566] [Experiment 'p6_2_f_move_even_to_front'] [FINE]: Saved 1854 characters to file gen_ai_messages_simple.json
+[18/12/25 10:01:24.566] [Experiment 'p6_2_f_move_even_to_front'] [INFO]: Converting GenAI response to method...
+[18/12/25 10:01:24.566] [Experiment 'p6_2_f_move_even_to_front'] [FINE]: Saving program.dfy
+[18/12/25 10:01:24.566] [Experiment 'p6_2_f_move_even_to_front'] [FINE]: Saved 821 characters to file program.dfy
+[18/12/25 10:01:24.566] [Experiment 'p6_2_f_move_even_to_front'] [INFO]: Context is treated as being fully enabled, meaning that subsequent prompts do not include the full code.
+[18/12/25 10:01:24.566] [Experiment 'p6_2_f_move_even_to_front'] [INFO]: Checking the method for the presence of the 'assume' keyword...
+[18/12/25 10:01:24.566] [Experiment 'p6_2_f_move_even_to_front'] [INFO]: Calling dafny to resolve the generated method...
+[18/12/25 10:01:24.870] [Experiment 'p6_2_f_move_even_to_front'] [INFO]: Program exited with code 0
+[18/12/25 10:01:24.870] [Experiment 'p6_2_f_move_even_to_front'] [INFO]: Program stdout: 
+Dafny program verifier did not attempt verification
+[18/12/25 10:01:24.870] [Experiment 'p6_2_f_move_even_to_front'] [INFO]: Calling dafny to resolve the generated method, but with warnings allowed...
+[18/12/25 10:01:25.175] [Experiment 'p6_2_f_move_even_to_front'] [INFO]: Program exited with code 0
+[18/12/25 10:01:25.175] [Experiment 'p6_2_f_move_even_to_front'] [INFO]: Program stdout: 
+Dafny program verifier did not attempt verification
+[18/12/25 10:01:25.175] [Experiment 'p6_2_f_move_even_to_front'] [INFO]: Resolution passes without warnings.
+[18/12/25 10:01:25.175] [Experiment 'p6_2_f_move_even_to_front'] [INFO]: Dafny resolution check passed.
+[18/12/25 10:01:25.175] [Experiment 'p6_2_f_move_even_to_front'] [INFO]: Calling dafny to verify the generated method...
+[18/12/25 10:01:25.804] [Experiment 'p6_2_f_move_even_to_front'] [SEVERE]: Program exited with code 4
+[18/12/25 10:01:25.805] [Experiment 'p6_2_f_move_even_to_front'] [SEVERE]: Program stdout: problem_data/p6_2_f_move_even_to_front/program.dfy(5,0): Error: a postcondition could not be proved on this return path
+  |
+5 | {
+  | ^
+
+problem_data/p6_2_f_move_even_to_front/program.dfy(3,9): Related location: this is the postcondition that could not be proved
+  |
+3 | 	ensures forall i, j :: 0 <= i < j < |result| && result[i] % 2 == 0 && result[j] % 2 != 0
+  |          ^^^^^^
+
+problem_data/p6_2_f_move_even_to_front/program.dfy(5,0): Error: a postcondition could not be proved on this return path
+  |
+5 | {
+  | ^
+
+problem_data/p6_2_f_move_even_to_front/program.dfy(4,9): Related location: this is the postcondition that could not be proved
+  |
+4 | 	ensures forall i :: 0 <= i < |arr| ==> exists j :: 0 <= j < |result| && arr[i] == result[j]
+  |          ^^^^^^
+
+problem_data/p6_2_f_move_even_to_front/program.dfy(11,14): Error: this invariant could not be proved to be maintained by the loop
+ Related message: loop invariant violation
+   |
+11 |     invariant forall k :: 0 <= k < i && arr[k] % 2 == 0 ==> exists j :: 0 <= j < |evens| && evens[j] == arr[k]
+   |               ^^^^^^
+
+problem_data/p6_2_f_move_even_to_front/program.dfy(12,14): Error: this invariant could not be proved to be maintained by the loop
+ Related message: loop invariant violation
+   |
+12 |     invariant forall k :: 0 <= k < i && arr[k] % 2 != 0 ==> exists j :: 0 <= j < |odds| && odds[j] == arr[k]
+   |               ^^^^^^
+
+
+Dafny program verifier finished with 1 verified, 4 errors
+[18/12/25 10:01:25.805] [Experiment 'p6_2_f_move_even_to_front'] [WARNING]: Failed to verify the generated method. Preparing GenAI prompt to fix...
+[18/12/25 10:01:25.805] [Experiment 'p6_2_f_move_even_to_front'] [INFO]: There are 29214 left in the jar, for the rest of this experiment.
+[18/12/25 10:01:25.805] [Experiment 'p6_2_f_move_even_to_front'] [INFO]: Previous iteration lasted 5766ms
+[18/12/25 10:01:25.805] [Experiment 'p6_2_f_move_even_to_front'] [INFO]: Querrying GenAI...
+[18/12/25 10:01:25.805] [Experiment 'p6_2_f_move_even_to_front'] [FINE]: Constructing message for GenAI
+[18/12/25 10:01:25.805] [Experiment 'p6_2_f_move_even_to_front'] [INFO]: Context is on, attaching 3 previous messages in the request to GenAI.
+[18/12/25 10:01:25.805] [Experiment 'p6_2_f_move_even_to_front'] [INFO]: A reasoning model is chosen, but no reasoning effort value is set. Setting reasoning to 'medium'
+[18/12/25 10:01:25.805] [Experiment 'p6_2_f_move_even_to_front'] [FINE]: Setting max tokens for the request to 29214
+[18/12/25 10:01:25.805] [Experiment 'p6_2_f_move_even_to_front'] [FINE]: Using model gpt-5.1-chat-latest. Awaiting response...
+[18/12/25 10:01:28.718] [Experiment 'p6_2_f_move_even_to_front'] [FINE]: Got response with 187 characters.
+[18/12/25 10:01:28.718] [Experiment 'p6_2_f_move_even_to_front'] [FINE]: Saving gen_ai_messages.json
+[18/12/25 10:01:28.718] [Experiment 'p6_2_f_move_even_to_front'] [FINE]: Saved 7432 characters to file gen_ai_messages.json
+[18/12/25 10:01:28.718] [Experiment 'p6_2_f_move_even_to_front'] [FINE]: Saving gen_ai_messages_simple.json
+[18/12/25 10:01:28.718] [Experiment 'p6_2_f_move_even_to_front'] [FINE]: Saved 4325 characters to file gen_ai_messages_simple.json
+[18/12/25 10:01:28.718] [Experiment 'p6_2_f_move_even_to_front'] [INFO]: Converting GenAI response to method...
+[18/12/25 10:01:28.718] [Experiment 'p6_2_f_move_even_to_front'] [FINE]: Saving program.dfy
+[18/12/25 10:01:28.719] [Experiment 'p6_2_f_move_even_to_front'] [FINE]: Saved 450 characters to file program.dfy
+[18/12/25 10:01:28.719] [Experiment 'p6_2_f_move_even_to_front'] [INFO]: Context is treated as being fully enabled, meaning that subsequent prompts do not include the full code.
+[18/12/25 10:01:28.719] [Experiment 'p6_2_f_move_even_to_front'] [INFO]: Checking the method for the presence of the 'assume' keyword...
+[18/12/25 10:01:28.719] [Experiment 'p6_2_f_move_even_to_front'] [INFO]: Calling dafny to resolve the generated method...
+[18/12/25 10:01:28.905] [Experiment 'p6_2_f_move_even_to_front'] [SEVERE]: Program exited with code 2
+[18/12/25 10:01:28.905] [Experiment 'p6_2_f_move_even_to_front'] [SEVERE]: Program stdout: problem_data/p6_2_f_move_even_to_front/program.dfy(6,19): Error: openparen expected
+  |
+6 |   var evens := seq i | 0 <= i < |arr| && arr[i] % 2 == 0 :: arr[i];
+  |                    ^
+
+problem_data/p6_2_f_move_even_to_front/program.dfy(6,57): Error: comma expected
+  |
+6 |   var evens := seq i | 0 <= i < |arr| && arr[i] % 2 == 0 :: arr[i];
+  |                                                          ^
+
+problem_data/p6_2_f_move_even_to_front/program.dfy(7,19): Error: openparen expected
+  |
+7 |   var odds  := seq i | 0 <= i < |arr| && arr[i] % 2 != 0 :: arr[i];
+  |                    ^
+
+problem_data/p6_2_f_move_even_to_front/program.dfy(7,57): Error: comma expected
+  |
+7 |   var odds  := seq i | 0 <= i < |arr| && arr[i] % 2 != 0 :: arr[i];
+  |                                                          ^
+
+4 parse errors detected in program.dfy
+[18/12/25 10:01:28.905] [Experiment 'p6_2_f_move_even_to_front'] [INFO]: Calling dafny to resolve the generated method, but with warnings allowed...
+[18/12/25 10:01:29.096] [Experiment 'p6_2_f_move_even_to_front'] [SEVERE]: Program exited with code 2
+[18/12/25 10:01:29.096] [Experiment 'p6_2_f_move_even_to_front'] [SEVERE]: Program stdout: problem_data/p6_2_f_move_even_to_front/program.dfy(6,19): Error: openparen expected
+  |
+6 |   var evens := seq i | 0 <= i < |arr| && arr[i] % 2 == 0 :: arr[i];
+  |                    ^
+
+problem_data/p6_2_f_move_even_to_front/program.dfy(6,57): Error: comma expected
+  |
+6 |   var evens := seq i | 0 <= i < |arr| && arr[i] % 2 == 0 :: arr[i];
+  |                                                          ^
+
+problem_data/p6_2_f_move_even_to_front/program.dfy(7,19): Error: openparen expected
+  |
+7 |   var odds  := seq i | 0 <= i < |arr| && arr[i] % 2 != 0 :: arr[i];
+  |                    ^
+
+problem_data/p6_2_f_move_even_to_front/program.dfy(7,57): Error: comma expected
+  |
+7 |   var odds  := seq i | 0 <= i < |arr| && arr[i] % 2 != 0 :: arr[i];
+  |                                                          ^
+
+4 parse errors detected in program.dfy
+[18/12/25 10:01:29.096] [Experiment 'p6_2_f_move_even_to_front'] [INFO]: Resolution fails as a result of an error.
+[18/12/25 10:01:29.096] [Experiment 'p6_2_f_move_even_to_front'] [WARNING]: Treating resolution as failed for the generated method. Preparing GenAI prompt to fix...
+[18/12/25 10:01:29.096] [Experiment 'p6_2_f_move_even_to_front'] [INFO]: There are 27567 left in the jar, for the rest of this experiment.
+[18/12/25 10:01:29.096] [Experiment 'p6_2_f_move_even_to_front'] [INFO]: Previous iteration lasted 3291ms
+[18/12/25 10:01:29.096] [Experiment 'p6_2_f_move_even_to_front'] [INFO]: Querrying GenAI...
+[18/12/25 10:01:29.096] [Experiment 'p6_2_f_move_even_to_front'] [FINE]: Constructing message for GenAI
+[18/12/25 10:01:29.096] [Experiment 'p6_2_f_move_even_to_front'] [INFO]: Context is on, attaching 5 previous messages in the request to GenAI.
+[18/12/25 10:01:29.096] [Experiment 'p6_2_f_move_even_to_front'] [INFO]: A reasoning model is chosen, but no reasoning effort value is set. Setting reasoning to 'medium'
+[18/12/25 10:01:29.096] [Experiment 'p6_2_f_move_even_to_front'] [FINE]: Setting max tokens for the request to 27567
+[18/12/25 10:01:29.096] [Experiment 'p6_2_f_move_even_to_front'] [FINE]: Using model gpt-5.1-chat-latest. Awaiting response...
+[18/12/25 10:01:32.080] [Experiment 'p6_2_f_move_even_to_front'] [FINE]: Got response with 189 characters.
+[18/12/25 10:01:32.080] [Experiment 'p6_2_f_move_even_to_front'] [FINE]: Saving gen_ai_messages.json
+[18/12/25 10:01:32.080] [Experiment 'p6_2_f_move_even_to_front'] [FINE]: Saved 10407 characters to file gen_ai_messages.json
+[18/12/25 10:01:32.080] [Experiment 'p6_2_f_move_even_to_front'] [FINE]: Saving gen_ai_messages_simple.json
+[18/12/25 10:01:32.081] [Experiment 'p6_2_f_move_even_to_front'] [FINE]: Saved 6035 characters to file gen_ai_messages_simple.json
+[18/12/25 10:01:32.081] [Experiment 'p6_2_f_move_even_to_front'] [INFO]: Converting GenAI response to method...
+[18/12/25 10:01:32.081] [Experiment 'p6_2_f_move_even_to_front'] [FINE]: Saving program.dfy
+[18/12/25 10:01:32.081] [Experiment 'p6_2_f_move_even_to_front'] [FINE]: Saved 452 characters to file program.dfy
+[18/12/25 10:01:32.081] [Experiment 'p6_2_f_move_even_to_front'] [INFO]: Context is treated as being fully enabled, meaning that subsequent prompts do not include the full code.
+[18/12/25 10:01:32.081] [Experiment 'p6_2_f_move_even_to_front'] [INFO]: Checking the method for the presence of the 'assume' keyword...
+[18/12/25 10:01:32.081] [Experiment 'p6_2_f_move_even_to_front'] [INFO]: Calling dafny to resolve the generated method...
+[18/12/25 10:01:32.270] [Experiment 'p6_2_f_move_even_to_front'] [SEVERE]: Program exited with code 2
+[18/12/25 10:01:32.270] [Experiment 'p6_2_f_move_even_to_front'] [SEVERE]: Program stdout: problem_data/p6_2_f_move_even_to_front/program.dfy(6,56): Error: comma expected
+  |
+6 |   var evens := seq(i | 0 <= i < |arr| && arr[i] % 2 == 0) :: arr[i];
+  |                                                         ^
+
+problem_data/p6_2_f_move_even_to_front/program.dfy(7,56): Error: comma expected
+  |
+7 |   var odds  := seq(i | 0 <= i < |arr| && arr[i] % 2 != 0) :: arr[i];
+  |                                                         ^
+
+2 parse errors detected in program.dfy
+[18/12/25 10:01:32.270] [Experiment 'p6_2_f_move_even_to_front'] [INFO]: Calling dafny to resolve the generated method, but with warnings allowed...
+[18/12/25 10:01:32.466] [Experiment 'p6_2_f_move_even_to_front'] [SEVERE]: Program exited with code 2
+[18/12/25 10:01:32.466] [Experiment 'p6_2_f_move_even_to_front'] [SEVERE]: Program stdout: problem_data/p6_2_f_move_even_to_front/program.dfy(6,56): Error: comma expected
+  |
+6 |   var evens := seq(i | 0 <= i < |arr| && arr[i] % 2 == 0) :: arr[i];
+  |                                                         ^
+
+problem_data/p6_2_f_move_even_to_front/program.dfy(7,56): Error: comma expected
+  |
+7 |   var odds  := seq(i | 0 <= i < |arr| && arr[i] % 2 != 0) :: arr[i];
+  |                                                         ^
+
+2 parse errors detected in program.dfy
+[18/12/25 10:01:32.466] [Experiment 'p6_2_f_move_even_to_front'] [INFO]: Resolution fails as a result of an error.
+[18/12/25 10:01:32.466] [Experiment 'p6_2_f_move_even_to_front'] [WARNING]: Treating resolution as failed for the generated method. Preparing GenAI prompt to fix...
+[18/12/25 10:01:32.466] [Experiment 'p6_2_f_move_even_to_front'] [INFO]: There are 25619 left in the jar, for the rest of this experiment.
+[18/12/25 10:01:32.466] [Experiment 'p6_2_f_move_even_to_front'] [INFO]: Previous iteration lasted 3370ms
+[18/12/25 10:01:32.466] [Experiment 'p6_2_f_move_even_to_front'] [INFO]: Querrying GenAI...
+[18/12/25 10:01:32.466] [Experiment 'p6_2_f_move_even_to_front'] [FINE]: Constructing message for GenAI
+[18/12/25 10:01:32.466] [Experiment 'p6_2_f_move_even_to_front'] [INFO]: Context is on, attaching 7 previous messages in the request to GenAI.
+[18/12/25 10:01:32.466] [Experiment 'p6_2_f_move_even_to_front'] [INFO]: A reasoning model is chosen, but no reasoning effort value is set. Setting reasoning to 'medium'
+[18/12/25 10:01:32.466] [Experiment 'p6_2_f_move_even_to_front'] [FINE]: Setting max tokens for the request to 25619
+[18/12/25 10:01:32.466] [Experiment 'p6_2_f_move_even_to_front'] [FINE]: Using model gpt-5.1-chat-latest. Awaiting response...
+[18/12/25 10:01:34.834] [Experiment 'p6_2_f_move_even_to_front'] [FINE]: Got response with 191 characters.
+[18/12/25 10:01:34.835] [Experiment 'p6_2_f_move_even_to_front'] [FINE]: Saving gen_ai_messages.json
+[18/12/25 10:01:34.835] [Experiment 'p6_2_f_move_even_to_front'] [FINE]: Saved 12926 characters to file gen_ai_messages.json
+[18/12/25 10:01:34.835] [Experiment 'p6_2_f_move_even_to_front'] [FINE]: Saving gen_ai_messages_simple.json
+[18/12/25 10:01:34.835] [Experiment 'p6_2_f_move_even_to_front'] [FINE]: Saved 7290 characters to file gen_ai_messages_simple.json
+[18/12/25 10:01:34.835] [Experiment 'p6_2_f_move_even_to_front'] [INFO]: Converting GenAI response to method...
+[18/12/25 10:01:34.835] [Experiment 'p6_2_f_move_even_to_front'] [FINE]: Saving program.dfy
+[18/12/25 10:01:34.836] [Experiment 'p6_2_f_move_even_to_front'] [FINE]: Saved 454 characters to file program.dfy
+[18/12/25 10:01:34.836] [Experiment 'p6_2_f_move_even_to_front'] [INFO]: Context is treated as being fully enabled, meaning that subsequent prompts do not include the full code.
+[18/12/25 10:01:34.836] [Experiment 'p6_2_f_move_even_to_front'] [INFO]: Checking the method for the presence of the 'assume' keyword...
+[18/12/25 10:01:34.836] [Experiment 'p6_2_f_move_even_to_front'] [INFO]: Calling dafny to resolve the generated method...
+[18/12/25 10:01:35.021] [Experiment 'p6_2_f_move_even_to_front'] [SEVERE]: Program exited with code 2
+[18/12/25 10:01:35.021] [Experiment 'p6_2_f_move_even_to_front'] [SEVERE]: Program stdout: problem_data/p6_2_f_move_even_to_front/program.dfy(6,19): Error: openparen expected
+  |
+6 |   var evens := seq i | (0 <= i < |arr| && arr[i] % 2 == 0) :: arr[i];
+  |                    ^
+
+problem_data/p6_2_f_move_even_to_front/program.dfy(6,59): Error: comma expected
+  |
+6 |   var evens := seq i | (0 <= i < |arr| && arr[i] % 2 == 0) :: arr[i];
+  |                                                            ^
+
+problem_data/p6_2_f_move_even_to_front/program.dfy(7,19): Error: openparen expected
+  |
+7 |   var odds  := seq i | (0 <= i < |arr| && arr[i] % 2 != 0) :: arr[i];
+  |                    ^
+
+problem_data/p6_2_f_move_even_to_front/program.dfy(7,59): Error: comma expected
+  |
+7 |   var odds  := seq i | (0 <= i < |arr| && arr[i] % 2 != 0) :: arr[i];
+  |                                                            ^
+
+4 parse errors detected in program.dfy
+[18/12/25 10:01:35.021] [Experiment 'p6_2_f_move_even_to_front'] [INFO]: Calling dafny to resolve the generated method, but with warnings allowed...
+[18/12/25 10:01:35.211] [Experiment 'p6_2_f_move_even_to_front'] [SEVERE]: Program exited with code 2
+[18/12/25 10:01:35.211] [Experiment 'p6_2_f_move_even_to_front'] [SEVERE]: Program stdout: problem_data/p6_2_f_move_even_to_front/program.dfy(6,19): Error: openparen expected
+  |
+6 |   var evens := seq i | (0 <= i < |arr| && arr[i] % 2 == 0) :: arr[i];
+  |                    ^
+
+problem_data/p6_2_f_move_even_to_front/program.dfy(6,59): Error: comma expected
+  |
+6 |   var evens := seq i | (0 <= i < |arr| && arr[i] % 2 == 0) :: arr[i];
+  |                                                            ^
+
+problem_data/p6_2_f_move_even_to_front/program.dfy(7,19): Error: openparen expected
+  |
+7 |   var odds  := seq i | (0 <= i < |arr| && arr[i] % 2 != 0) :: arr[i];
+  |                    ^
+
+problem_data/p6_2_f_move_even_to_front/program.dfy(7,59): Error: comma expected
+  |
+7 |   var odds  := seq i | (0 <= i < |arr| && arr[i] % 2 != 0) :: arr[i];
+  |                                                            ^
+
+4 parse errors detected in program.dfy
+[18/12/25 10:01:35.211] [Experiment 'p6_2_f_move_even_to_front'] [INFO]: Resolution fails as a result of an error.
+[18/12/25 10:01:35.211] [Experiment 'p6_2_f_move_even_to_front'] [WARNING]: Treating resolution as failed for the generated method. Preparing GenAI prompt to fix...
+[18/12/25 10:01:35.211] [Experiment 'p6_2_f_move_even_to_front'] [INFO]: There are 23629 left in the jar, for the rest of this experiment.
+[18/12/25 10:01:35.211] [Experiment 'p6_2_f_move_even_to_front'] [INFO]: Previous iteration lasted 2745ms
+[18/12/25 10:01:35.211] [Experiment 'p6_2_f_move_even_to_front'] [INFO]: Querrying GenAI...
+[18/12/25 10:01:35.211] [Experiment 'p6_2_f_move_even_to_front'] [FINE]: Constructing message for GenAI
+[18/12/25 10:01:35.211] [Experiment 'p6_2_f_move_even_to_front'] [INFO]: Context is on, attaching 9 previous messages in the request to GenAI.
+[18/12/25 10:01:35.211] [Experiment 'p6_2_f_move_even_to_front'] [INFO]: A reasoning model is chosen, but no reasoning effort value is set. Setting reasoning to 'medium'
+[18/12/25 10:01:35.212] [Experiment 'p6_2_f_move_even_to_front'] [FINE]: Setting max tokens for the request to 23629
+[18/12/25 10:01:35.212] [Experiment 'p6_2_f_move_even_to_front'] [FINE]: Using model gpt-5.1-chat-latest. Awaiting response...
+[18/12/25 10:01:38.995] [Experiment 'p6_2_f_move_even_to_front'] [FINE]: Got response with 183 characters.
+[18/12/25 10:01:38.995] [Experiment 'p6_2_f_move_even_to_front'] [FINE]: Saving gen_ai_messages.json
+[18/12/25 10:01:38.995] [Experiment 'p6_2_f_move_even_to_front'] [FINE]: Saved 15901 characters to file gen_ai_messages.json
+[18/12/25 10:01:38.995] [Experiment 'p6_2_f_move_even_to_front'] [FINE]: Saving gen_ai_messages_simple.json
+[18/12/25 10:01:38.995] [Experiment 'p6_2_f_move_even_to_front'] [FINE]: Saved 9006 characters to file gen_ai_messages_simple.json
+[18/12/25 10:01:38.995] [Experiment 'p6_2_f_move_even_to_front'] [INFO]: Converting GenAI response to method...
+[18/12/25 10:01:38.995] [Experiment 'p6_2_f_move_even_to_front'] [FINE]: Saving program.dfy
+[18/12/25 10:01:38.996] [Experiment 'p6_2_f_move_even_to_front'] [FINE]: Saved 446 characters to file program.dfy
+[18/12/25 10:01:38.996] [Experiment 'p6_2_f_move_even_to_front'] [INFO]: Context is treated as being fully enabled, meaning that subsequent prompts do not include the full code.
+[18/12/25 10:01:38.996] [Experiment 'p6_2_f_move_even_to_front'] [INFO]: Checking the method for the presence of the 'assume' keyword...
+[18/12/25 10:01:38.996] [Experiment 'p6_2_f_move_even_to_front'] [INFO]: Calling dafny to resolve the generated method...
+[18/12/25 10:01:39.185] [Experiment 'p6_2_f_move_even_to_front'] [SEVERE]: Program exited with code 2
+[18/12/25 10:01:39.185] [Experiment 'p6_2_f_move_even_to_front'] [SEVERE]: Program stdout: problem_data/p6_2_f_move_even_to_front/program.dfy(6,56): Error: comma expected
+  |
+6 |   var evens := seq(i | 0 <= i < |arr| && arr[i] % 2 == 0) arr[i];
+  |                                                         ^
+
+problem_data/p6_2_f_move_even_to_front/program.dfy(7,56): Error: comma expected
+  |
+7 |   var odds  := seq(i | 0 <= i < |arr| && arr[i] % 2 != 0) arr[i];
+  |                                                         ^
+
+2 parse errors detected in program.dfy
+[18/12/25 10:01:39.185] [Experiment 'p6_2_f_move_even_to_front'] [INFO]: Calling dafny to resolve the generated method, but with warnings allowed...
+[18/12/25 10:01:39.378] [Experiment 'p6_2_f_move_even_to_front'] [SEVERE]: Program exited with code 2
+[18/12/25 10:01:39.378] [Experiment 'p6_2_f_move_even_to_front'] [SEVERE]: Program stdout: problem_data/p6_2_f_move_even_to_front/program.dfy(6,56): Error: comma expected
+  |
+6 |   var evens := seq(i | 0 <= i < |arr| && arr[i] % 2 == 0) arr[i];
+  |                                                         ^
+
+problem_data/p6_2_f_move_even_to_front/program.dfy(7,56): Error: comma expected
+  |
+7 |   var odds  := seq(i | 0 <= i < |arr| && arr[i] % 2 != 0) arr[i];
+  |                                                         ^
+
+2 parse errors detected in program.dfy
+[18/12/25 10:01:39.378] [Experiment 'p6_2_f_move_even_to_front'] [INFO]: Resolution fails as a result of an error.
+[18/12/25 10:01:39.378] [Experiment 'p6_2_f_move_even_to_front'] [WARNING]: Treating resolution as failed for the generated method. Preparing GenAI prompt to fix...
+[18/12/25 10:01:39.378] [Experiment 'p6_2_f_move_even_to_front'] [INFO]: There are 20893 left in the jar, for the rest of this experiment.
+[18/12/25 10:01:39.378] [Experiment 'p6_2_f_move_even_to_front'] [INFO]: Previous iteration lasted 4167ms
+[18/12/25 10:01:39.378] [Experiment 'p6_2_f_move_even_to_front'] [INFO]: Querrying GenAI...
+[18/12/25 10:01:39.378] [Experiment 'p6_2_f_move_even_to_front'] [FINE]: Constructing message for GenAI
+[18/12/25 10:01:39.378] [Experiment 'p6_2_f_move_even_to_front'] [INFO]: Context is on, attaching 11 previous messages in the request to GenAI.
+[18/12/25 10:01:39.378] [Experiment 'p6_2_f_move_even_to_front'] [INFO]: A reasoning model is chosen, but no reasoning effort value is set. Setting reasoning to 'medium'
+[18/12/25 10:01:39.378] [Experiment 'p6_2_f_move_even_to_front'] [FINE]: Setting max tokens for the request to 20893
+[18/12/25 10:01:39.378] [Experiment 'p6_2_f_move_even_to_front'] [FINE]: Using model gpt-5.1-chat-latest. Awaiting response...
+[18/12/25 10:01:41.719] [Experiment 'p6_2_f_move_even_to_front'] [FINE]: Got response with 189 characters.
+[18/12/25 10:01:41.719] [Experiment 'p6_2_f_move_even_to_front'] [FINE]: Saving gen_ai_messages.json
+[18/12/25 10:01:41.719] [Experiment 'p6_2_f_move_even_to_front'] [FINE]: Saved 18412 characters to file gen_ai_messages.json
+[18/12/25 10:01:41.719] [Experiment 'p6_2_f_move_even_to_front'] [FINE]: Saving gen_ai_messages_simple.json
+[18/12/25 10:01:41.720] [Experiment 'p6_2_f_move_even_to_front'] [FINE]: Saved 10253 characters to file gen_ai_messages_simple.json
+[18/12/25 10:01:41.720] [Experiment 'p6_2_f_move_even_to_front'] [INFO]: Converting GenAI response to method...
+[18/12/25 10:01:41.720] [Experiment 'p6_2_f_move_even_to_front'] [FINE]: Saving program.dfy
+[18/12/25 10:01:41.720] [Experiment 'p6_2_f_move_even_to_front'] [FINE]: Saved 452 characters to file program.dfy
+[18/12/25 10:01:41.720] [Experiment 'p6_2_f_move_even_to_front'] [INFO]: Context is treated as being fully enabled, meaning that subsequent prompts do not include the full code.
+[18/12/25 10:01:41.720] [Experiment 'p6_2_f_move_even_to_front'] [INFO]: Checking the method for the presence of the 'assume' keyword...
+[18/12/25 10:01:41.720] [Experiment 'p6_2_f_move_even_to_front'] [INFO]: Calling dafny to resolve the generated method...
+[18/12/25 10:01:41.903] [Experiment 'p6_2_f_move_even_to_front'] [SEVERE]: Program exited with code 2
+[18/12/25 10:01:41.903] [Experiment 'p6_2_f_move_even_to_front'] [SEVERE]: Program stdout: problem_data/p6_2_f_move_even_to_front/program.dfy(6,56): Error: comma expected
+  |
+6 |   var evens := seq(i | 0 <= i < |arr| && arr[i] % 2 == 0) :: arr[i];
+  |                                                         ^
+
+problem_data/p6_2_f_move_even_to_front/program.dfy(7,56): Error: comma expected
+  |
+7 |   var odds  := seq(i | 0 <= i < |arr| && arr[i] % 2 != 0) :: arr[i];
+  |                                                         ^
+
+2 parse errors detected in program.dfy
+[18/12/25 10:01:41.903] [Experiment 'p6_2_f_move_even_to_front'] [INFO]: Calling dafny to resolve the generated method, but with warnings allowed...
+[18/12/25 10:01:42.092] [Experiment 'p6_2_f_move_even_to_front'] [SEVERE]: Program exited with code 2
+[18/12/25 10:01:42.092] [Experiment 'p6_2_f_move_even_to_front'] [SEVERE]: Program stdout: problem_data/p6_2_f_move_even_to_front/program.dfy(6,56): Error: comma expected
+  |
+6 |   var evens := seq(i | 0 <= i < |arr| && arr[i] % 2 == 0) :: arr[i];
+  |                                                         ^
+
+problem_data/p6_2_f_move_even_to_front/program.dfy(7,56): Error: comma expected
+  |
+7 |   var odds  := seq(i | 0 <= i < |arr| && arr[i] % 2 != 0) :: arr[i];
+  |                                                         ^
+
+2 parse errors detected in program.dfy
+[18/12/25 10:01:42.092] [Experiment 'p6_2_f_move_even_to_front'] [INFO]: Resolution fails as a result of an error.
+[18/12/25 10:01:42.092] [Experiment 'p6_2_f_move_even_to_front'] [WARNING]: Treating resolution as failed for the generated method. Preparing GenAI prompt to fix...
+[18/12/25 10:01:42.092] [Experiment 'p6_2_f_move_even_to_front'] [INFO]: There are 18123 left in the jar, for the rest of this experiment.
+[18/12/25 10:01:42.092] [Experiment 'p6_2_f_move_even_to_front'] [INFO]: Previous iteration lasted 2714ms
+[18/12/25 10:01:42.092] [Experiment 'p6_2_f_move_even_to_front'] [INFO]: Querrying GenAI...
+[18/12/25 10:01:42.092] [Experiment 'p6_2_f_move_even_to_front'] [FINE]: Constructing message for GenAI
+[18/12/25 10:01:42.092] [Experiment 'p6_2_f_move_even_to_front'] [INFO]: Context is on, attaching 13 previous messages in the request to GenAI.
+[18/12/25 10:01:42.092] [Experiment 'p6_2_f_move_even_to_front'] [INFO]: A reasoning model is chosen, but no reasoning effort value is set. Setting reasoning to 'medium'
+[18/12/25 10:01:42.092] [Experiment 'p6_2_f_move_even_to_front'] [FINE]: Setting max tokens for the request to 18123
+[18/12/25 10:01:42.092] [Experiment 'p6_2_f_move_even_to_front'] [FINE]: Using model gpt-5.1-chat-latest. Awaiting response...
+[18/12/25 10:01:45.530] [Experiment 'p6_2_f_move_even_to_front'] [FINE]: Got response with 189 characters.
+[18/12/25 10:01:45.530] [Experiment 'p6_2_f_move_even_to_front'] [FINE]: Saving gen_ai_messages.json
+[18/12/25 10:01:45.531] [Experiment 'p6_2_f_move_even_to_front'] [FINE]: Saved 20933 characters to file gen_ai_messages.json
+[18/12/25 10:01:45.531] [Experiment 'p6_2_f_move_even_to_front'] [FINE]: Saving gen_ai_messages_simple.json
+[18/12/25 10:01:45.531] [Experiment 'p6_2_f_move_even_to_front'] [FINE]: Saved 11506 characters to file gen_ai_messages_simple.json
+[18/12/25 10:01:45.531] [Experiment 'p6_2_f_move_even_to_front'] [INFO]: Converting GenAI response to method...
+[18/12/25 10:01:45.531] [Experiment 'p6_2_f_move_even_to_front'] [FINE]: Saving program.dfy
+[18/12/25 10:01:45.531] [Experiment 'p6_2_f_move_even_to_front'] [FINE]: Saved 452 characters to file program.dfy
+[18/12/25 10:01:45.531] [Experiment 'p6_2_f_move_even_to_front'] [INFO]: Context is treated as being fully enabled, meaning that subsequent prompts do not include the full code.
+[18/12/25 10:01:45.531] [Experiment 'p6_2_f_move_even_to_front'] [INFO]: Checking the method for the presence of the 'assume' keyword...
+[18/12/25 10:01:45.532] [Experiment 'p6_2_f_move_even_to_front'] [INFO]: Calling dafny to resolve the generated method...
+[18/12/25 10:01:45.722] [Experiment 'p6_2_f_move_even_to_front'] [SEVERE]: Program exited with code 2
+[18/12/25 10:01:45.722] [Experiment 'p6_2_f_move_even_to_front'] [SEVERE]: Program stdout: problem_data/p6_2_f_move_even_to_front/program.dfy(6,57): Error: comma expected
+  |
+6 |   var evens := seq(i | 0 <= i < |arr| && arr[i] % 2 == 0 :: arr[i]);
+  |                                                          ^
+
+problem_data/p6_2_f_move_even_to_front/program.dfy(7,57): Error: comma expected
+  |
+7 |   var odds  := seq(i | 0 <= i < |arr| && arr[i] % 2 != 0 :: arr[i]);
+  |                                                          ^
+
+2 parse errors detected in program.dfy
+[18/12/25 10:01:45.722] [Experiment 'p6_2_f_move_even_to_front'] [INFO]: Calling dafny to resolve the generated method, but with warnings allowed...
+[18/12/25 10:01:45.912] [Experiment 'p6_2_f_move_even_to_front'] [SEVERE]: Program exited with code 2
+[18/12/25 10:01:45.913] [Experiment 'p6_2_f_move_even_to_front'] [SEVERE]: Program stdout: problem_data/p6_2_f_move_even_to_front/program.dfy(6,57): Error: comma expected
+  |
+6 |   var evens := seq(i | 0 <= i < |arr| && arr[i] % 2 == 0 :: arr[i]);
+  |                                                          ^
+
+problem_data/p6_2_f_move_even_to_front/program.dfy(7,57): Error: comma expected
+  |
+7 |   var odds  := seq(i | 0 <= i < |arr| && arr[i] % 2 != 0 :: arr[i]);
+  |                                                          ^
+
+2 parse errors detected in program.dfy
+[18/12/25 10:01:45.913] [Experiment 'p6_2_f_move_even_to_front'] [INFO]: Resolution fails as a result of an error.
+[18/12/25 10:01:45.913] [Experiment 'p6_2_f_move_even_to_front'] [WARNING]: Treating resolution as failed for the generated method. Preparing GenAI prompt to fix...
+[18/12/25 10:01:45.913] [Experiment 'p6_2_f_move_even_to_front'] [INFO]: There are 14929 left in the jar, for the rest of this experiment.
+[18/12/25 10:01:45.913] [Experiment 'p6_2_f_move_even_to_front'] [INFO]: Previous iteration lasted 3821ms
+[18/12/25 10:01:45.913] [Experiment 'p6_2_f_move_even_to_front'] [INFO]: Querrying GenAI...
+[18/12/25 10:01:45.913] [Experiment 'p6_2_f_move_even_to_front'] [FINE]: Constructing message for GenAI
+[18/12/25 10:01:45.913] [Experiment 'p6_2_f_move_even_to_front'] [INFO]: Context is on, attaching 15 previous messages in the request to GenAI.
+[18/12/25 10:01:45.913] [Experiment 'p6_2_f_move_even_to_front'] [INFO]: A reasoning model is chosen, but no reasoning effort value is set. Setting reasoning to 'medium'
+[18/12/25 10:01:45.913] [Experiment 'p6_2_f_move_even_to_front'] [FINE]: Setting max tokens for the request to 14929
+[18/12/25 10:01:45.913] [Experiment 'p6_2_f_move_even_to_front'] [FINE]: Using model gpt-5.1-chat-latest. Awaiting response...
+[18/12/25 10:01:51.535] [Experiment 'p6_2_f_move_even_to_front'] [FINE]: Got response with 962 characters.
+[18/12/25 10:01:51.535] [Experiment 'p6_2_f_move_even_to_front'] [FINE]: Saving gen_ai_messages.json
+[18/12/25 10:01:51.536] [Experiment 'p6_2_f_move_even_to_front'] [FINE]: Saved 25861 characters to file gen_ai_messages.json
+[18/12/25 10:01:51.536] [Experiment 'p6_2_f_move_even_to_front'] [FINE]: Saving gen_ai_messages_simple.json
+[18/12/25 10:01:51.536] [Experiment 'p6_2_f_move_even_to_front'] [FINE]: Saved 13964 characters to file gen_ai_messages_simple.json
+[18/12/25 10:01:51.536] [Experiment 'p6_2_f_move_even_to_front'] [INFO]: Converting GenAI response to method...
+[18/12/25 10:01:51.536] [Experiment 'p6_2_f_move_even_to_front'] [FINE]: Saving program.dfy
+[18/12/25 10:01:51.536] [Experiment 'p6_2_f_move_even_to_front'] [FINE]: Saved 1200 characters to file program.dfy
+[18/12/25 10:01:51.536] [Experiment 'p6_2_f_move_even_to_front'] [INFO]: Context is treated as being fully enabled, meaning that subsequent prompts do not include the full code.
+[18/12/25 10:01:51.536] [Experiment 'p6_2_f_move_even_to_front'] [INFO]: Checking the method for the presence of the 'assume' keyword...
+[18/12/25 10:01:51.537] [Experiment 'p6_2_f_move_even_to_front'] [INFO]: Calling dafny to resolve the generated method...
+[18/12/25 10:01:51.850] [Experiment 'p6_2_f_move_even_to_front'] [INFO]: Program exited with code 0
+[18/12/25 10:01:51.850] [Experiment 'p6_2_f_move_even_to_front'] [INFO]: Program stdout: 
+Dafny program verifier did not attempt verification
+[18/12/25 10:01:51.850] [Experiment 'p6_2_f_move_even_to_front'] [INFO]: Calling dafny to resolve the generated method, but with warnings allowed...
+[18/12/25 10:01:52.156] [Experiment 'p6_2_f_move_even_to_front'] [INFO]: Program exited with code 0
+[18/12/25 10:01:52.156] [Experiment 'p6_2_f_move_even_to_front'] [INFO]: Program stdout: 
+Dafny program verifier did not attempt verification
+[18/12/25 10:01:52.156] [Experiment 'p6_2_f_move_even_to_front'] [INFO]: Resolution passes without warnings.
+[18/12/25 10:01:52.156] [Experiment 'p6_2_f_move_even_to_front'] [INFO]: Dafny resolution check passed.
+[18/12/25 10:01:52.156] [Experiment 'p6_2_f_move_even_to_front'] [INFO]: Calling dafny to verify the generated method...
+[18/12/25 10:01:52.833] [Experiment 'p6_2_f_move_even_to_front'] [SEVERE]: Program exited with code 4
+[18/12/25 10:01:52.833] [Experiment 'p6_2_f_move_even_to_front'] [SEVERE]: Program stdout: problem_data/p6_2_f_move_even_to_front/program.dfy(5,0): Error: a postcondition could not be proved on this return path
+  |
+5 | {
+  | ^
+
+problem_data/p6_2_f_move_even_to_front/program.dfy(2,18): Related location: this is the postcondition that could not be proved
+  |
+2 | 	ensures |result| == |arr|
+  |                   ^^
+
+problem_data/p6_2_f_move_even_to_front/program.dfy(5,0): Error: a postcondition could not be proved on this return path
+  |
+5 | {
+  | ^
+
+problem_data/p6_2_f_move_even_to_front/program.dfy(3,9): Related location: this is the postcondition that could not be proved
+  |
+3 | 	ensures forall i, j :: 0 <= i < j < |result| && result[i] % 2 == 0 && result[j] % 2 != 0
+  |          ^^^^^^
+
+problem_data/p6_2_f_move_even_to_front/program.dfy(5,0): Error: a postcondition could not be proved on this return path
+  |
+5 | {
+  | ^
+
+problem_data/p6_2_f_move_even_to_front/program.dfy(4,9): Related location: this is the postcondition that could not be proved
+  |
+4 | 	ensures forall i :: 0 <= i < |arr| ==> exists j :: 0 <= j < |result| && arr[i] == result[j]
+  |          ^^^^^^
+
+problem_data/p6_2_f_move_even_to_front/program.dfy(11,23): Error: this invariant could not be proved to be maintained by the loop
+ Related message: loop invariant violation
+   |
+11 |     invariant |result| <= |arr|
+   |                        ^^
+
+problem_data/p6_2_f_move_even_to_front/program.dfy(12,14): Error: this invariant could not be proved to be maintained by the loop
+ Related message: loop invariant violation
+   |
+12 |     invariant forall k :: 0 <= k < i && arr[k] % 2 == 0 ==> exists j :: 0 <= j < |result| && result[j] == arr[k]
+   |               ^^^^^^
+
+
+Dafny program verifier finished with 1 verified, 5 errors
+[18/12/25 10:01:52.833] [Experiment 'p6_2_f_move_even_to_front'] [WARNING]: Failed to verify the generated method. Preparing GenAI prompt to fix...
+[18/12/25 10:01:52.833] [Experiment 'p6_2_f_move_even_to_front'] [WARNING]: Experiment stopped due to too many GenAI interactions.
+[18/12/25 10:01:52.833] [Experiment 'p6_2_f_move_even_to_front'] [FINE]: Saving gen_ai_messages.json
+[18/12/25 10:01:52.834] [Experiment 'p6_2_f_move_even_to_front'] [FINE]: Saved 25861 characters to file gen_ai_messages.json
+[18/12/25 10:01:52.834] [Experiment 'p6_2_f_move_even_to_front'] [FINE]: Saving gen_ai_messages_simple.json
+[18/12/25 10:01:52.835] [Experiment 'p6_2_f_move_even_to_front'] [FINE]: Saved 13964 characters to file gen_ai_messages_simple.json
+[18/12/25 10:01:52.835] [Experiment 'p6_2_f_move_even_to_front'] [FINE]: Saving experiment_result.json
+[18/12/25 10:01:52.835] [Experiment 'p6_2_f_move_even_to_front'] [FINE]: Saved 1590 characters to file experiment_result.json
+[18/12/25 10:01:53.581] [Experiment 'p6_2_f_move_even_to_front'] [INFO]: Compilation of experiment report tex file successful

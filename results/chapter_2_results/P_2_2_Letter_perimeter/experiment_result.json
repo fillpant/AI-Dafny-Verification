@@ -1,0 +1,64 @@
+{
+  "outcome": "FAILURE_VERIFY",
+  "usage": {
+    "tokensInput": 10468,
+    "tokensOutput": 3798,
+    "tokensTotal": 14266,
+    "totalReasoningTokens": 2880
+  },
+  "badResponses": 0,
+  "verificationAttempts": 4,
+  "resolutionAttempts": 8,
+  "softFailedResolutions": 0,
+  "hardFailedResolutions": 4,
+  "responsesWithAssume": 0,
+  "experimentTimings": {
+    "events": {
+      "Iteration #8": {
+        "startTimeMs": 1766049351233,
+        "endTimeMs": 1766049356789,
+        "durationMs": 5556
+      },
+      "Overall Experiment": {
+        "startTimeMs": 1766049302252,
+        "endTimeMs": 1766049356789,
+        "durationMs": 54537
+      },
+      "Iteration #4": {
+        "startTimeMs": 1766049332097,
+        "endTimeMs": 1766049335483,
+        "durationMs": 3386
+      },
+      "Iteration #5": {
+        "startTimeMs": 1766049335484,
+        "endTimeMs": 1766049338341,
+        "durationMs": 2857
+      },
+      "Iteration #6": {
+        "startTimeMs": 1766049338341,
+        "endTimeMs": 1766049341549,
+        "durationMs": 3208
+      },
+      "Iteration #7": {
+        "startTimeMs": 1766049341549,
+        "endTimeMs": 1766049351233,
+        "durationMs": 9684
+      },
+      "Iteration #1": {
+        "startTimeMs": 1766049302252,
+        "endTimeMs": 1766049308659,
+        "durationMs": 6407
+      },
+      "Iteration #2": {
+        "startTimeMs": 1766049308660,
+        "endTimeMs": 1766049320687,
+        "durationMs": 12027
+      },
+      "Iteration #3": {
+        "startTimeMs": 1766049320687,
+        "endTimeMs": 1766049332097,
+        "durationMs": 11410
+      }
+    }
+  }
+}

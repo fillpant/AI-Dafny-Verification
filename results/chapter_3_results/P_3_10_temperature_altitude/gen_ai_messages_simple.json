@@ -1,0 +1,10 @@
+[
+  {
+    "role": "user",
+    "content": "You are given the following task to perform in Dafny:\n\nWrite a method that takes a temperature value and the altitude in meters. Return whether water is liquid, solid, or gaseous at the given temperature. The boiling point of water drops by about one degree centigrade for every 300 meters of altitude.\n\nThe signature should be:\n\nmethod P_3_10_temperature_altitude (t: real, a: nat) returns (s: string)\n\nThe method should respect the following contract:\n\nrequires t \u003e\u003d -273.15 \u0026\u0026 a \u003c\u003d 10000, ensures if t \u003c 0.0 then s \u003d\u003d \"solid\" else if t \u003d\u003d 0.0 then s \u003d\u003d \"solid or liquid\" else if 0.0 \u003c t \u003c 100.0 - (a as real / 300.0) then s \u003d\u003d \"liquid\" else if t \u003d\u003d 100.0 - (a as real / 300.0) then s \u003d\u003d \"liquid or gaseous\" else s \u003d\u003d \"gaseous\"\n\nProduce and show only the Dafny body of this method, including the curly braces that surround it. Do not show the signature nor contract. You must not use \u0027assume\u0027 anywhere in your code.\n"
+  },
+  {
+    "role": "assistant",
+    "content": "{\"method_body\":\"{\\n  var bp :\u003d 100.0 - (a as real / 300.0);\\n  if t \u003c 0.0 {\\n    s :\u003d \\\"solid\\\";\\n  } else if t \u003d\u003d 0.0 {\\n    s :\u003d \\\"solid or liquid\\\";\\n  } else if t \u003c bp {\\n    s :\u003d \\\"liquid\\\";\\n  } else if t \u003d\u003d bp {\\n    s :\u003d \\\"liquid or gaseous\\\";\\n  } else {\\n    s :\u003d \\\"gaseous\\\";\\n  }\\n}\"}"
+  }
+]

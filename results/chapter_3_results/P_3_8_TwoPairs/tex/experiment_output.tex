@@ -1,0 +1,91 @@
+\documentclass{article}
+\usepackage{lmodern}
+\usepackage{amsmath}
+\usepackage{listings}
+\usepackage{fullpage}
+\usepackage{parskip}
+\usepackage{xcolor}
+\lstset{
+	basicstyle=\ttfamily,
+	columns=fullflexible,
+	frame=single,
+	breaklines=true,
+	postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},
+}
+\begin{document}
+\title{Experiment `P\_3\_8\_TwoPairs' Results}
+\author{\today}
+\date{}
+\maketitle
+\textbf{Experiment outcome: }SUCCESS
+\\\textbf{Bad responses: }0
+\\\textbf{Responses containing}~\texttt{assume}~\textbf{: }0
+\\\textbf{Resolution attempts: }1
+\\\textbf{Hard fails (resolution): }0
+\\\textbf{Soft fails (resolution): }0
+\\\textbf{Verification attempts: }1
+\section*{Problem Specification}
+\textbf{Problem name: }P\_3\_8\_TwoPairs
+\\\textbf{Natural language statement: }Write a method that takes four integers and returns "two pairs" if the input consists of two matching pairs (in some order) and "not two pairs" otherwise.
+\\\textbf{Method signature: }P\_3\_8\_TwoPairs (i:int, j: int, k: int, l: int) returns (s: string)
+\subsection*{Ensures}
+\begin{itemize}
+\item \texttt{if (i==j \&\& k==l) || (i==k \&\& j==l) || (i==l \&\& j==k) then s == "two pairs" else s == "not two pairs"}
+\end{itemize}
+\clearpage
+\section*{GenAI interactions}
+Below you will find all interactions between the `user' (program) and the `assistant' (OpenAI).
+\subsection*{Program $\rightarrow$ GenAI}
+\begin{lstlisting}
+You are given the following task to perform in Dafny:
+
+Write a method that takes four integers and returns "two pairs" if the input consists of two matching pairs (in some order) and "not two pairs" otherwise.
+
+The signature should be:
+
+method P_3_8_TwoPairs (i:int, j: int, k: int, l: int) returns (s: string)
+
+The method should respect the following contract:
+
+ensures if (i==j && k==l) || (i==k && j==l) || (i==l && j==k) then s == "two pairs" else s == "not two pairs"
+
+Produce and show only the Dafny body of this method, including the curly braces that surround it. Do not show the signature nor contract. You must not use 'assume' anywhere in your code.
+
+\end{lstlisting}
+\subsection*{GenAI $\rightarrow$ Program}
+\textbf{System fingerprint: }
+\\\textbf{ID: }chatcmpl-Co4StP0ZTe6uuwSTIEfW3mHTydDps
+\\\textbf{Model: }gpt-5.1-chat-latest
+\\\textbf{Created at: }1766049599
+\\\textbf{Finish reason: }stop
+\\\textbf{Usage: }392 tokens in, and 80 tokens out
+\begin{lstlisting}
+{
+  if ((i == j && k == l) || (i == k && j == l) || (i == l && j == k)) {
+    s := "two pairs";
+  } else {
+    s := "not two pairs";
+  }
+}
+\end{lstlisting}
+\section*{Final Program}
+\begin{lstlisting}
+method P_3_8_TwoPairs (i:int, j: int, k: int, l: int) returns (s: string)
+	ensures if (i==j && k==l) || (i==k && j==l) || (i==l && j==k) then s == "two pairs" else s == "not two pairs"
+{
+  if ((i == j && k == l) || (i == k && j == l) || (i == l && j == k)) {
+    s := "two pairs";
+  } else {
+    s := "not two pairs";
+  }
+}
+\end{lstlisting}
+\section*{Total Token Usage}
+\textbf{Input tokens: }392
+\\\textbf{Output tokens: }80
+\\\textbf{Reasoning tokens: }0
+\\\textbf{Sum of `total tokens': }472
+\section*{Experiment Timings}
+\textbf{Overall Experiment} started at 1766049601160, ended at 1766049603979, lasting 2819ms (2.82 seconds)
+\\\textbf{Iteration \#1} started at 1766049601161, ended at 1766049603979, lasting 2818ms (2.82 seconds)
+\end{document}
