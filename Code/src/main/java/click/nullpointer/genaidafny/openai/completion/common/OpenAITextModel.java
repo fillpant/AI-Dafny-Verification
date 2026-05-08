@@ -3,6 +3,8 @@ package click.nullpointer.genaidafny.openai.completion.common;
 public enum OpenAITextModel {
     GPT_5_1("gpt-5.1", true),
     GPT_5_2("gpt-5.2", true),
+    GPT_5_4("gpt-5.4", true),
+    GPT_5_5("gpt-5.5", true),
     GPT_5("gpt-5", true),
     GPT_5_MINI("gpt-5-mini", true),
     GPT_5_NANO("gpt-5-nano", true),
