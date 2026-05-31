@@ -14,13 +14,13 @@
   },
   {
     "name": "P_2_2_Letter_perimeter",
-    "nat_lang_statement": "Write a method that computes and returns the perimeter of a letter-size (8.5 x 11 inches) sheet of paper and the length of its diagonal.",
+    "nat_lang_statement": "Write a method that computes and returns the perimeter of a letter-size (8.5 x 11 inches) sheet of paper and the length of its diagonal within an error margin of < 0.01.",
     "dafny": {
       "method_signature": "letter_perimeter() returns (perimeter:real, diagonal:real)",
       "requires": [],
       "ensures": [
-        "perimeter == (8.5 * 25.4) * 2.0 + 11.0 * 25.4 * 2.0",
-        "diagonal * diagonal == (8.5 * 25.4) * (8.5 * 25.4) + 11.0 * 25.4 * 11.0 * 25.4"
+        "perimeter == (8.5 + 11) * 2.0",
+        "-0.0001 < (diagonal * diagonal) - (8.5 * 8.5) + (11 * 11) < 0.0001"
       ],
       "functional_code": null
     }
