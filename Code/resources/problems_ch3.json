@@ -53,7 +53,7 @@
       "method_signature": "P_3_4_Classification (i:int, j: int, k: int) returns (s: string)",
       "requires": [],
       "ensures": [
-        "if i == j == k then s == \"all the same\" else if i != j && j!=k && i!=k then s == \"all different\" else s== \"neither\""
+        "if i == j == k then s == \"all the same\" else if i != j && j != k && i != k then s == \"all different\" else s == \"neither\""
       ],
       "functional_code": null
     }
@@ -65,7 +65,7 @@
       "method_signature": "P_3_5_Order (i:int, j: int, k: int) returns (s: string)",
       "requires": [],
       "ensures": [
-        "if i < j < k then s == \"increasing\" else if i > j && j > k then s == \"decreasing\" else s== \"neither\""
+        "if i < j < k then s == \"increasing\" else if i > j && j > k then s == \"decreasing\" else s == \"neither\""
       ],
       "functional_code": null
     }
