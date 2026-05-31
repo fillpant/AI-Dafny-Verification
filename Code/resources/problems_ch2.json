@@ -20,7 +20,7 @@
       "requires": [],
       "ensures": [
         "perimeter == (8.5 + 11) * 2.0",
-        "-0.0001 < (diagonal * diagonal) - (8.5 * 8.5) + (11 * 11) < 0.0001"
+        "-0.0001 < (diagonal * diagonal) - ((8.5 * 8.5) + (11 * 11)) < 0.0001"
       ],
       "functional_code": null
     }
@@ -157,14 +157,14 @@
   },
   {
     "name": "2_8_rectangle_properties",
-    "nat_lang_statement": "Write a method that takes the lengths of the sides of a rectangle. Then return the area and perimeter of the rectangle and the length of the diagonal (use the Pythagorean theorem).",
+    "nat_lang_statement": "Write a method that takes the lengths of the sides of a rectangle. Then return the area and perimeter of the rectangle and the length of the diagonal (use the Pythagorean theorem) within an error margin of < 0.01.",
     "dafny": {
       "method_signature": "rectangle_properties(length: real, width: real) returns (area: real, perimeter: real, diagonal: real)",
       "requires": [],
       "ensures": [
         "area == length * width",
         "perimeter == 2.0 * (length + width)",
-        "diagonal * diagonal == length * length + width * width"
+        "-0.0001 < (diagonal * diagonal) - ((length * length) + (width * width)) < 0.0001"
       ],
       "functional_code": null
     }
