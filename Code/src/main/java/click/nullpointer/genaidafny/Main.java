@@ -48,6 +48,7 @@ public class Main {
             LOG.info("Found " + problems.length + " problems.");
             if (!validateProblemList(problems)) {
                 LOG.severe("Program exiting due to failed validation.");
+                return;
             }
             processAllProblems(problems);
         }
@@ -103,30 +104,26 @@ public class Main {
     private static boolean validateProblemList(DafnyProblem... problems) {
         LOG.info("Validating problems...");
         //Check if the names of problems are all unique.
-        Map<String, Long> counts = Arrays.stream(problems).map(DafnyProblem::name).collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
+        Map<String, Long> counts = Arrays.stream(problems).map(DafnyProblem::name).collect(Collectors.groupingBy(Function.identity(),
+                Collectors.counting()));
         counts.entrySet().stream().filter(a -> a.getValue() > 1).forEach(e -> {
-            LOG.severe("The problem with name '" + e.getKey() + "' appears " + e.getValue() + " times in the file. Problem names must be unique.");
+            LOG.severe("The problem with name '" + e.getKey() + "' appears " + e.getValue() + " times in the file. Problem names must be " +
+                    "unique.");
         });
         boolean valid = counts.size() == problems.length;
         if (valid) {
             for (DafnyProblem problem : problems) {
-                if (problem.dafny() == null) {
-                    LOG.severe("No dafny spec found for problem " + problem);
+                boolean hasContract =
+                        problem.dafny() != null && !(problem.dafny().ensures().isEmpty() && problem.dafny().requires().isEmpty());
+                boolean hasSpec = problem.statement() != null && !problem.statement().isBlank();
+                boolean hasMethod = problem.dafny().methodSignature() != null && !problem.dafny().methodSignature().isBlank();
+
+                if (!(hasContract || hasSpec || hasMethod)) {
+                    LOG.severe("Invalid/blank problem found: " + problem);
                     valid = false;
-                } else {
-                    if (problem.dafny().requires() == null) {
-                        LOG.severe("No 'requires' array found in dafny spec for problem " + problem);
-                        valid = false;
-                    }
-                    if (problem.dafny().ensures() == null) {
-                        LOG.severe("No 'ensures' array found in dafny spec for problem " + problem);
-                        valid = false;
-                    }
-                    if (problem.dafny().methodSignature() == null) {
-                        LOG.severe("No method signature found in dafny spec for problem " + problem);
-                        valid = false;
-                    } else if (problem.dafny().methodSignature().isBlank())
-                        LOG.warning("Blank method signature found in dafny spec for problem " + problem + " going to assume this is by design.");
+                } else if (hasContract && !hasMethod) {
+                    LOG.severe("No method found associated with the non-empty contract for problem: " + problem);
+                    valid = false;
                 }
             }
         }
@@ -137,22 +134,26 @@ public class Main {
         LOG.info("Processing " + problems.length + " problems.");
         boolean force = getConfig().containsKey(ConfigurationKeys.FORCE_RERUN_EXPERIMENTS);
         if (force)
-            LOG.warning("The force flag is set. All previously completed experiments will now be re-run, and previous results will be overwritten.");
+            LOG.warning("The force flag is set. All previously completed experiments will now be re-run, and previous results will be " +
+                    "overwritten.");
         for (DafnyProblem problem : problems) {
             LOG.info("Processing problem '" + problem.name() + "'");
             DafnyExperiment gen = new DafnyExperiment(PROBLEM_DATA_DIR, problem, manager);
             if (!force) {
                 try {
                     if (gen.getStoredExperimentResult() != null) {
-                        LOG.warning("Skipping experiment '" + problem.name() + "' as a result for it already exists. To ignore this check, re-run the program with the flag --force set.");
+                        LOG.warning("Skipping experiment '" + problem.name() + "' as a result for it already exists. To ignore this " +
+                                "check, re-run the program with the flag --force set.");
                         continue;
                     }
                 } catch (IOException e) {
-                    LOG.log(Level.SEVERE, "Failed to check if experiment " + problem.name() + " has previously been completed. Skipping experiment.", e);
+                    LOG.log(Level.SEVERE, "Failed to check if experiment " + problem.name() + " has previously been completed. Skipping " +
+                            "experiment.", e);
                 }
             }
             DafnyExperimentResult res = gen.execute();
-            LOG.info("Experiment finished after " + res.resolutionAttempts() + " resolution and " + res.verificationAttempts() + " verification attempts, with result: " + res.outcome());
+            LOG.info("Experiment finished after " + res.resolutionAttempts() + " resolution and " + res.verificationAttempts() + " " +
+                    "verification attempts, with result: " + res.outcome());
         }
     }
 
