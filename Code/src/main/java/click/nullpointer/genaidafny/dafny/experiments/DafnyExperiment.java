@@ -72,6 +72,7 @@ public class DafnyExperiment {
     private int badResponses = 0; //Number of times GenAI returned no response (likely due to being caught in an infinite loop)
     private int verificationAttempts = 0;
     private int methodsWithAssumeClauses = 0;
+    private int methodsWithExpectClauses = 0;
     private int genAIInteractions = 0;
     private int totalTokens = 0;
     private EventTimer timer = new EventTimer();
@@ -140,12 +141,21 @@ public class DafnyExperiment {
                     log.info("Context is limited beyond the amount of previous messages, or is disabled entirely. Treating any subsequent" +
                             " GenAI requests as needing the full method body in them.");
                 }
-                log.info("Checking the code for the presence of the 'assume' keyword...");
+                log.info("Checking the code for the presence of the 'assume' or 'expect' keyword...");
                 //If, without comments and string literals the word assume appears, then it is reasonable to expect it's used as a keyword.
-                if (Utilities.lightStripCommentsAndStringsFromDafny(method).toLowerCase().contains("assume")) {
-                    log.warning("GenAI has produced code with one or more 'assume' keywords. Rejecting, and re-prompting to fix...");
-                    methodsWithAssumeClauses++;
-                    //prompt = constructAssumePrompt(problem.dafny().methodSignature(), problem.statement(), method, contextEnabled);
+                boolean hasAssume, hasExpect;
+                {
+                    String assumeOrExpect = Utilities.lightStripCommentsAndStringsFromDafny(method).toLowerCase();
+                    hasAssume = assumeOrExpect.contains("assume");
+                    hasExpect = assumeOrExpect.contains("expect");
+                }
+                if (hasAssume || hasExpect) {
+                    log.warning("GenAI has produced code with one or more 'assume' or 'expect' keywords. Rejecting, and re-prompting to " +
+                            "fix...");
+                    if (hasAssume)
+                        methodsWithAssumeClauses++;
+                    else if (hasExpect)//technically redundant, but for clarity
+                        methodsWithExpectClauses++;
                     prompt = getPrompt(contextEnabled ? PromptSelection.CONTEXT_ON_ASSUME_USED_FAIL : PromptSelection.ASSUME_USED_FAIL,
                             method, null);
                     timer.stopEvent("Iteration #" + iteration);
@@ -226,7 +236,8 @@ public class DafnyExperiment {
             scilentGenAIMessageSave();
         }
         DafnyExperimentResult result = new DafnyExperimentResult(outcome, getUsageStats(), badResponses, verificationAttempts,
-                resolutionAttempts, softFailedResolutions, hardFailedResolutions, methodsWithAssumeClauses, timer);
+                resolutionAttempts, softFailedResolutions, hardFailedResolutions, methodsWithAssumeClauses, methodsWithExpectClauses,
+                timer);
         try {
             saveExperimentFile("experiment_result.json", GSON.toJson(result));
         } catch (IOException e) {
@@ -431,9 +442,10 @@ public class DafnyExperiment {
                 if (!methodSig.isEmpty())
                     prompt.append("Produce and show only the Dafny body of this method, including the curly braces that surround it. Do " +
                             "not " +
-                            "show the signature nor contract. You must not use 'assume' or 'expect' anywhere in your code.");
+                            "show the signature nor contract. You must not use 'assume' nor 'expect' anywhere in your code.");
                 else
-                    prompt.append("Produce and show code in Dafny to address this task. You must not use 'assume' or 'expect' anywhere in your code.");
+                    prompt.append("Produce and show code in Dafny to address this task. You must not use 'assume' nor 'expect' anywhere " +
+                            "in your code.");
                 break;
             case RESOLVE_FAIL:
             case VERIFY_FAIL:
@@ -454,23 +466,24 @@ public class DafnyExperiment {
                     prompt.append("The ").append(codeOrMethod).append(" should respect the following contract:\n\n").append(contract).append("\n\n");
                 String actionWord = selection == PromptSelection.RESOLVE_FAIL ? "resolve" : "verify";
                 if (selection == PromptSelection.ASSUME_USED_FAIL) {
-                    prompt.append("The ").append(codeOrMethod).append(" makes use of 'assume'. Correct the ").append(codeOrMethod);
+                    prompt.append("The ").append(codeOrMethod).append(" makes use of 'assume' or 'expect'. Correct the ").append(codeOrMethod);
                     if (!methodSig.isEmpty())
-                        prompt.append(" by altering only the method body, to not use 'assume'. Produce and show only the Dafny body, " +
+                        prompt.append(" by altering only the method body, to not use 'assume' nor 'expect'. Produce and show only the " +
+                                "Dafny body, " +
                                 "including the curly braces that surround it. Do not show the signature nor contract.");
                     else
-                        prompt.append(" making any required change. You must not use 'assume' anywhere in your code.");
+                        prompt.append(" making any required change. You must not use 'assume' nor 'expect' anywhere in your code.");
                     break;
                 }
                 prompt.append("When using dafny ").append(actionWord).append(", the below error is emitted and ").append(actionWord).append(" fails:\n\n");
                 prompt.append(errorMessage).append("\n\n");
                 if (!methodSig.isEmpty())
                     prompt.append("Correct the error by altering only the method body. Produce and show only the Dafny body, including " +
-                            "the curly braces that surround it. Do not show the signature nor contract. You must not use 'assume' " +
-                            "anywhere in your code.");
+                            "the curly braces that surround it. Do not show the signature nor contract. You must not use 'assume' nor " +
+                            "'expect' anywhere in your code.");
                 else
                     prompt.append("Correct the error by altering the given code. Produce and show the full fixed code. You must not use " +
-                            "'assume' anywhere in your code.");
+                            "'assume' nor 'expect' anywhere in your code.");
                 break;
 
             case CONTEXT_ON_RESOLVE_FAIL:
@@ -485,18 +498,19 @@ public class DafnyExperiment {
                 if (!methodSig.isEmpty())
                     prompt.append(" by altering only the ").append(codeOrMethod).append(" body. Produce and show only the Dafny body, " +
                             "including the curly braces that surround it. Do not show the signature nor contract");
-                prompt.append(". You must not use 'assume' anywhere in your code.");
+                prompt.append(". You must not use 'assume' nor 'expect' anywhere in your code.");
                 break;
             case CONTEXT_ON_ASSUME_USED_FAIL:
                 if (generatedMethod == null || generatedMethod.isBlank())
                     throw new IllegalArgumentException("CONTEXT_ON_ASSUME_USED_FAIL requires generatedMethod");
-                prompt.append("The ").append(codeOrMethod).append(" uses 'assume', but must not do so.");
+                prompt.append("The ").append(codeOrMethod).append(" uses 'assume' nor 'expect', but must not do so.");
                 if (!methodSig.isEmpty())
-                    prompt.append(" Correct the error by altering only the method body to not use 'assume'. Produce and show only the " +
+                    prompt.append(" Correct the error by altering only the method body to not use 'assume' nor 'expect'. Produce and show" +
+                            " only the " +
                             "Dafny body, including the curly braces that surround it. Do not show the signature nor contract.");
                 else
-                    prompt.append(" Correct the error by altering the code to not include 'assume'.");
-                prompt.append(" You must not use 'assume' anywhere in your code.");
+                    prompt.append(" Correct the error by altering the code to not include 'assume' nor 'expect'.");
+                prompt.append(" You must not use 'assume' nor 'expect' anywhere in your code.");
                 break;
             default:
                 throw new UnsupportedOperationException("Unknown prompt type: " + selection);
@@ -577,6 +591,7 @@ public class DafnyExperiment {
         sb.append("\\textbf{Experiment outcome: }").append(escapeLatex(result.outcome().toString())).append("\n");
         sb.append("\\\\\\textbf{Bad responses: }").append(result.badResponses()).append("\n");
         sb.append("\\\\\\textbf{Responses containing}~\\texttt{assume}~\\textbf{: }").append(result.responsesWithAssume()).append("\n");
+        sb.append("\\\\\\textbf{Responses containing}~\\texttt{expect}~\\textbf{: }").append(result.responsesWithExpect()).append("\n");
         sb.append("\\\\\\textbf{Resolution attempts: }").append(result.resolutionAttempts()).append("\n");
         sb.append("\\\\\\textbf{Hard fails (resolution): }").append(result.hardFailedResolutions()).append("\n");
         sb.append("\\\\\\textbf{Soft fails (resolution): }").append(result.softFailedResolutions()).append("\n");
