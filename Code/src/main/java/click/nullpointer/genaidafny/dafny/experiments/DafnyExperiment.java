@@ -431,9 +431,9 @@ public class DafnyExperiment {
                 if (!methodSig.isEmpty())
                     prompt.append("Produce and show only the Dafny body of this method, including the curly braces that surround it. Do " +
                             "not " +
-                            "show the signature nor contract. You must not use 'assume' anywhere in your code.");
+                            "show the signature nor contract. You must not use 'assume' or 'expect' anywhere in your code.");
                 else
-                    prompt.append("Produce and show code in Dafny to address this task. You must not use 'assume' anywhere in your code.");
+                    prompt.append("Produce and show code in Dafny to address this task. You must not use 'assume' or 'expect' anywhere in your code.");
                 break;
             case RESOLVE_FAIL:
             case VERIFY_FAIL:
