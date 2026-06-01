@@ -6,4 +6,8 @@ public record DafnyProblem(String name, @SerializedName("nat_lang_statement") St
     public String getFileSafeName() {
         return name();
     }
+
+    public DafnyProblem cloneWithName(String newName) {
+        return new DafnyProblem(newName, statement, dafny);
+    }
 }

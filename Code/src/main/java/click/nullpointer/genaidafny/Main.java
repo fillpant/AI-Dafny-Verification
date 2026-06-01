@@ -4,6 +4,7 @@ import click.nullpointer.genaidafny.common.utils.Utilities;
 import click.nullpointer.genaidafny.config.ConfigurationKeys;
 import click.nullpointer.genaidafny.dafny.DafnyProblem;
 import click.nullpointer.genaidafny.dafny.experiments.DafnyExperiment;
+import click.nullpointer.genaidafny.dafny.experiments.DafnyExperimentOutcome;
 import click.nullpointer.genaidafny.dafny.experiments.DafnyExperimentResult;
 import click.nullpointer.genaidafny.openai.completion.OpenAICompletionManager;
 import com.google.gson.Gson;
@@ -136,24 +137,49 @@ public class Main {
         if (force)
             LOG.warning("The force flag is set. All previously completed experiments will now be re-run, and previous results will be " +
                     "overwritten.");
-        for (DafnyProblem problem : problems) {
-            LOG.info("Processing problem '" + problem.name() + "'");
-            DafnyExperiment gen = new DafnyExperiment(PROBLEM_DATA_DIR, problem, manager);
-            if (!force) {
-                try {
-                    if (gen.getStoredExperimentResult() != null) {
-                        LOG.warning("Skipping experiment '" + problem.name() + "' as a result for it already exists. To ignore this " +
-                                "check, re-run the program with the flag --force set.");
-                        continue;
+        int rerunCount = Integer.valueOf(getConfig().get(ConfigurationKeys.FAILED_EXPERIMENT_RERUN_COUNT));
+        if (rerunCount > 0)
+            LOG.warning("Failed experiments will be re-tried " + rerunCount + " times, or until they succeed (whichever happens first). " +
+                    "Be cautious! Experiments failing because of typos/other errors can result in very high token use for no gain. " +
+                    "Results will be saved separately for each run, with the suffix _RERUN-# appended at the end (where # is a number).");
+
+        problems:
+        for (DafnyProblem curr : problems) {
+            int runs = 0;
+            boolean shouldRerun = false;
+            do {
+                DafnyProblem problem = curr;
+                if (runs > 0)
+                    problem = curr.cloneWithName(curr.name() + "_RERUN-" + runs);
+                LOG.info("Processing problem '" + problem.name() + "'");
+                if (runs > 0)
+                    LOG.warning("This experiment is a re-run of an earlier problem that failed.");
+
+                DafnyExperiment gen = new DafnyExperiment(PROBLEM_DATA_DIR, problem, manager);
+                if (!force) {
+                    try {
+                        if (gen.getStoredExperimentResult() != null) {
+                            LOG.warning("Skipping experiment '" + problem.name() + "' as a result for it already exists. To ignore this " +
+                                    "check, re-run the program with the flag --force set.");
+                            continue;
+                        }
+                    } catch (IOException e) {
+                        LOG.log(Level.SEVERE, "Failed to check if experiment " + problem.name() + " has previously been completed. " +
+                                "Skipping experiment and moving on to the next!", e);
+                        continue problems;
                     }
-                } catch (IOException e) {
-                    LOG.log(Level.SEVERE, "Failed to check if experiment " + problem.name() + " has previously been completed. Skipping " +
-                            "experiment.", e);
                 }
-            }
-            DafnyExperimentResult res = gen.execute();
-            LOG.info("Experiment finished after " + res.resolutionAttempts() + " resolution and " + res.verificationAttempts() + " " +
-                    "verification attempts, with result: " + res.outcome());
+                DafnyExperimentResult res = gen.execute();
+                LOG.info("Experiment finished after " + res.resolutionAttempts() + " resolution and " + res.verificationAttempts() + " " +
+                        "verification attempts, with result: " + res.outcome());
+                ++runs;
+                shouldRerun =
+                        res.outcome() != DafnyExperimentOutcome.SUCCESS && res.outcome() != DafnyExperimentOutcome.FAILURE_INTERNAL_ERROR;
+                if (res.outcome() == DafnyExperimentOutcome.FAILURE_INTERNAL_ERROR && runs <= rerunCount) {
+                    LOG.severe("The last experiment failed due to an internal error. Whilst re-running experiments is enabled, this " +
+                            "experiment will not be re-run to not skew results.");
+                }
+            } while (runs <= rerunCount && shouldRerun);
         }
     }
 

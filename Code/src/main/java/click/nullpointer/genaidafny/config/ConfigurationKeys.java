@@ -6,8 +6,7 @@ import org.apache.commons.cli.Option;
 
 public enum ConfigurationKeys {
     DISABLE_EXPERIMENT_CACHE(Option.builder().longOpt("no-prompt-cache").desc("Disable prompt caching per-experiment.").get()),
-    FORCE_RERUN_EXPERIMENTS(Option.builder().longOpt("force-rerun").desc("Force re-run of all completed experiments.")
-            .get(), null, "Forcing experiment re-run will overwrite previous results."),
+    FORCE_RERUN_EXPERIMENTS(Option.builder().longOpt("force-rerun").desc("Force re-run of all completed experiments.").get(), null, "Forcing experiment re-run will overwrite previous results."),
     MAX_GEN_AI_INTERACTIONS(Option.builder().longOpt("max-ai-interactions").desc("Max number of interactions between the program and GenAI, in each experiment.").type(Integer.class).hasArg().get(), "10"),
     DO_NOT_PROMPT_CONFIRMATION(Option.builder("y").longOpt("yes").desc("Do not prompt for confirmation though STDIN.").get()),
     INPUT_PROBLEM_FILE(Option.builder("i").longOpt("input-problem-file").desc("Input problem file path.").hasArg().type(String.class).converter(Converter.FILE).get(), "resources/problems.json", null),
@@ -16,7 +15,9 @@ public enum ConfigurationKeys {
     DISABLE_LATEX_REPORT(Option.builder().longOpt("disable-latex-report").desc("Disable latex report creation for experiments.").get()),
     MAX_CONTEXT_MESSAGES_COUNT(Option.builder().longOpt("max-context-cnt").desc("Maximum number of previous messages to send on each GenAI request, for context. WARNING: grows very quickly, and costs.").hasArg().type(Integer.class).get(), Integer.MAX_VALUE + ""),
     GEN_AI_MODEL(Option.builder("m").longOpt("gen-ai-model").desc("The OpenAI model to use for experiments.").hasArg().type(OpenAITextModel.class).get(), OpenAITextModel.GPT_4O_MINI.toString()),
-    GEN_AI_REASONING_EFFORT(Option.builder().longOpt("gen-ai-reasoning-effort").desc("The reasoning effort value. Only applicable to reasoning models!").hasArg().get(), null);
+    GEN_AI_REASONING_EFFORT(Option.builder().longOpt("gen-ai-reasoning-effort").desc("The reasoning effort value. Only applicable to reasoning models!").hasArg().get(), null),
+    FAILED_EXPERIMENT_RERUN_COUNT(Option.builder().longOpt("failed-experiment-rerun-count").desc("The number of times a failed experment should be re-attempted (maximally, stops if it succeeds OR if this number is reached. Intermediate results automatically saved).").hasArg().type(Integer.class).get(), "0");
+
     private final Option option;
     private final String defaultValue;
     private final String confirmationMessage;
