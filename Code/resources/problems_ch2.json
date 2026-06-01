@@ -19,8 +19,8 @@
       "method_signature": "letter_perimeter() returns (perimeter:real, diagonal:real)",
       "requires": [],
       "ensures": [
-        "perimeter == (8.5 + 11) * 2.0",
-        "-0.0001 < (diagonal * diagonal) - ((8.5 * 8.5) + (11 * 11)) < 0.0001"
+        "perimeter == (8.5 + 11.0) * 2.0",
+        "-0.0001 < (diagonal * diagonal) - ((8.5 * 8.5) + (11.0 * 11.0)) < 0.0001"
       ],
       "functional_code": null
     }
