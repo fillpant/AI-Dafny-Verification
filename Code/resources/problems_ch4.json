@@ -24,7 +24,7 @@
     }
   },
   {
-    "name": "p4_1_c_powers_of_two",
+    "name": "p4_1_c_powers_of_two_seq",
     "nat_lang_statement": "Write a method with loops that computes all powers of 2 from 2^0 up to 2^20.",
     "dafny": {
       "method_signature": "p4_1_c_powers_of_two() returns (powers: seq<int>)",
@@ -32,6 +32,19 @@
       "ensures": [
         "|powers| == 21",
         "forall i :: 0 <= i < |powers| ==> powers[i] == pow(2, i)"
+      ],
+      "functional_code": "function pow(base: int, exp: int): int\n  requires  0 <= exp\n  decreases exp\n{\n  if exp == 0 then 1 else base * pow(base, exp - 1)\n}"
+    }
+  },
+  {
+    "name": "p4_1_c_powers_of_two_array",
+    "nat_lang_statement": "Write a method with loops that computes all powers of 2 from 2^0 up to 2^20.",
+    "dafny": {
+      "method_signature": "p4_1_c_powers_of_two() returns (powers: array<int>)",
+      "requires": [],
+      "ensures": [
+        "powers.Length == 21",
+        "forall i :: 0 <= i < powers.Length ==> powers[i] == pow(2, i)"
       ],
       "functional_code": "function pow(base: int, exp: int): int\n  requires  0 <= exp\n  decreases exp\n{\n  if exp == 0 then 1 else base * pow(base, exp - 1)\n}"
     }
@@ -64,7 +77,24 @@
     }
   },
   {
-    "name": "p4_2_a_min_max",
+    "name": "p4_2_a_min_max_seq",
+    "nat_lang_statement": "Write a method that takes a sequence of integers and returns the smallest and largest of the inputs.",
+    "dafny": {
+      "method_signature": "p4_2_a_min_max(inputs: seq<int>) returns (min: int, max: int)",
+      "requires": [
+        "0 < |inputs|"
+      ],
+      "ensures": [
+        "forall i :: 0 <= i < |inputs| ==> min <= inputs[i]",
+        "forall i :: 0 <= i < |inputs| ==> max >= inputs[i]",
+        "exists i :: 0 <= i < |inputs| && min == inputs[i]",
+        "exists i :: 0 <= i < |inputs| && max == inputs[i]"
+      ],
+      "functional_code": null
+    }
+  },
+  {
+    "name": "p4_2_a_min_max_array",
     "nat_lang_statement": "Write a method that takes a sequence of integers and returns the smallest and largest of the inputs.",
     "dafny": {
       "method_signature": "p4_2_a_min_max(inputs: array<int>) returns (min: int, max: int)",
@@ -81,10 +111,23 @@
     }
   },
   {
-    "name": "p4_2_b_count_even_odd",
+    "name": "p4_2_b_count_even_odd_seq",
     "nat_lang_statement": "Write a method that takes a sequence of integers and returns the number of even and odd inputs.",
     "dafny": {
       "method_signature": "p4_2_b_count_even_odd(inputs: seq<int>) returns (even_count: int, odd_count: int)",
+      "requires": [],
+      "ensures": [
+        "even_count == number_even(inputs)",
+        "odd_count == number_odd(inputs)"
+      ],
+      "functional_code": "function number_odd(s:seq<int>): int\n{ if s == [] then 0\n  else if s[0] % 2 == 1 then 1 + number_odd(s[1..])\n  else number_odd(s[1..])\n}\n\nfunction number_even (s:seq<int>): int\n{ if s == [] then 0\n  else if s[0] % 2 == 0 then 1 + number_even(s[1..])\n  else number_even(s[1..])\n}"
+    }
+  },
+  {
+    "name": "p4_2_b_count_even_odd_array",
+    "nat_lang_statement": "Write a method that takes a sequence of integers and returns the number of even and odd inputs.",
+    "dafny": {
+      "method_signature": "p4_2_b_count_even_odd(inputs: array<int>) returns (even_count: int, odd_count: int)",
       "requires": [],
       "ensures": [
         "even_count == number_even(inputs[..])",
@@ -94,7 +137,7 @@
     }
   },
   {
-    "name": "p4_2_c_cumulative_totals",
+    "name": "p4_2_c_cumulative_totals_seq",
     "nat_lang_statement": "Write a method that takes a sequence of integers and returns cumulative totals. For example, if the input is [1, 7, 2, 9], the method should return [1, 8, 10, 19].",
     "dafny": {
       "method_signature": "p4_2_c_cumulative_totals(inputs: seq<int>) returns (totals: seq<int>)",
@@ -109,7 +152,22 @@
     }
   },
   {
-    "name": "p4_2_d_adjacent_duplicates",
+    "name": "p4_2_c_cumulative_totals_array",
+    "nat_lang_statement": "Write a method that takes a sequence of integers and returns cumulative totals. For example, if the input is [1, 7, 2, 9], the method should return [1, 8, 10, 19].",
+    "dafny": {
+      "method_signature": "p4_2_c_cumulative_totals(inputs: array<int>) returns (totals: array<int>)",
+      "requires": [
+        "0 < inputs.Length"
+      ],
+      "ensures": [
+        "totals.Length == inputs.Length",
+        "forall i :: 0 <= i < inputs.Length ==> totals[i] == (if i == 0 then inputs[0] else totals[i - 1] + inputs[i])"
+      ],
+      "functional_code": null
+    }
+  },
+  {
+    "name": "p4_2_d_adjacent_duplicates_seq",
     "nat_lang_statement": "Write a method that takes a sequence of integers and returns all adjacent duplicates. For example, if the input is [1, 3, 3, 4, 5, 5, 6, 6, 6, 2], the method should return [3, 5, 6].",
     "dafny": {
       "method_signature": "p4_2_d_adjacent_duplicates(inputs: seq<int>) returns (duplicates: seq<int>)",
@@ -119,6 +177,21 @@
         "forall i :: 0 <= i < |inputs| - 1 && inputs[i] == inputs[i + 1] ==> inputs[i] in duplicates",
         "forall d :: d in duplicates ==> exists i :: 0 <= i < |inputs| - 1 && inputs[i] == inputs[i + 1] && inputs[i] == d",
         "forall d :: d in duplicates ==> exists i, j :: 0 <= i < j < |inputs| && contiguous_duplicates(inputs, i, j, d) == true"
+      ],
+      "functional_code": "function contiguous_duplicates(inputs: seq<int>, i : int, j : int, d : int) : (b : bool) \n  requires 0 <= i < j < |inputs|\n  decreases j - i\n{\n  if i + 1 == j then inputs[i] == inputs[j] == d\n  else if inputs[i] == d then contiguous_duplicates(inputs, i + 1, j, d)\n  else false\n}"
+    }
+  },
+  {
+    "name": "p4_2_d_adjacent_duplicates_array",
+    "nat_lang_statement": "Write a method that takes a sequence of integers and returns all adjacent duplicates. For example, if the input is [1, 3, 3, 4, 5, 5, 6, 6, 6, 2], the method should return [3, 5, 6].",
+    "dafny": {
+      "method_signature": "p4_2_d_adjacent_duplicates(inputs: array<int>) returns (duplicates: array<int>)",
+      "requires": [],
+      "ensures": [
+        "forall d :: d in duplicates[..] ==> d in inputs[..]",
+        "forall i :: 0 <= i < inputs.Length - 1 && inputs[i] == inputs[i + 1] ==> inputs[i] in duplicates[..]",
+        "forall d :: d in duplicates[..] ==> exists i :: 0 <= i < inputs.Length - 1 && inputs[i] == inputs[i + 1] && inputs[i] == d",
+        "forall d :: d in duplicates[..] ==> exists i, j :: 0 <= i < j < inputs.Length && contiguous_duplicates(inputs[..], i, j, d) == true"
       ],
       "functional_code": "function contiguous_duplicates(inputs: seq<int>, i : int, j : int, d : int) : (b : bool) \n  requires 0 <= i < j < |inputs|\n  decreases j - i\n{\n  if i + 1 == j then inputs[i] == inputs[j] == d\n  else if inputs[i] == d then contiguous_duplicates(inputs, i + 1, j, d)\n  else false\n}"
     }
@@ -177,7 +250,7 @@
     }
   },
   {
-    "name": "p4_3_e_positions_of_vowels",
+    "name": "p4_3_e_positions_of_vowels_seq",
     "nat_lang_statement": "Write a method that takes a string and returns the positions of all vowels in the string.",
     "dafny": {
       "method_signature": "p4_3_e_positions_of_vowels(s: string) returns (positions: seq<int>)",
@@ -190,7 +263,20 @@
     }
   },
   {
-    "name": "p4_4_month_with_highest_temperature",
+    "name": "p4_3_e_positions_of_vowels_array",
+    "nat_lang_statement": "Write a method that takes a string and returns the positions of all vowels in the string.",
+    "dafny": {
+      "method_signature": "p4_3_e_positions_of_vowels(s: string) returns (positions: array<int>)",
+      "requires": [],
+      "ensures": [
+        "forall p :: p in positions[..] ==> 0 <= p < |s| && s[p] in ['a','e','i','o','u','A','E','I','O','U']",
+        "forall i :: 0 <= i < |s| && s[i] in ['a','e','i','o','u','A','E','I','O','U'] ==> i in positions[..]"
+      ],
+      "functional_code": null
+    }
+  },
+  {
+    "name": "p4_4_month_with_highest_temperature_seq",
     "nat_lang_statement": "Write a method that reads a sequence of twelve temperature values and returns the number of the month with the highest temperature.",
     "dafny": {
       "method_signature": "p4_5_month_with_highest_temperature(inputs: seq<real>) returns (hottest: int)",
@@ -199,13 +285,28 @@
       ],
       "ensures": [
         "1 <= hottest <= 12",
-        "forall i :: 0 <= i <= |inputs|-1 ==> inputs[hottest-1] >= inputs[i]"
+        "forall i :: 0 <= i <= |inputs| - 1 ==> inputs[hottest - 1] >= inputs[i]"
       ],
       "functional_code": null
     }
   },
   {
-    "name": "p4_5_analyze_floats",
+    "name": "p4_4_month_with_highest_temperature_array",
+    "nat_lang_statement": "Write a method that reads a sequence of twelve temperature values and returns the number of the month with the highest temperature.",
+    "dafny": {
+      "method_signature": "p4_5_month_with_highest_temperature(inputs: array<real>) returns (hottest: int)",
+      "requires": [
+        "inputs.Length == 12"
+      ],
+      "ensures": [
+        "1 <= hottest <= 12",
+        "forall i :: 0 <= i <= inputs.Length - 1 ==> inputs[hottest - 1] >= inputs[i]"
+      ],
+      "functional_code": null
+    }
+  },
+  {
+    "name": "p4_5_analyze_floats_seq",
     "nat_lang_statement": "Write a method that takes a sequence of floatingpoint numbers and returns: - the average of the values. - the smallest of the values. - the largest of the values. - the range, that is the difference between the smallest and largest.",
     "dafny": {
       "method_signature": "p4_5_analyze_floats(values: seq<real>) returns (average: real, min: real, max: real, range: real)",
@@ -224,7 +325,41 @@
     }
   },
   {
-    "name": "p4_6_find_minimum",
+    "name": "p4_5_analyze_floats_array",
+    "nat_lang_statement": "Write a method that takes a sequence of floatingpoint numbers and returns: - the average of the values. - the smallest of the values. - the largest of the values. - the range, that is the difference between the smallest and largest.",
+    "dafny": {
+      "method_signature": "p4_5_analyze_floats(values: array<real>) returns (average: real, min: real, max: real, range: real)",
+      "requires": [
+        "0 < values.Length"
+      ],
+      "ensures": [
+        "average == (sum(values[..]) / values.Length as real)",
+        "forall v :: v in values[..] ==> min <= v",
+        "forall v :: v in values[..] ==> max >= v",
+        "range == max - min",
+        "exists v :: v in values[..] && min == v",
+        "exists v :: v in values[..] && max == v"
+      ],
+      "functional_code": "function sum(values: seq<real>): real\n{\n  if |values| == 0 then 0.0\n  else values[0] + sum(values[1..])\n}"
+    }
+  },
+  {
+    "name": "p4_6_find_minimum_seq",
+    "nat_lang_statement": "Write a method that finds the minimum value from a list of inputs into a method.",
+    "dafny": {
+      "method_signature": "p4_6_find_minimum(inputs: seq<int>) returns (min: int)",
+      "requires": [
+        "0 < |inputs|"
+      ],
+      "ensures": [
+        "forall i :: 0 <= i < |inputs| ==> min <= inputs[i]",
+        "exists i :: 0 <= i < |inputs| && min == inputs[i]"
+      ],
+      "functional_code": null
+    }
+  },
+  {
+    "name": "p4_6_find_minimum_array",
     "nat_lang_statement": "Write a method that finds the minimum value from a list of inputs into a method.",
     "dafny": {
       "method_signature": "p4_6_find_minimum(inputs: array<int>) returns (min: int)",
