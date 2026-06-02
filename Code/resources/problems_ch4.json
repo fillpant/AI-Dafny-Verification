@@ -1,9 +1,9 @@
 [
   {
-    "name": "p4_1_a_sum_even_numbers",
+    "name": "p_4_1_a_sum_even_numbers",
     "nat_lang_statement": "Write a method with loops that computes the sum of all even numbers between 2 and 100 (inclusive).",
     "dafny": {
-      "method_signature": "p4_1_a_sum_even_numbers() returns (sum: int)",
+      "method_signature": "p_4_1_a_sum_even_numbers() returns (sum: int)",
       "requires": [],
       "ensures": [
         "sum == 2550"
@@ -12,10 +12,10 @@
     }
   },
   {
-    "name": "p4_1_b_sum_squares",
+    "name": "p_4_1_b_sum_squares",
     "nat_lang_statement": "Write a method with loops that computes the sum of all squares between 1 and 100 (inclusive).",
     "dafny": {
-      "method_signature": "p4_1_b_sum_squares() returns (sum: int)",
+      "method_signature": "p_4_1_b_sum_squares() returns (sum: int)",
       "requires": [],
       "ensures": [
         "sum == 338350"
@@ -24,10 +24,10 @@
     }
   },
   {
-    "name": "p4_1_c_powers_of_two_seq",
+    "name": "p_4_1_c_powers_of_two_seq",
     "nat_lang_statement": "Write a method with loops that computes all powers of 2 from 2^0 up to 2^20.",
     "dafny": {
-      "method_signature": "p4_1_c_powers_of_two_seq() returns (powers: seq<int>)",
+      "method_signature": "p_4_1_c_powers_of_two_seq() returns (powers: seq<int>)",
       "requires": [],
       "ensures": [
         "|powers| == 21",
@@ -37,10 +37,10 @@
     }
   },
   {
-    "name": "p4_1_c_powers_of_two_array",
+    "name": "p_4_1_c_powers_of_two_array",
     "nat_lang_statement": "Write a method with loops that computes all powers of 2 from 2^0 up to 2^20.",
     "dafny": {
-      "method_signature": "p4_1_c_powers_of_two_array() returns (powers: array<int>)",
+      "method_signature": "p_4_1_c_powers_of_two_array() returns (powers: array<int>)",
       "requires": [],
       "ensures": [
         "powers.Length == 21",
@@ -50,10 +50,10 @@
     }
   },
   {
-    "name": "p4_1_d_sum_odd_numbers",
+    "name": "p_4_1_d_sum_odd_numbers",
     "nat_lang_statement": "Write a method with loops that computes the sum of all odd numbers between a and b (inclusive), where a and b are inputs.",
     "dafny": {
-      "method_signature": "p4_1_d_sum_odd_numbers(a: int, b: int) returns (sum: int)",
+      "method_signature": "p_4_1_d_sum_odd_numbers(a: int, b: int) returns (sum: int)",
       "requires": [],
       "ensures": [
         "sum == sum_odd(a, b)"
@@ -62,10 +62,10 @@
     }
   },
   {
-    "name": "p4_1_e_sum_odd_digits",
+    "name": "p_4_1_e_sum_odd_digits",
     "nat_lang_statement": "Write a method with loops that computes the sum of all odd digits of an input. (For example, if the input is 32677, the sum would be 3 + 7 + 7 = 17.)",
     "dafny": {
-      "method_signature": "p4_1_e_sum_odd_digits(a: int) returns (sum: int)",
+      "method_signature": "p_4_1_e_sum_odd_digits(a: int) returns (sum: int)",
       "requires": [
         "a >= 0"
       ],
@@ -77,10 +77,10 @@
     }
   },
   {
-    "name": "p4_2_a_min_max_seq",
+    "name": "p_4_2_a_min_max_seq",
     "nat_lang_statement": "Write a method that takes a sequence of integers and returns the smallest and largest of the inputs.",
     "dafny": {
-      "method_signature": "p4_2_a_min_max_seq(inputs: seq<int>) returns (min: int, max: int)",
+      "method_signature": "p_4_2_a_min_max_seq(inputs: seq<int>) returns (min: int, max: int)",
       "requires": [
         "0 < |inputs|"
       ],
@@ -94,10 +94,10 @@
     }
   },
   {
-    "name": "p4_2_a_min_max_array",
+    "name": "p_4_2_a_min_max_array",
     "nat_lang_statement": "Write a method that takes a sequence of integers and returns the smallest and largest of the inputs.",
     "dafny": {
-      "method_signature": "p4_2_a_min_max_array(inputs: array<int>) returns (min: int, max: int)",
+      "method_signature": "p_4_2_a_min_max_array(inputs: array<int>) returns (min: int, max: int)",
       "requires": [
         "0 < inputs.Length"
       ],
@@ -111,36 +111,36 @@
     }
   },
   {
-    "name": "p4_2_b_count_even_odd_seq",
+    "name": "p_4_2_b_count_even_odd_seq",
     "nat_lang_statement": "Write a method that takes a sequence of integers and returns the number of even and odd inputs.",
     "dafny": {
-      "method_signature": "p4_2_b_count_even_odd_seq(inputs: seq<int>) returns (even_count: int, odd_count: int)",
+      "method_signature": "p_4_2_b_count_even_odd_seq(inputs: seq<int>) returns (even_count: int, odd_count: int)",
       "requires": [],
       "ensures": [
         "even_count == number_even(inputs)",
         "odd_count == number_odd(inputs)"
       ],
-      "functional_code": "function number_odd(s:seq<int>): int\n{ if s == [] then 0\n  else if s[0] % 2 == 1 then 1 + number_odd(s[1..])\n  else number_odd(s[1..])\n}\n\nfunction number_even (s:seq<int>): int\n{ if s == [] then 0\n  else if s[0] % 2 == 0 then 1 + number_even(s[1..])\n  else number_even(s[1..])\n}"
+      "functional_code": "function number_odd(s:seq<int>): int\n{ if s == [] then 0\n  else if s[0] % 2 == 1 then 1 + number_odd(s[1..])\n  else number_odd(s[1..])\n}\n\nfunction number_even (s: seq<int>): int\n{ if s == [] then 0\n  else if s[0] % 2 == 0 then 1 + number_even(s[1..])\n  else number_even(s[1..])\n}"
     }
   },
   {
-    "name": "p4_2_b_count_even_odd_array",
+    "name": "p_4_2_b_count_even_odd_array",
     "nat_lang_statement": "Write a method that takes a sequence of integers and returns the number of even and odd inputs.",
     "dafny": {
-      "method_signature": "p4_2_b_count_even_odd_array(inputs: array<int>) returns (even_count: int, odd_count: int)",
+      "method_signature": "p_4_2_b_count_even_odd_array(inputs: array<int>) returns (even_count: int, odd_count: int)",
       "requires": [],
       "ensures": [
         "even_count == number_even(inputs[..])",
         "odd_count == number_odd(inputs[..])"
       ],
-      "functional_code": "function number_odd(s:seq<int>): int\n{ if s == [] then 0\n  else if s[0] % 2 == 1 then 1 + number_odd(s[1..])\n  else number_odd(s[1..])\n}\n\nfunction number_even (s:seq<int>): int\n{ if s == [] then 0\n  else if s[0] % 2 == 0 then 1 + number_even(s[1..])\n  else number_even(s[1..])\n}"
+      "functional_code": "function number_odd(s: seq<int>): int\n{ if s == [] then 0\n  else if s[0] % 2 == 1 then 1 + number_odd(s[1..])\n  else number_odd(s[1..])\n}\n\nfunction number_even (s: seq<int>): int\n{ if s == [] then 0\n  else if s[0] % 2 == 0 then 1 + number_even(s[1..])\n  else number_even(s[1..])\n}"
     }
   },
   {
-    "name": "p4_2_c_cumulative_totals_seq",
+    "name": "p_4_2_c_cumulative_totals_seq",
     "nat_lang_statement": "Write a method that takes a sequence of integers and returns cumulative totals. For example, if the input is [1, 7, 2, 9], the method should return [1, 8, 10, 19].",
     "dafny": {
-      "method_signature": "p4_2_c_cumulative_totals_seq(inputs: seq<int>) returns (totals: seq<int>)",
+      "method_signature": "p_4_2_c_cumulative_totals_seq(inputs: seq<int>) returns (totals: seq<int>)",
       "requires": [
         "0 < |inputs|"
       ],
@@ -152,10 +152,10 @@
     }
   },
   {
-    "name": "p4_2_c_cumulative_totals_array",
+    "name": "p_4_2_c_cumulative_totals_array",
     "nat_lang_statement": "Write a method that takes a sequence of integers and returns cumulative totals. For example, if the input is [1, 7, 2, 9], the method should return [1, 8, 10, 19].",
     "dafny": {
-      "method_signature": "p4_2_c_cumulative_totals_array(inputs: array<int>) returns (totals: array<int>)",
+      "method_signature": "p_4_2_c_cumulative_totals_array(inputs: array<int>) returns (totals: array<int>)",
       "requires": [
         "0 < inputs.Length"
       ],
@@ -167,10 +167,10 @@
     }
   },
   {
-    "name": "p4_2_d_adjacent_duplicates_seq",
+    "name": "p_4_2_d_adjacent_duplicates_seq",
     "nat_lang_statement": "Write a method that takes a sequence of integers and returns all adjacent duplicates. For example, if the input is [1, 3, 3, 4, 5, 5, 6, 6, 6, 2], the method should return [3, 5, 6].",
     "dafny": {
-      "method_signature": "p4_2_d_adjacent_duplicates_seq(inputs: seq<int>) returns (duplicates: seq<int>)",
+      "method_signature": "p_4_2_d_adjacent_duplicates_seq(inputs: seq<int>) returns (duplicates: seq<int>)",
       "requires": [],
       "ensures": [
         "forall d :: d in duplicates ==> d in inputs",
@@ -178,14 +178,14 @@
         "forall d :: d in duplicates ==> exists i :: 0 <= i < |inputs| - 1 && inputs[i] == inputs[i + 1] && inputs[i] == d",
         "forall d :: d in duplicates ==> exists i, j :: 0 <= i < j < |inputs| && contiguous_duplicates(inputs, i, j, d) == true"
       ],
-      "functional_code": "function contiguous_duplicates(inputs: seq<int>, i : int, j : int, d : int) : (b : bool) \n  requires 0 <= i < j < |inputs|\n  decreases j - i\n{\n  if i + 1 == j then inputs[i] == inputs[j] == d\n  else if inputs[i] == d then contiguous_duplicates(inputs, i + 1, j, d)\n  else false\n}"
+      "functional_code": "function contiguous_duplicates(inputs: seq<int>, i: int, j: int, d: int): (b: bool) \n  requires 0 <= i < j < |inputs|\n  decreases j - i\n{\n  if i + 1 == j then inputs[i] == inputs[j] == d\n  else if inputs[i] == d then contiguous_duplicates(inputs, i + 1, j, d)\n  else false\n}"
     }
   },
   {
-    "name": "p4_2_d_adjacent_duplicates_array",
+    "name": "p_4_2_d_adjacent_duplicates_array",
     "nat_lang_statement": "Write a method that takes a sequence of integers and returns all adjacent duplicates. For example, if the input is [1, 3, 3, 4, 5, 5, 6, 6, 6, 2], the method should return [3, 5, 6].",
     "dafny": {
-      "method_signature": "p4_2_d_adjacent_duplicates_array(inputs: array<int>) returns (duplicates: array<int>)",
+      "method_signature": "p_4_2_d_adjacent_duplicates_array(inputs: array<int>) returns (duplicates: array<int>)",
       "requires": [],
       "ensures": [
         "forall d :: d in duplicates[..] ==> d in inputs[..]",
@@ -193,14 +193,14 @@
         "forall d :: d in duplicates[..] ==> exists i :: 0 <= i < inputs.Length - 1 && inputs[i] == inputs[i + 1] && inputs[i] == d",
         "forall d :: d in duplicates[..] ==> exists i, j :: 0 <= i < j < inputs.Length && contiguous_duplicates(inputs[..], i, j, d) == true"
       ],
-      "functional_code": "function contiguous_duplicates(inputs: seq<int>, i : int, j : int, d : int) : (b : bool) \n  requires 0 <= i < j < |inputs|\n  decreases j - i\n{\n  if i + 1 == j then inputs[i] == inputs[j] == d\n  else if inputs[i] == d then contiguous_duplicates(inputs, i + 1, j, d)\n  else false\n}"
+      "functional_code": "function contiguous_duplicates(inputs: seq<int>, i: int, j: int, d: int): (b: bool) \n  requires 0 <= i < j < |inputs|\n  decreases j - i\n{\n  if i + 1 == j then inputs[i] == inputs[j] == d\n  else if inputs[i] == d then contiguous_duplicates(inputs, i + 1, j, d)\n  else false\n}"
     }
   },
   {
-    "name": "p4_3_a_extract_uppercase",
+    "name": "p_4_3_a_extract_uppercase",
     "nat_lang_statement": "Write a method that takes a string and returns only the uppercase letters in the string.",
     "dafny": {
-      "method_signature": "p4_3_a_extract_uppercase(s: string) returns (uppercase: string)",
+      "method_signature": "p_4_3_a_extract_uppercase(s: string) returns (uppercase: string)",
       "requires": [],
       "ensures": [
         "forall c :: c in uppercase ==> 'A' <= c <= 'Z'",
@@ -210,10 +210,10 @@
     }
   },
   {
-    "name": "p4_3_b_every_second_letter",
+    "name": "p_4_3_b_every_second_letter",
     "nat_lang_statement": "Write a method that takes a string and returns every second letter of the string.",
     "dafny": {
-      "method_signature": "p4_3_b_every_second_letter(s: string) returns (result: string)",
+      "method_signature": "p_4_3_b_every_second_letter(s: string) returns (result: string)",
       "requires": [],
       "ensures": [
         "|result| * 2 == |s| || |result| * 2 + 1 == |s|",
@@ -223,10 +223,10 @@
     }
   },
   {
-    "name": "p4_3_c_replace_vowels",
+    "name": "p_4_3_c_replace_vowels",
     "nat_lang_statement": "Write a method that takes a string and returns the string, with all vowels replaced by an underscore.",
     "dafny": {
-      "method_signature": "p4_3_c_replace_vowels(s: string) returns (result: string)",
+      "method_signature": "p_4_3_c_replace_vowels(s: string) returns (result: string)",
       "requires": [],
       "ensures": [
         "|result| == |s|",
@@ -236,10 +236,10 @@
     }
   },
   {
-    "name": "p4_3_d_count_vowels",
+    "name": "p_4_3_d_count_vowels",
     "nat_lang_statement": "Write a method that takes a string and returns the number of vowels in the string.",
     "dafny": {
-      "method_signature": "p4_3_d_count_vowels(s: string) returns (count: int)",
+      "method_signature": "p_4_3_d_count_vowels(s: string) returns (count: int)",
       "requires": [],
       "ensures": [
         "count >= 0",
@@ -250,10 +250,10 @@
     }
   },
   {
-    "name": "p4_3_e_positions_of_vowels_seq",
+    "name": "p_4_3_e_positions_of_vowels_seq",
     "nat_lang_statement": "Write a method that takes a string and returns the positions of all vowels in the string.",
     "dafny": {
-      "method_signature": "p4_3_e_positions_of_vowels_seq(s: string) returns (positions: seq<int>)",
+      "method_signature": "p_4_3_e_positions_of_vowels_seq(s: string) returns (positions: seq<int>)",
       "requires": [],
       "ensures": [
         "forall p :: p in positions ==> 0 <= p < |s| && s[p] in ['a','e','i','o','u','A','E','I','O','U']",
@@ -263,10 +263,10 @@
     }
   },
   {
-    "name": "p4_3_e_positions_of_vowels_array",
+    "name": "p_4_3_e_positions_of_vowels_array",
     "nat_lang_statement": "Write a method that takes a string and returns the positions of all vowels in the string.",
     "dafny": {
-      "method_signature": "p4_3_e_positions_of_vowels_array(s: string) returns (positions: array<int>)",
+      "method_signature": "p_4_3_e_positions_of_vowels_array(s: string) returns (positions: array<int>)",
       "requires": [],
       "ensures": [
         "forall p :: p in positions[..] ==> 0 <= p < |s| && s[p] in ['a','e','i','o','u','A','E','I','O','U']",
@@ -276,10 +276,10 @@
     }
   },
   {
-    "name": "p4_4_month_with_highest_temperature_seq",
+    "name": "p_4_4_month_with_highest_temperature_seq",
     "nat_lang_statement": "Write a method that reads a sequence of twelve temperature values and returns the number of the month with the highest temperature.",
     "dafny": {
-      "method_signature": "p4_4_month_with_highest_temperature_seq(inputs: seq<real>) returns (hottest: int)",
+      "method_signature": "p_4_4_month_with_highest_temperature_seq(inputs: seq<real>) returns (hottest: int)",
       "requires": [
         "|inputs| == 12"
       ],
@@ -291,10 +291,10 @@
     }
   },
   {
-    "name": "p4_4_month_with_highest_temperature_array",
+    "name": "p_4_4_month_with_highest_temperature_array",
     "nat_lang_statement": "Write a method that reads a sequence of twelve temperature values and returns the number of the month with the highest temperature.",
     "dafny": {
-      "method_signature": "p4_4_month_with_highest_temperature_array(inputs: array<real>) returns (hottest: int)",
+      "method_signature": "p_4_4_month_with_highest_temperature_array(inputs: array<real>) returns (hottest: int)",
       "requires": [
         "inputs.Length == 12"
       ],
@@ -306,10 +306,10 @@
     }
   },
   {
-    "name": "p4_5_analyse_floats_seq",
+    "name": "p_4_5_analyse_floats_seq",
     "nat_lang_statement": "Write a method that takes a sequence of floatingpoint numbers and returns: - the average of the values. - the smallest of the values. - the largest of the values. - the range, that is the difference between the smallest and largest.",
     "dafny": {
-      "method_signature": "p4_5_analyse_floats_seq(values: seq<real>) returns (average: real, min: real, max: real, range: real)",
+      "method_signature": "p_4_5_analyse_floats_seq(values: seq<real>) returns (average: real, min: real, max: real, range: real)",
       "requires": [
         "0 < |values|"
       ],
@@ -325,10 +325,10 @@
     }
   },
   {
-    "name": "p4_5_analyse_floats_array",
+    "name": "p_4_5_analyse_floats_array",
     "nat_lang_statement": "Write a method that takes a sequence of floatingpoint numbers and returns: - the average of the values. - the smallest of the values. - the largest of the values. - the range, that is the difference between the smallest and largest.",
     "dafny": {
-      "method_signature": "p4_5_analyse_floats_array(values: array<real>) returns (average: real, min: real, max: real, range: real)",
+      "method_signature": "p_4_5_analyse_floats_array(values: array<real>) returns (average: real, min: real, max: real, range: real)",
       "requires": [
         "0 < values.Length"
       ],
@@ -344,10 +344,10 @@
     }
   },
   {
-    "name": "p4_6_find_minimum_seq",
+    "name": "p_4_6_find_minimum_seq",
     "nat_lang_statement": "Write a method that finds the minimum value from a list of inputs into a method.",
     "dafny": {
-      "method_signature": "p4_6_find_minimum_seq(inputs: seq<int>) returns (min: int)",
+      "method_signature": "p_4_6_find_minimum_seq(inputs: seq<int>) returns (min: int)",
       "requires": [
         "0 < |inputs|"
       ],
@@ -359,10 +359,10 @@
     }
   },
   {
-    "name": "p4_6_find_minimum_array",
+    "name": "p_4_6_find_minimum_array",
     "nat_lang_statement": "Write a method that finds the minimum value from a list of inputs into a method.",
     "dafny": {
-      "method_signature": "p4_6_find_minimum_array(inputs: array<int>) returns (min: int)",
+      "method_signature": "p_4_6_find_minimum_array(inputs: array<int>) returns (min: int)",
       "requires": [
         "0 < inputs.Length"
       ],
@@ -374,10 +374,10 @@
     }
   },
   {
-    "name": "p4_7_permute_string",
+    "name": "p_4_7_permute_string",
     "nat_lang_statement": "Write a method that randomly permutes the characters in a string.",
     "dafny": {
-      "method_signature": "p4_7_permute_string(s: string) returns (permuted: string)",
+      "method_signature": "p_4_7_permute_string(s: string) returns (permuted: string)",
       "requires": [],
       "ensures": [
         "|permuted| == |s|",
@@ -388,10 +388,10 @@
     }
   },
   {
-    "name": "p4_8_seperate_lines",
+    "name": "p_4_8_seperate_lines",
     "nat_lang_statement": "Write a method that reads a word and returns each character of the word on a separate line.",
     "dafny": {
-      "method_signature": "p4_8_seperate_lines(s: string) returns (chars: string)",
+      "method_signature": "p_4_8_seperate_lines(s: string) returns (chars: string)",
       "requires": [],
       "ensures": [
         "|chars| == 2 * |s|",
@@ -402,10 +402,10 @@
     }
   },
   {
-    "name": "p4_9_reverse_string",
+    "name": "p_4_9_reverse_string",
     "nat_lang_statement": "Write a method that reads a word and returns the word in reverse.",
     "dafny": {
-      "method_signature": "p4_9_reverse_string(s: string) returns (reversed: string)",
+      "method_signature": "p_4_9_reverse_string(s: string) returns (reversed: string)",
       "requires": [],
       "ensures": [
         "|reversed| == |s|",
@@ -415,10 +415,10 @@
     }
   },
   {
-    "name": "p4_10_count_vowels",
+    "name": "p_4_10_count_vowels",
     "nat_lang_statement": "Write a method that reads a word and returns the number of vowels in the word.",
     "dafny": {
-      "method_signature": "p4_10_count_vowels(s: string) returns (count: int)",
+      "method_signature": "p_4_10_count_vowels(s: string) returns (count: int)",
       "requires": [],
       "ensures": [
         "0 <= count",
