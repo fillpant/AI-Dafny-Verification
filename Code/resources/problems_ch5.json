@@ -79,7 +79,7 @@
     "name": "p5_4_middle",
     "nat_lang_statement": "Write a method that returns the middle character of a string if the length is odd, or the two middle characters if the length is even. For example, middle(\"middle\") returns \"dd\".",
     "dafny": {
-      "method_signature": "p5_4_middle(str: seq<char>) returns (middleStr: seq<char>)",
+      "method_signature": "p5_4_middle(str: string) returns (middleStr: string)",
       "requires": [
         "0 < |str|"
       ],
@@ -94,7 +94,7 @@
     "name": "p5_5_repeat",
     "nat_lang_statement": "Write a method that returns a string repeated n times. For example, repeat(\"ho\", 3) returns \"hohoho\".",
     "dafny": {
-      "method_signature": "p5_5_repeat(str: seq<char>, n: int) returns (repeatedStr: seq<char>)",
+      "method_signature": "p5_5_repeat(str: string, n: int) returns (repeatedStr: string)",
       "requires": [
         "n >= 0"
       ],
@@ -109,7 +109,7 @@
     "name": "p5_6_countVowels",
     "nat_lang_statement": "Write a method that returns the count of all vowels in a string. Vowels are the letters a, e, i, o, and u, and their uppercase variants.",
     "dafny": {
-      "method_signature": "p5_6_countVowels(str: seq<char>) returns (vowelCount: int)",
+      "method_signature": "p5_6_countVowels(str: string) returns (vowelCount: int)",
       "requires": [],
       "ensures": [
         "vowelCount >= 0",
@@ -124,14 +124,14 @@
     "name": "p5_7_countWords",
     "nat_lang_statement": "Write a method that returns the count of all words in a string. Words are separated by spaces. For example, countWords(\"Mary had a little lamb\") should return 5.",
     "dafny": {
-      "method_signature": "p5_7_countWords(str: seq<char>) returns (wordCount: int)",
+      "method_signature": "p5_7_countWords(str: string) returns (wordCount: int)",
       "requires": [],
       "ensures": [
         "wordCount >= 0",
         "if |str| == 0 then wordCount == 0 else wordCount >= 1",
         "wordCount == count_space(str) + 1"
       ],
-      "functional_code": "function count_space(str: seq<char>) : int\n{\n  if |str| == 0 then 0\n  else if str[0] == ' ' then 1 + count_space(str[1..])\n  else count_space(str[1..])\n}"
+      "functional_code": "function count_space(str: string) : int\n{\n  if |str| == 0 then 0\n  else if str[0] == ' ' then 1 + count_space(str[1..])\n  else count_space(str[1..])\n}"
     }
   },
   {
@@ -167,10 +167,10 @@
     "name": "p5_9_sphereSurface",
     "nat_lang_statement": "Write a method that computes the surface of a sphere given its radius.",
     "dafny": {
-      "method_signature": "p5_9_sphereSurface(r: real) returns (surface_area: real)",
+      "method_signature": "p5_9_sphereSurface(r: real) returns (surface: real)",
       "requires": [],
       "ensures": [
-        "surface_area == 4.0 * 3.14159 * r * r"
+        "surface == 4.0 * 3.14159 * r * r"
       ],
       "functional_code": null
     }
@@ -189,12 +189,12 @@
   },
   {
     "name": "p5_9_cylinderSurface",
-    "nat_lang_statement": "Write a method that computes the surface area of a cylinder with a circular base, given radius and height.",
+    "nat_lang_statement": "Write a method that computes the surface of a cylinder with a circular base, given radius and height.",
     "dafny": {
-      "method_signature": "p5_9_cylinderSurface(r: real, h: real) returns (surface_area: real)",
+      "method_signature": "p5_9_cylinderSurface(r: real, h: real) returns (surface: real)",
       "requires": [],
       "ensures": [
-        "surface_area == 2.0 * 3.14159 * r * (r + h)"
+        "surface == 2.0 * 3.14159 * r * h + 2 * 3.14159 * r * r"
       ],
       "functional_code": null
     }
@@ -213,12 +213,12 @@
   },
   {
     "name": "p5_9_coneSurface",
-    "nat_lang_statement": "Write a method that computes the surface area of a cone with a circular base, given radius and height.",
+    "nat_lang_statement": "Write a method that computes the surface area of a cone with a circular base with a residual error less than 0.01, given radius and height.",
     "dafny": {
-      "method_signature": "p5_9_coneSurface(r: real, h: real) returns (surface_area: real)",
+      "method_signature": "p5_9_coneSurface(r: real, h: real) returns (surface: real)",
       "requires": [],
       "ensures": [
-        "(-r + (surface_area / (3.14159 * r))) * (-r + (surface_area / (3.14159 * r))) == h * h + r * r"
+        "-0.01 < (((surface / (3.14159 * r)) - r) * ((surface / (3.14159 * r)) - r)) - ((h * h) + (r * r)) < 0.01"
       ],
       "functional_code": null
     }
