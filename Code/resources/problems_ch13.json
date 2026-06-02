@@ -49,5 +49,17 @@
       ],
       "functional_code": "function starts_with(text: string, str: string): (b: bool)  ensures b == (|str| <= |text| && forall i :: 0 <= i < |str| ==> text[i] == str[i]){  if |str| == 0 then true  else if |text| == 0 then false  else if text[0] == str[0] then starts_with(text[1..], str[1..])  else false}"
     }
+  },
+  {
+    "name": "p_13_7_recursive_index_of",
+    "nat_lang_statement": "Write a recursive method that returns the starting position of the first substring of the text that matches str. Return –1 if str is not a substring of the text. For example, s.indexOf(\"Mississippi\", \"sip\") returns 6. Hint: This is a bit tricky because you must keep track of how far the match is from the beginning of the text. Make that value a parameter variable of a helper method.",
+    "dafny": {
+      "method_signature": "p_13_7_recursive_index_of(text: string, str: string) returns (index: int)",
+      "requires": [],
+      "ensures": [
+          "index == find_index(text, str, 0)"
+      ],
+      "functional_code": "function find_index(text: string, str: string, index: nat): (ret: int)   ensures starts_with(text, str) ==> ret == index {  if |text| < |str| then -1  else if starts_with(text, str) then index  else find_index(text[1..], str, index + 1)}"
+    }
   }
 ]
