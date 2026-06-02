@@ -1,9 +1,9 @@
 [
   {
-    "name": "P_2_1_Letter_Dimensions",
+    "name": "p_2_1_letter_dimensions",
     "nat_lang_statement": "Write a method that computes and returns the dimensions of a letter-size (8.5 x 11 inches) sheet of paper in millimeters. There are 25.4 millimeters per inch. Use constants and comments in your method.",
     "dafny": {
-      "method_signature": "letter_dimensions() returns (width:real, height:real)",
+      "method_signature": "p_2_1_letter_dimensions() returns (width: real, height: real)",
       "requires": [],
       "ensures": [
         "width == 8.5 * 25.4",
@@ -13,10 +13,10 @@
     }
   },
   {
-    "name": "P_2_2_Letter_perimeter",
+    "name": "p_2_2_letter_perimeter",
     "nat_lang_statement": "Write a method that computes and returns the perimeter of a letter-size (8.5 x 11 inches) sheet of paper and the length of its diagonal with a residual error less than 0.01.",
     "dafny": {
-      "method_signature": "letter_perimeter() returns (perimeter:real, diagonal:real)",
+      "method_signature": "p_2_2_letter_perimeter() returns (perimeter: real, diagonal: real)",
       "requires": [],
       "ensures": [
         "perimeter == (8.5 + 11.0) * 2.0",
@@ -26,10 +26,10 @@
     }
   },
   {
-    "name": "P_2_3_powerFunctions",
+    "name": "p_2_3_power_functions",
     "nat_lang_statement": "Write a method that takes a number and returns its square, cube, and fourth power.",
     "dafny": {
-      "method_signature": "power_functions(x: int) returns (sq: int, cube : int, fourth: int)",
+      "method_signature": "p_2_3_power_functions(x: int) returns (sq: int, cube: int, fourth: int)",
       "requires": [],
       "ensures": [
         "sq == x * x",
@@ -40,10 +40,10 @@
     }
   },
   {
-    "name": "P_2_4_1_sum",
+    "name": "p_2_4_1_sum",
     "nat_lang_statement": "Write a method that takes two integers and then returns the sum.",
     "dafny": {
-      "method_signature": "sum(x: int, y: int) returns (result:int)",
+      "method_signature": "p_2_4_1_sum(x: int, y: int) returns (result: int)",
       "requires": [],
       "ensures": [
         "result == x + y"
@@ -52,10 +52,10 @@
     }
   },
   {
-    "name": "P_2_4_2_difference",
+    "name": "p_2_4_2_difference",
     "nat_lang_statement": "Write a method that takes two integers and then returns the difference.",
     "dafny": {
-      "method_signature": "difference(x: int, y: int) returns (result:int)",
+      "method_signature": "p_2_4_2_difference(x: int, y: int) returns (result: int)",
       "requires": [],
       "ensures": [
         "result == x - y"
@@ -64,10 +64,10 @@
     }
   },
   {
-    "name": "P_2_4_3_product",
+    "name": "p_2_4_3_product",
     "nat_lang_statement": "Write a method that takes two integers and then returns the product.",
     "dafny": {
-      "method_signature": "product(x: int, y: int) returns (result:int)",
+      "method_signature": "p_2_4_3_product(x: int, y: int) returns (result: int)",
       "requires": [],
       "ensures": [
         "result == x * y"
@@ -76,10 +76,10 @@
     }
   },
   {
-    "name": "P_2_4_4_avarage",
+    "name": "p_2_4_4_avarage",
     "nat_lang_statement": "Write a method that takes two integers and then returns the average.",
     "dafny": {
-      "method_signature": "average(x: int, y: int) returns (result:real)",
+      "method_signature": "p_2_4_4_avarage(x: int, y: int) returns (result: real)",
       "requires": [],
       "ensures": [
         "result == (x + y) as real / 2.0"
@@ -88,10 +88,10 @@
     }
   },
   {
-    "name": "P_2_4_5_distance",
+    "name": "p_2_4_5_distance",
     "nat_lang_statement": "Write a method that takes two integers and then returns the distance (absolute value of the difference).",
     "dafny": {
-      "method_signature": "distance(x: int, y: int) returns (result:int)",
+      "method_signature": "p_2_4_5_distance(x: int, y: int) returns (result: int)",
       "requires": [],
       "ensures": [
         "result >= 0",
@@ -101,10 +101,10 @@
     }
   },
   {
-    "name": "2_4_6_max",
+    "name": "p_2_4_6_max",
     "nat_lang_statement": "Write a method that takes two integers and then returns the maximum (the larger of the two).",
     "dafny": {
-      "method_signature": "max(x: int, y: int) returns (result:int)",
+      "method_signature": "p_2_4_6_max(x: int, y: int) returns (result: int)",
       "requires": [],
       "ensures": [
         "result == x || result == y",
@@ -114,10 +114,10 @@
     }
   },
   {
-    "name": "2_4_7_min",
+    "name": "p_2_4_7_min",
     "nat_lang_statement": "Write a method that takes two integers and then returns the minimum (the smaller of the two).",
     "dafny": {
-      "method_signature": "min(x: int, y: int) returns (result:int)",
+      "method_signature": "p_2_4_7_min(x: int, y: int) returns (result: int)",
       "requires": [],
       "ensures": [
         "result == x || result == y",
@@ -127,10 +127,10 @@
     }
   },
   {
-    "name": "2_6_convert",
+    "name": "p_2_6_convert",
     "nat_lang_statement": "Write a method that takes a measurement in meters and then converts it to miles, feet, and inches.",
     "dafny": {
-      "method_signature": "convert(x: real) returns (miles: real, feet: real, inches: real)",
+      "method_signature": "p_2_6_convert(x: real) returns (miles: real, feet: real, inches: real)",
       "requires": [],
       "ensures": [
         "x / 0.000621371 == miles",
@@ -141,25 +141,25 @@
     }
   },
   {
-    "name": "2_7_circle_properties",
+    "name": "p_2_7_circle_properties",
     "nat_lang_statement": "Write a method that takes a radius and then returns the area and circumference of a circle with that radius and the volume and surface area of a sphere with that radius.",
     "dafny": {
-      "method_signature": "circle_properties(radius: real) returns (circumference: real, area: real, surface_area: real, volume: real)",
+      "method_signature": "p_2_7_circle_properties(radius: real) returns (circumference: real, area: real, volume: real, surface_area: real)",
       "requires": [],
       "ensures": [
         "circumference == 2.0 * 3.14159 * radius",
         "area == 3.14159 * radius * radius",
-        "surface_area == 4.0 * 3.14159 * radius * radius",
-        "volume == (4.0 / 3.0) * 3.14159 * radius * radius * radius"
+        "volume == (4.0 / 3.0) * 3.14159 * radius * radius * radius",
+        "surface_area == 4.0 * 3.14159 * radius * radius"
       ],
       "functional_code": null
     }
   },
   {
-    "name": "2_8_rectangle_properties",
+    "name": "p_2_8_rectangle_properties",
     "nat_lang_statement": "Write a method that takes the lengths of the sides of a rectangle. Then return the area and perimeter of the rectangle and the length of the diagonal (use the Pythagorean theorem) with a residual error less than 0.01.",
     "dafny": {
-      "method_signature": "rectangle_properties(length: real, width: real) returns (area: real, perimeter: real, diagonal: real)",
+      "method_signature": "p_2_8_rectangle_properties(length: real, width: real) returns (area: real, perimeter: real, diagonal: real)",
       "requires": [],
       "ensures": [
         "area == length * width",
@@ -170,10 +170,10 @@
     }
   },
   {
-    "name": "2_10_hybrid_car_cost",
+    "name": "p_2_10_hybrid_car_cost",
     "nat_lang_statement": "Write a method that helps a person decide whether to buy a hybrid car. Your methods's inputs should be: the cost of a new car, the estimated miles driven per year, the estimated gas price, the efficiency in miles per gallon, the estimated resale value after 5 years. Compute the total cost of owning the car for five years.",
     "dafny": {
-      "method_signature": "hybrid_car_cost(new_car_cost: real, miles_per_year: real, gas_price: real, mpg: real, resale_value: real) returns (total_cost: real)",
+      "method_signature": "p_2_10_hybrid_car_cost(new_car_cost: real, miles_per_year: real, gas_price: real, mpg: real, resale_value: real) returns (total_cost: real)",
       "requires": [
         "0.0 < mpg"
       ],
