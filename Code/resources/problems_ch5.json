@@ -25,10 +25,10 @@
     }
   },
   {
-    "name": "p5_2_a_allTheSame",
+    "name": "p5_2_a_all_the_same",
     "nat_lang_statement": "Write a method returning true if the arguments are all the same.",
     "dafny": {
-      "method_signature": "p5_2_a_allTheSame(x: real, y: real, z: real) returns (allSame: bool)",
+      "method_signature": "p5_2_a_all_the_same(x: real, y: real, z: real) returns (allSame: bool)",
       "requires": [],
       "ensures": [
         "allSame == (x == y && y == z)"
@@ -37,10 +37,10 @@
     }
   },
   {
-    "name": "p5_2_b_allDifferent",
+    "name": "p5_2_b_all_different",
     "nat_lang_statement": "Write a method returning true if the arguments are all different.",
     "dafny": {
-      "method_signature": "p5_2_b_allDifferent(x: real, y: real, z: real) returns (allDiff: bool)",
+      "method_signature": "p5_2_b_all_different(x: real, y: real, z: real) returns (allDiff: bool)",
       "requires": [],
       "ensures": [
         "allDiff == (x != y && y != z && x != z)"
@@ -61,10 +61,10 @@
     }
   },
   {
-    "name": "p5_3_firstDigit",
+    "name": "p5_3_first_digit",
     "nat_lang_statement": "Write a method returning the first digit of the argument.",
     "dafny": {
-      "method_signature": "p5_3_firstDigit(n: int) returns (first: int)",
+      "method_signature": "p5_3_first_digit(n: int) returns (first: int)",
       "requires": [
         "0 <= n"
       ],
@@ -106,10 +106,10 @@
     }
   },
   {
-    "name": "p5_6_countVowels",
+    "name": "p5_6_count_vowels",
     "nat_lang_statement": "Write a method that returns the count of all vowels in a string. Vowels are the letters a, e, i, o, and u, and their uppercase variants.",
     "dafny": {
-      "method_signature": "p5_6_countVowels(str: string) returns (vowelCount: int)",
+      "method_signature": "p5_6_count_vowels(str: string) returns (vowelCount: int)",
       "requires": [],
       "ensures": [
         "vowelCount >= 0",
@@ -121,10 +121,10 @@
     }
   },
   {
-    "name": "p5_7_countWords",
+    "name": "p5_7_count_words",
     "nat_lang_statement": "Write a method that returns the count of all words in a string. Words are separated by spaces. For example, countWords(\"Mary had a little lamb\") should return 5.",
     "dafny": {
-      "method_signature": "p5_7_countWords(str: string) returns (wordCount: int)",
+      "method_signature": "p5_7_count_words(str: string) returns (wordCount: int)",
       "requires": [],
       "ensures": [
         "wordCount >= 0",
@@ -138,7 +138,7 @@
     "name": "p5_8_scramble",
     "nat_lang_statement": "Write a method that constructs a scrambled version of string, randomly flipping two characters other than the first and last ones.",
     "dafny": {
-      "method_signature": "p5_8_word_scramble(word: string) returns (scrambled: string)",
+      "method_signature": "p5_8_scramble(word: string) returns (scrambled: string)",
       "requires": [
         "1 <= |word|"
       ],
@@ -152,10 +152,10 @@
     }
   },
   {
-    "name": "p5_9_sphereVolume",
+    "name": "p5_9_sphere_volume",
     "nat_lang_statement": "Write a method that computes the volume of a sphere given its radius.",
     "dafny": {
-      "method_signature": "p5_9_sphereVolume(r: real) returns (volume: real)",
+      "method_signature": "p5_9_sphere_volume(r: real) returns (volume: real)",
       "requires": [],
       "ensures": [
         "volume == (4.0 / 3.0) * 3.14159 * r * r * r"
@@ -164,10 +164,10 @@
     }
   },
   {
-    "name": "p5_9_sphereSurface",
+    "name": "p5_9_sphere_surface",
     "nat_lang_statement": "Write a method that computes the surface of a sphere given its radius.",
     "dafny": {
-      "method_signature": "p5_9_sphereSurface(r: real) returns (surface: real)",
+      "method_signature": "p5_9_sphere_surface(r: real) returns (surface: real)",
       "requires": [],
       "ensures": [
         "surface == 4.0 * 3.14159 * r * r"
@@ -176,10 +176,10 @@
     }
   },
   {
-    "name": "p5_9_cylinderVolume",
+    "name": "p5_9_cylinder_volume",
     "nat_lang_statement": "Write a method that computes the volume of a cylinder with a circular base, given radius and height.",
     "dafny": {
-      "method_signature": "p5_9_cylinderVolume(r: real, h: real) returns (volume: real)",
+      "method_signature": "p5_9_cylinder_volume(r: real, h: real) returns (volume: real)",
       "requires": [],
       "ensures": [
         "volume == 3.14159 * r * r * h"
@@ -188,10 +188,10 @@
     }
   },
   {
-    "name": "p5_9_cylinderSurface",
+    "name": "p5_9_cylinder_surface",
     "nat_lang_statement": "Write a method that computes the surface of a cylinder with a circular base, given radius and height.",
     "dafny": {
-      "method_signature": "p5_9_cylinderSurface(r: real, h: real) returns (surface: real)",
+      "method_signature": "p5_9_cylinder_surface(r: real, h: real) returns (surface: real)",
       "requires": [],
       "ensures": [
         "surface == 2.0 * 3.14159 * r * h + 2 * 3.14159 * r * r"
@@ -200,10 +200,10 @@
     }
   },
   {
-    "name": "p5_9_coneVolume",
+    "name": "p5_9_cone_volume",
     "nat_lang_statement": "Write a method that computes the volume of a cone with a circular base, given radius and height.",
     "dafny": {
-      "method_signature": "p5_9_coneVolume(r: real, h: real) returns (volume: real)",
+      "method_signature": "p5_9_cone_volume(r: real, h: real) returns (volume: real)",
       "requires": [],
       "ensures": [
         "volume == (1.0 / 3.0) * 3.14159 * r * r * h"
@@ -212,10 +212,10 @@
     }
   },
   {
-    "name": "p5_9_coneSurface",
+    "name": "p5_9_cone_surface",
     "nat_lang_statement": "Write a method that computes the surface area of a cone with a circular base with a residual error less than 0.01, given radius and height.",
     "dafny": {
-      "method_signature": "p5_9_coneSurface(r: real, h: real) returns (surface: real)",
+      "method_signature": "p5_9_cone_surface(r: real, h: real) returns (surface: real)",
       "requires": [],
       "ensures": [
         "-0.01 < (((surface / (3.14159 * r)) - r) * ((surface / (3.14159 * r)) - r)) - ((h * h) + (r * r)) < 0.01"
