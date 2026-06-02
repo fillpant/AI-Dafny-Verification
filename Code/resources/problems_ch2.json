@@ -40,10 +40,10 @@
     }
   },
   {
-    "name": "p_2_4_1_sum",
+    "name": "p_2_4_a_sum",
     "nat_lang_statement": "Write a method that takes two integers and then returns the sum.",
     "dafny": {
-      "method_signature": "p_2_4_1_sum(x: int, y: int) returns (result: int)",
+      "method_signature": "p_2_4_a_sum(x: int, y: int) returns (result: int)",
       "requires": [],
       "ensures": [
         "result == x + y"
@@ -52,10 +52,10 @@
     }
   },
   {
-    "name": "p_2_4_2_difference",
+    "name": "p_2_4_b_difference",
     "nat_lang_statement": "Write a method that takes two integers and then returns the difference.",
     "dafny": {
-      "method_signature": "p_2_4_2_difference(x: int, y: int) returns (result: int)",
+      "method_signature": "p_2_4_b_difference(x: int, y: int) returns (result: int)",
       "requires": [],
       "ensures": [
         "result == x - y"
@@ -64,10 +64,10 @@
     }
   },
   {
-    "name": "p_2_4_3_product",
+    "name": "p_2_4_c_product",
     "nat_lang_statement": "Write a method that takes two integers and then returns the product.",
     "dafny": {
-      "method_signature": "p_2_4_3_product(x: int, y: int) returns (result: int)",
+      "method_signature": "p_2_4_c_product(x: int, y: int) returns (result: int)",
       "requires": [],
       "ensures": [
         "result == x * y"
@@ -76,10 +76,10 @@
     }
   },
   {
-    "name": "p_2_4_4_avarage",
+    "name": "p_2_4_d_avarage",
     "nat_lang_statement": "Write a method that takes two integers and then returns the average.",
     "dafny": {
-      "method_signature": "p_2_4_4_avarage(x: int, y: int) returns (result: real)",
+      "method_signature": "p_2_4_d_avarage(x: int, y: int) returns (result: real)",
       "requires": [],
       "ensures": [
         "result == (x + y) as real / 2.0"
@@ -88,10 +88,10 @@
     }
   },
   {
-    "name": "p_2_4_5_distance",
+    "name": "p_2_4_e_distance",
     "nat_lang_statement": "Write a method that takes two integers and then returns the distance (absolute value of the difference).",
     "dafny": {
-      "method_signature": "p_2_4_5_distance(x: int, y: int) returns (result: int)",
+      "method_signature": "p_2_4_e_distance(x: int, y: int) returns (result: int)",
       "requires": [],
       "ensures": [
         "result >= 0",
@@ -101,10 +101,10 @@
     }
   },
   {
-    "name": "p_2_4_6_max",
+    "name": "p_2_4_f_max",
     "nat_lang_statement": "Write a method that takes two integers and then returns the maximum (the larger of the two).",
     "dafny": {
-      "method_signature": "p_2_4_6_max(x: int, y: int) returns (result: int)",
+      "method_signature": "p_2_4_f_max(x: int, y: int) returns (result: int)",
       "requires": [],
       "ensures": [
         "result == x || result == y",
@@ -114,10 +114,10 @@
     }
   },
   {
-    "name": "p_2_4_7_min",
+    "name": "p_2_4_g_min",
     "nat_lang_statement": "Write a method that takes two integers and then returns the minimum (the smaller of the two).",
     "dafny": {
-      "method_signature": "p_2_4_7_min(x: int, y: int) returns (result: int)",
+      "method_signature": "p_2_4_g_min(x: int, y: int) returns (result: int)",
       "requires": [],
       "ensures": [
         "result == x || result == y",
