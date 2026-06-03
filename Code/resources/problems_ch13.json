@@ -113,5 +113,33 @@
       ],
       "functional_code": "function sum_array(inputs: seq<int>): int\n  ensures sum_array(inputs) == (if |inputs| == 0 then 0 else inputs[0] + sum_array(inputs[1..]))\n{\n  if |inputs| == 0 then 0\n  else inputs[0] + sum_array(inputs[1..])\n}"
     }
+  },
+  {
+    "name": "p_13_10_recursive_area_polygon_seq",
+    "nat_lang_statement": "Write a recursive method that takes an array of points of a polygon and returns its area. Cut off a triangle and use the fact that a triangle with corners (x1, y1), (x2, y2), (x3, y3) has area (abs(x1y2 + x2y3 + x3y1 - y1x2 - y2x3 - y3x1)) / 2.",
+    "dafny": {
+      "method_signature": "p_13_10_recursive_area_polygon_seq(points: seq<(real, real)>) returns (area: real)",
+      "requires": [
+        "|points| >= 3"
+      ],
+      "ensures": [
+        "area == polygon_area(points)"
+      ],
+      "functional_code": "function polygon_area(points: seq<(real, real)>): real\n  decreases |points|\n  requires |points| >= 3\n  ensures polygon_area(points) >= 0.0\n{\n  if |points| == 3 then \n    var (x1, y1) := points[0];\n    var (x2, y2) := points[1];\n    var (x3, y3) := points[2];\n    var sign : real := x1 * (y2 - y3) + x2 * (y3 - y1) + x3 * (y1 - y2);\n    if sign < 0.0 then -sign / 2.0 else sign / 2.0 as real \n  else \n    var (x1, y1) := points[0];\n    var (x2, y2) := points[1];\n    var (x3, y3) := points[2];\n    var sign : real := x1 * (y2 - y3) + x2 * (y3 - y1) + x3 * (y1 - y2);\n    var triangle_area := if sign < 0.0 then -sign / 2.0 else sign / 2.0 as real;\n    triangle_area + polygon_area([points[0]] + points[2..])\n}"
+    }
+  },
+  {
+    "name": "p_13_10_recursive_area_polygon_array",
+    "nat_lang_statement": "Write a recursive method that takes an array of points of a polygon and returns its area. Cut off a triangle and use the fact that a triangle with corners (x1, y1), (x2, y2), (x3, y3) has area (abs(x1y2 + x2y3 + x3y1 - y1x2 - y2x3 - y3x1)) / 2.",
+    "dafny": {
+      "method_signature": "p_13_10_recursive_area_polygon_array(points: array<(real, real)>) returns (area: real)",
+      "requires": [
+        "points.Length >= 3"
+      ],
+      "ensures": [
+        "area == polygon_area(points[..])"
+      ],
+      "functional_code": "function polygon_area(points: seq<(real, real)>): real\n  decreases |points|\n  requires |points| >= 3\n  ensures polygon_area(points) >= 0.0\n{\n  if |points| == 3 then \n    var (x1, y1) := points[0];\n    var (x2, y2) := points[1];\n    var (x3, y3) := points[2];\n    var sign : real := x1 * (y2 - y3) + x2 * (y3 - y1) + x3 * (y1 - y2);\n    if sign < 0.0 then -sign / 2.0 else sign / 2.0 as real \n  else \n    var (x1, y1) := points[0];\n    var (x2, y2) := points[1];\n    var (x3, y3) := points[2];\n    var sign : real := x1 * (y2 - y3) + x2 * (y3 - y1) + x3 * (y1 - y2);\n    var triangle_area := if sign < 0.0 then -sign / 2.0 else sign / 2.0 as real;\n    triangle_area + polygon_area([points[0]] + points[2..])\n}"
+    }
   }
 ]
