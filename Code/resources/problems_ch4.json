@@ -270,11 +270,9 @@
       "method_signature": "p_4_3_d_count_vowels(s: string) returns (count: int)",
       "requires": [],
       "ensures": [
-        "count >= 0",
-        "forall c :: c in s && c in ['a','e','i','o','u','A','E','I','O','U'] ==> count >= 1",
-        "forall c :: c in s ==> c !in ['a','e','i','o','u','A','E','I','O','U'] ==> count == 0"
+        "ensures count == count_vowels(s) ",
       ],
-      "functional_code": null
+      "functional_code": "function count_vowels(s: string): int {\n  if s == "" then 0\n  else if s[0] in ['a','e','i','o','u','A','E','I','O','U'] then count_vowels(s[1..]) + 1\n  else count_vowels(s[1..])\n}"
     }
   },
   {
