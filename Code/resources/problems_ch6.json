@@ -1,9 +1,9 @@
 [
   {
-    "name": "p_6_1_a_process_array_even_indexed",
+    "name": "p_6_1_a_process_array_even_indexed_seq",
     "nat_lang_statement": "Write a method that takes an array of ten integers and then returns every element at an even index.",
     "dafny": {
-      "method_signature": "p_6_1_a_process_array_even_indexed(inputs: seq<int>) returns (even_indexed: seq<int>)",
+      "method_signature": "p_6_1_a_process_array_even_indexed_seq(inputs: seq<int>) returns (even_indexed: seq<int>)",
       "requires": [
         "|inputs| == 10"
       ],
@@ -14,24 +14,52 @@
     }
   },
   {
-    "name": "p_6_1_b_process_array_every_even_element",
-    "nat_lang_statement": "Write a method that takes an array of ten integers and then returns every even element.",
+    "name": "p_6_1_a_process_array_even_indexed_array",
+    "nat_lang_statement": "Write a method that takes an array of ten integers and then returns every element at an even index.",
     "dafny": {
-      "method_signature": "p_6_1_b_process_array_every_even_element(inputs: seq<int>) returns (even_elements: seq<int>)",
+      "method_signature": "p_6_1_a_process_array_even_indexed_array(inputs: array<int>) returns (even_indexed: array<int>)",
       "requires": [
-        "|inputs| == 10"
+        "inputs.Length == 10"
       ],
       "ensures": [
-        "forall i :: 0 <= i < |inputs| ==> inputs[i] % 2 == 0 ==> exists j :: 0 <= j < |even_elements| && even_elements[j] == inputs[i]"
+        "even_indexed[..] == [inputs[0], inputs[2], inputs[4], inputs[6], inputs[8]]"
       ],
       "functional_code": null
     }
   },
   {
-    "name": "p_6_1_c_process_array_reverse_order",
+    "name": "p_6_1_b_process_array_every_even_element_seq",
+    "nat_lang_statement": "Write a method that takes an array of ten integers and then returns every even element.",
+    "dafny": {
+      "method_signature": "p_6_1_b_process_array_every_even_element_seq(inputs: seq<int>) returns (even_elements: seq<int>)",
+      "requires": [
+        "|inputs| == 10"
+      ],
+      "ensures": [
+        "even_elements == evens(inputs)"
+      ],
+      "functional_code": "function evens(inputs: seq<int>): seq<int>\n{\n  if inputs ==[] then []\n  else if inputs[0] % 2 == 0 then [inputs[0]] + evens(inputs[1..])\n  else evens(inputs[1..])\n}"
+    }
+  },
+  {
+    "name": "p_6_1_b_process_array_every_even_element_array",
+    "nat_lang_statement": "Write a method that takes an array of ten integers and then returns every even element.",
+    "dafny": {
+      "method_signature": "p_6_1_b_process_array_every_even_element_array(inputs: array<int>) returns (even_elements: array<int>)",
+      "requires": [
+        "inputs.Length == 10"
+      ],
+      "ensures": [
+        "even_elements == evens(inputs[..])"
+      ],
+      "functional_code": "function evens(inputs: seq<int>): seq<int>\n{\n  if inputs ==[] then []\n  else if inputs[0] % 2 == 0 then [inputs[0]] + evens(inputs[1..])\n  else evens(inputs[1..])\n}"
+    }
+  },
+  {
+    "name": "p_6_1_c_process_array_reverse_order_seq",
     "nat_lang_statement": "Write a method that takes an array of ten integers and then returns all elements in reverse order.",
     "dafny": {
-      "method_signature": "p_6_1_c_process_array_reverse_order(inputs: seq<int>) returns (reversed: seq<int>)",
+      "method_signature": "p_6_1_c_process_array_reverse_order_seq(inputs: seq<int>) returns (reversed: seq<int>)",
       "requires": [
         "|inputs| == 10"
       ],
@@ -43,10 +71,25 @@
     }
   },
   {
-    "name": "p_6_1_d_process_array_first_and_last",
+    "name": "p_6_1_c_process_array_reverse_order_array",
+    "nat_lang_statement": "Write a method that takes an array of ten integers and then returns all elements in reverse order.",
+    "dafny": {
+      "method_signature": "p_6_1_c_process_array_reverse_order_array(inputs: array<int>) returns (reversed: array<int>)",
+      "requires": [
+        "inputs.Length == 10"
+      ],
+      "ensures": [
+        "reversed.Length == inputs.Length",
+        "forall i :: 0 <= i < reversed.Length ==> reversed[i] == inputs[inputs.Length - 1 - i]"
+      ],
+      "functional_code": null
+    }
+  },
+  {
+    "name": "p_6_1_d_process_array_first_and_last_seq",
     "nat_lang_statement": "Write a method that takes an array of ten integers and then returns the first and last elements.",
     "dafny": {
-      "method_signature": "p_6_1_d_process_array_first_and_last(inputs: seq<int>) returns (first_and_last: seq<int>)",
+      "method_signature": "p_6_1_d_process_array_first_and_last_seq(inputs: seq<int>) returns (first_and_last: seq<int>)",
       "requires": [
         "|inputs| == 10"
       ],
@@ -57,10 +100,24 @@
     }
   },
   {
-    "name": "p_6_2_a_swap_first_last",
+    "name": "p_6_1_d_process_array_first_and_last_array",
+    "nat_lang_statement": "Write a method that takes an array of ten integers and then returns the first and last elements.",
+    "dafny": {
+      "method_signature": "p_6_1_d_process_array_first_and_last_array(inputs: array<int>) returns (first_and_last: array<int>)",
+      "requires": [
+        "inputs.Length == 10"
+      ],
+      "ensures": [
+        "first_and_last[..] == [inputs[0], inputs[inputs.Length - 1]]"
+      ],
+      "functional_code": null
+    }
+  },
+  {
+    "name": "p_6_2_a_swap_first_last_seq",
     "nat_lang_statement": "Write a method to swap the first and last elements in an array.",
     "dafny": {
-      "method_signature": "p_6_2_a_swap_first_last(inputs: seq<int>) returns (result: seq<int>)",
+      "method_signature": "p_6_2_a_swap_first_last_seq(inputs: seq<int>) returns (result: seq<int>)",
       "requires": [
         "|inputs| >= 2"
       ],
@@ -74,10 +131,27 @@
     }
   },
   {
-    "name": "p_6_2_b_shift_right",
+    "name": "p_6_2_a_swap_first_last_array",
+    "nat_lang_statement": "Write a method to swap the first and last elements in an array.",
+    "dafny": {
+      "method_signature": "p_6_2_a_swap_first_last_array(inputs: array<int>) returns (result: array<int>)",
+      "requires": [
+        "inputs.Length >= 2"
+      ],
+      "ensures": [
+        "result.Length == inputs.Length",
+        "result[0] == inputs[inputs.Length - 1]",
+        "result[inputs.Length - 1] == inputs[0]",
+        "forall i :: 1 <= i < inputs.Length - 1 ==> result[i] == inputs[i]"
+      ],
+      "functional_code": null
+    }
+  },
+  {
+    "name": "p_6_2_b_shift_right_seq",
     "nat_lang_statement": "Write a method to shift all elements of an array by one to the right and move the last element into the first position. For example, [1, 4, 9, 16, 25] would be transformed into [25, 1, 4, 9, 16].",
     "dafny": {
-      "method_signature": "p_6_2_b_shift_right(inputs: seq<int>) returns (result: seq<int>)",
+      "method_signature": "p_6_2_b_shift_right_seq(inputs: seq<int>) returns (result: seq<int>)",
       "requires": [
         "|inputs| >= 1"
       ],
@@ -90,10 +164,26 @@
     }
   },
   {
-    "name": "p_6_2_c_replace_even_with_zero",
+    "name": "p_6_2_b_shift_right_array",
+    "nat_lang_statement": "Write a method to shift all elements of an array by one to the right and move the last element into the first position. For example, [1, 4, 9, 16, 25] would be transformed into [25, 1, 4, 9, 16].",
+    "dafny": {
+      "method_signature": "p_6_2_b_shift_right_array(inputs: array<int>) returns (result: array<int>)",
+      "requires": [
+        "inputs.Length >= 1"
+      ],
+      "ensures": [
+        "result.Length == inputs.Length",
+        "result[0] == inputs[inputs.Length - 1]",
+        "forall i :: 1 <= i < inputs.Length ==> result[i] == inputs[i - 1]"
+      ],
+      "functional_code": null
+    }
+  },
+  {
+    "name": "p_6_2_c_replace_even_with_zero_seq",
     "nat_lang_statement": "Write a method to replace all even elements in an array with 0.",
     "dafny": {
-      "method_signature": "p_6_2_c_replace_even_with_zero(inputs: seq<int>) returns (result: seq<int>)",
+      "method_signature": "p_6_2_c_replace_even_with_zero_seq(inputs: seq<int>) returns (result: seq<int>)",
       "requires": [],
       "ensures": [
         "|result| == |inputs|",
@@ -103,10 +193,23 @@
     }
   },
   {
-    "name": "p_6_2_d_replace_with_larger_neighbor",
+    "name": "p_6_2_c_replace_even_with_zero_array",
+    "nat_lang_statement": "Write a method to replace all even elements in an array with 0.",
+    "dafny": {
+      "method_signature": "p_6_2_c_replace_even_with_zero_array(inputs: array<int>) returns (result: array<int>)",
+      "requires": [],
+      "ensures": [
+        "result.Length == inputs.Length",
+        "forall i :: 0 <= i < inputs.Length ==> (inputs[i] % 2 == 0 ==> result[i] == 0) && (inputs[i] % 2 != 0 ==> result[i] == inputs[i])"
+      ],
+      "functional_code": null
+    }
+  },
+  {
+    "name": "p_6_2_d_replace_with_larger_neighbor_seq",
     "nat_lang_statement": "Write a method to replace each element of an array, except the first and last, by the larger of its two neighbors.",
     "dafny": {
-      "method_signature": "p_6_2_d_replace_with_larger_neighbor(inputs: seq<int>) returns (result: seq<int>)",
+      "method_signature": "p_6_2_d_replace_with_larger_neighbor_seq(inputs: seq<int>) returns (result: seq<int>)",
       "requires": [
         "|inputs| >= 3"
       ],
@@ -119,11 +222,28 @@
       "functional_code": null
     }
   },
+ {
+    "name": "p_6_2_d_replace_with_larger_neighbor_array",
+    "nat_lang_statement": "Write a method to replace each element of an array, except the first and last, by the larger of its two neighbors.",
+    "dafny": {
+      "method_signature": "p_6_2_d_replace_with_larger_neighbor_array(inputs: array<int>) returns (result: array<int>)",
+      "requires": [
+        "inputs.Length >= 3"
+      ],
+      "ensures": [
+        "result.Length == inputs.Length",
+        "result[0] == inputs[0]",
+        "result[inputs.Length - 1] == inputs[inputs.Length - 1]",
+        "forall i :: 1 <= i < inputs.Length - 1 ==> result[i] == if inputs[i - 1] >= inputs[i + 1] then inputs[i - 1] else inputs[i + 1]"
+      ],
+      "functional_code": null
+    }
+  },
   {
-    "name": "p_6_2_e_remove_middle",
+    "name": "p_6_2_e_remove_middle_seq",
     "nat_lang_statement": "Write a method to remove the middle element of an array if the array length is odd, or the middle two elements if the length is even.",
     "dafny": {
-      "method_signature": "p_6_2_e_remove_middle(inputs: seq<int>) returns (result: seq<int>)",
+      "method_signature": "p_6_2_e_remove_middle_seq(inputs: seq<int>) returns (result: seq<int>)",
       "requires": [
         "|inputs| >= 1"
       ],
@@ -136,39 +256,80 @@
     }
   },
   {
-    "name": "p_6_2_f_move_even_to_front",
-    "nat_lang_statement": "Write a method to move all even elements in an array to the front, otherwise preserving the order of the elements.",
+    "name": "p_6_2_e_remove_middle_array",
+    "nat_lang_statement": "Write a method to remove the middle element of an array if the array length is odd, or the middle two elements if the length is even.",
     "dafny": {
-      "method_signature": "p_6_2_f_move_even_to_front(inputs: seq<int>) returns (result: seq<int>)",
-      "requires": [],
+      "method_signature": "p_6_2_e_remove_middle_array(inputs: array<int>) returns (result: array<int>)",
+      "requires": [
+        "inputs.Length >= 1"
+      ],
       "ensures": [
-        "|result| == |inputs|",
-        "forall i, j :: 0 <= i < j < |result| && result[i] % 2 == 0 && result[j] % 2 != 0",
-        "forall i :: 0 <= i < |inputs| ==> exists j :: 0 <= j < |result| && inputs[i] == result[j]"
+        "result.Length == if inputs.Length % 2 == 1 then inputs.Length - 1 else inputs.Length - 2",
+        "inputs.Length % 2 == 1 ==> forall i :: 0 <= i < inputs.Length / 2 ==> result[i] == inputs[i] && forall j :: inputs.Length / 2 <= j < result.Length ==> result[j] == inputs[j + 1]",
+        "inputs.Length % 2 == 0 ==> forall i :: 0 <= i < inputs.Length / 2 - 1 ==> result[i] == inputs[i] && forall j :: inputs.Length / 2 - 1 <= j < result.Length ==> result[j] == inputs[j + 2]"
       ],
       "functional_code": null
     }
   },
   {
-    "name": "p_6_2_g_second_largest",
+    "name": "p_6_2_f_move_even_to_front_seq",
+    "nat_lang_statement": "Write a method to move all even elements in an array to the front, otherwise preserving the order of the elements.",
+    "dafny": {
+      "method_signature": "p_6_2_f_move_even_to_front_seq(inputs: seq<int>) returns (result: seq<int>)",
+      "requires": [],
+      "ensures": [
+        "result == evens(inputs) + odds(inputs)"
+      ],
+      "functional_code": "function evens(s: seq<int>): seq<int>\n{\n  if |s| == 0 then []\n  else if s[0] % 2 == 0\n       then [s[0]] + evens(s[1..])\n       else evens(s[1..])\n}\n\nfunction odds(s: seq<int>): seq<int>\n{\n  if |s| == 0 then []\n  else if s[0] % 2 != 0\n       then [s[0]] + odds(s[1..])\n       else odds(s[1..])\n}"
+    }
+  },
+  {
+    "name": "p_6_2_f_move_even_to_front_array",
+    "nat_lang_statement": "Write a method to move all even elements in an array to the front, otherwise preserving the order of the elements.",
+    "dafny": {
+      "method_signature": "p_6_2_f_move_even_to_front_array(inputs: array<int>) returns (result: array<int>)",
+      "requires": [],
+      "ensures": [
+        "result[..] == evens(inputs[..]) + odds(inputs[..])"
+      ],
+      "functional_code": "function evens(s: seq<int>): seq<int>\n{\n  if |s| == 0 then []\n  else if s[0] % 2 == 0\n       then [s[0]] + evens(s[1..])\n       else evens(s[1..])\n}\n\nfunction odds(s: seq<int>): seq<int>\n{\n  if |s| == 0 then []\n  else if s[0] % 2 != 0\n       then [s[0]] + odds(s[1..])\n       else odds(s[1..])\n}"
+    }
+  },
+  {
+    "name": "p_6_2_g_second_largest_seq",
     "nat_lang_statement": "Write a method to return the second-largest element in an array.",
     "dafny": {
-      "method_signature": "p_6_2_g_second_largest(inputs: seq<int>) returns (second_largest: int)",
+      "method_signature": "p_6_2_g_second_largest_seq(inputs: seq<int>) returns (second_largest: int)",
       "requires": [
         "|inputs| >= 2"
       ],
       "ensures": [
-        "second_largest < find_largest(inputs)",
+        "second_largest <= find_largest(inputs)",
         "forall x :: x in inputs ==> x < find_largest(inputs) ==> x <= second_largest"
       ],
       "functional_code": "function find_largest(inputs: seq<int>): (ret: int)\n  requires |inputs| >= 1\n  ensures forall x :: x in inputs ==> x <= ret\n{\n  if |inputs| == 1 then inputs[0]\n  else \n    assert 2 <= |inputs|;\n    var rest_largest := find_largest(inputs[1..]);\n    var ret: int := if inputs[0] >= rest_largest then inputs[0] else rest_largest;\n    assert inputs == [inputs[0]] + inputs[1..]; \n    ret \n} "
     }
   },
   {
-    "name": "p_6_2_h_is_sorted",
+    "name": "p_6_2_g_second_largest_array",
+    "nat_lang_statement": "Write a method to return the second-largest element in an array.",
+    "dafny": {
+      "method_signature": "p_6_2_g_second_largest_array(inputs: array<int>) returns (second_largest: int)",
+      "requires": [
+        "inputs.Length >= 2"
+      ],
+      "ensures": [
+        "second_largest <= find_largest(inputs[..])",
+        "forall x :: x in inputs[..] ==> x < find_largest(inputs[..]) ==> x <= second_largest"
+      ],
+      "functional_code": "function find_largest(inputs: seq<int>): (ret: int)\n  requires |inputs| >= 1\n  ensures forall x :: x in inputs ==> x <= ret\n{\n  if |inputs| == 1 then inputs[0]\n  else \n    assert 2 <= |inputs|;\n    var rest_largest := find_largest(inputs[1..]);\n    var ret: int := if inputs[0] >= rest_largest then inputs[0] else rest_largest;\n    assert inputs == [inputs[0]] + inputs[1..]; \n    ret \n} "
+    }
+  },
+  {
+    "name": "p_6_2_h_is_sorted_seq",
     "nat_lang_statement": "Write a method to return true if the given array is currently sorted in increasing order.",
     "dafny": {
-      "method_signature": "p_6_2_h_is_sorted(inputs: seq<int>) returns (is_sorted: bool)",
+      "method_signature": "p_6_2_h_is_sorted_seq(inputs: seq<int>) returns (is_sorted: bool)",
       "requires": [],
       "ensures": [
         "is_sorted == (forall i :: 0 <= i < |inputs| - 1 ==> inputs[i] <= inputs[i + 1])"
@@ -177,25 +338,50 @@
     }
   },
   {
-    "name": "p_6_2_i_has_adjacent_duplicates",
+    "name": "p_6_2_h_is_sorted_array",
+    "nat_lang_statement": "Write a method to return true if the given array is currently sorted in increasing order.",
+    "dafny": {
+      "method_signature": "p_6_2_h_is_sorted_array(inputs: array<int>) returns (is_sorted: bool)",
+      "requires": [],
+      "ensures": [
+        "is_sorted == (forall i :: 0 <= i < inputs.Length - 1 ==> inputs[i] <= inputs[i + 1])"
+      ],
+      "functional_code": null
+    }
+  },
+  {
+    "name": "p_6_2_i_has_adjacent_duplicates_seq",
     "nat_lang_statement": "Write a method to return true if the given array contains two adjacent duplicate elements.",
     "dafny": {
-      "method_signature": "p_6_2_i_has_adjacent_duplicates(inputs: seq<int>) returns (has_duplicates: bool)",
+      "method_signature": "p_6_2_i_has_adjacent_duplicates_seq(inputs: seq<int>) returns (has_duplicates: bool)",
       "requires": [
         "|inputs| >= 2"
       ],
       "ensures": [
         "has_duplicates == (exists i :: 0 <= i < |inputs| - 1 && inputs[i] == inputs[i + 1])",
-        "1 <= count_adajacent_duplicates(inputs, 0) ==> has_duplicates == true"
       ],
-      "functional_code": "function count_adajacent_duplicates(inputs: seq<int>, i: int): int\n  requires 0 <= i < |inputs| - 1\n  decreases |inputs| - i\n{\n  if i + 1 == |inputs| - 1 then if inputs[i] == inputs[i + 1] then 1 else 0\n  else if inputs[i] == inputs[i + 1] then 1 + count_adajacent_duplicates(inputs, i + 1)\n  else count_adajacent_duplicates(inputs, i + 1)\n} "
+      "functional_code": null
     }
   },
   {
-    "name": "p_6_2_j_has_duplicates",
+    "name": "p_6_2_i_has_adjacent_duplicates_array",
+    "nat_lang_statement": "Write a method to return true if the given array contains two adjacent duplicate elements.",
+    "dafny": {
+      "method_signature": "p_6_2_i_has_adjacent_duplicates_array(inputs: array<int>) returns (has_duplicates: bool)",
+      "requires": [
+        "inputs.Length >= 2"
+      ],
+      "ensures": [
+        "has_duplicates == (exists i :: 0 <= i < inputs.Length - 1 && inputs[i] == inputs[i + 1])",
+      ],
+      "functional_code": null
+    }
+  },
+  {
+    "name": "p_6_2_j_has_duplicates_seq",
     "nat_lang_statement": "Write a method to return true if the given array contains duplicate elements (which need not be adjacent).",
     "dafny": {
-      "method_signature": "p_6_2_j_has_duplicates(inputs: seq<int>) returns (has_duplicates: bool)",
+      "method_signature": "p_6_2_j_has_duplicates_seq(inputs: seq<int>) returns (has_duplicates: bool)",
       "requires": [
         "|inputs| >= 2"
       ],
@@ -206,10 +392,24 @@
     }
   },
   {
-    "name": "p_6_4_sum_without_smallest",
+    "name": "p_6_2_j_has_duplicates_array",
+    "nat_lang_statement": "Write a method to return true if the given array contains duplicate elements (which need not be adjacent).",
+    "dafny": {
+      "method_signature": "p_6_2_j_has_duplicates_array(inputs: array<int>) returns (has_duplicates: bool)",
+      "requires": [
+        "inputs.Length >= 2"
+      ],
+      "ensures": [
+        "has_duplicates == (exists i, j :: 0 <= i < j < inputs.Length && inputs[i] == inputs[j])"
+      ],
+      "functional_code": null
+    }
+  },
+  {
+    "name": "p_6_4_sum_without_smallest_seq",
     "nat_lang_statement": "Write a method that computes the sum of an array of values, except for the smallest one, in a single loop. In the loop, update the sum and the smallest value. After the loop, return the difference.",
     "dafny": {
-      "method_signature": "p_6_4_sum_without_smallest(inputs: seq<int>) returns (sum: int)",
+      "method_signature": "p_6_4_sum_without_smallest_seq(inputs: seq<int>) returns (sum: int)",
       "requires": [
         "|inputs| >= 1"
       ],
@@ -220,10 +420,24 @@
     }
   },
   {
-    "name": "p_6_6_alternating_sum",
+    "name": "p_6_4_sum_without_smallest_array",
+    "nat_lang_statement": "Write a method that computes the sum of an array of values, except for the smallest one, in a single loop. In the loop, update the sum and the smallest value. After the loop, return the difference.",
+    "dafny": {
+      "method_signature": "p_6_4_sum_without_smallest_array(inputs: array<int>) returns (sum: int)",
+      "requires": [
+        "inputs.Length >= 1"
+      ],
+      "ensures": [
+        "sum == sum_array(inputs[..]) - find_smallest(inputs[..])"
+      ],
+      "functional_code": "function find_smallest(inputs: seq<int>): (ret: int)\n  requires |inputs| >= 1\n  ensures forall x :: x in inputs ==> ret <= x \n{\n  if |inputs| == 1 then inputs[0]\n  else \n    assert 2 <= |inputs|;\n    var rest_smallest := find_smallest(inputs[1..]);\n    var ret: int := if inputs[0] <= rest_smallest then inputs[0] else rest_smallest;\n    assert inputs == [inputs[0]] + inputs[1..]; \n    assert ret == if inputs[0] <= rest_smallest then inputs[0] else rest_smallest;\n    ret \n}\n\nfunction sum_array(inputs: seq<int>): int\n{\n  if |inputs| == 0 then 0\n  else  inputs[0] + sum_array(inputs[1..])\n}"
+    }
+  },
+  {
+    "name": "p_6_6_alternating_sum_seq",
     "nat_lang_statement": "Compute the alternating sum of all elements in an array. For example, if your method reads the input [1, 4, 9, 16, 9, 7, 4, 9, 11] then it computes 1 – 4 + 9 – 16 + 9 – 7 + 4 – 9 + 11 = –2.",
     "dafny": {
-      "method_signature": "p_6_6_alternating_sum(inputs: seq<int>) returns (alt_sum: int)",
+      "method_signature": "p_6_6_alternating_sum_seq(inputs: seq<int>) returns (alt_sum: int)",
       "requires": [],
       "ensures": [
         "alt_sum == sum_array(inputs, 1)"
@@ -232,10 +446,22 @@
     }
   },
   {
-    "name": "p_6_7_reverse_array",
+    "name": "p_6_6_alternating_sum_array",
+    "nat_lang_statement": "Compute the alternating sum of all elements in an array. For example, if your method reads the input [1, 4, 9, 16, 9, 7, 4, 9, 11] then it computes 1 – 4 + 9 – 16 + 9 – 7 + 4 – 9 + 11 = –2.",
+    "dafny": {
+      "method_signature": "p_6_6_alternating_sum_array(inputs: array<int>) returns (alt_sum: int)",
+      "requires": [],
+      "ensures": [
+        "alt_sum == sum_array(inputs[..], 1)"
+      ],
+      "functional_code": "function sum_array(inputs: seq<int>, i: int): int\n{\n  if |inputs| == 0 then 0\n  else inputs[0] * i + sum_array(inputs[1..], i * -1)\n}"
+    }
+  },
+  {
+    "name": "p_6_7_reverse_array_seq",
     "nat_lang_statement": "Write a method that reverses the sequence of elements in an array. For example, if you call the method with the array [1, 4, 9, 16, 9, 7, 4, 9, 11] then the array is changed to [11, 9, 4, 7, 9, 16, 9, 4, 1].",
     "dafny": {
-      "method_signature": "p_6_7_reverse_array(inputs: seq<int>) returns (reversed: seq<int>)",
+      "method_signature": "p_6_7_reverse_array_seq(inputs: seq<int>) returns (reversed: seq<int>)",
       "requires": [],
       "ensures": [
         "|reversed| == |inputs|",
@@ -245,25 +471,62 @@
     }
   },
   {
-    "name": "p_6_9_arrays_equal",
-    "nat_lang_statement": "Write a method that checks whether two arrays have the same elements in the same order.",
+    "name": "p_6_7_reverse_array_array",
+    "nat_lang_statement": "Write a method that reverses the sequence of elements in an array. For example, if you call the method with the array [1, 4, 9, 16, 9, 7, 4, 9, 11] then the array is changed to [11, 9, 4, 7, 9, 16, 9, 4, 1].",
     "dafny": {
-      "method_signature": "p_6_9_arrays_equal(first: seq<int>, second: seq<int>) returns (areEqual: bool)",
+      "method_signature": "p_6_7_reverse_array_array(inputs: array<int>) returns (reversed: array<int>)",
       "requires": [],
       "ensures": [
-        "areEqual == (|first| == |second| && forall i :: 0 <= i < |first| ==> first[i] == second[i])"
+        "reversed.Length == inputs.Length",
+        "forall i :: 0 <= i < reversed.Length ==> reversed[i] == inputs[inputs.Length - 1 - i]"
       ],
       "functional_code": null
     }
   },
   {
-    "name": "p_6_10_same_set",
-    "nat_lang_statement": "Write a method that checks whether two arrays have the same elements in some order, ignoring duplicates.",
+    "name": "p_6_9_arrays_equal_seq",
+    "nat_lang_statement": "Write a method that checks whether two arrays have the same elements in the same order.",
     "dafny": {
-      "method_signature": "p_6_10_same_set(first: seq<int>, second: seq<int>) returns (areSameSet: bool)",
+      "method_signature": "p_6_9_arrays_equal_seq(first: seq<int>, second: seq<int>) returns (are_equal: bool)",
       "requires": [],
       "ensures": [
-        "areSameSet == (array_to_set(first) == array_to_set(second))"
+        "are_equal == (|first| == |second| && forall i :: 0 <= i < |first| ==> first[i] == second[i])"
+      ],
+      "functional_code": null
+    }
+  },
+  {
+    "name": "p_6_9_arrays_equal_array",
+    "nat_lang_statement": "Write a method that checks whether two arrays have the same elements in the same order.",
+    "dafny": {
+      "method_signature": "p_6_9_arrays_equal_array(first: array<int>, second: array<int>) returns (are_equal: bool)",
+      "requires": [],
+      "ensures": [
+        "are_equal == (first.Length == second.Length && forall i :: 0 <= i < first.Length ==> first[i] == second[i])"
+      ],
+      "functional_code": null
+    }
+  },
+  {
+    "name": "p_6_10_same_set_seq",
+    "nat_lang_statement": "Write a method that checks whether two arrays have the same elements in some order, ignoring duplicates.",
+    "dafny": {
+      "method_signature": "p_6_10_same_set_seq(first: seq<int>, second: seq<int>) returns (are_same_set: bool)",
+      "requires": [],
+      "ensures": [
+        "are_same_set == (array_to_set(first) == array_to_set(second))"
+      ],
+      "functional_code": "function array_to_set(arr: seq<int>): set<int>\n{\n  if |arr| == 0 then {}\n  else {arr[0]} + array_to_set(arr[1..])\n}"
+    }
+  },
+  {
+    "name": "p_6_10_same_set_array",
+    "nat_lang_statement": "Write a method that checks whether two arrays have the same elements in some order, ignoring duplicates.",
+    "dafny": {
+      "method_signature": "p_6_10_same_set_array(first: array<int>, second: array<int>) returns (are_same_set: bool)",
+      "requires": [],
+      "ensures": [
+        "are_same_set == (array_to_set(first[..]) == array_to_set(second[..]))"
       ],
       "functional_code": "function array_to_set(arr: seq<int>): set<int>\n{\n  if |arr| == 0 then {}\n  else {arr[0]} + array_to_set(arr[1..])\n}"
     }
