@@ -62,5 +62,33 @@
       ],
       "functional_code": null
     }
-  }
+  },
+  {
+    "name": "p_14_7_bubble_sort_seq",
+    "nat_lang_statement": "Write a method that implements the bubble sort algorithm to sort an array of integers.",
+    "dafny": {
+      "method_signature": "p_14_4_bubble_sort_seq(inputs: seq<int>) returns (sorted: seq<int>)",
+      "requires": [],
+      "ensures": [
+        "|inputs| == |sorted|",
+        "forall i, j :: 0 <= i < j < |inputs| ==> sorted[i] <= sorted[j]",
+        "forall i :: 0 <= i < |inputs| ==> exists j :: 0 <= j < |sorted| && inputs[i] == sorted[j]"
+      ],
+      "functional_code": null
+    }
+  },
+  {
+    "name": "p_14_7_bubble_sort_array",
+    "nat_lang_statement": "Write a method that implements the bubble sort algorithm to sort an array of integers.",
+    "dafny": {
+      "method_signature": "p_14_4_bubble_sort_array(inputs: array<int>) returns (sorted: array<int>)",
+      "requires": [],
+      "ensures": [
+        "inputs.Length == sorted.Length",
+        "forall i, j :: 0 <= i < j < inputs.Length ==> sorted[i] <= sorted[j]",
+        "forall i :: 0 <= i < inputs.Length ==> exists j :: 0 <= j < sorted.Length && inputs[i] == sorted[j]"
+      ],
+      "functional_code": null
+    }
+  },
 ]
