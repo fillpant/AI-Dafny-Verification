@@ -30,5 +30,37 @@
       ],
       "functional_code": null
     }
+  },
+  {
+    "name": "p_14_4_merge_sort_lexicographic_seq",
+    "nat_lang_statement": "Write a method that implements the merge sort algorithm to sort an array of strings in lexicographic order.",
+    "dafny": {
+      "method_signature": "p_14_4_merge_sort_lexicographic_seq(inputs: seq<string>) returns (sorted: seq<string>)",
+      "requires": [
+        "|inputs| >= 0"
+      ],
+      "ensures": [
+        "|inputs| == |sorted|",
+        "forall i, j :: 0 <= i < j < |inputs| ==> sorted[i] <= sorted[j]",
+        "forall i :: 0 <= i < |inputs| ==> exists j :: 0 <= j < |sorted| && inputs[i] == sorted[j]"
+      ],
+      "functional_code": null
+    }
+  },
+  {
+    "name": "p_14_4_merge_sort_lexicographic_array",
+    "nat_lang_statement": "Write a method that implements the merge sort algorithm to sort an array of strings in lexicographic order.",
+    "dafny": {
+      "method_signature": "p_14_4_merge_sort_lexicographic_array(inputs: array<string>) returns (sorted: array<string>)",
+      "requires": [
+        "inputs.Length >= 0"
+      ],
+      "ensures": [
+        "inputs.Length == sorted.Length",
+        "forall i, j :: 0 <= i < j < inputs.Length ==> sorted[i] <= sorted[j]",
+        "forall i :: 0 <= i < inputs.Length ==> exists j :: 0 <= j < sorted.Length && inputs[i] == sorted[j]"
+      ],
+      "functional_code": null
+    }
   }
 ]
