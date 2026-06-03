@@ -441,19 +441,5 @@
       ],
       "functional_code": null
     }
-  },
-  {
-    "name": "p_4_10_count_vowels",
-    "nat_lang_statement": "Write a method that reads a word and returns the number of vowels in the word.",
-    "dafny": {
-      "method_signature": "p_4_10_count_vowels(s: string) returns (count: int)",
-      "requires": [],
-      "ensures": [
-        "0 <= count",
-        "forall c :: c in s ==> c in ['a','e','i','o','u','A','E','I','O','U'] ==> count >= 1",
-        "forall c :: c in s ==> c !in ['a','e','i','o','u','A','E','I','O','U'] ==> count == 0"
-      ],
-      "functional_code": null
-    }
   }
 ]
