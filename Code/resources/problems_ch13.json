@@ -66,7 +66,7 @@
     "name": "p_13_8_recursive_largest_seq",
     "nat_lang_statement": "Write a recursive method that takes an array and returns the largest element in the array. Hint: Find the largest element in the subset containing all but the last element. Then compare that maximum to the value of the last element.",
     "dafny": {
-      "method_signature": "p_13_8_recursive_largest(inputs: seq<int>) returns (largest: int)",
+      "method_signature": "p_13_8_recursive_largest_seq(inputs: seq<int>) returns (largest: int)",
       "requires": [
           "|inputs| >= 1"
       ],
@@ -80,7 +80,7 @@
     "name": "p_13_8_recursive_largest_array",
     "nat_lang_statement": "Write a recursive method that takes an array and returns the largest element in the array. Hint: Find the largest element in the subset containing all but the last element. Then compare that maximum to the value of the last element.",
     "dafny": {
-      "method_signature": "p_13_8_recursive_largest(inputs: array<int>) returns (largest: int)",
+      "method_signature": "p_13_8_recursive_largest_array(inputs: array<int>) returns (largest: int)",
       "requires": [
           "inputs.Length >= 1"
       ],
@@ -88,6 +88,30 @@
         "largest == find_largest(inputs[..])"
       ],
       "functional_code": "function find_largest(inputs: seq<int>): int\n  requires |inputs| >= 1\n  ensures forall x :: x in inputs ==> find_largest(inputs) >= x\n{\n  if |inputs| == 1 then inputs[0]\n  else \n      assert inputs == [inputs[0]] + inputs[1..];\n      var sub_largest := find_largest(inputs[1..]) ;\n      if inputs[0] >= sub_largest then inputs[0] else sub_largest\n}"
+    }
+  },
+  {
+    "name": "p_13_9_recursive_sum_seq",
+    "nat_lang_statement": "Write a recursive method that takes an array and returns the sum of the values.",
+    "dafny": {
+      "method_signature": "p_13_9_recursive_sum_seq(inputs: seq<int>) returns (sum: int)",
+      "requires": [],
+      "ensures": [
+        "sum == sum_array(inputs)"
+      ],
+      "functional_code": "function sum_array(inputs: seq<int>): int\n  ensures sum_array(inputs) == (if |inputs| == 0 then 0 else inputs[0] + sum_array(inputs[1..]))\n{\n  if |inputs| == 0 then 0\n  else inputs[0] + sum_array(inputs[1..])\n}"
+    }
+  },
+  {
+    "name": "p_13_9_recursive_sum_array",
+    "nat_lang_statement": "Write a recursive method that takes an array and returns the sum of the values.",
+    "dafny": {
+      "method_signature": "p_13_9_recursive_sum_array(inputs: array<int>) returns (sum: int)",
+      "requires": [],
+      "ensures": [
+        "sum == sum_array(inputs[..])"
+      ],
+      "functional_code": "function sum_array(inputs: seq<int>): int\n  ensures sum_array(inputs) == (if |inputs| == 0 then 0 else inputs[0] + sum_array(inputs[1..]))\n{\n  if |inputs| == 0 then 0\n  else inputs[0] + sum_array(inputs[1..])\n}"
     }
   }
 ]
