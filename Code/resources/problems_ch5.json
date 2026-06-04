@@ -201,7 +201,9 @@
     "nat_lang_statement": "Write a method that computes the surface area of a cone with a circular base with a residual error less than 0.01, given radius and height.",
     "dafny": {
       "method_signature": "p_5_9_f_cone_surface(r: real, h: real) returns (surface: real)",
-      "requires": [],
+      "requires": [
+        "r > 0.0"
+      ],
       "ensures": [
         "-0.01 < (((surface / (3.14159 * r)) - r) * ((surface / (3.14159 * r)) - r)) - ((h * h) + (r * r)) < 0.01"
       ],
