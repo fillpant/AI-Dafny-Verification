@@ -100,7 +100,7 @@
       ],
       "ensures": [
         "|repeated_str| == n * |str|",
-        "forall i :: 0 <= i < n ==> repeated_str[i * |str| .. (i + 1) * |str| - 1 ] == str"
+        "forall i :: 0 <= i < n ==> repeated_str[i * |str| .. (i + 1) * |str| ] == str"
       ],
       "functional_code": null
     }
