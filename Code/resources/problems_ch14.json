@@ -4,13 +4,10 @@
     "nat_lang_statement": "Write a method that implements the selection sort algorithm to sort an array of integers in descending order.",
     "dafny": {
       "method_signature": "p_14_1_selection_sort_desc_seq(inputs: seq<int>) returns (sorted: seq<int>)",
-      "requires": [
-        "|inputs| >= 0"
-      ],
+      "requires": [],
       "ensures": [
-        "|inputs| == |sorted|",
-        "forall i, j :: 0 <= i < j < |inputs| ==> sorted[i] >= sorted[j]",
-        "What about permutation?"
+        "forall i, j :: 0 <= i < j < |sorted| ==> sorted[i] >= sorted[j]",
+        "multiset(inputs) == multiset(sorted)"
       ],
       "functional_code": null
     }
@@ -20,13 +17,40 @@
     "nat_lang_statement": "Write a method that implements the selection sort algorithm to sort an array of integers in descending order.",
     "dafny": {
       "method_signature": "p_14_1_selection_sort_desc_array(inputs: array<int>) returns (sorted: array<int>)",
+      "requires": [],
+      "ensures": [
+        "forall i, j :: 0 <= i < j < sorted.Length ==> sorted[i] >= sorted[j]",
+        "multiset(inputs[..]) == multiset(sorted[..])"
+      ],
+      "functional_code": null
+    }
+  },
+  {
+    "name": "p_14_2_selection_sort_interval_seq",
+    "nat_lang_statement": "Write a method that implements the selection sort algorithm to sort an array of values from a finite interval.",
+    "dafny": {
+      "method_signature": "p_14_2_selection_sort_interval_seq(inputs: seq<int>, bound: nat) returns (sorted: seq<int>)",
       "requires": [
-        "inputs.Length >= 0"
+        "forall i :: 0 <= i < |inputs| ==> 0 <= inputs[i] <= bound"
       ],
       "ensures": [
-        "inputs.Length == sorted.Length",
-        "forall i, j :: 0 <= i < j < inputs.Length ==> sorted[i] >= sorted[j]",
-        "What about permutation?"
+        "forall i, j :: 0 <= i < j < |sorted| ==> sorted[i] <= sorted[j]",
+        "multiset(inputs) == multiset(sorted)"
+      ],
+      "functional_code": null
+    }
+  },
+  {
+    "name": "p_14_2_selection_sort_interval_array",
+    "nat_lang_statement": "Write a method that implements the selection sort algorithm to sort an array of values from a finite interval.",
+    "dafny": {
+      "method_signature": "p_14_2_selection_sort_interval_array(inputs: array<int>, bound: nat) returns (sorted: array<int>)",
+      "requires": [
+        "forall i :: 0 <= i < inputs.Length ==> 0 <= inputs[i] <= bound"
+      ],
+      "ensures": [
+        "forall i, j :: 0 <= i < j < sorted.Length ==> sorted[i] <= sorted[j]",
+        "multiset(inputs[..]) == multiset(sorted[..])"
       ],
       "functional_code": null
     }
@@ -36,13 +60,10 @@
     "nat_lang_statement": "Write a method that implements the merge sort algorithm to sort an array of strings in lexicographic order.",
     "dafny": {
       "method_signature": "p_14_4_merge_sort_lexicographic_seq(inputs: seq<string>) returns (sorted: seq<string>)",
-      "requires": [
-        "|inputs| >= 0"
-      ],
+      "requires": [],
       "ensures": [
-        "|inputs| == |sorted|",
-        "forall i, j :: 0 <= i < j < |inputs| ==> sorted[i] <= sorted[j]",
-        "forall i :: 0 <= i < |inputs| ==> exists j :: 0 <= j < |sorted| && inputs[i] == sorted[j]"
+        "forall i, j :: 0 <= i < j < |sorted| ==> sorted[i] <= sorted[j]",
+        "multiset(inputs) == multiset(sorted)"
       ],
       "functional_code": null
     }
@@ -52,13 +73,10 @@
     "nat_lang_statement": "Write a method that implements the merge sort algorithm to sort an array of strings in lexicographic order.",
     "dafny": {
       "method_signature": "p_14_4_merge_sort_lexicographic_array(inputs: array<string>) returns (sorted: array<string>)",
-      "requires": [
-        "inputs.Length >= 0"
-      ],
+      "requires": [],
       "ensures": [
-        "inputs.Length == sorted.Length",
-        "forall i, j :: 0 <= i < j < inputs.Length ==> sorted[i] <= sorted[j]",
-        "forall i :: 0 <= i < inputs.Length ==> exists j :: 0 <= j < sorted.Length && inputs[i] == sorted[j]"
+        "forall i, j :: 0 <= i < j < sorted.Length ==> sorted[i] <= sorted[j]",
+        "multiset(inputs[..]) == multiset(sorted[..])"
       ],
       "functional_code": null
     }
@@ -70,9 +88,8 @@
       "method_signature": "p_14_4_bubble_sort_seq(inputs: seq<int>) returns (sorted: seq<int>)",
       "requires": [],
       "ensures": [
-        "|inputs| == |sorted|",
-        "forall i, j :: 0 <= i < j < |inputs| ==> sorted[i] <= sorted[j]",
-        "forall i :: 0 <= i < |inputs| ==> exists j :: 0 <= j < |sorted| && inputs[i] == sorted[j]"
+        "forall i, j :: 0 <= i < j < |sorted| ==> sorted[i] <= sorted[j]",
+        "multiset(inputs) == multiset(sorted)"
       ],
       "functional_code": null
     }
@@ -84,9 +101,8 @@
       "method_signature": "p_14_4_bubble_sort_array(inputs: array<int>) returns (sorted: array<int>)",
       "requires": [],
       "ensures": [
-        "inputs.Length == sorted.Length",
-        "forall i, j :: 0 <= i < j < inputs.Length ==> sorted[i] <= sorted[j]",
-        "forall i :: 0 <= i < inputs.Length ==> exists j :: 0 <= j < sorted.Length && inputs[i] == sorted[j]"
+        "forall i, j :: 0 <= i < j < sorted.Length ==> sorted[i] <= sorted[j]",
+        "multiset(inputs[..]) == multiset(sorted[..])"
       ],
       "functional_code": null
     }
