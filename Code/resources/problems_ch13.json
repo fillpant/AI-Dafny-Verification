@@ -4,7 +4,10 @@
     "nat_lang_statement": "Write a recursive method that takes the width and height of a rectangle and returns its area. Call the method with a width that is one less than the original.",
     "dafny": {
       "method_signature": "p_13_1_recursive_rectangle_area(width: nat, height: nat) returns (area: nat)",
-      "requires": [],
+      "requires": [
+        "1 <= width",
+        "1 <= height"
+      ],
       "ensures": [
         "area == width * height"
       ],
@@ -16,7 +19,9 @@
     "nat_lang_statement": "Write a recursive method that takes the width of a square and returns its area. Call the method with a width that is one less than the original.",
     "dafny": {
       "method_signature": "p_13_2_recursive_square_area(width: nat) returns (area: nat)",
-      "requires": [],
+      "requires": [
+        "1 <= width"
+      ],
       "ensures": [
         "area == width * width"
       ],
@@ -31,9 +36,7 @@
       "requires": [],
       "ensures": [
         "|reversed| == |text|",
-        "reversed == reverse_string(text)    TODO: Not Needed",
-        "ensures forall i :: 0 <= i < |text| ==> reversed[i] == text[|text| - 1 - i]",
-        "ensures text == reverse_string(reversed)      TODO: Not Needed"
+        "forall i :: 0 <= i < |text| ==> reversed[i] == text[|text| - 1 - i]",
       ],
       "functional_code": null
     }
@@ -43,11 +46,13 @@
     "nat_lang_statement": "Write a recursive method that tests whether a given text contains a string. For example, find(\"Mississippi\", \"sip\") returns true. Hint: If the text starts with the string you want to match, then you are done. If not, consider the text that you obtain by removing the first character.",
     "dafny": {
       "method_signature": "p_13_6_recursive_find(text: string, str: string) returns (found: bool)",
-      "requires": [],
-      "ensures": [
-          "found == (exists i :: 0 <= i <= |text| - |str| && starts_with(text[i..], str) == true)"
+      "requires": [
+        "1 <= |str| <= |text|"
       ],
-      "functional_code": "function starts_with(text: string, str: string): (b: bool)\n  ensures b == (|str| <= |text| && forall i :: 0 <= i < |str| ==> text[i] == str[i])\n{\n  if |str| == 0 then true\n  else if |text| == 0 then false\n  else if text[0] == str[0] then starts_with(text[1..], str[1..])\n  else false\n}"
+      "ensures": [
+          "found == (exists i :: 0 <= i <= (|text| - |str|) && text[i..(i + |str|)] == str)"
+      ],
+      "functional_code": null
     }
   },
   {
@@ -55,11 +60,13 @@
     "nat_lang_statement": "Write a recursive method that returns the starting position of the first substring of the text that matches str. Return –1 if str is not a substring of the text. For example, s.indexOf(\"Mississippi\", \"sip\") returns 6. Hint: This is a bit tricky because you must keep track of how far the match is from the beginning of the text. Make that value a parameter variable of a helper method.",
     "dafny": {
       "method_signature": "p_13_7_recursive_index_of(text: string, str: string) returns (index: int)",
-      "requires": [],
-      "ensures": [
-          "index == find_index(text, str, 0)"
+      "requires": [
+        "1 <= |str| <= |text|"
       ],
-      "functional_code": "function find_index(text: string, str: string, index: nat): (ret: int)\n   ensures starts_with(text, str) ==> ret == index \n{\n  if |text| < |str| then -1\n  else if starts_with(text, str) then index\n  else find_index(text[1..], str, index + 1)\n}"
+      "ensures": [
+        "ensures index == find_index(text, str, 0)"
+      ],
+      "functional_code": "function starts_with(text: string, str: string) : (b: bool)\n  ensures b == (|str| <= |text| && forall i :: 0 <= i < |str| ==> text[i] == str[i])\n{\n  if |str| == 0 then true\n  else if |text| == 0 then false\n  else if text[0] == str[0] then starts_with(text[1..], str[1..])\n  else false\n}\n\nfunction find_index(text: string, str: string, index: nat) : (ret : int)\n   ensures starts_with(text, str) ==> ret == index \n{\n  if |text| < |str| then -1\n  else if starts_with(text, str) then index\n  else find_index(text[1..], str, index + 1)\n}"
     }
   },
   {
