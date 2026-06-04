@@ -205,7 +205,7 @@
       "ensures": [
         "forall d :: d in duplicates ==> d in inputs",
         "forall i :: 0 <= i < |inputs| - 1 && inputs[i] == inputs[i + 1] ==> inputs[i] in duplicates",
-        "forall d :: d in duplicates ==> exists i :: 0 <= i < |inputs| - 1 && inputs[i] == inputs[i + 1] && inputs[i] == d",
+        "forall d :: d in duplicates ==> exists i :: 0 <= i < |inputs| - 1 && inputs[i] == inputs[i + 1] && inputs[i] == d"
       ],
       "functional_code": null
     }
@@ -219,7 +219,7 @@
       "ensures": [
         "forall d :: d in duplicates[..] ==> d in inputs[..]",
         "forall i :: 0 <= i < inputs.Length - 1 && inputs[i] == inputs[i + 1] ==> inputs[i] in duplicates[..]",
-        "forall d :: d in duplicates[..] ==> exists i :: 0 <= i < inputs.Length - 1 && inputs[i] == inputs[i + 1] && inputs[i] == d",
+        "forall d :: d in duplicates[..] ==> exists i :: 0 <= i < inputs.Length - 1 && inputs[i] == inputs[i + 1] && inputs[i] == d"
       ],
       "functional_code": null
     }
