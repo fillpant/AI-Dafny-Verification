@@ -50,7 +50,7 @@
         "inputs.Length == 10"
       ],
       "ensures": [
-        "even_elements == evens(inputs[..])"
+        "even_elements[..] == evens(inputs[..])"
       ],
       "functional_code": "function evens(inputs: seq<int>): seq<int>\n{\n  if inputs ==[] then []\n  else if inputs[0] % 2 == 0 then [inputs[0]] + evens(inputs[1..])\n  else evens(inputs[1..])\n}"
     }
