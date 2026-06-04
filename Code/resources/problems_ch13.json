@@ -36,7 +36,7 @@
       "requires": [],
       "ensures": [
         "|reversed| == |text|",
-        "forall i :: 0 <= i < |text| ==> reversed[i] == text[|text| - 1 - i]",
+        "forall i :: 0 <= i < |text| ==> reversed[i] == text[|text| - 1 - i]"
       ],
       "functional_code": null
     }
