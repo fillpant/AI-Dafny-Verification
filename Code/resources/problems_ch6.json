@@ -358,7 +358,7 @@
         "|inputs| >= 2"
       ],
       "ensures": [
-        "has_duplicates == (exists i :: 0 <= i < |inputs| - 1 && inputs[i] == inputs[i + 1])",
+        "has_duplicates == (exists i :: 0 <= i < |inputs| - 1 && inputs[i] == inputs[i + 1])"
       ],
       "functional_code": null
     }
@@ -372,7 +372,7 @@
         "inputs.Length >= 2"
       ],
       "ensures": [
-        "has_duplicates == (exists i :: 0 <= i < inputs.Length - 1 && inputs[i] == inputs[i + 1])",
+        "has_duplicates == (exists i :: 0 <= i < inputs.Length - 1 && inputs[i] == inputs[i + 1])"
       ],
       "functional_code": null
     }
