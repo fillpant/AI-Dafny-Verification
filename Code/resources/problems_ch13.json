@@ -64,7 +64,7 @@
         "1 <= |str| <= |text|"
       ],
       "ensures": [
-        "ensures index == find_index(text, str, 0)"
+        "index == find_index(text, str, 0)"
       ],
       "functional_code": "function starts_with(text: string, str: string) : (b: bool)\n  ensures b == (|str| <= |text| && forall i :: 0 <= i < |str| ==> text[i] == str[i])\n{\n  if |str| == 0 then true\n  else if |text| == 0 then false\n  else if text[0] == str[0] then starts_with(text[1..], str[1..])\n  else false\n}\n\nfunction find_index(text: string, str: string, index: nat) : (ret : int)\n   ensures starts_with(text, str) ==> ret == index \n{\n  if |text| < |str| then -1\n  else if starts_with(text, str) then index\n  else find_index(text[1..], str, index + 1)\n}"
     }
