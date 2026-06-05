@@ -50,9 +50,9 @@
         "1 <= |str| <= |text|"
       ],
       "ensures": [
-          "found == (exists i :: 0 <= i <= (|text| - |str|) && text[i..(i + |str|)] == str)"
+          "found == find(text, str)"
       ],
-      "functional_code": null
+      "functional_code": "function find(text: string, str: string): bool{\n  if |text| < |str| then false\n  else if text[0 .. |str|] == str then true\n  else find(text[1..], str)\n}"
     }
   },
   {
