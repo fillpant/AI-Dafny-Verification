@@ -112,11 +112,9 @@
       "method_signature": "p_5_7_count_words(str: string) returns (word_count: int)",
       "requires": [],
       "ensures": [
-        "word_count >= 0",
-        "if |str| == 0 then word_count == 0 else word_count >= 1",
-        "word_count == count_space(str) + 1"
+        "word_count == count_words(str)"
       ],
-      "functional_code": "function count_space(str: string): int\n{\n  if |str| == 0 then 0\n  else if str[0] == ' ' then 1 + count_space(str[1..])\n  else count_space(str[1..])\n}"
+      "functional_code": "function remove_leading_spaces(s: string): (result: string)\n    ensures |s| > 0 && s[0] == ' ' ==> |result| < |s|\n{\n    if |s| == 0 then s\n    else if s[0] == ' ' then remove_leading_spaces(s[1..])\n    else s\n}\n\nfunction remove_word(s: string): (result: string)\n    ensures |s| > 0 && s[0] != ' ' ==> |result| < |s|\n{\n    if |s| == 0 then s\n    else if s[0] != ' ' then remove_word(s[1..])\n    else s\n}\n\nfunction count_words(s: string): int\n    decreases |s|\n{\n    var s2 := remove_leading_spaces(s);\n    if |s2| > 0 then 1 + count_words(remove_word(s2))\n    else 0\n}"
     }
   },
   {
