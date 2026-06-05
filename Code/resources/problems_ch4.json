@@ -400,20 +400,6 @@
     }
   },
   {
-    "name": "p_4_7_permute_string",
-    "nat_lang_statement": "Write a method that randomly permutes the characters in a string.",
-    "dafny": {
-      "method_signature": "p_4_7_permute_string(s: string) returns (permuted: string)",
-      "requires": [],
-      "ensures": [
-        "|permuted| == |s|",
-        "forall c :: c in s ==> c in permuted",
-        "forall c :: c in permuted ==> c in s"
-      ],
-      "functional_code": null
-    }
-  },
-  {
     "name": "p_4_8_seperate_lines",
     "nat_lang_statement": "Write a method that reads a word and returns each character of the word on a separate line.",
     "dafny": {
