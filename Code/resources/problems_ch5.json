@@ -85,7 +85,7 @@
       ],
       "ensures": [
         "if |str| % 2 == 1 then |middle_str| == 1 else |middle_str| == 2",
-        "if |str| % 2 == 1 then middle_str[0] == str[|str| / 2] else middle_str == str[|str| / 2 - 1 .. |str| / 2]"
+        "if |str| % 2 == 1 then middle_str[0] == str[|str| / 2] else middle_str == str[|str| / 2 - 1 .. (|str| / 2) + 1]"
       ],
       "functional_code": null
     }
