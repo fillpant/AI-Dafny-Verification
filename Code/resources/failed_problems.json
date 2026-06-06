@@ -1,0 +1,86 @@
+[
+  {
+    "name": "p_5_5_repeat",
+    "nat_lang_statement": "Write a method that returns a string repeated n times. For example, repeat(\"ho\", 3) returns \"hohoho\".",
+    "dafny": {
+      "method_signature": "p_5_5_repeat(str: string, n: int) returns (repeated_str: string)",
+      "requires": [
+        "n >= 0"
+      ],
+      "ensures": [
+        "|repeated_str| == n * |str|",
+        "forall i :: 0 <= i < n ==> repeated_str[i * |str| .. (i + 1) * |str| ] == str"
+      ],
+      "functional_code": null
+    }
+  },
+  {
+    "name": "p_5_9_f_cone_surface",
+    "nat_lang_statement": "Write a method that computes the surface area of a cone with a circular base with a residual error less than 0.01, given radius and height.",
+    "dafny": {
+      "method_signature": "p_5_9_f_cone_surface(r: real, h: real) returns (surface: real)",
+      "requires": [
+        "r > 0.0"
+      ],
+      "ensures": [
+        "-0.01 < (((surface / (3.14159 * r)) - r) * ((surface / (3.14159 * r)) - r)) - ((h * h) + (r * r)) < 0.01"
+      ],
+      "functional_code": null
+    }
+  },
+  {
+    "name": "p_13_10_recursive_area_polygon_array",
+    "nat_lang_statement": "Write a recursive method that takes an array of points of a polygon and returns its area. Cut off a triangle and use the fact that a triangle with corners (x1, y1), (x2, y2), (x3, y3) has area (abs(x1y2 + x2y3 + x3y1 - y1x2 - y2x3 - y3x1)) / 2.",
+    "dafny": {
+      "method_signature": "p_13_10_recursive_area_polygon_array(points: array<(real, real)>) returns (area: real)",
+      "requires": [
+        "points.Length >= 3"
+      ],
+      "ensures": [
+        "area == polygon_area(points[..])"
+      ],
+      "functional_code": "function polygon_area(points: seq<(real, real)>): real\n  decreases |points|\n  requires |points| >= 3\n  ensures polygon_area(points) >= 0.0\n{\n  if |points| == 3 then \n    var (x1, y1) := points[0];\n    var (x2, y2) := points[1];\n    var (x3, y3) := points[2];\n    var sign : real := x1 * (y2 - y3) + x2 * (y3 - y1) + x3 * (y1 - y2);\n    if sign < 0.0 then -sign / 2.0 else sign / 2.0 as real \n  else \n    var (x1, y1) := points[0];\n    var (x2, y2) := points[1];\n    var (x3, y3) := points[2];\n    var sign : real := x1 * (y2 - y3) + x2 * (y3 - y1) + x3 * (y1 - y2);\n    var triangle_area := if sign < 0.0 then -sign / 2.0 else sign / 2.0 as real;\n    triangle_area + polygon_area([points[0]] + points[2..])\n}"
+    }
+  },
+  {
+    "name": "p_14_2_selection_sort_interval_array",
+    "nat_lang_statement": "Write a method that implements the selection sort algorithm to sort an array of values from a finite interval.",
+    "dafny": {
+      "method_signature": "p_14_2_selection_sort_interval_array(inputs: array<int>, bound: nat) returns (sorted: array<int>)",
+      "requires": [
+        "forall i :: 0 <= i < inputs.Length ==> 0 <= inputs[i] <= bound"
+      ],
+      "ensures": [
+        "forall i, j :: 0 <= i < j < sorted.Length ==> sorted[i] <= sorted[j]",
+        "multiset(inputs[..]) == multiset(sorted[..])"
+      ],
+      "functional_code": null
+    }
+  },
+  {
+    "name": "p_14_4_merge_sort_lexicographic_seq",
+    "nat_lang_statement": "Write a method that implements the merge sort algorithm to sort an array of strings in lexicographic order.",
+    "dafny": {
+      "method_signature": "p_14_4_merge_sort_lexicographic_seq(inputs: seq<string>) returns (sorted: seq<string>)",
+      "requires": [],
+      "ensures": [
+        "forall i, j :: 0 <= i < j < |sorted| ==> sorted[i] <= sorted[j]",
+        "multiset(inputs) == multiset(sorted)"
+      ],
+      "functional_code": null
+    }
+  },
+  {
+    "name": "p_14_4_merge_sort_lexicographic_array",
+    "nat_lang_statement": "Write a method that implements the merge sort algorithm to sort an array of strings in lexicographic order.",
+    "dafny": {
+      "method_signature": "p_14_4_merge_sort_lexicographic_array(inputs: array<string>) returns (sorted: array<string>)",
+      "requires": [],
+      "ensures": [
+        "forall i, j :: 0 <= i < j < sorted.Length ==> sorted[i] <= sorted[j]",
+        "multiset(inputs[..]) == multiset(sorted[..])"
+      ],
+      "functional_code": null
+    }
+  }
+]
