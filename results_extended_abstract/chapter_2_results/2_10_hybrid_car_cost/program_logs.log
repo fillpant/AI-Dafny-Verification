@@ -1,0 +1,56 @@
+[18/12/25 09:17:10.066] [Experiment '2_10_hybrid_car_cost'] [INFO]: Experiment created.
+[18/12/25 09:17:10.066] [Experiment '2_10_hybrid_car_cost'] [INFO]: Experiment started.
+[18/12/25 09:17:10.067] [Experiment '2_10_hybrid_car_cost'] [INFO]: Using initial prompt: You are given the following task to perform in Dafny:
+
+Write a method that helps a person decide whether to buy a hybrid car. Your methods's inputs should be: the cost of a new car, the estimated miles driven per year, the estimated gas price, the efficiency in miles per gallon, the estimated resale value after 5 years. Compute the total cost of owning the car for five years.
+
+The signature should be:
+
+method hybrid_car_cost(new_car_cost: real, miles_per_year: real, gas_price: real, mpg: real, resale_value: real) returns (total_cost: real)
+
+The method should respect the following contract:
+
+requires 0.0 < mpg, ensures total_cost == new_car_cost + (miles_per_year / mpg) * gas_price * 5.0 - resale_value
+
+Produce and show only the Dafny body of this method, including the curly braces that surround it. Do not show the signature nor contract. You must not use 'assume' anywhere in your code.
+
+[18/12/25 09:17:10.067] [Experiment '2_10_hybrid_car_cost'] [INFO]: There are 30000 left in the jar, for the rest of this experiment.
+[18/12/25 09:17:10.067] [Experiment '2_10_hybrid_car_cost'] [INFO]: Querrying GenAI...
+[18/12/25 09:17:10.067] [Experiment '2_10_hybrid_car_cost'] [FINE]: Constructing message for GenAI
+[18/12/25 09:17:10.067] [Experiment '2_10_hybrid_car_cost'] [INFO]: Context is on, attaching 1 previous messages in the request to GenAI.
+[18/12/25 09:17:10.067] [Experiment '2_10_hybrid_car_cost'] [INFO]: A reasoning model is chosen, but no reasoning effort value is set. Setting reasoning to 'medium'
+[18/12/25 09:17:10.067] [Experiment '2_10_hybrid_car_cost'] [FINE]: Setting max tokens for the request to 30000
+[18/12/25 09:17:10.067] [Experiment '2_10_hybrid_car_cost'] [FINE]: Using model gpt-5.1-chat-latest. Awaiting response...
+[18/12/25 09:17:12.339] [Experiment '2_10_hybrid_car_cost'] [FINE]: Got response with 111 characters.
+[18/12/25 09:17:12.339] [Experiment '2_10_hybrid_car_cost'] [FINE]: Saving gen_ai_messages.json
+[18/12/25 09:17:12.339] [Experiment '2_10_hybrid_car_cost'] [FINE]: Saved 2272 characters to file gen_ai_messages.json
+[18/12/25 09:17:12.339] [Experiment '2_10_hybrid_car_cost'] [FINE]: Saving gen_ai_messages_simple.json
+[18/12/25 09:17:12.339] [Experiment '2_10_hybrid_car_cost'] [FINE]: Saved 1165 characters to file gen_ai_messages_simple.json
+[18/12/25 09:17:12.340] [Experiment '2_10_hybrid_car_cost'] [INFO]: Converting GenAI response to method...
+[18/12/25 09:17:12.340] [Experiment '2_10_hybrid_car_cost'] [FINE]: Saving program.dfy
+[18/12/25 09:17:12.340] [Experiment '2_10_hybrid_car_cost'] [FINE]: Saved 345 characters to file program.dfy
+[18/12/25 09:17:12.340] [Experiment '2_10_hybrid_car_cost'] [INFO]: Context is treated as being fully enabled, meaning that subsequent prompts do not include the full code.
+[18/12/25 09:17:12.340] [Experiment '2_10_hybrid_car_cost'] [INFO]: Checking the method for the presence of the 'assume' keyword...
+[18/12/25 09:17:12.340] [Experiment '2_10_hybrid_car_cost'] [INFO]: Calling dafny to resolve the generated method...
+[18/12/25 09:17:12.616] [Experiment '2_10_hybrid_car_cost'] [INFO]: Program exited with code 0
+[18/12/25 09:17:12.616] [Experiment '2_10_hybrid_car_cost'] [INFO]: Program stdout: 
+Dafny program verifier did not attempt verification
+[18/12/25 09:17:12.616] [Experiment '2_10_hybrid_car_cost'] [INFO]: Calling dafny to resolve the generated method, but with warnings allowed...
+[18/12/25 09:17:12.890] [Experiment '2_10_hybrid_car_cost'] [INFO]: Program exited with code 0
+[18/12/25 09:17:12.890] [Experiment '2_10_hybrid_car_cost'] [INFO]: Program stdout: 
+Dafny program verifier did not attempt verification
+[18/12/25 09:17:12.890] [Experiment '2_10_hybrid_car_cost'] [INFO]: Resolution passes without warnings.
+[18/12/25 09:17:12.890] [Experiment '2_10_hybrid_car_cost'] [INFO]: Dafny resolution check passed.
+[18/12/25 09:17:12.890] [Experiment '2_10_hybrid_car_cost'] [INFO]: Calling dafny to verify the generated method...
+[18/12/25 09:17:13.441] [Experiment '2_10_hybrid_car_cost'] [INFO]: Program exited with code 0
+[18/12/25 09:17:13.441] [Experiment '2_10_hybrid_car_cost'] [INFO]: Program stdout: 
+Dafny program verifier finished with 2 verified, 0 errors
+[18/12/25 09:17:13.441] [Experiment '2_10_hybrid_car_cost'] [INFO]: Dafny verification check passed.
+[18/12/25 09:17:13.441] [Experiment '2_10_hybrid_car_cost'] [INFO]: Experiment finished.
+[18/12/25 09:17:13.441] [Experiment '2_10_hybrid_car_cost'] [FINE]: Saving gen_ai_messages.json
+[18/12/25 09:17:13.442] [Experiment '2_10_hybrid_car_cost'] [FINE]: Saved 2272 characters to file gen_ai_messages.json
+[18/12/25 09:17:13.442] [Experiment '2_10_hybrid_car_cost'] [FINE]: Saving gen_ai_messages_simple.json
+[18/12/25 09:17:13.442] [Experiment '2_10_hybrid_car_cost'] [FINE]: Saved 1165 characters to file gen_ai_messages_simple.json
+[18/12/25 09:17:13.442] [Experiment '2_10_hybrid_car_cost'] [FINE]: Saving experiment_result.json
+[18/12/25 09:17:13.443] [Experiment '2_10_hybrid_car_cost'] [FINE]: Saved 638 characters to file experiment_result.json
+[18/12/25 09:17:14.187] [Experiment '2_10_hybrid_car_cost'] [INFO]: Compilation of experiment report tex file successful
