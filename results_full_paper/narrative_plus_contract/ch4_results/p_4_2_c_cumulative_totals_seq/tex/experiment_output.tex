@@ -1,0 +1,218 @@
+\documentclass{article}
+\usepackage{lmodern}
+\usepackage{amsmath}
+\usepackage{listings}
+\usepackage{fullpage}
+\usepackage{parskip}
+\usepackage{xcolor}
+\lstset{
+	basicstyle=\ttfamily,
+	columns=fullflexible,
+	frame=single,
+	breaklines=true,
+	postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},
+}
+\begin{document}
+\title{Experiment `p\_4\_2\_c\_cumulative\_totals\_seq' Results}
+\author{\today}
+\date{}
+\maketitle
+\textbf{Experiment outcome: }SUCCESS
+\\\textbf{Bad responses: }0
+\\\textbf{Responses containing}~\texttt{assume}~\textbf{: }0
+\\\textbf{Responses containing}~\texttt{expect}~\textbf{: }0
+\\\textbf{Resolution attempts: }1
+\\\textbf{Hard fails (resolution): }0
+\\\textbf{Soft fails (resolution): }0
+\\\textbf{Verification attempts: }1
+\section*{Problem Specification}
+\textbf{Problem name: }p\_4\_2\_c\_cumulative\_totals\_seq
+\\\textbf{Natural language statement: }Write a method that takes a sequence of integers and returns cumulative totals. For example, if the input is [1, 7, 2, 9], the method should return [1, 8, 10, 19].
+\\\textbf{Method signature: }p\_4\_2\_c\_cumulative\_totals\_seq(inputs: seq<int>) returns (totals: seq<int>)
+\subsection*{Ensures}
+\begin{itemize}
+\item \texttt{|totals| == |inputs|}
+\item \texttt{forall i :: 0 <= i < |inputs| ==> totals[i] == (if i == 0 then inputs[0] else totals[i - 1] + inputs[i])}
+\end{itemize}
+\subsection*{Requires}
+\begin{itemize}
+\item \texttt{0 < |inputs|}
+\end{itemize}
+\clearpage
+\section*{GenAI interactions}
+Below you will find all interactions between the `user' (program) and the `assistant' (OpenAI).
+\subsection*{Program $\rightarrow$ GenAI}
+\begin{lstlisting}
+You are given the following task to perform in Dafny:
+
+Write a method that takes a sequence of integers and returns cumulative totals. For example, if the input is [1, 7, 2, 9], the method should return [1, 8, 10, 19].
+
+The signature should be:
+
+p_4_2_c_cumulative_totals_seq(inputs: seq<int>) returns (totals: seq<int>)
+
+The method should respect the following contract:
+
+requires 0 < |inputs|, ensures |totals| == |inputs|, ensures forall i :: 0 <= i < |inputs| ==> totals[i] == (if i == 0 then inputs[0] else totals[i - 1] + inputs[i])
+
+Produce and show only the Dafny body of this method, including the curly braces that surround it. Do not show the signature nor contract. You must not use 'assume' nor 'expect' anywhere in your code.
+\end{lstlisting}
+\subsection*{GenAI $\rightarrow$ Program}
+\textbf{System fingerprint: }null
+\\\textbf{ID: }chatcmpl-Dme7Q8IQJwe3DgJ2dE3oKxfczQWOm
+\\\textbf{Model: }gpt-5.5-2026-04-23
+\\\textbf{Created at: }1780486332
+\\\textbf{Finish reason: }stop
+\\\textbf{Usage: }438 tokens in, and 5178 tokens out
+\begin{lstlisting}
+{
+  totals := [inputs[0]];
+  assert |totals| == 1;
+  assert totals[0] == inputs[0];
+  assert forall j :: 0 <= j < 1 ==> totals[j] == (if j == 0 then inputs[0] else totals[j - 1] + inputs[j]) by {
+    forall j | 0 <= j < 1
+      ensures totals[j] == (if j == 0 then inputs[0] else totals[j - 1] + inputs[j])
+    {
+      assert j == 0;
+      assert totals[j] == inputs[0];
+    }
+  }
+
+  var i := 1;
+  while i < |inputs|
+    invariant 1 <= i <= |inputs|
+    invariant |totals| == i
+    invariant forall j :: 0 <= j < i ==> totals[j] == (if j == 0 then inputs[0] else totals[j - 1] + inputs[j])
+  {
+    var oldTotals := totals;
+    assert |oldTotals| == i;
+
+    totals := oldTotals + [oldTotals[i - 1] + inputs[i]];
+    assert |totals| == i + 1;
+
+    assert forall j :: 0 <= j < i + 1 ==> totals[j] == (if j == 0 then inputs[0] else totals[j - 1] + inputs[j]) by {
+      forall j | 0 <= j < i + 1
+        ensures totals[j] == (if j == 0 then inputs[0] else totals[j - 1] + inputs[j])
+      {
+        if j < i {
+          assert 0 <= j < |oldTotals|;
+          assert totals[j] == oldTotals[j];
+          assert oldTotals[j] == (if j == 0 then inputs[0] else oldTotals[j - 1] + inputs[j]);
+          if j == 0 {
+            assert totals[j] == inputs[0];
+          } else {
+            assert 0 <= j - 1 < |oldTotals|;
+            assert totals[j - 1] == oldTotals[j - 1];
+            assert totals[j] == totals[j - 1] + inputs[j];
+          }
+        } else {
+          assert j == i;
+          assert j != 0;
+          assert totals[j] == oldTotals[i - 1] + inputs[i];
+          assert 0 <= i - 1 < |oldTotals|;
+          assert totals[i - 1] == oldTotals[i - 1];
+          assert j - 1 == i - 1;
+          assert totals[j - 1] == oldTotals[i - 1];
+          assert inputs[j] == inputs[i];
+          assert totals[j] == totals[j - 1] + inputs[j];
+        }
+      }
+    }
+
+    i := i + 1;
+  }
+
+  assert i == |inputs|;
+  assert |totals| == |inputs|;
+  assert forall j :: 0 <= j < |inputs| ==> totals[j] == (if j == 0 then inputs[0] else totals[j - 1] + inputs[j]) by {
+    forall j | 0 <= j < |inputs|
+      ensures totals[j] == (if j == 0 then inputs[0] else totals[j - 1] + inputs[j])
+    {
+      assert j < i;
+    }
+  }
+}
+\end{lstlisting}
+\section*{Final Program}
+\begin{lstlisting}
+method p_4_2_c_cumulative_totals_seq(inputs: seq<int>) returns (totals: seq<int>)
+	requires 0 < |inputs|
+	ensures |totals| == |inputs|
+	ensures forall i :: 0 <= i < |inputs| ==> totals[i] == (if i == 0 then inputs[0] else totals[i - 1] + inputs[i])
+{
+  totals := [inputs[0]];
+  assert |totals| == 1;
+  assert totals[0] == inputs[0];
+  assert forall j :: 0 <= j < 1 ==> totals[j] == (if j == 0 then inputs[0] else totals[j - 1] + inputs[j]) by {
+    forall j | 0 <= j < 1
+      ensures totals[j] == (if j == 0 then inputs[0] else totals[j - 1] + inputs[j])
+    {
+      assert j == 0;
+      assert totals[j] == inputs[0];
+    }
+  }
+
+  var i := 1;
+  while i < |inputs|
+    invariant 1 <= i <= |inputs|
+    invariant |totals| == i
+    invariant forall j :: 0 <= j < i ==> totals[j] == (if j == 0 then inputs[0] else totals[j - 1] + inputs[j])
+  {
+    var oldTotals := totals;
+    assert |oldTotals| == i;
+
+    totals := oldTotals + [oldTotals[i - 1] + inputs[i]];
+    assert |totals| == i + 1;
+
+    assert forall j :: 0 <= j < i + 1 ==> totals[j] == (if j == 0 then inputs[0] else totals[j - 1] + inputs[j]) by {
+      forall j | 0 <= j < i + 1
+        ensures totals[j] == (if j == 0 then inputs[0] else totals[j - 1] + inputs[j])
+      {
+        if j < i {
+          assert 0 <= j < |oldTotals|;
+          assert totals[j] == oldTotals[j];
+          assert oldTotals[j] == (if j == 0 then inputs[0] else oldTotals[j - 1] + inputs[j]);
+          if j == 0 {
+            assert totals[j] == inputs[0];
+          } else {
+            assert 0 <= j - 1 < |oldTotals|;
+            assert totals[j - 1] == oldTotals[j - 1];
+            assert totals[j] == totals[j - 1] + inputs[j];
+          }
+        } else {
+          assert j == i;
+          assert j != 0;
+          assert totals[j] == oldTotals[i - 1] + inputs[i];
+          assert 0 <= i - 1 < |oldTotals|;
+          assert totals[i - 1] == oldTotals[i - 1];
+          assert j - 1 == i - 1;
+          assert totals[j - 1] == oldTotals[i - 1];
+          assert inputs[j] == inputs[i];
+          assert totals[j] == totals[j - 1] + inputs[j];
+        }
+      }
+    }
+
+    i := i + 1;
+  }
+
+  assert i == |inputs|;
+  assert |totals| == |inputs|;
+  assert forall j :: 0 <= j < |inputs| ==> totals[j] == (if j == 0 then inputs[0] else totals[j - 1] + inputs[j]) by {
+    forall j | 0 <= j < |inputs|
+      ensures totals[j] == (if j == 0 then inputs[0] else totals[j - 1] + inputs[j])
+    {
+      assert j < i;
+    }
+  }
+}
+\end{lstlisting}
+\section*{Total Token Usage}
+\textbf{Input tokens: }438
+\\\textbf{Output tokens: }5178
+\\\textbf{Reasoning tokens: }4316
+\\\textbf{Sum of `total tokens': }5616
+\section*{Experiment Timings}
+\textbf{Overall Experiment} started at 1780486332187, ended at 1780486424364, lasting 92177ms (92.18 seconds)
+\\\textbf{Iteration \#1} started at 1780486332188, ended at 1780486424364, lasting 92176ms (92.18 seconds)
+\end{document}

@@ -1,0 +1,438 @@
+\documentclass{article}
+\usepackage{lmodern}
+\usepackage{amsmath}
+\usepackage{listings}
+\usepackage{fullpage}
+\usepackage{parskip}
+\usepackage{xcolor}
+\lstset{
+	basicstyle=\ttfamily,
+	columns=fullflexible,
+	frame=single,
+	breaklines=true,
+	postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},
+}
+\begin{document}
+\title{Experiment `p\_4\_1\_c\_powers\_of\_two\_seq' Results}
+\author{\today}
+\date{}
+\maketitle
+\textbf{Experiment outcome: }SUCCESS
+\\\textbf{Bad responses: }0
+\\\textbf{Responses containing}~\texttt{assume}~\textbf{: }0
+\\\textbf{Responses containing}~\texttt{expect}~\textbf{: }0
+\\\textbf{Resolution attempts: }2
+\\\textbf{Hard fails (resolution): }0
+\\\textbf{Soft fails (resolution): }0
+\\\textbf{Verification attempts: }2
+\section*{Problem Specification}
+\textbf{Problem name: }p\_4\_1\_c\_powers\_of\_two\_seq
+\\\textbf{Natural language statement: }null
+\\\textbf{Method signature: }p\_4\_1\_c\_powers\_of\_two\_seq() returns (powers: seq<int>)
+\subsection*{Ensures}
+\begin{itemize}
+\item \texttt{|powers| == 21}
+\item \texttt{forall i :: 0 <= i < |powers| ==> powers[i] == pow(2, i)}
+\end{itemize}
+\subsection*{Functional Code Given}
+\begin{lstlisting}
+function pow(base: int, exp: int): int
+  requires  0 <= exp
+  decreases exp
+{
+  if exp == 0 then 1 else base * pow(base, exp - 1)
+}
+\end{lstlisting}
+\clearpage
+\section*{GenAI interactions}
+Below you will find all interactions between the `user' (program) and the `assistant' (OpenAI).
+\subsection*{Program $\rightarrow$ GenAI}
+\begin{lstlisting}
+You are given the following task to perform in Dafny:
+
+Write a method to satisfy the below requirements.
+
+The signature should be:
+
+p_4_1_c_powers_of_two_seq() returns (powers: seq<int>)
+
+The method should respect the following contract:
+
+ensures |powers| == 21, ensures forall i :: 0 <= i < |powers| ==> powers[i] == pow(2, i)
+
+The contract uses the following dafny code:
+
+function pow(base: int, exp: int): int
+  requires  0 <= exp
+  decreases exp
+{
+  if exp == 0 then 1 else base * pow(base, exp - 1)
+}
+
+These function(s) must not be used in your implementation of the method.
+
+Produce and show only the Dafny body of this method, including the curly braces that surround it. Do not show the signature nor contract. You must not use 'assume' nor 'expect' anywhere in your code.
+\end{lstlisting}
+\subsection*{GenAI $\rightarrow$ Program}
+\textbf{System fingerprint: }null
+\\\textbf{ID: }chatcmpl-DnLAERjjWvF3k97wf2ksBgsq8Ff6P
+\\\textbf{Model: }gpt-5.5-2026-04-23
+\\\textbf{Created at: }1780651798
+\\\textbf{Finish reason: }stop
+\\\textbf{Usage: }438 tokens in, and 1176 tokens out
+\begin{lstlisting}
+{
+  powers := [
+    1,
+    2,
+    4,
+    8,
+    16,
+    32,
+    64,
+    128,
+    256,
+    512,
+    1024,
+    2048,
+    4096,
+    8192,
+    16384,
+    32768,
+    65536,
+    131072,
+    262144,
+    524288,
+    1048576
+  ];
+}
+\end{lstlisting}
+\subsection*{Program $\rightarrow$ GenAI}
+\begin{lstlisting}
+When using dafny verify, the below error is emitted and verify fails:
+
+problem_data/p_4_1_c_powers_of_two_seq/program.dfy(11,0): Error: a postcondition could not be proved on this return path
+   |
+11 | {
+   | ^
+
+problem_data/p_4_1_c_powers_of_two_seq/program.dfy(10,9): Related location: this is the postcondition that could not be proved
+   |
+10 | 	ensures forall i :: 0 <= i < |powers| ==> powers[i] == pow(2, i)
+   |          ^^^^^^
+
+
+Dafny program verifier finished with 2 verified, 1 error
+
+Correct the error in code by altering only the method body. Produce and show only the Dafny body, including the curly braces that surround it. Do not show the signature nor contract. You must not use 'assume' nor 'expect' anywhere in your code.
+\end{lstlisting}
+\subsection*{GenAI $\rightarrow$ Program}
+\textbf{System fingerprint: }null
+\\\textbf{ID: }chatcmpl-DnLB1aoKKGOvvbEXZNpGGZYEqOMj8
+\\\textbf{Model: }gpt-5.5-2026-04-23
+\\\textbf{Created at: }1780651847
+\\\textbf{Finish reason: }stop
+\\\textbf{Usage: }784 tokens in, and 3806 tokens out
+\begin{lstlisting}
+{
+  powers := [
+    1,
+    2,
+    4,
+    8,
+    16,
+    32,
+    64,
+    128,
+    256,
+    512,
+    1024,
+    2048,
+    4096,
+    8192,
+    16384,
+    32768,
+    65536,
+    131072,
+    262144,
+    524288,
+    1048576
+  ];
+
+  assert |powers| == 21;
+
+  assert pow(2, 0) == 1;
+  assert pow(2, 1) == 2 * pow(2, 0);
+  assert pow(2, 1) == 2;
+  assert pow(2, 2) == 2 * pow(2, 1);
+  assert pow(2, 2) == 4;
+  assert pow(2, 3) == 2 * pow(2, 2);
+  assert pow(2, 3) == 8;
+  assert pow(2, 4) == 2 * pow(2, 3);
+  assert pow(2, 4) == 16;
+  assert pow(2, 5) == 2 * pow(2, 4);
+  assert pow(2, 5) == 32;
+  assert pow(2, 6) == 2 * pow(2, 5);
+  assert pow(2, 6) == 64;
+  assert pow(2, 7) == 2 * pow(2, 6);
+  assert pow(2, 7) == 128;
+  assert pow(2, 8) == 2 * pow(2, 7);
+  assert pow(2, 8) == 256;
+  assert pow(2, 9) == 2 * pow(2, 8);
+  assert pow(2, 9) == 512;
+  assert pow(2, 10) == 2 * pow(2, 9);
+  assert pow(2, 10) == 1024;
+  assert pow(2, 11) == 2 * pow(2, 10);
+  assert pow(2, 11) == 2048;
+  assert pow(2, 12) == 2 * pow(2, 11);
+  assert pow(2, 12) == 4096;
+  assert pow(2, 13) == 2 * pow(2, 12);
+  assert pow(2, 13) == 8192;
+  assert pow(2, 14) == 2 * pow(2, 13);
+  assert pow(2, 14) == 16384;
+  assert pow(2, 15) == 2 * pow(2, 14);
+  assert pow(2, 15) == 32768;
+  assert pow(2, 16) == 2 * pow(2, 15);
+  assert pow(2, 16) == 65536;
+  assert pow(2, 17) == 2 * pow(2, 16);
+  assert pow(2, 17) == 131072;
+  assert pow(2, 18) == 2 * pow(2, 17);
+  assert pow(2, 18) == 262144;
+  assert pow(2, 19) == 2 * pow(2, 18);
+  assert pow(2, 19) == 524288;
+  assert pow(2, 20) == 2 * pow(2, 19);
+  assert pow(2, 20) == 1048576;
+
+  forall i | 0 <= i < |powers|
+    ensures powers[i] == pow(2, i)
+  {
+    if i == 0 {
+      assert powers[i] == 1;
+      assert pow(2, i) == 1;
+    } else if i == 1 {
+      assert powers[i] == 2;
+      assert pow(2, i) == 2;
+    } else if i == 2 {
+      assert powers[i] == 4;
+      assert pow(2, i) == 4;
+    } else if i == 3 {
+      assert powers[i] == 8;
+      assert pow(2, i) == 8;
+    } else if i == 4 {
+      assert powers[i] == 16;
+      assert pow(2, i) == 16;
+    } else if i == 5 {
+      assert powers[i] == 32;
+      assert pow(2, i) == 32;
+    } else if i == 6 {
+      assert powers[i] == 64;
+      assert pow(2, i) == 64;
+    } else if i == 7 {
+      assert powers[i] == 128;
+      assert pow(2, i) == 128;
+    } else if i == 8 {
+      assert powers[i] == 256;
+      assert pow(2, i) == 256;
+    } else if i == 9 {
+      assert powers[i] == 512;
+      assert pow(2, i) == 512;
+    } else if i == 10 {
+      assert powers[i] == 1024;
+      assert pow(2, i) == 1024;
+    } else if i == 11 {
+      assert powers[i] == 2048;
+      assert pow(2, i) == 2048;
+    } else if i == 12 {
+      assert powers[i] == 4096;
+      assert pow(2, i) == 4096;
+    } else if i == 13 {
+      assert powers[i] == 8192;
+      assert pow(2, i) == 8192;
+    } else if i == 14 {
+      assert powers[i] == 16384;
+      assert pow(2, i) == 16384;
+    } else if i == 15 {
+      assert powers[i] == 32768;
+      assert pow(2, i) == 32768;
+    } else if i == 16 {
+      assert powers[i] == 65536;
+      assert pow(2, i) == 65536;
+    } else if i == 17 {
+      assert powers[i] == 131072;
+      assert pow(2, i) == 131072;
+    } else if i == 18 {
+      assert powers[i] == 262144;
+      assert pow(2, i) == 262144;
+    } else if i == 19 {
+      assert powers[i] == 524288;
+      assert pow(2, i) == 524288;
+    } else {
+      assert i == 20;
+      assert powers[i] == 1048576;
+      assert pow(2, i) == 1048576;
+    }
+  }
+}
+\end{lstlisting}
+\section*{Final Program}
+\begin{lstlisting}
+function pow(base: int, exp: int): int
+  requires  0 <= exp
+  decreases exp
+{
+  if exp == 0 then 1 else base * pow(base, exp - 1)
+}
+
+method p_4_1_c_powers_of_two_seq() returns (powers: seq<int>)
+	ensures |powers| == 21
+	ensures forall i :: 0 <= i < |powers| ==> powers[i] == pow(2, i)
+{
+  powers := [
+    1,
+    2,
+    4,
+    8,
+    16,
+    32,
+    64,
+    128,
+    256,
+    512,
+    1024,
+    2048,
+    4096,
+    8192,
+    16384,
+    32768,
+    65536,
+    131072,
+    262144,
+    524288,
+    1048576
+  ];
+
+  assert |powers| == 21;
+
+  assert pow(2, 0) == 1;
+  assert pow(2, 1) == 2 * pow(2, 0);
+  assert pow(2, 1) == 2;
+  assert pow(2, 2) == 2 * pow(2, 1);
+  assert pow(2, 2) == 4;
+  assert pow(2, 3) == 2 * pow(2, 2);
+  assert pow(2, 3) == 8;
+  assert pow(2, 4) == 2 * pow(2, 3);
+  assert pow(2, 4) == 16;
+  assert pow(2, 5) == 2 * pow(2, 4);
+  assert pow(2, 5) == 32;
+  assert pow(2, 6) == 2 * pow(2, 5);
+  assert pow(2, 6) == 64;
+  assert pow(2, 7) == 2 * pow(2, 6);
+  assert pow(2, 7) == 128;
+  assert pow(2, 8) == 2 * pow(2, 7);
+  assert pow(2, 8) == 256;
+  assert pow(2, 9) == 2 * pow(2, 8);
+  assert pow(2, 9) == 512;
+  assert pow(2, 10) == 2 * pow(2, 9);
+  assert pow(2, 10) == 1024;
+  assert pow(2, 11) == 2 * pow(2, 10);
+  assert pow(2, 11) == 2048;
+  assert pow(2, 12) == 2 * pow(2, 11);
+  assert pow(2, 12) == 4096;
+  assert pow(2, 13) == 2 * pow(2, 12);
+  assert pow(2, 13) == 8192;
+  assert pow(2, 14) == 2 * pow(2, 13);
+  assert pow(2, 14) == 16384;
+  assert pow(2, 15) == 2 * pow(2, 14);
+  assert pow(2, 15) == 32768;
+  assert pow(2, 16) == 2 * pow(2, 15);
+  assert pow(2, 16) == 65536;
+  assert pow(2, 17) == 2 * pow(2, 16);
+  assert pow(2, 17) == 131072;
+  assert pow(2, 18) == 2 * pow(2, 17);
+  assert pow(2, 18) == 262144;
+  assert pow(2, 19) == 2 * pow(2, 18);
+  assert pow(2, 19) == 524288;
+  assert pow(2, 20) == 2 * pow(2, 19);
+  assert pow(2, 20) == 1048576;
+
+  forall i | 0 <= i < |powers|
+    ensures powers[i] == pow(2, i)
+  {
+    if i == 0 {
+      assert powers[i] == 1;
+      assert pow(2, i) == 1;
+    } else if i == 1 {
+      assert powers[i] == 2;
+      assert pow(2, i) == 2;
+    } else if i == 2 {
+      assert powers[i] == 4;
+      assert pow(2, i) == 4;
+    } else if i == 3 {
+      assert powers[i] == 8;
+      assert pow(2, i) == 8;
+    } else if i == 4 {
+      assert powers[i] == 16;
+      assert pow(2, i) == 16;
+    } else if i == 5 {
+      assert powers[i] == 32;
+      assert pow(2, i) == 32;
+    } else if i == 6 {
+      assert powers[i] == 64;
+      assert pow(2, i) == 64;
+    } else if i == 7 {
+      assert powers[i] == 128;
+      assert pow(2, i) == 128;
+    } else if i == 8 {
+      assert powers[i] == 256;
+      assert pow(2, i) == 256;
+    } else if i == 9 {
+      assert powers[i] == 512;
+      assert pow(2, i) == 512;
+    } else if i == 10 {
+      assert powers[i] == 1024;
+      assert pow(2, i) == 1024;
+    } else if i == 11 {
+      assert powers[i] == 2048;
+      assert pow(2, i) == 2048;
+    } else if i == 12 {
+      assert powers[i] == 4096;
+      assert pow(2, i) == 4096;
+    } else if i == 13 {
+      assert powers[i] == 8192;
+      assert pow(2, i) == 8192;
+    } else if i == 14 {
+      assert powers[i] == 16384;
+      assert pow(2, i) == 16384;
+    } else if i == 15 {
+      assert powers[i] == 32768;
+      assert pow(2, i) == 32768;
+    } else if i == 16 {
+      assert powers[i] == 65536;
+      assert pow(2, i) == 65536;
+    } else if i == 17 {
+      assert powers[i] == 131072;
+      assert pow(2, i) == 131072;
+    } else if i == 18 {
+      assert powers[i] == 262144;
+      assert pow(2, i) == 262144;
+    } else if i == 19 {
+      assert powers[i] == 524288;
+      assert pow(2, i) == 524288;
+    } else {
+      assert i == 20;
+      assert powers[i] == 1048576;
+      assert pow(2, i) == 1048576;
+    }
+  }
+}
+\end{lstlisting}
+\section*{Total Token Usage}
+\textbf{Input tokens: }1222
+\\\textbf{Output tokens: }4982
+\\\textbf{Reasoning tokens: }3169
+\\\textbf{Sum of `total tokens': }6204
+\section*{Experiment Timings}
+\textbf{Overall Experiment} started at 1780651797454, ended at 1780651930632, lasting 133178ms (133.18 seconds)
+\\\textbf{Iteration \#1} started at 1780651797460, ended at 1780651846772, lasting 49312ms (49.31 seconds)
+\\\textbf{Iteration \#2} started at 1780651846781, ended at 1780651930632, lasting 83851ms (83.85 seconds)
+\end{document}

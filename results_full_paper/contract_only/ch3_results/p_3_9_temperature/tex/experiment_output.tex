@@ -1,0 +1,138 @@
+\documentclass{article}
+\usepackage{lmodern}
+\usepackage{amsmath}
+\usepackage{listings}
+\usepackage{fullpage}
+\usepackage{parskip}
+\usepackage{xcolor}
+\lstset{
+	basicstyle=\ttfamily,
+	columns=fullflexible,
+	frame=single,
+	breaklines=true,
+	postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},
+}
+\begin{document}
+\title{Experiment `p\_3\_9\_temperature' Results}
+\author{\today}
+\date{}
+\maketitle
+\textbf{Experiment outcome: }SUCCESS
+\\\textbf{Bad responses: }0
+\\\textbf{Responses containing}~\texttt{assume}~\textbf{: }0
+\\\textbf{Responses containing}~\texttt{expect}~\textbf{: }0
+\\\textbf{Resolution attempts: }1
+\\\textbf{Hard fails (resolution): }0
+\\\textbf{Soft fails (resolution): }0
+\\\textbf{Verification attempts: }1
+\section*{Problem Specification}
+\textbf{Problem name: }p\_3\_9\_temperature
+\\\textbf{Natural language statement: }null
+\\\textbf{Method signature: }p\_3\_9\_temperature (t: real, c: char) returns (s: string)
+\subsection*{Ensures}
+\begin{itemize}
+\item \texttt{if c == 'C' then if t < 0.0 then s == "solid" else if t == 0.0 then s == "solid or liquid" else if 0.0 < t < 100.0 then s == "liquid" else if t == 100.0 then s == "liquid or gaseous" else s == "gaseous" else if t < 32.0 then s == "solid" else if t == 32.0 then s == "solid or liquid" else if 32.0 < t < 212.0 then s == "liquid" else if t == 212.0 then s == "liquid or gaseous" else s == "gaseous"}
+\end{itemize}
+\subsection*{Requires}
+\begin{itemize}
+\item \texttt{(c == 'C' \&\& t >= -273.15) || (c == 'F' \&\& t >= -459.67)}
+\item \texttt{c == 'C' || c == 'F'}
+\end{itemize}
+\clearpage
+\section*{GenAI interactions}
+Below you will find all interactions between the `user' (program) and the `assistant' (OpenAI).
+\subsection*{Program $\rightarrow$ GenAI}
+\begin{lstlisting}
+You are given the following task to perform in Dafny:
+
+Write a method to satisfy the below requirements.
+
+The signature should be:
+
+p_3_9_temperature (t: real, c: char) returns (s: string)
+
+The method should respect the following contract:
+
+requires (c == 'C' && t >= -273.15) || (c == 'F' && t >= -459.67), requires c == 'C' || c == 'F', ensures if c == 'C' then if t < 0.0 then s == "solid" else if t == 0.0 then s == "solid or liquid" else if 0.0 < t < 100.0 then s == "liquid" else if t == 100.0 then s == "liquid or gaseous" else s == "gaseous" else if t < 32.0 then s == "solid" else if t == 32.0 then s == "solid or liquid" else if 32.0 < t < 212.0 then s == "liquid" else if t == 212.0 then s == "liquid or gaseous" else s == "gaseous"
+
+Produce and show only the Dafny body of this method, including the curly braces that surround it. Do not show the signature nor contract. You must not use 'assume' nor 'expect' anywhere in your code.
+\end{lstlisting}
+\subsection*{GenAI $\rightarrow$ Program}
+\textbf{System fingerprint: }null
+\\\textbf{ID: }chatcmpl-Dn3DbBoqoKfKrfogHSUGg1IElaURQ
+\\\textbf{Model: }gpt-5.5-2026-04-23
+\\\textbf{Created at: }1780582815
+\\\textbf{Finish reason: }stop
+\\\textbf{Usage: }638 tokens in, and 489 tokens out
+\begin{lstlisting}
+{
+  if c == 'C' {
+    if t < 0.0 {
+      s := "solid";
+    } else if t == 0.0 {
+      s := "solid or liquid";
+    } else if t < 100.0 {
+      s := "liquid";
+    } else if t == 100.0 {
+      s := "liquid or gaseous";
+    } else {
+      s := "gaseous";
+    }
+  } else {
+    if t < 32.0 {
+      s := "solid";
+    } else if t == 32.0 {
+      s := "solid or liquid";
+    } else if t < 212.0 {
+      s := "liquid";
+    } else if t == 212.0 {
+      s := "liquid or gaseous";
+    } else {
+      s := "gaseous";
+    }
+  }
+}
+\end{lstlisting}
+\section*{Final Program}
+\begin{lstlisting}
+method p_3_9_temperature (t: real, c: char) returns (s: string)
+	requires (c == 'C' && t >= -273.15) || (c == 'F' && t >= -459.67)
+	requires c == 'C' || c == 'F'
+	ensures if c == 'C' then if t < 0.0 then s == "solid" else if t == 0.0 then s == "solid or liquid" else if 0.0 < t < 100.0 then s == "liquid" else if t == 100.0 then s == "liquid or gaseous" else s == "gaseous" else if t < 32.0 then s == "solid" else if t == 32.0 then s == "solid or liquid" else if 32.0 < t < 212.0 then s == "liquid" else if t == 212.0 then s == "liquid or gaseous" else s == "gaseous"
+{
+  if c == 'C' {
+    if t < 0.0 {
+      s := "solid";
+    } else if t == 0.0 {
+      s := "solid or liquid";
+    } else if t < 100.0 {
+      s := "liquid";
+    } else if t == 100.0 {
+      s := "liquid or gaseous";
+    } else {
+      s := "gaseous";
+    }
+  } else {
+    if t < 32.0 {
+      s := "solid";
+    } else if t == 32.0 {
+      s := "solid or liquid";
+    } else if t < 212.0 {
+      s := "liquid";
+    } else if t == 212.0 {
+      s := "liquid or gaseous";
+    } else {
+      s := "gaseous";
+    }
+  }
+}
+\end{lstlisting}
+\section*{Total Token Usage}
+\textbf{Input tokens: }638
+\\\textbf{Output tokens: }489
+\\\textbf{Reasoning tokens: }246
+\\\textbf{Sum of `total tokens': }1127
+\section*{Experiment Timings}
+\textbf{Overall Experiment} started at 1780582814552, ended at 1780582845691, lasting 31139ms (31.14 seconds)
+\\\textbf{Iteration \#1} started at 1780582814566, ended at 1780582845691, lasting 31125ms (31.13 seconds)
+\end{document}

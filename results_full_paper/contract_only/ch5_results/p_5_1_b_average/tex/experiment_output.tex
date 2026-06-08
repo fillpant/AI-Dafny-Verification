@@ -1,0 +1,83 @@
+\documentclass{article}
+\usepackage{lmodern}
+\usepackage{amsmath}
+\usepackage{listings}
+\usepackage{fullpage}
+\usepackage{parskip}
+\usepackage{xcolor}
+\lstset{
+	basicstyle=\ttfamily,
+	columns=fullflexible,
+	frame=single,
+	breaklines=true,
+	postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},
+}
+\begin{document}
+\title{Experiment `p\_5\_1\_b\_average' Results}
+\author{\today}
+\date{}
+\maketitle
+\textbf{Experiment outcome: }SUCCESS
+\\\textbf{Bad responses: }0
+\\\textbf{Responses containing}~\texttt{assume}~\textbf{: }0
+\\\textbf{Responses containing}~\texttt{expect}~\textbf{: }0
+\\\textbf{Resolution attempts: }1
+\\\textbf{Hard fails (resolution): }0
+\\\textbf{Soft fails (resolution): }0
+\\\textbf{Verification attempts: }1
+\section*{Problem Specification}
+\textbf{Problem name: }p\_5\_1\_b\_average
+\\\textbf{Natural language statement: }null
+\\\textbf{Method signature: }p\_5\_1\_b\_average(x: real, y: real, z: real) returns (average: real)
+\subsection*{Ensures}
+\begin{itemize}
+\item \texttt{average == (x + y + z) / 3.0}
+\end{itemize}
+\clearpage
+\section*{GenAI interactions}
+Below you will find all interactions between the `user' (program) and the `assistant' (OpenAI).
+\subsection*{Program $\rightarrow$ GenAI}
+\begin{lstlisting}
+You are given the following task to perform in Dafny:
+
+Write a method to satisfy the below requirements.
+
+The signature should be:
+
+p_5_1_b_average(x: real, y: real, z: real) returns (average: real)
+
+The method should respect the following contract:
+
+ensures average == (x + y + z) / 3.0
+
+Produce and show only the Dafny body of this method, including the curly braces that surround it. Do not show the signature nor contract. You must not use 'assume' nor 'expect' anywhere in your code.
+\end{lstlisting}
+\subsection*{GenAI $\rightarrow$ Program}
+\textbf{System fingerprint: }null
+\\\textbf{ID: }chatcmpl-DnQsBmt5D7bujIrmfxBznFUTUYYuf
+\\\textbf{Model: }gpt-5.5-2026-04-23
+\\\textbf{Created at: }1780673743
+\\\textbf{Finish reason: }stop
+\\\textbf{Usage: }278 tokens in, and 108 tokens out
+\begin{lstlisting}
+{
+  average := (x + y + z) / 3.0;
+}
+\end{lstlisting}
+\section*{Final Program}
+\begin{lstlisting}
+method p_5_1_b_average(x: real, y: real, z: real) returns (average: real)
+	ensures average == (x + y + z) / 3.0
+{
+  average := (x + y + z) / 3.0;
+}
+\end{lstlisting}
+\section*{Total Token Usage}
+\textbf{Input tokens: }278
+\\\textbf{Output tokens: }108
+\\\textbf{Reasoning tokens: }71
+\\\textbf{Sum of `total tokens': }386
+\section*{Experiment Timings}
+\textbf{Overall Experiment} started at 1780673743271, ended at 1780673760334, lasting 17063ms (17.06 seconds)
+\\\textbf{Iteration \#1} started at 1780673743285, ended at 1780673760334, lasting 17049ms (17.05 seconds)
+\end{document}

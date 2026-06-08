@@ -1,0 +1,145 @@
+\documentclass{article}
+\usepackage{lmodern}
+\usepackage{amsmath}
+\usepackage{listings}
+\usepackage{fullpage}
+\usepackage{parskip}
+\usepackage{xcolor}
+\lstset{
+	basicstyle=\ttfamily,
+	columns=fullflexible,
+	frame=single,
+	breaklines=true,
+	postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},
+}
+\begin{document}
+\title{Experiment `p\_13\_8\_recursive\_largest\_seq' Results}
+\author{\today}
+\date{}
+\maketitle
+\textbf{Experiment outcome: }SUCCESS
+\\\textbf{Bad responses: }0
+\\\textbf{Responses containing}~\texttt{assume}~\textbf{: }0
+\\\textbf{Responses containing}~\texttt{expect}~\textbf{: }0
+\\\textbf{Resolution attempts: }1
+\\\textbf{Hard fails (resolution): }0
+\\\textbf{Soft fails (resolution): }0
+\\\textbf{Verification attempts: }1
+\section*{Problem Specification}
+\textbf{Problem name: }p\_13\_8\_recursive\_largest\_seq
+\\\textbf{Natural language statement: }Write a recursive method that takes an array and returns the largest element in the array. Hint: Find the largest element in the subset containing all but the last element. Then compare that maximum to the value of the last element.
+\\\textbf{Method signature: }p\_13\_8\_recursive\_largest\_seq(inputs: seq<int>) returns (largest: int)
+\subsection*{Ensures}
+\begin{itemize}
+\item \texttt{largest == find\_largest(inputs)}
+\end{itemize}
+\subsection*{Requires}
+\begin{itemize}
+\item \texttt{|inputs| >= 1}
+\end{itemize}
+\subsection*{Functional Code Given}
+\begin{lstlisting}
+function find_largest(inputs: seq<int>): int
+  requires |inputs| >= 1
+  ensures forall x :: x in inputs ==> find_largest(inputs) >= x
+{
+  if |inputs| == 1 then inputs[0]
+  else 
+      assert inputs == [inputs[0]] + inputs[1..];
+      var sub_largest := find_largest(inputs[1..]) ;
+      if inputs[0] >= sub_largest then inputs[0] else sub_largest
+}
+\end{lstlisting}
+\clearpage
+\section*{GenAI interactions}
+Below you will find all interactions between the `user' (program) and the `assistant' (OpenAI).
+\subsection*{Program $\rightarrow$ GenAI}
+\begin{lstlisting}
+You are given the following task to perform in Dafny:
+
+Write a recursive method that takes an array and returns the largest element in the array. Hint: Find the largest element in the subset containing all but the last element. Then compare that maximum to the value of the last element.
+
+The signature should be:
+
+p_13_8_recursive_largest_seq(inputs: seq<int>) returns (largest: int)
+
+The method should respect the following contract:
+
+requires |inputs| >= 1, ensures largest == find_largest(inputs)
+
+The contract uses the following dafny code:
+
+function find_largest(inputs: seq<int>): int
+  requires |inputs| >= 1
+  ensures forall x :: x in inputs ==> find_largest(inputs) >= x
+{
+  if |inputs| == 1 then inputs[0]
+  else 
+      assert inputs == [inputs[0]] + inputs[1..];
+      var sub_largest := find_largest(inputs[1..]) ;
+      if inputs[0] >= sub_largest then inputs[0] else sub_largest
+}
+
+These function(s) must not be used in your implementation of the method.
+
+Produce and show only the Dafny body of this method, including the curly braces that surround it. Do not show the signature nor contract. You must not use 'assume' nor 'expect' anywhere in your code.
+\end{lstlisting}
+\subsection*{GenAI $\rightarrow$ Program}
+\textbf{System fingerprint: }null
+\\\textbf{ID: }chatcmpl-DnAlnTW6xy5dGyZhjwDOu6AE6IQIo
+\\\textbf{Model: }gpt-5.5-2026-04-23
+\\\textbf{Created at: }1780611843
+\\\textbf{Finish reason: }stop
+\\\textbf{Usage: }596 tokens in, and 618 tokens out
+\begin{lstlisting}
+{
+  if |inputs| == 1 {
+    largest := inputs[0];
+  } else {
+    var sub_largest := p_13_8_recursive_largest_seq(inputs[1..]);
+    if inputs[0] >= sub_largest {
+      largest := inputs[0];
+    } else {
+      largest := sub_largest;
+    }
+  }
+}
+\end{lstlisting}
+\section*{Final Program}
+\begin{lstlisting}
+function find_largest(inputs: seq<int>): int
+  requires |inputs| >= 1
+  ensures forall x :: x in inputs ==> find_largest(inputs) >= x
+{
+  if |inputs| == 1 then inputs[0]
+  else 
+      assert inputs == [inputs[0]] + inputs[1..];
+      var sub_largest := find_largest(inputs[1..]) ;
+      if inputs[0] >= sub_largest then inputs[0] else sub_largest
+}
+
+method p_13_8_recursive_largest_seq(inputs: seq<int>) returns (largest: int)
+	requires |inputs| >= 1
+	ensures largest == find_largest(inputs)
+{
+  if |inputs| == 1 {
+    largest := inputs[0];
+  } else {
+    var sub_largest := p_13_8_recursive_largest_seq(inputs[1..]);
+    if inputs[0] >= sub_largest {
+      largest := inputs[0];
+    } else {
+      largest := sub_largest;
+    }
+  }
+}
+\end{lstlisting}
+\section*{Total Token Usage}
+\textbf{Input tokens: }596
+\\\textbf{Output tokens: }618
+\\\textbf{Reasoning tokens: }512
+\\\textbf{Sum of `total tokens': }1214
+\section*{Experiment Timings}
+\textbf{Overall Experiment} started at 1780611842662, ended at 1780611871117, lasting 28455ms (28.46 seconds)
+\\\textbf{Iteration \#1} started at 1780611842669, ended at 1780611871116, lasting 28447ms (28.45 seconds)
+\end{document}

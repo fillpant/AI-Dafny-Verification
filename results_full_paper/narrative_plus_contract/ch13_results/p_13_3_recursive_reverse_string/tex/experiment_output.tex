@@ -1,0 +1,145 @@
+\documentclass{article}
+\usepackage{lmodern}
+\usepackage{amsmath}
+\usepackage{listings}
+\usepackage{fullpage}
+\usepackage{parskip}
+\usepackage{xcolor}
+\lstset{
+	basicstyle=\ttfamily,
+	columns=fullflexible,
+	frame=single,
+	breaklines=true,
+	postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},
+}
+\begin{document}
+\title{Experiment `p\_13\_3\_recursive\_reverse\_string' Results}
+\author{\today}
+\date{}
+\maketitle
+\textbf{Experiment outcome: }SUCCESS
+\\\textbf{Bad responses: }0
+\\\textbf{Responses containing}~\texttt{assume}~\textbf{: }0
+\\\textbf{Responses containing}~\texttt{expect}~\textbf{: }0
+\\\textbf{Resolution attempts: }1
+\\\textbf{Hard fails (resolution): }0
+\\\textbf{Soft fails (resolution): }0
+\\\textbf{Verification attempts: }1
+\section*{Problem Specification}
+\textbf{Problem name: }p\_13\_3\_recursive\_reverse\_string
+\\\textbf{Natural language statement: }Write a recursive method that takes a string and returns the string in reverse. For example, reverse("Hello!") returns the string "!olleH". Implement a recursive solution by removing the first character, reversing the remaining text, and combining the two.
+\\\textbf{Method signature: }p\_13\_3\_recursive\_reverse\_string(text: string) returns (reversed: string)
+\subsection*{Ensures}
+\begin{itemize}
+\item \texttt{|reversed| == |text|}
+\item \texttt{forall i :: 0 <= i < |text| ==> reversed[i] == text[|text| - 1 - i]}
+\end{itemize}
+\clearpage
+\section*{GenAI interactions}
+Below you will find all interactions between the `user' (program) and the `assistant' (OpenAI).
+\subsection*{Program $\rightarrow$ GenAI}
+\begin{lstlisting}
+You are given the following task to perform in Dafny:
+
+Write a recursive method that takes a string and returns the string in reverse. For example, reverse("Hello!") returns the string "!olleH". Implement a recursive solution by removing the first character, reversing the remaining text, and combining the two.
+
+The signature should be:
+
+p_13_3_recursive_reverse_string(text: string) returns (reversed: string)
+
+The method should respect the following contract:
+
+ensures |reversed| == |text|, ensures forall i :: 0 <= i < |text| ==> reversed[i] == text[|text| - 1 - i]
+
+Produce and show only the Dafny body of this method, including the curly braces that surround it. Do not show the signature nor contract. You must not use 'assume' nor 'expect' anywhere in your code.
+\end{lstlisting}
+\subsection*{GenAI $\rightarrow$ Program}
+\textbf{System fingerprint: }null
+\\\textbf{ID: }chatcmpl-DnAX7wrJvaaPKFlPcqWGwRpJgHWdR
+\\\textbf{Model: }gpt-5.5-2026-04-23
+\\\textbf{Created at: }1780610933
+\\\textbf{Finish reason: }stop
+\\\textbf{Usage: }390 tokens in, and 2458 tokens out
+\begin{lstlisting}
+{
+  if |text| == 0 {
+    reversed := "";
+  } else {
+    var rest := text[1..];
+    var restReversed := p_13_3_recursive_reverse_string(rest);
+    reversed := restReversed + text[0..1];
+
+    assert |rest| == |text| - 1;
+    assert |text[0..1]| == 1;
+    assert |restReversed| == |rest|;
+    assert |reversed| == |text|;
+
+    forall i | 0 <= i < |text|
+      ensures reversed[i] == text[|text| - 1 - i]
+    {
+      if i < |text| - 1 {
+        assert i < |restReversed|;
+        assert reversed[i] == restReversed[i];
+        assert restReversed[i] == rest[|rest| - 1 - i];
+        assert 0 <= |rest| - 1 - i < |rest|;
+        assert rest[|rest| - 1 - i] == text[1 + (|rest| - 1 - i)];
+        assert 1 + (|rest| - 1 - i) == |text| - 1 - i;
+      } else {
+        assert i == |text| - 1;
+        assert i == |restReversed|;
+        assert reversed[i] == text[0..1][0];
+        assert text[0..1][0] == text[0];
+        assert |text| - 1 - i == 0;
+      }
+    }
+  }
+}
+\end{lstlisting}
+\section*{Final Program}
+\begin{lstlisting}
+method p_13_3_recursive_reverse_string(text: string) returns (reversed: string)
+	ensures |reversed| == |text|
+	ensures forall i :: 0 <= i < |text| ==> reversed[i] == text[|text| - 1 - i]
+{
+  if |text| == 0 {
+    reversed := "";
+  } else {
+    var rest := text[1..];
+    var restReversed := p_13_3_recursive_reverse_string(rest);
+    reversed := restReversed + text[0..1];
+
+    assert |rest| == |text| - 1;
+    assert |text[0..1]| == 1;
+    assert |restReversed| == |rest|;
+    assert |reversed| == |text|;
+
+    forall i | 0 <= i < |text|
+      ensures reversed[i] == text[|text| - 1 - i]
+    {
+      if i < |text| - 1 {
+        assert i < |restReversed|;
+        assert reversed[i] == restReversed[i];
+        assert restReversed[i] == rest[|rest| - 1 - i];
+        assert 0 <= |rest| - 1 - i < |rest|;
+        assert rest[|rest| - 1 - i] == text[1 + (|rest| - 1 - i)];
+        assert 1 + (|rest| - 1 - i) == |text| - 1 - i;
+      } else {
+        assert i == |text| - 1;
+        assert i == |restReversed|;
+        assert reversed[i] == text[0..1][0];
+        assert text[0..1][0] == text[0];
+        assert |text| - 1 - i == 0;
+      }
+    }
+  }
+}
+\end{lstlisting}
+\section*{Total Token Usage}
+\textbf{Input tokens: }390
+\\\textbf{Output tokens: }2458
+\\\textbf{Reasoning tokens: }2047
+\\\textbf{Sum of `total tokens': }2848
+\section*{Experiment Timings}
+\textbf{Overall Experiment} started at 1780610926472, ended at 1780611014181, lasting 87709ms (87.71 seconds)
+\\\textbf{Iteration \#1} started at 1780610926486, ended at 1780611014178, lasting 87692ms (87.69 seconds)
+\end{document}

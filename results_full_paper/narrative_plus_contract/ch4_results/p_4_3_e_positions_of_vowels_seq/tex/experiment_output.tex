@@ -1,0 +1,107 @@
+\documentclass{article}
+\usepackage{lmodern}
+\usepackage{amsmath}
+\usepackage{listings}
+\usepackage{fullpage}
+\usepackage{parskip}
+\usepackage{xcolor}
+\lstset{
+	basicstyle=\ttfamily,
+	columns=fullflexible,
+	frame=single,
+	breaklines=true,
+	postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},
+}
+\begin{document}
+\title{Experiment `p\_4\_3\_e\_positions\_of\_vowels\_seq' Results}
+\author{\today}
+\date{}
+\maketitle
+\textbf{Experiment outcome: }SUCCESS
+\\\textbf{Bad responses: }0
+\\\textbf{Responses containing}~\texttt{assume}~\textbf{: }0
+\\\textbf{Responses containing}~\texttt{expect}~\textbf{: }0
+\\\textbf{Resolution attempts: }1
+\\\textbf{Hard fails (resolution): }0
+\\\textbf{Soft fails (resolution): }0
+\\\textbf{Verification attempts: }1
+\section*{Problem Specification}
+\textbf{Problem name: }p\_4\_3\_e\_positions\_of\_vowels\_seq
+\\\textbf{Natural language statement: }Write a method that takes a string and returns the positions of all vowels in the string.
+\\\textbf{Method signature: }p\_4\_3\_e\_positions\_of\_vowels\_seq(s: string) returns (positions: seq<int>)
+\subsection*{Ensures}
+\begin{itemize}
+\item \texttt{forall p :: p in positions ==> 0 <= p < |s| \&\& s[p] in ['a','e','i','o','u','A','E','I','O','U']}
+\item \texttt{forall i :: 0 <= i < |s| \&\& s[i] in ['a','e','i','o','u','A','E','I','O','U'] ==> i in positions}
+\end{itemize}
+\clearpage
+\section*{GenAI interactions}
+Below you will find all interactions between the `user' (program) and the `assistant' (OpenAI).
+\subsection*{Program $\rightarrow$ GenAI}
+\begin{lstlisting}
+You are given the following task to perform in Dafny:
+
+Write a method that takes a string and returns the positions of all vowels in the string.
+
+The signature should be:
+
+p_4_3_e_positions_of_vowels_seq(s: string) returns (positions: seq<int>)
+
+The method should respect the following contract:
+
+ensures forall p :: p in positions ==> 0 <= p < |s| && s[p] in ['a','e','i','o','u','A','E','I','O','U'], ensures forall i :: 0 <= i < |s| && s[i] in ['a','e','i','o','u','A','E','I','O','U'] ==> i in positions
+
+Produce and show only the Dafny body of this method, including the curly braces that surround it. Do not show the signature nor contract. You must not use 'assume' nor 'expect' anywhere in your code.
+\end{lstlisting}
+\subsection*{GenAI $\rightarrow$ Program}
+\textbf{System fingerprint: }null
+\\\textbf{ID: }chatcmpl-DmfTzspI62mS2NvV6pYE4i3AVDGGU
+\\\textbf{Model: }gpt-5.5-2026-04-23
+\\\textbf{Created at: }1780491575
+\\\textbf{Finish reason: }stop
+\\\textbf{Usage: }430 tokens in, and 1743 tokens out
+\begin{lstlisting}
+{
+  positions := [];
+  var i := 0;
+  while i < |s|
+    invariant 0 <= i <= |s|
+    invariant forall p :: p in positions ==> 0 <= p < i && s[p] in ['a','e','i','o','u','A','E','I','O','U']
+    invariant forall j :: 0 <= j < i && s[j] in ['a','e','i','o','u','A','E','I','O','U'] ==> j in positions
+  {
+    if s[i] in ['a','e','i','o','u','A','E','I','O','U'] {
+      positions := positions + [i];
+    }
+    i := i + 1;
+  }
+}
+\end{lstlisting}
+\section*{Final Program}
+\begin{lstlisting}
+method p_4_3_e_positions_of_vowels_seq(s: string) returns (positions: seq<int>)
+	ensures forall p :: p in positions ==> 0 <= p < |s| && s[p] in ['a','e','i','o','u','A','E','I','O','U']
+	ensures forall i :: 0 <= i < |s| && s[i] in ['a','e','i','o','u','A','E','I','O','U'] ==> i in positions
+{
+  positions := [];
+  var i := 0;
+  while i < |s|
+    invariant 0 <= i <= |s|
+    invariant forall p :: p in positions ==> 0 <= p < i && s[p] in ['a','e','i','o','u','A','E','I','O','U']
+    invariant forall j :: 0 <= j < i && s[j] in ['a','e','i','o','u','A','E','I','O','U'] ==> j in positions
+  {
+    if s[i] in ['a','e','i','o','u','A','E','I','O','U'] {
+      positions := positions + [i];
+    }
+    i := i + 1;
+  }
+}
+\end{lstlisting}
+\section*{Total Token Usage}
+\textbf{Input tokens: }430
+\\\textbf{Output tokens: }1743
+\\\textbf{Reasoning tokens: }1536
+\\\textbf{Sum of `total tokens': }2173
+\section*{Experiment Timings}
+\textbf{Overall Experiment} started at 1780491575261, ended at 1780491622142, lasting 46881ms (46.88 seconds)
+\\\textbf{Iteration \#1} started at 1780491575262, ended at 1780491622142, lasting 46880ms (46.88 seconds)
+\end{document}

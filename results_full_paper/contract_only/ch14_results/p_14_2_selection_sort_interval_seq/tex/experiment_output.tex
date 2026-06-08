@@ -1,0 +1,322 @@
+\documentclass{article}
+\usepackage{lmodern}
+\usepackage{amsmath}
+\usepackage{listings}
+\usepackage{fullpage}
+\usepackage{parskip}
+\usepackage{xcolor}
+\lstset{
+	basicstyle=\ttfamily,
+	columns=fullflexible,
+	frame=single,
+	breaklines=true,
+	postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},
+}
+\begin{document}
+\title{Experiment `p\_14\_2\_selection\_sort\_interval\_seq' Results}
+\author{\today}
+\date{}
+\maketitle
+\textbf{Experiment outcome: }SUCCESS
+\\\textbf{Bad responses: }0
+\\\textbf{Responses containing}~\texttt{assume}~\textbf{: }0
+\\\textbf{Responses containing}~\texttt{expect}~\textbf{: }0
+\\\textbf{Resolution attempts: }1
+\\\textbf{Hard fails (resolution): }0
+\\\textbf{Soft fails (resolution): }0
+\\\textbf{Verification attempts: }1
+\section*{Problem Specification}
+\textbf{Problem name: }p\_14\_2\_selection\_sort\_interval\_seq
+\\\textbf{Natural language statement: }null
+\\\textbf{Method signature: }p\_14\_2\_selection\_sort\_interval\_seq(inputs: seq<int>, bound: nat) returns (sorted: seq<int>)
+\subsection*{Ensures}
+\begin{itemize}
+\item \texttt{forall i, j :: 0 <= i < j < |sorted| ==> sorted[i] <= sorted[j]}
+\item \texttt{multiset(inputs) == multiset(sorted)}
+\end{itemize}
+\subsection*{Requires}
+\begin{itemize}
+\item \texttt{forall i :: 0 <= i < |inputs| ==> 0 <= inputs[i] <= bound}
+\end{itemize}
+\clearpage
+\section*{GenAI interactions}
+Below you will find all interactions between the `user' (program) and the `assistant' (OpenAI).
+\subsection*{Program $\rightarrow$ GenAI}
+\begin{lstlisting}
+You are given the following task to perform in Dafny:
+
+Write a method to satisfy the below requirements.
+
+The signature should be:
+
+p_14_2_selection_sort_interval_seq(inputs: seq<int>, bound: nat) returns (sorted: seq<int>)
+
+The method should respect the following contract:
+
+requires forall i :: 0 <= i < |inputs| ==> 0 <= inputs[i] <= bound, ensures forall i, j :: 0 <= i < j < |sorted| ==> sorted[i] <= sorted[j], ensures multiset(inputs) == multiset(sorted)
+
+Produce and show only the Dafny body of this method, including the curly braces that surround it. Do not show the signature nor contract. You must not use 'assume' nor 'expect' anywhere in your code.
+\end{lstlisting}
+\subsection*{GenAI $\rightarrow$ Program}
+\textbf{System fingerprint: }null
+\\\textbf{ID: }chatcmpl-DnPjNaeSagIF9yBwJgmczeyIaXgE4
+\\\textbf{Model: }gpt-5.5-2026-04-23
+\\\textbf{Created at: }1780669353
+\\\textbf{Finish reason: }stop
+\\\textbf{Usage: }358 tokens in, and 7439 tokens out
+\begin{lstlisting}
+{
+  sorted := [];
+  var rest := inputs;
+  var v: int := 0;
+
+  while v <= bound
+    invariant 0 <= v <= bound + 1
+    invariant multiset(inputs) == multiset(sorted) + multiset(rest)
+    invariant forall i, j :: 0 <= i < j < |sorted| ==> sorted[i] <= sorted[j]
+    invariant forall i :: 0 <= i < |sorted| ==> sorted[i] < v
+    invariant forall i :: 0 <= i < |rest| ==> v <= rest[i] <= bound
+    decreases bound + 1 - v
+  {
+    assert 0 <= v <= bound;
+
+    while exists k :: 0 <= k < |rest| && rest[k] == v
+      invariant 0 <= v <= bound
+      invariant multiset(inputs) == multiset(sorted) + multiset(rest)
+      invariant forall i, j :: 0 <= i < j < |sorted| ==> sorted[i] <= sorted[j]
+      invariant forall i :: 0 <= i < |sorted| ==> sorted[i] <= v
+      invariant forall i :: 0 <= i < |rest| ==> v <= rest[i] <= bound
+      decreases |rest|
+    {
+      var k :| 0 <= k < |rest| && rest[k] == v;
+      var oldSorted := sorted;
+      var oldRest := rest;
+      var newSorted := oldSorted + [v];
+      var newRest := oldRest[..k] + oldRest[(k + 1)..];
+
+      assert oldRest == oldRest[..k] + [oldRest[k]] + oldRest[(k + 1)..];
+      assert oldRest[k] == v;
+      assert multiset(oldRest) == multiset([v]) + multiset(newRest);
+      assert multiset(newSorted) == multiset(oldSorted) + multiset([v]);
+      calc {
+        multiset(inputs);
+        == multiset(oldSorted) + multiset(oldRest);
+        == multiset(oldSorted) + (multiset([v]) + multiset(newRest));
+        == (multiset(oldSorted) + multiset([v])) + multiset(newRest);
+        == multiset(newSorted) + multiset(newRest);
+      }
+
+      assert forall a, b :: 0 <= a < b < |newSorted| ==> newSorted[a] <= newSorted[b] by {
+        forall a, b | 0 <= a < b < |newSorted|
+          ensures newSorted[a] <= newSorted[b]
+        {
+          if b < |oldSorted| {
+            assert newSorted[a] == oldSorted[a];
+            assert newSorted[b] == oldSorted[b];
+          } else {
+            assert b == |oldSorted|;
+            assert a < |oldSorted|;
+            assert newSorted[a] == oldSorted[a];
+            assert newSorted[b] == v;
+            assert oldSorted[a] <= v;
+          }
+        }
+      }
+
+      assert forall t :: 0 <= t < |newSorted| ==> newSorted[t] <= v by {
+        forall t | 0 <= t < |newSorted|
+          ensures newSorted[t] <= v
+        {
+          if t < |oldSorted| {
+            assert newSorted[t] == oldSorted[t];
+          } else {
+            assert t == |oldSorted|;
+            assert newSorted[t] == v;
+          }
+        }
+      }
+
+      assert forall t :: 0 <= t < |newRest| ==> v <= newRest[t] <= bound by {
+        forall t | 0 <= t < |newRest|
+          ensures v <= newRest[t] <= bound
+        {
+          if t < k {
+            assert newRest[t] == oldRest[t];
+          } else {
+            assert t + 1 < |oldRest|;
+            assert newRest[t] == oldRest[t + 1];
+          }
+        }
+      }
+
+      sorted := newSorted;
+      rest := newRest;
+    }
+
+    assert !(exists k :: 0 <= k < |rest| && rest[k] == v);
+    assert forall t :: 0 <= t < |rest| ==> v + 1 <= rest[t] <= bound by {
+      forall t | 0 <= t < |rest|
+        ensures v + 1 <= rest[t] <= bound
+      {
+        assert v <= rest[t] <= bound;
+        assert rest[t] != v;
+        assert v < rest[t];
+      }
+    }
+    assert forall t :: 0 <= t < |sorted| ==> sorted[t] < v + 1 by {
+      forall t | 0 <= t < |sorted|
+        ensures sorted[t] < v + 1
+      {
+        assert sorted[t] <= v;
+      }
+    }
+    v := v + 1;
+  }
+
+  assert v == bound + 1;
+  if |rest| != 0 {
+    assert 0 <= 0 < |rest|;
+    assert v <= rest[0] <= bound;
+    assert false;
+  }
+  assert |rest| == 0;
+  assert rest == [];
+  assert multiset(rest) == multiset{};
+  assert multiset(inputs) == multiset(sorted);
+}
+\end{lstlisting}
+\section*{Final Program}
+\begin{lstlisting}
+method p_14_2_selection_sort_interval_seq(inputs: seq<int>, bound: nat) returns (sorted: seq<int>)
+	requires forall i :: 0 <= i < |inputs| ==> 0 <= inputs[i] <= bound
+	ensures forall i, j :: 0 <= i < j < |sorted| ==> sorted[i] <= sorted[j]
+	ensures multiset(inputs) == multiset(sorted)
+{
+  sorted := [];
+  var rest := inputs;
+  var v: int := 0;
+
+  while v <= bound
+    invariant 0 <= v <= bound + 1
+    invariant multiset(inputs) == multiset(sorted) + multiset(rest)
+    invariant forall i, j :: 0 <= i < j < |sorted| ==> sorted[i] <= sorted[j]
+    invariant forall i :: 0 <= i < |sorted| ==> sorted[i] < v
+    invariant forall i :: 0 <= i < |rest| ==> v <= rest[i] <= bound
+    decreases bound + 1 - v
+  {
+    assert 0 <= v <= bound;
+
+    while exists k :: 0 <= k < |rest| && rest[k] == v
+      invariant 0 <= v <= bound
+      invariant multiset(inputs) == multiset(sorted) + multiset(rest)
+      invariant forall i, j :: 0 <= i < j < |sorted| ==> sorted[i] <= sorted[j]
+      invariant forall i :: 0 <= i < |sorted| ==> sorted[i] <= v
+      invariant forall i :: 0 <= i < |rest| ==> v <= rest[i] <= bound
+      decreases |rest|
+    {
+      var k :| 0 <= k < |rest| && rest[k] == v;
+      var oldSorted := sorted;
+      var oldRest := rest;
+      var newSorted := oldSorted + [v];
+      var newRest := oldRest[..k] + oldRest[(k + 1)..];
+
+      assert oldRest == oldRest[..k] + [oldRest[k]] + oldRest[(k + 1)..];
+      assert oldRest[k] == v;
+      assert multiset(oldRest) == multiset([v]) + multiset(newRest);
+      assert multiset(newSorted) == multiset(oldSorted) + multiset([v]);
+      calc {
+        multiset(inputs);
+        == multiset(oldSorted) + multiset(oldRest);
+        == multiset(oldSorted) + (multiset([v]) + multiset(newRest));
+        == (multiset(oldSorted) + multiset([v])) + multiset(newRest);
+        == multiset(newSorted) + multiset(newRest);
+      }
+
+      assert forall a, b :: 0 <= a < b < |newSorted| ==> newSorted[a] <= newSorted[b] by {
+        forall a, b | 0 <= a < b < |newSorted|
+          ensures newSorted[a] <= newSorted[b]
+        {
+          if b < |oldSorted| {
+            assert newSorted[a] == oldSorted[a];
+            assert newSorted[b] == oldSorted[b];
+          } else {
+            assert b == |oldSorted|;
+            assert a < |oldSorted|;
+            assert newSorted[a] == oldSorted[a];
+            assert newSorted[b] == v;
+            assert oldSorted[a] <= v;
+          }
+        }
+      }
+
+      assert forall t :: 0 <= t < |newSorted| ==> newSorted[t] <= v by {
+        forall t | 0 <= t < |newSorted|
+          ensures newSorted[t] <= v
+        {
+          if t < |oldSorted| {
+            assert newSorted[t] == oldSorted[t];
+          } else {
+            assert t == |oldSorted|;
+            assert newSorted[t] == v;
+          }
+        }
+      }
+
+      assert forall t :: 0 <= t < |newRest| ==> v <= newRest[t] <= bound by {
+        forall t | 0 <= t < |newRest|
+          ensures v <= newRest[t] <= bound
+        {
+          if t < k {
+            assert newRest[t] == oldRest[t];
+          } else {
+            assert t + 1 < |oldRest|;
+            assert newRest[t] == oldRest[t + 1];
+          }
+        }
+      }
+
+      sorted := newSorted;
+      rest := newRest;
+    }
+
+    assert !(exists k :: 0 <= k < |rest| && rest[k] == v);
+    assert forall t :: 0 <= t < |rest| ==> v + 1 <= rest[t] <= bound by {
+      forall t | 0 <= t < |rest|
+        ensures v + 1 <= rest[t] <= bound
+      {
+        assert v <= rest[t] <= bound;
+        assert rest[t] != v;
+        assert v < rest[t];
+      }
+    }
+    assert forall t :: 0 <= t < |sorted| ==> sorted[t] < v + 1 by {
+      forall t | 0 <= t < |sorted|
+        ensures sorted[t] < v + 1
+      {
+        assert sorted[t] <= v;
+      }
+    }
+    v := v + 1;
+  }
+
+  assert v == bound + 1;
+  if |rest| != 0 {
+    assert 0 <= 0 < |rest|;
+    assert v <= rest[0] <= bound;
+    assert false;
+  }
+  assert |rest| == 0;
+  assert rest == [];
+  assert multiset(rest) == multiset{};
+  assert multiset(inputs) == multiset(sorted);
+}
+\end{lstlisting}
+\section*{Total Token Usage}
+\textbf{Input tokens: }358
+\\\textbf{Output tokens: }7439
+\\\textbf{Reasoning tokens: }6143
+\\\textbf{Sum of `total tokens': }7797
+\section*{Experiment Timings}
+\textbf{Overall Experiment} started at 1780669352432, ended at 1780669500966, lasting 148534ms (148.53 seconds)
+\\\textbf{Iteration \#1} started at 1780669352458, ended at 1780669500966, lasting 148508ms (148.51 seconds)
+\end{document}

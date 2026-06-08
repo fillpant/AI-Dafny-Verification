@@ -1,0 +1,10 @@
+[
+  {
+    "role": "user",
+    "content": "You are given the following task to perform in Dafny:\n\nWrite a method with loops that computes the sum of all even numbers between 2 and 100 (inclusive).\n\nThe signature should be:\n\np_4_1_a_sum_even_numbers() returns (sum: int)\n\nThe method should respect the following contract:\n\nensures sum \u003d\u003d 2550\n\nProduce and show only the Dafny body of this method, including the curly braces that surround it. Do not show the signature nor contract. You must not use \u0027assume\u0027 nor \u0027expect\u0027 anywhere in your code."
+  },
+  {
+    "role": "assistant",
+    "content": "{\"method_body\":\"{\\n  sum :\u003d 0;\\n  var n :\u003d 1;\\n  while n \u003c\u003d 50\\n    invariant 1 \u003c\u003d n \u003c\u003d 51\\n    invariant sum \u003d\u003d n * (n - 1)\\n    decreases 51 - n\\n  {\\n    sum :\u003d sum + 2 * n;\\n    n :\u003d n + 1;\\n  }\\n  assert n \u003d\u003d 51;\\n  assert sum \u003d\u003d 51 * 50;\\n  assert sum \u003d\u003d 2550;\\n}\"}"
+  }
+]

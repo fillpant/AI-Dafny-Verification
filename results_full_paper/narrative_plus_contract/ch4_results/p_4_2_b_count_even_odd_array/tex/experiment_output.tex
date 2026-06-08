@@ -1,0 +1,203 @@
+\documentclass{article}
+\usepackage{lmodern}
+\usepackage{amsmath}
+\usepackage{listings}
+\usepackage{fullpage}
+\usepackage{parskip}
+\usepackage{xcolor}
+\lstset{
+	basicstyle=\ttfamily,
+	columns=fullflexible,
+	frame=single,
+	breaklines=true,
+	postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},
+}
+\begin{document}
+\title{Experiment `p\_4\_2\_b\_count\_even\_odd\_array' Results}
+\author{\today}
+\date{}
+\maketitle
+\textbf{Experiment outcome: }SUCCESS
+\\\textbf{Bad responses: }0
+\\\textbf{Responses containing}~\texttt{assume}~\textbf{: }0
+\\\textbf{Responses containing}~\texttt{expect}~\textbf{: }0
+\\\textbf{Resolution attempts: }1
+\\\textbf{Hard fails (resolution): }0
+\\\textbf{Soft fails (resolution): }0
+\\\textbf{Verification attempts: }1
+\section*{Problem Specification}
+\textbf{Problem name: }p\_4\_2\_b\_count\_even\_odd\_array
+\\\textbf{Natural language statement: }Write a method that takes a sequence of integers and returns the number of even and odd inputs.
+\\\textbf{Method signature: }p\_4\_2\_b\_count\_even\_odd\_array(inputs: array<int>) returns (even\_count: int, odd\_count: int)
+\subsection*{Ensures}
+\begin{itemize}
+\item \texttt{even\_count == number\_even(inputs[..])}
+\item \texttt{odd\_count == number\_odd(inputs[..])}
+\end{itemize}
+\subsection*{Functional Code Given}
+\begin{lstlisting}
+function number_odd(s: seq<int>): int
+{ if s == [] then 0
+  else if s[0] % 2 == 1 then 1 + number_odd(s[1..])
+  else number_odd(s[1..])
+}
+
+function number_even (s: seq<int>): int
+{ if s == [] then 0
+  else if s[0] % 2 == 0 then 1 + number_even(s[1..])
+  else number_even(s[1..])
+}
+\end{lstlisting}
+\clearpage
+\section*{GenAI interactions}
+Below you will find all interactions between the `user' (program) and the `assistant' (OpenAI).
+\subsection*{Program $\rightarrow$ GenAI}
+\begin{lstlisting}
+You are given the following task to perform in Dafny:
+
+Write a method that takes a sequence of integers and returns the number of even and odd inputs.
+
+The signature should be:
+
+p_4_2_b_count_even_odd_array(inputs: array<int>) returns (even_count: int, odd_count: int)
+
+The method should respect the following contract:
+
+ensures even_count == number_even(inputs[..]), ensures odd_count == number_odd(inputs[..])
+
+The contract uses the following dafny code:
+
+function number_odd(s: seq<int>): int
+{ if s == [] then 0
+  else if s[0] % 2 == 1 then 1 + number_odd(s[1..])
+  else number_odd(s[1..])
+}
+
+function number_even (s: seq<int>): int
+{ if s == [] then 0
+  else if s[0] % 2 == 0 then 1 + number_even(s[1..])
+  else number_even(s[1..])
+}
+
+These function(s) must not be used in your implementation of the method.
+
+Produce and show only the Dafny body of this method, including the curly braces that surround it. Do not show the signature nor contract. You must not use 'assume' nor 'expect' anywhere in your code.
+\end{lstlisting}
+\subsection*{GenAI $\rightarrow$ Program}
+\textbf{System fingerprint: }null
+\\\textbf{ID: }chatcmpl-Dme62fGSpHMVJftUWY5AULOp7kNPX
+\\\textbf{Model: }gpt-5.5-2026-04-23
+\\\textbf{Created at: }1780486246
+\\\textbf{Finish reason: }stop
+\\\textbf{Usage: }578 tokens in, and 4495 tokens out
+\begin{lstlisting}
+{
+  even_count := 0;
+  odd_count := 0;
+  var i := inputs.Length;
+  assert inputs[i..] == [];
+
+  while i > 0
+    invariant 0 <= i <= inputs.Length
+    invariant even_count == number_even(inputs[i..])
+    invariant odd_count == number_odd(inputs[i..])
+    decreases i
+  {
+    ghost var tail := inputs[i..];
+    i := i - 1;
+
+    assert 0 <= i < inputs.Length;
+    assert tail == inputs[i + 1..];
+    assert inputs[i..i + 1] == [inputs[i]];
+    assert inputs[i..] == inputs[i..i + 1] + inputs[i + 1..];
+    assert inputs[i..] == [inputs[i]] + tail;
+    assert inputs[i..] != [];
+    assert (inputs[i..])[0] == inputs[i];
+    assert (inputs[i..])[1..] == tail;
+
+    if inputs[i] % 2 == 0 {
+      assert inputs[i] % 2 != 1;
+      even_count := even_count + 1;
+      assert number_even(inputs[i..]) == 1 + number_even(tail);
+      assert number_odd(inputs[i..]) == number_odd(tail);
+    } else {
+      assert 0 <= inputs[i] % 2 < 2;
+      assert inputs[i] % 2 == 1;
+      odd_count := odd_count + 1;
+      assert number_even(inputs[i..]) == number_even(tail);
+      assert number_odd(inputs[i..]) == 1 + number_odd(tail);
+    }
+  }
+
+  assert i == 0;
+  assert inputs[i..] == inputs[..];
+}
+\end{lstlisting}
+\section*{Final Program}
+\begin{lstlisting}
+function number_odd(s: seq<int>): int
+{ if s == [] then 0
+  else if s[0] % 2 == 1 then 1 + number_odd(s[1..])
+  else number_odd(s[1..])
+}
+
+function number_even (s: seq<int>): int
+{ if s == [] then 0
+  else if s[0] % 2 == 0 then 1 + number_even(s[1..])
+  else number_even(s[1..])
+}
+
+method p_4_2_b_count_even_odd_array(inputs: array<int>) returns (even_count: int, odd_count: int)
+	ensures even_count == number_even(inputs[..])
+	ensures odd_count == number_odd(inputs[..])
+{
+  even_count := 0;
+  odd_count := 0;
+  var i := inputs.Length;
+  assert inputs[i..] == [];
+
+  while i > 0
+    invariant 0 <= i <= inputs.Length
+    invariant even_count == number_even(inputs[i..])
+    invariant odd_count == number_odd(inputs[i..])
+    decreases i
+  {
+    ghost var tail := inputs[i..];
+    i := i - 1;
+
+    assert 0 <= i < inputs.Length;
+    assert tail == inputs[i + 1..];
+    assert inputs[i..i + 1] == [inputs[i]];
+    assert inputs[i..] == inputs[i..i + 1] + inputs[i + 1..];
+    assert inputs[i..] == [inputs[i]] + tail;
+    assert inputs[i..] != [];
+    assert (inputs[i..])[0] == inputs[i];
+    assert (inputs[i..])[1..] == tail;
+
+    if inputs[i] % 2 == 0 {
+      assert inputs[i] % 2 != 1;
+      even_count := even_count + 1;
+      assert number_even(inputs[i..]) == 1 + number_even(tail);
+      assert number_odd(inputs[i..]) == number_odd(tail);
+    } else {
+      assert 0 <= inputs[i] % 2 < 2;
+      assert inputs[i] % 2 == 1;
+      odd_count := odd_count + 1;
+      assert number_even(inputs[i..]) == number_even(tail);
+      assert number_odd(inputs[i..]) == 1 + number_odd(tail);
+    }
+  }
+
+  assert i == 0;
+  assert inputs[i..] == inputs[..];
+}
+\end{lstlisting}
+\section*{Total Token Usage}
+\textbf{Input tokens: }578
+\\\textbf{Output tokens: }4495
+\\\textbf{Reasoning tokens: }4026
+\\\textbf{Sum of `total tokens': }5073
+\section*{Experiment Timings}
+\textbf{Overall Experiment} started at 1780486246470, ended at 1780486331221, lasting 84751ms (84.75 seconds)
+\\\textbf{Iteration \#1} started at 1780486246471, ended at 1780486331221, lasting 84750ms (84.75 seconds)
+\end{document}

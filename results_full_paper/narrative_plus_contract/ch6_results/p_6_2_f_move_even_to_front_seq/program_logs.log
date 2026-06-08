@@ -1,0 +1,77 @@
+[04/06/26 13:54:18.912] [Experiment 'p_6_2_f_move_even_to_front_seq'] [INFO]: Experiment created.
+[04/06/26 13:54:18.913] [Experiment 'p_6_2_f_move_even_to_front_seq'] [INFO]: Experiment started.
+[04/06/26 13:54:18.914] [Experiment 'p_6_2_f_move_even_to_front_seq'] [INFO]: Using initial prompt: You are given the following task to perform in Dafny:
+
+Write a method to move all even elements in an array to the front, otherwise preserving the order of the elements.
+
+The signature should be:
+
+p_6_2_f_move_even_to_front_seq(inputs: seq<int>) returns (result: seq<int>)
+
+The method should respect the following contract:
+
+ensures result == evens(inputs) + odds(inputs)
+
+The contract uses the following dafny code:
+
+function evens(s: seq<int>): seq<int>
+{
+  if |s| == 0 then []
+  else if s[0] % 2 == 0
+       then [s[0]] + evens(s[1..])
+       else evens(s[1..])
+}
+
+function odds(s: seq<int>): seq<int>
+{
+  if |s| == 0 then []
+  else if s[0] % 2 != 0
+       then [s[0]] + odds(s[1..])
+       else odds(s[1..])
+}
+
+These function(s) must not be used in your implementation of the method.
+
+Produce and show only the Dafny body of this method, including the curly braces that surround it. Do not show the signature nor contract. You must not use 'assume' nor 'expect' anywhere in your code.
+[04/06/26 13:54:18.915] [Experiment 'p_6_2_f_move_even_to_front_seq'] [INFO]: There are 30000 left in the jar, for the rest of this experiment.
+[04/06/26 13:54:18.916] [Experiment 'p_6_2_f_move_even_to_front_seq'] [INFO]: Querrying GenAI...
+[04/06/26 13:54:18.916] [Experiment 'p_6_2_f_move_even_to_front_seq'] [FINE]: Constructing message for GenAI
+[04/06/26 13:54:18.917] [Experiment 'p_6_2_f_move_even_to_front_seq'] [INFO]: Context is on, attaching 1 previous messages in the request to GenAI.
+[04/06/26 13:54:18.917] [Experiment 'p_6_2_f_move_even_to_front_seq'] [INFO]: A reasoning model is chosen, but no reasoning effort value is set. Setting reasoning to 'medium'
+[04/06/26 13:54:18.919] [Experiment 'p_6_2_f_move_even_to_front_seq'] [FINE]: Setting max tokens for the request to 30000
+[04/06/26 13:54:18.921] [Experiment 'p_6_2_f_move_even_to_front_seq'] [FINE]: Using model gpt-5.5. Awaiting response...
+[04/06/26 13:56:12.535] [Experiment 'p_6_2_f_move_even_to_front_seq'] [FINE]: Got response with 1126 characters.
+[04/06/26 13:56:12.536] [Experiment 'p_6_2_f_move_even_to_front_seq'] [FINE]: Saving gen_ai_messages.json
+[04/06/26 13:56:12.537] [Experiment 'p_6_2_f_move_even_to_front_seq'] [FINE]: Saved 5140 characters to file gen_ai_messages.json
+[04/06/26 13:56:12.537] [Experiment 'p_6_2_f_move_even_to_front_seq'] [FINE]: Saving gen_ai_messages_simple.json
+[04/06/26 13:56:12.553] [Experiment 'p_6_2_f_move_even_to_front_seq'] [FINE]: Saved 2699 characters to file gen_ai_messages_simple.json
+[04/06/26 13:56:12.553] [Experiment 'p_6_2_f_move_even_to_front_seq'] [INFO]: Converting GenAI response to a program...
+[04/06/26 13:56:12.553] [Experiment 'p_6_2_f_move_even_to_front_seq'] [INFO]: Treating GenAIs response as a partial method, not a complete program (Since, the problem spec has a method signature).
+[04/06/26 13:56:12.553] [Experiment 'p_6_2_f_move_even_to_front_seq'] [FINE]: Saving program.dfy
+[04/06/26 13:56:12.629] [Experiment 'p_6_2_f_move_even_to_front_seq'] [FINE]: Saved 1498 characters to file program.dfy
+[04/06/26 13:56:12.813] [Experiment 'p_6_2_f_move_even_to_front_seq'] [INFO]: Context is treated as being fully enabled, meaning that subsequent prompts do not include the full code.
+[04/06/26 13:56:12.813] [Experiment 'p_6_2_f_move_even_to_front_seq'] [INFO]: Checking the code for the presence of the 'assume' or 'expect' keyword...
+[04/06/26 13:56:12.813] [Experiment 'p_6_2_f_move_even_to_front_seq'] [INFO]: Calling dafny to resolve the generated code...
+[04/06/26 13:56:22.098] [Experiment 'p_6_2_f_move_even_to_front_seq'] [INFO]: Program exited with code 0
+[04/06/26 13:56:22.132] [Experiment 'p_6_2_f_move_even_to_front_seq'] [INFO]: Program stdout: 
+Dafny program verifier did not attempt verification
+[04/06/26 13:56:22.132] [Experiment 'p_6_2_f_move_even_to_front_seq'] [INFO]: Calling dafny to resolve the generated code, but with warnings allowed...
+[04/06/26 13:56:38.215] [Experiment 'p_6_2_f_move_even_to_front_seq'] [INFO]: Program exited with code 0
+[04/06/26 13:56:38.408] [Experiment 'p_6_2_f_move_even_to_front_seq'] [INFO]: Program stdout: 
+Dafny program verifier did not attempt verification
+[04/06/26 13:56:38.478] [Experiment 'p_6_2_f_move_even_to_front_seq'] [INFO]: Resolution passes without warnings.
+[04/06/26 13:56:38.650] [Experiment 'p_6_2_f_move_even_to_front_seq'] [INFO]: Dafny resolution check passed.
+[04/06/26 13:56:38.650] [Experiment 'p_6_2_f_move_even_to_front_seq'] [INFO]: Calling dafny to verify the generated code...
+[04/06/26 13:57:03.646] [Experiment 'p_6_2_f_move_even_to_front_seq'] [INFO]: Program exited with code 0
+[04/06/26 13:57:03.649] [Experiment 'p_6_2_f_move_even_to_front_seq'] [INFO]: Program stdout: 
+Dafny program verifier finished with 3 verified, 0 errors
+[04/06/26 13:57:03.649] [Experiment 'p_6_2_f_move_even_to_front_seq'] [INFO]: Dafny verification check passed.
+[04/06/26 13:57:03.649] [Experiment 'p_6_2_f_move_even_to_front_seq'] [INFO]: Experiment finished.
+[04/06/26 13:57:03.671] [Experiment 'p_6_2_f_move_even_to_front_seq'] [FINE]: Saving gen_ai_messages.json
+[04/06/26 13:57:03.702] [Experiment 'p_6_2_f_move_even_to_front_seq'] [FINE]: Saved 5140 characters to file gen_ai_messages.json
+[04/06/26 13:57:03.703] [Experiment 'p_6_2_f_move_even_to_front_seq'] [FINE]: Saving gen_ai_messages_simple.json
+[04/06/26 13:57:03.704] [Experiment 'p_6_2_f_move_even_to_front_seq'] [FINE]: Saved 2699 characters to file gen_ai_messages_simple.json
+[04/06/26 13:57:03.705] [Experiment 'p_6_2_f_move_even_to_front_seq'] [FINE]: Saving experiment_result.json
+[04/06/26 13:57:03.705] [Experiment 'p_6_2_f_move_even_to_front_seq'] [FINE]: Saved 674 characters to file experiment_result.json
+[04/06/26 13:57:07.397] [Experiment 'p_6_2_f_move_even_to_front_seq'] [INFO]: Compilation of experiment report tex file successful
+[04/06/26 18:17:57.484] [Experiment 'p_6_2_f_move_even_to_front_seq'] [INFO]: Experiment created.

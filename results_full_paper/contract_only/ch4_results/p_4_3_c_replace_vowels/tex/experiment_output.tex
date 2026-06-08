@@ -1,0 +1,132 @@
+\documentclass{article}
+\usepackage{lmodern}
+\usepackage{amsmath}
+\usepackage{listings}
+\usepackage{fullpage}
+\usepackage{parskip}
+\usepackage{xcolor}
+\lstset{
+	basicstyle=\ttfamily,
+	columns=fullflexible,
+	frame=single,
+	breaklines=true,
+	postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},
+}
+\begin{document}
+\title{Experiment `p\_4\_3\_c\_replace\_vowels' Results}
+\author{\today}
+\date{}
+\maketitle
+\textbf{Experiment outcome: }SUCCESS
+\\\textbf{Bad responses: }0
+\\\textbf{Responses containing}~\texttt{assume}~\textbf{: }0
+\\\textbf{Responses containing}~\texttt{expect}~\textbf{: }0
+\\\textbf{Resolution attempts: }2
+\\\textbf{Hard fails (resolution): }0
+\\\textbf{Soft fails (resolution): }0
+\\\textbf{Verification attempts: }2
+\section*{Problem Specification}
+\textbf{Problem name: }p\_4\_3\_c\_replace\_vowels
+\\\textbf{Natural language statement: }null
+\\\textbf{Method signature: }p\_4\_3\_c\_replace\_vowels(s: string) returns (result: string)
+\subsection*{Ensures}
+\begin{itemize}
+\item \texttt{|result| == |s|}
+\item \texttt{forall i :: 0 <= i < |s| ==> (if s[i] in ['a','e','i','o','u','A','E','I','O','U'] then result[i] == '\_' else result[i] == s[i])}
+\end{itemize}
+\clearpage
+\section*{GenAI interactions}
+Below you will find all interactions between the `user' (program) and the `assistant' (OpenAI).
+\subsection*{Program $\rightarrow$ GenAI}
+\begin{lstlisting}
+You are given the following task to perform in Dafny:
+
+Write a method to satisfy the below requirements.
+
+The signature should be:
+
+p_4_3_c_replace_vowels(s: string) returns (result: string)
+
+The method should respect the following contract:
+
+ensures |result| == |s|, ensures forall i :: 0 <= i < |s| ==> (if s[i] in ['a','e','i','o','u','A','E','I','O','U'] then result[i] == '_' else result[i] == s[i])
+
+Produce and show only the Dafny body of this method, including the curly braces that surround it. Do not show the signature nor contract. You must not use 'assume' nor 'expect' anywhere in your code.
+\end{lstlisting}
+\subsection*{GenAI $\rightarrow$ Program}
+\textbf{System fingerprint: }null
+\\\textbf{ID: }chatcmpl-DnLr2ePkjCYio3vBviVLX8JUvb1La
+\\\textbf{Model: }gpt-5.5-2026-04-23
+\\\textbf{Created at: }1780654452
+\\\textbf{Finish reason: }stop
+\\\textbf{Usage: }360 tokens in, and 1599 tokens out
+\begin{lstlisting}
+{
+  result := seq(|s|, i => if s[i] in ['a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U'] then '_' else s[i]);
+}
+\end{lstlisting}
+\subsection*{Program $\rightarrow$ GenAI}
+\begin{lstlisting}
+When using dafny verify, the below error is emitted and verify fails:
+
+problem_data/p_4_3_c_replace_vowels/program.dfy(5,30): Error: index out of range
+  |
+5 |   result := seq(|s|, i => if s[i] in ['a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U'] then '_' else s[i]);
+  |                               ^
+
+
+Dafny program verifier finished with 1 verified, 1 error
+
+Correct the error in code by altering only the method body. Produce and show only the Dafny body, including the curly braces that surround it. Do not show the signature nor contract. You must not use 'assume' nor 'expect' anywhere in your code.
+\end{lstlisting}
+\subsection*{GenAI $\rightarrow$ Program}
+\textbf{System fingerprint: }null
+\\\textbf{ID: }chatcmpl-DnLrptA3ZIs53lDNJFJLcHpq6bzpW
+\\\textbf{Model: }gpt-5.5-2026-04-23
+\\\textbf{Created at: }1780654501
+\\\textbf{Finish reason: }stop
+\\\textbf{Usage: }612 tokens in, and 710 tokens out
+\begin{lstlisting}
+{
+  result := "";
+  var i := 0;
+  while i < |s|
+    invariant 0 <= i <= |s|
+    invariant |result| == i
+    invariant forall j :: 0 <= j < i ==> (if s[j] in ['a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U'] then result[j] == '_' else result[j] == s[j])
+  {
+    var c := if s[i] in ['a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U'] then '_' else s[i];
+    result := result + [c];
+    i := i + 1;
+  }
+}
+\end{lstlisting}
+\section*{Final Program}
+\begin{lstlisting}
+method p_4_3_c_replace_vowels(s: string) returns (result: string)
+	ensures |result| == |s|
+	ensures forall i :: 0 <= i < |s| ==> (if s[i] in ['a','e','i','o','u','A','E','I','O','U'] then result[i] == '_' else result[i] == s[i])
+{
+  result := "";
+  var i := 0;
+  while i < |s|
+    invariant 0 <= i <= |s|
+    invariant |result| == i
+    invariant forall j :: 0 <= j < i ==> (if s[j] in ['a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U'] then result[j] == '_' else result[j] == s[j])
+  {
+    var c := if s[i] in ['a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U'] then '_' else s[i];
+    result := result + [c];
+    i := i + 1;
+  }
+}
+\end{lstlisting}
+\section*{Total Token Usage}
+\textbf{Input tokens: }972
+\\\textbf{Output tokens: }2309
+\\\textbf{Reasoning tokens: }2026
+\\\textbf{Sum of `total tokens': }3281
+\section*{Experiment Timings}
+\textbf{Overall Experiment} started at 1780654451849, ended at 1780654533683, lasting 81834ms (81.83 seconds)
+\\\textbf{Iteration \#1} started at 1780654451849, ended at 1780654500858, lasting 49009ms (49.01 seconds)
+\\\textbf{Iteration \#2} started at 1780654500859, ended at 1780654533683, lasting 32824ms (32.82 seconds)
+\end{document}

@@ -1,0 +1,211 @@
+\documentclass{article}
+\usepackage{lmodern}
+\usepackage{amsmath}
+\usepackage{listings}
+\usepackage{fullpage}
+\usepackage{parskip}
+\usepackage{xcolor}
+\lstset{
+	basicstyle=\ttfamily,
+	columns=fullflexible,
+	frame=single,
+	breaklines=true,
+	postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},
+}
+\begin{document}
+\title{Experiment `p\_6\_2\_f\_move\_even\_to\_front\_seq' Results}
+\author{\today}
+\date{}
+\maketitle
+\textbf{Experiment outcome: }SUCCESS
+\\\textbf{Bad responses: }0
+\\\textbf{Responses containing}~\texttt{assume}~\textbf{: }0
+\\\textbf{Responses containing}~\texttt{expect}~\textbf{: }0
+\\\textbf{Resolution attempts: }1
+\\\textbf{Hard fails (resolution): }0
+\\\textbf{Soft fails (resolution): }0
+\\\textbf{Verification attempts: }1
+\section*{Problem Specification}
+\textbf{Problem name: }p\_6\_2\_f\_move\_even\_to\_front\_seq
+\\\textbf{Natural language statement: }null
+\\\textbf{Method signature: }p\_6\_2\_f\_move\_even\_to\_front\_seq(inputs: seq<int>) returns (result: seq<int>)
+\subsection*{Ensures}
+\begin{itemize}
+\item \texttt{result == evens(inputs) + odds(inputs)}
+\end{itemize}
+\subsection*{Functional Code Given}
+\begin{lstlisting}
+function evens(s: seq<int>): seq<int>
+{
+  if |s| == 0 then []
+  else if s[0] % 2 == 0
+       then [s[0]] + evens(s[1..])
+       else evens(s[1..])
+}
+
+function odds(s: seq<int>): seq<int>
+{
+  if |s| == 0 then []
+  else if s[0] % 2 != 0
+       then [s[0]] + odds(s[1..])
+       else odds(s[1..])
+}
+\end{lstlisting}
+\clearpage
+\section*{GenAI interactions}
+Below you will find all interactions between the `user' (program) and the `assistant' (OpenAI).
+\subsection*{Program $\rightarrow$ GenAI}
+\begin{lstlisting}
+You are given the following task to perform in Dafny:
+
+Write a method to satisfy the below requirements.
+
+The signature should be:
+
+p_6_2_f_move_even_to_front_seq(inputs: seq<int>) returns (result: seq<int>)
+
+The method should respect the following contract:
+
+ensures result == evens(inputs) + odds(inputs)
+
+The contract uses the following dafny code:
+
+function evens(s: seq<int>): seq<int>
+{
+  if |s| == 0 then []
+  else if s[0] % 2 == 0
+       then [s[0]] + evens(s[1..])
+       else evens(s[1..])
+}
+
+function odds(s: seq<int>): seq<int>
+{
+  if |s| == 0 then []
+  else if s[0] % 2 != 0
+       then [s[0]] + odds(s[1..])
+       else odds(s[1..])
+}
+
+These function(s) must not be used in your implementation of the method.
+
+Produce and show only the Dafny body of this method, including the curly braces that surround it. Do not show the signature nor contract. You must not use 'assume' nor 'expect' anywhere in your code.
+\end{lstlisting}
+\subsection*{GenAI $\rightarrow$ Program}
+\textbf{System fingerprint: }null
+\\\textbf{ID: }chatcmpl-DnNt9hHQydtoAc3iVeqX7Zl5Xjsj9
+\\\textbf{Model: }gpt-5.5-2026-04-23
+\\\textbf{Created at: }1780662271
+\\\textbf{Finish reason: }stop
+\\\textbf{Usage: }552 tokens in, and 3001 tokens out
+\begin{lstlisting}
+{
+  var i := |inputs|;
+  var evenPart: seq<int> := [];
+  var oddPart: seq<int> := [];
+
+  assert inputs[|inputs|..] == [];
+  assert evens(inputs[|inputs|..]) == [];
+  assert odds(inputs[|inputs|..]) == [];
+
+  while i > 0
+    invariant 0 <= i <= |inputs|
+    invariant evenPart == evens(inputs[i..])
+    invariant oddPart == odds(inputs[i..])
+    decreases i
+  {
+    i := i - 1;
+
+    assert 0 <= i < |inputs|;
+    assert |inputs[i..]| > 0;
+    assert inputs[i..][0] == inputs[i];
+    assert inputs[i..][1..] == inputs[i + 1..];
+
+    if inputs[i] % 2 == 0 {
+      assert evens(inputs[i..]) == [inputs[i]] + evens(inputs[i + 1..]);
+      assert odds(inputs[i..]) == odds(inputs[i + 1..]);
+      evenPart := [inputs[i]] + evenPart;
+      assert evenPart == evens(inputs[i..]);
+      assert oddPart == odds(inputs[i..]);
+    } else {
+      assert evens(inputs[i..]) == evens(inputs[i + 1..]);
+      assert odds(inputs[i..]) == [inputs[i]] + odds(inputs[i + 1..]);
+      oddPart := [inputs[i]] + oddPart;
+      assert evenPart == evens(inputs[i..]);
+      assert oddPart == odds(inputs[i..]);
+    }
+  }
+
+  assert i == 0;
+  result := evenPart + oddPart;
+}
+\end{lstlisting}
+\section*{Final Program}
+\begin{lstlisting}
+function evens(s: seq<int>): seq<int>
+{
+  if |s| == 0 then []
+  else if s[0] % 2 == 0
+       then [s[0]] + evens(s[1..])
+       else evens(s[1..])
+}
+
+function odds(s: seq<int>): seq<int>
+{
+  if |s| == 0 then []
+  else if s[0] % 2 != 0
+       then [s[0]] + odds(s[1..])
+       else odds(s[1..])
+}
+
+method p_6_2_f_move_even_to_front_seq(inputs: seq<int>) returns (result: seq<int>)
+	ensures result == evens(inputs) + odds(inputs)
+{
+  var i := |inputs|;
+  var evenPart: seq<int> := [];
+  var oddPart: seq<int> := [];
+
+  assert inputs[|inputs|..] == [];
+  assert evens(inputs[|inputs|..]) == [];
+  assert odds(inputs[|inputs|..]) == [];
+
+  while i > 0
+    invariant 0 <= i <= |inputs|
+    invariant evenPart == evens(inputs[i..])
+    invariant oddPart == odds(inputs[i..])
+    decreases i
+  {
+    i := i - 1;
+
+    assert 0 <= i < |inputs|;
+    assert |inputs[i..]| > 0;
+    assert inputs[i..][0] == inputs[i];
+    assert inputs[i..][1..] == inputs[i + 1..];
+
+    if inputs[i] % 2 == 0 {
+      assert evens(inputs[i..]) == [inputs[i]] + evens(inputs[i + 1..]);
+      assert odds(inputs[i..]) == odds(inputs[i + 1..]);
+      evenPart := [inputs[i]] + evenPart;
+      assert evenPart == evens(inputs[i..]);
+      assert oddPart == odds(inputs[i..]);
+    } else {
+      assert evens(inputs[i..]) == evens(inputs[i + 1..]);
+      assert odds(inputs[i..]) == [inputs[i]] + odds(inputs[i + 1..]);
+      oddPart := [inputs[i]] + oddPart;
+      assert evenPart == evens(inputs[i..]);
+      assert oddPart == odds(inputs[i..]);
+    }
+  }
+
+  assert i == 0;
+  result := evenPart + oddPart;
+}
+\end{lstlisting}
+\section*{Total Token Usage}
+\textbf{Input tokens: }552
+\\\textbf{Output tokens: }3001
+\\\textbf{Reasoning tokens: }2557
+\\\textbf{Sum of `total tokens': }3553
+\section*{Experiment Timings}
+\textbf{Overall Experiment} started at 1780662269584, ended at 1780662369548, lasting 99964ms (99.96 seconds)
+\\\textbf{Iteration \#1} started at 1780662269584, ended at 1780662369548, lasting 99964ms (99.96 seconds)
+\end{document}

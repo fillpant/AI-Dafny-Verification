@@ -1,0 +1,162 @@
+\documentclass{article}
+\usepackage{lmodern}
+\usepackage{amsmath}
+\usepackage{listings}
+\usepackage{fullpage}
+\usepackage{parskip}
+\usepackage{xcolor}
+\lstset{
+	basicstyle=\ttfamily,
+	columns=fullflexible,
+	frame=single,
+	breaklines=true,
+	postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},
+}
+\begin{document}
+\title{Experiment `p\_6\_2\_a\_swap\_first\_last\_seq' Results}
+\author{\today}
+\date{}
+\maketitle
+\textbf{Experiment outcome: }SUCCESS
+\\\textbf{Bad responses: }0
+\\\textbf{Responses containing}~\texttt{assume}~\textbf{: }0
+\\\textbf{Responses containing}~\texttt{expect}~\textbf{: }0
+\\\textbf{Resolution attempts: }1
+\\\textbf{Hard fails (resolution): }0
+\\\textbf{Soft fails (resolution): }0
+\\\textbf{Verification attempts: }1
+\section*{Problem Specification}
+\textbf{Problem name: }p\_6\_2\_a\_swap\_first\_last\_seq
+\\\textbf{Natural language statement: }Write a method to swap the first and last elements in an array.
+\\\textbf{Method signature: }p\_6\_2\_a\_swap\_first\_last\_seq(inputs: seq<int>) returns (result: seq<int>)
+\subsection*{Ensures}
+\begin{itemize}
+\item \texttt{|result| == |inputs|}
+\item \texttt{result[0] == inputs[|inputs| - 1]}
+\item \texttt{result[|inputs| - 1] == inputs[0]}
+\item \texttt{forall i :: 1 <= i < |inputs| - 1 ==> result[i] == inputs[i]}
+\end{itemize}
+\subsection*{Requires}
+\begin{itemize}
+\item \texttt{|inputs| >= 2}
+\end{itemize}
+\clearpage
+\section*{GenAI interactions}
+Below you will find all interactions between the `user' (program) and the `assistant' (OpenAI).
+\subsection*{Program $\rightarrow$ GenAI}
+\begin{lstlisting}
+You are given the following task to perform in Dafny:
+
+Write a method to swap the first and last elements in an array.
+
+The signature should be:
+
+p_6_2_a_swap_first_last_seq(inputs: seq<int>) returns (result: seq<int>)
+
+The method should respect the following contract:
+
+requires |inputs| >= 2, ensures |result| == |inputs|, ensures result[0] == inputs[|inputs| - 1], ensures result[|inputs| - 1] == inputs[0], ensures forall i :: 1 <= i < |inputs| - 1 ==> result[i] == inputs[i]
+
+Produce and show only the Dafny body of this method, including the curly braces that surround it. Do not show the signature nor contract. You must not use 'assume' nor 'expect' anywhere in your code.
+\end{lstlisting}
+\subsection*{GenAI $\rightarrow$ Program}
+\textbf{System fingerprint: }null
+\\\textbf{ID: }chatcmpl-Dn0B0Uhg0nsq3VLiUaVPAwii2PoOc
+\\\textbf{Model: }gpt-5.5-2026-04-23
+\\\textbf{Created at: }1780571122
+\\\textbf{Finish reason: }stop
+\\\textbf{Usage: }390 tokens in, and 4951 tokens out
+\begin{lstlisting}
+{
+  var n := |inputs|;
+
+  assert 0 <= 0 < |inputs|;
+  assert 0 <= n - 1 < |inputs|;
+  var tmp := inputs[0 := inputs[n - 1]];
+  assert |tmp| == n;
+
+  assert 0 <= n - 1 < |tmp|;
+  result := tmp[n - 1 := inputs[0]];
+  assert |result| == n;
+
+  assert 1 <= n - 1;
+  assert n - 1 != 0;
+  assert 0 <= 0 < |result|;
+  assert 0 <= 0 < |tmp|;
+  assert result[0] == tmp[0];
+  assert tmp[0] == inputs[n - 1];
+  assert result[0] == inputs[n - 1];
+
+  assert 0 <= n - 1 < |result|;
+  assert result[n - 1] == inputs[0];
+
+  forall i | 1 <= i < n - 1
+    ensures result[i] == inputs[i]
+  {
+    assert 0 <= i;
+    assert i < n;
+    assert i < |result|;
+    assert i < |tmp|;
+    assert i < |inputs|;
+    assert i != n - 1;
+    assert i != 0;
+    assert result[i] == tmp[i];
+    assert tmp[i] == inputs[i];
+  }
+}
+\end{lstlisting}
+\section*{Final Program}
+\begin{lstlisting}
+method p_6_2_a_swap_first_last_seq(inputs: seq<int>) returns (result: seq<int>)
+	requires |inputs| >= 2
+	ensures |result| == |inputs|
+	ensures result[0] == inputs[|inputs| - 1]
+	ensures result[|inputs| - 1] == inputs[0]
+	ensures forall i :: 1 <= i < |inputs| - 1 ==> result[i] == inputs[i]
+{
+  var n := |inputs|;
+
+  assert 0 <= 0 < |inputs|;
+  assert 0 <= n - 1 < |inputs|;
+  var tmp := inputs[0 := inputs[n - 1]];
+  assert |tmp| == n;
+
+  assert 0 <= n - 1 < |tmp|;
+  result := tmp[n - 1 := inputs[0]];
+  assert |result| == n;
+
+  assert 1 <= n - 1;
+  assert n - 1 != 0;
+  assert 0 <= 0 < |result|;
+  assert 0 <= 0 < |tmp|;
+  assert result[0] == tmp[0];
+  assert tmp[0] == inputs[n - 1];
+  assert result[0] == inputs[n - 1];
+
+  assert 0 <= n - 1 < |result|;
+  assert result[n - 1] == inputs[0];
+
+  forall i | 1 <= i < n - 1
+    ensures result[i] == inputs[i]
+  {
+    assert 0 <= i;
+    assert i < n;
+    assert i < |result|;
+    assert i < |tmp|;
+    assert i < |inputs|;
+    assert i != n - 1;
+    assert i != 0;
+    assert result[i] == tmp[i];
+    assert tmp[i] == inputs[i];
+  }
+}
+\end{lstlisting}
+\section*{Total Token Usage}
+\textbf{Input tokens: }390
+\\\textbf{Output tokens: }4951
+\\\textbf{Reasoning tokens: }4542
+\\\textbf{Sum of `total tokens': }5341
+\section*{Experiment Timings}
+\textbf{Overall Experiment} started at 1780571122631, ended at 1780571232803, lasting 110172ms (110.17 seconds)
+\\\textbf{Iteration \#1} started at 1780571122631, ended at 1780571232803, lasting 110172ms (110.17 seconds)
+\end{document}

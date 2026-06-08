@@ -1,0 +1,153 @@
+\documentclass{article}
+\usepackage{lmodern}
+\usepackage{amsmath}
+\usepackage{listings}
+\usepackage{fullpage}
+\usepackage{parskip}
+\usepackage{xcolor}
+\lstset{
+	basicstyle=\ttfamily,
+	columns=fullflexible,
+	frame=single,
+	breaklines=true,
+	postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},
+}
+\begin{document}
+\title{Experiment `p\_6\_2\_h\_is\_sorted\_seq' Results}
+\author{\today}
+\date{}
+\maketitle
+\textbf{Experiment outcome: }SUCCESS
+\\\textbf{Bad responses: }0
+\\\textbf{Responses containing}~\texttt{assume}~\textbf{: }0
+\\\textbf{Responses containing}~\texttt{expect}~\textbf{: }0
+\\\textbf{Resolution attempts: }1
+\\\textbf{Hard fails (resolution): }0
+\\\textbf{Soft fails (resolution): }0
+\\\textbf{Verification attempts: }1
+\section*{Problem Specification}
+\textbf{Problem name: }p\_6\_2\_h\_is\_sorted\_seq
+\\\textbf{Natural language statement: }Write a method to return true if the given array is currently sorted in increasing order.
+\\\textbf{Method signature: }p\_6\_2\_h\_is\_sorted\_seq(inputs: seq<int>) returns (is\_sorted: bool)
+\subsection*{Ensures}
+\begin{itemize}
+\item \texttt{is\_sorted == (forall i :: 0 <= i < |inputs| - 1 ==> inputs[i] <= inputs[i + 1])}
+\end{itemize}
+\clearpage
+\section*{GenAI interactions}
+Below you will find all interactions between the `user' (program) and the `assistant' (OpenAI).
+\subsection*{Program $\rightarrow$ GenAI}
+\begin{lstlisting}
+You are given the following task to perform in Dafny:
+
+Write a method to return true if the given array is currently sorted in increasing order.
+
+The signature should be:
+
+p_6_2_h_is_sorted_seq(inputs: seq<int>) returns (is_sorted: bool)
+
+The method should respect the following contract:
+
+ensures is_sorted == (forall i :: 0 <= i < |inputs| - 1 ==> inputs[i] <= inputs[i + 1])
+
+Produce and show only the Dafny body of this method, including the curly braces that surround it. Do not show the signature nor contract. You must not use 'assume' nor 'expect' anywhere in your code.
+\end{lstlisting}
+\subsection*{GenAI $\rightarrow$ Program}
+\textbf{System fingerprint: }null
+\\\textbf{ID: }chatcmpl-Dn1D25ouKhFwi5VHK87x7v5Ia3WEr
+\\\textbf{Model: }gpt-5.5-2026-04-23
+\\\textbf{Created at: }1780575092
+\\\textbf{Finish reason: }stop
+\\\textbf{Usage: }314 tokens in, and 2933 tokens out
+\begin{lstlisting}
+{
+  if |inputs| < 2 {
+    is_sorted := true;
+    return;
+  }
+
+  var i := 0;
+  while i < |inputs| - 1
+    invariant 0 <= i <= |inputs| - 1
+    invariant forall k :: 0 <= k < i ==> inputs[k] <= inputs[k + 1]
+    decreases |inputs| - 1 - i
+  {
+    if inputs[i] > inputs[i + 1] {
+      is_sorted := false;
+      assert 0 <= i < |inputs| - 1;
+      assert !(inputs[i] <= inputs[i + 1]);
+      assert !(forall k :: 0 <= k < |inputs| - 1 ==> inputs[k] <= inputs[k + 1]);
+      return;
+    }
+
+    forall k | 0 <= k < i + 1
+      ensures inputs[k] <= inputs[k + 1]
+    {
+      if k == i {
+        assert inputs[k] <= inputs[k + 1];
+      } else {
+        assert k < i;
+        assert inputs[k] <= inputs[k + 1];
+      }
+    }
+
+    i := i + 1;
+  }
+
+  assert i == |inputs| - 1;
+  assert forall k :: 0 <= k < |inputs| - 1 ==> inputs[k] <= inputs[k + 1];
+  is_sorted := true;
+}
+\end{lstlisting}
+\section*{Final Program}
+\begin{lstlisting}
+method p_6_2_h_is_sorted_seq(inputs: seq<int>) returns (is_sorted: bool)
+	ensures is_sorted == (forall i :: 0 <= i < |inputs| - 1 ==> inputs[i] <= inputs[i + 1])
+{
+  if |inputs| < 2 {
+    is_sorted := true;
+    return;
+  }
+
+  var i := 0;
+  while i < |inputs| - 1
+    invariant 0 <= i <= |inputs| - 1
+    invariant forall k :: 0 <= k < i ==> inputs[k] <= inputs[k + 1]
+    decreases |inputs| - 1 - i
+  {
+    if inputs[i] > inputs[i + 1] {
+      is_sorted := false;
+      assert 0 <= i < |inputs| - 1;
+      assert !(inputs[i] <= inputs[i + 1]);
+      assert !(forall k :: 0 <= k < |inputs| - 1 ==> inputs[k] <= inputs[k + 1]);
+      return;
+    }
+
+    forall k | 0 <= k < i + 1
+      ensures inputs[k] <= inputs[k + 1]
+    {
+      if k == i {
+        assert inputs[k] <= inputs[k + 1];
+      } else {
+        assert k < i;
+        assert inputs[k] <= inputs[k + 1];
+      }
+    }
+
+    i := i + 1;
+  }
+
+  assert i == |inputs| - 1;
+  assert forall k :: 0 <= k < |inputs| - 1 ==> inputs[k] <= inputs[k + 1];
+  is_sorted := true;
+}
+\end{lstlisting}
+\section*{Total Token Usage}
+\textbf{Input tokens: }314
+\\\textbf{Output tokens: }2933
+\\\textbf{Reasoning tokens: }2560
+\\\textbf{Sum of `total tokens': }3247
+\section*{Experiment Timings}
+\textbf{Overall Experiment} started at 1780575091602, ended at 1780575196805, lasting 105203ms (105.20 seconds)
+\\\textbf{Iteration \#1} started at 1780575091604, ended at 1780575196805, lasting 105201ms (105.20 seconds)
+\end{document}

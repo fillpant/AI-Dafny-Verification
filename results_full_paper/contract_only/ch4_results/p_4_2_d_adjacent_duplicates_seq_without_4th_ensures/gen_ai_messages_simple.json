@@ -1,0 +1,10 @@
+[
+  {
+    "role": "user",
+    "content": "You are given the following task to perform in Dafny:\n\nWrite a method to satisfy the below requirements.\n\nThe signature should be:\n\np_4_2_d_adjacent_duplicates_seq_without_4th_ensures(inputs: seq\u003cint\u003e) returns (duplicates: seq\u003cint\u003e)\n\nThe method should respect the following contract:\n\nensures forall d :: d in duplicates \u003d\u003d\u003e d in inputs, ensures forall i :: 0 \u003c\u003d i \u003c |inputs| - 1 \u0026\u0026 inputs[i] \u003d\u003d inputs[i + 1] \u003d\u003d\u003e inputs[i] in duplicates, ensures forall d :: d in duplicates \u003d\u003d\u003e exists i :: 0 \u003c\u003d i \u003c |inputs| - 1 \u0026\u0026 inputs[i] \u003d\u003d inputs[i + 1] \u0026\u0026 inputs[i] \u003d\u003d d\n\nProduce and show only the Dafny body of this method, including the curly braces that surround it. Do not show the signature nor contract. You must not use \u0027assume\u0027 nor \u0027expect\u0027 anywhere in your code."
+  },
+  {
+    "role": "assistant",
+    "content": "{\"method_body\":\"{\\n  duplicates :\u003d [];\\n  var i :\u003d 0;\\n\\n  while i \u003c |inputs| - 1\\n    invariant 0 \u003c\u003d i \u003c\u003d |inputs|\\n    invariant forall d :: d in duplicates \u003d\u003d\u003e d in inputs\\n    invariant forall d :: d in duplicates \u003d\u003d\u003e exists j :: 0 \u003c\u003d j \u003c i \u0026\u0026 j \u003c |inputs| - 1 \u0026\u0026 inputs[j] \u003d\u003d inputs[j + 1] \u0026\u0026 inputs[j] \u003d\u003d d\\n    invariant forall j :: 0 \u003c\u003d j \u003c i \u0026\u0026 j \u003c |inputs| - 1 \u0026\u0026 inputs[j] \u003d\u003d inputs[j + 1] \u003d\u003d\u003e inputs[j] in duplicates\\n    decreases |inputs| - i\\n  {\\n    if inputs[i] \u003d\u003d inputs[i + 1] {\\n      duplicates :\u003d duplicates + [inputs[i]];\\n    }\\n    i :\u003d i + 1;\\n  }\\n}\"}"
+  }
+]

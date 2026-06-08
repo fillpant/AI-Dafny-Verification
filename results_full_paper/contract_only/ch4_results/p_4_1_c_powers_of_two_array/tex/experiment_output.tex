@@ -1,0 +1,300 @@
+\documentclass{article}
+\usepackage{lmodern}
+\usepackage{amsmath}
+\usepackage{listings}
+\usepackage{fullpage}
+\usepackage{parskip}
+\usepackage{xcolor}
+\lstset{
+	basicstyle=\ttfamily,
+	columns=fullflexible,
+	frame=single,
+	breaklines=true,
+	postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},
+}
+\begin{document}
+\title{Experiment `p\_4\_1\_c\_powers\_of\_two\_array' Results}
+\author{\today}
+\date{}
+\maketitle
+\textbf{Experiment outcome: }SUCCESS
+\\\textbf{Bad responses: }0
+\\\textbf{Responses containing}~\texttt{assume}~\textbf{: }0
+\\\textbf{Responses containing}~\texttt{expect}~\textbf{: }0
+\\\textbf{Resolution attempts: }3
+\\\textbf{Hard fails (resolution): }1
+\\\textbf{Soft fails (resolution): }0
+\\\textbf{Verification attempts: }2
+\section*{Problem Specification}
+\textbf{Problem name: }p\_4\_1\_c\_powers\_of\_two\_array
+\\\textbf{Natural language statement: }null
+\\\textbf{Method signature: }p\_4\_1\_c\_powers\_of\_two\_array() returns (powers: array<int>)
+\subsection*{Ensures}
+\begin{itemize}
+\item \texttt{powers.Length == 21}
+\item \texttt{forall i :: 0 <= i < powers.Length ==> powers[i] == pow(2, i)}
+\end{itemize}
+\subsection*{Functional Code Given}
+\begin{lstlisting}
+function pow(base: int, exp: int): int
+  requires  0 <= exp
+  decreases exp
+{
+  if exp == 0 then 1 else base * pow(base, exp - 1)
+}
+\end{lstlisting}
+\clearpage
+\section*{GenAI interactions}
+Below you will find all interactions between the `user' (program) and the `assistant' (OpenAI).
+\subsection*{Program $\rightarrow$ GenAI}
+\begin{lstlisting}
+You are given the following task to perform in Dafny:
+
+Write a method to satisfy the below requirements.
+
+The signature should be:
+
+p_4_1_c_powers_of_two_array() returns (powers: array<int>)
+
+The method should respect the following contract:
+
+ensures powers.Length == 21, ensures forall i :: 0 <= i < powers.Length ==> powers[i] == pow(2, i)
+
+The contract uses the following dafny code:
+
+function pow(base: int, exp: int): int
+  requires  0 <= exp
+  decreases exp
+{
+  if exp == 0 then 1 else base * pow(base, exp - 1)
+}
+
+These function(s) must not be used in your implementation of the method.
+
+Produce and show only the Dafny body of this method, including the curly braces that surround it. Do not show the signature nor contract. You must not use 'assume' nor 'expect' anywhere in your code.
+\end{lstlisting}
+\subsection*{GenAI $\rightarrow$ Program}
+\textbf{System fingerprint: }null
+\\\textbf{ID: }chatcmpl-DnLCO7aNoJgYRaHkz4wOAuO0M9a93
+\\\textbf{Model: }gpt-5.5-2026-04-23
+\\\textbf{Created at: }1780651932
+\\\textbf{Finish reason: }stop
+\\\textbf{Usage: }434 tokens in, and 3889 tokens out
+\begin{lstlisting}
+{
+  powers := new int[21](i =>
+    if i == 0 then 1
+    else if i == 1 then 2
+    else if i == 2 then 4
+    else if i == 3 then 8
+    else if i == 4 then 16
+    else if i == 5 then 32
+    else if i == 6 then 64
+    else if i == 7 then 128
+    else if i == 8 then 256
+    else if i == 9 then 512
+    else if i == 10 then 1024
+    else if i == 11 then 2048
+    else if i == 12 then 4096
+    else if i == 13 then 8192
+    else if i == 14 then 16384
+    else if i == 15 then 32768
+    else if i == 16 then 65536
+    else if i == 17 then 131072
+    else if i == 18 then 262144
+    else if i == 19 then 524288
+    else 1048576);
+}
+\end{lstlisting}
+\subsection*{Program $\rightarrow$ GenAI}
+\begin{lstlisting}
+When using dafny verify, the below error is emitted and verify fails:
+
+problem_data/p_4_1_c_powers_of_two_array/program.dfy(11,0): Error: a postcondition could not be proved on this return path
+   |
+11 | {
+   | ^
+
+problem_data/p_4_1_c_powers_of_two_array/program.dfy(10,9): Related location: this is the postcondition that could not be proved
+   |
+10 | 	ensures forall i :: 0 <= i < powers.Length ==> powers[i] == pow(2, i)
+   |          ^^^^^^
+
+
+Dafny program verifier finished with 2 verified, 1 error
+
+Correct the error in code by altering only the method body. Produce and show only the Dafny body, including the curly braces that surround it. Do not show the signature nor contract. You must not use 'assume' nor 'expect' anywhere in your code.
+\end{lstlisting}
+\subsection*{GenAI $\rightarrow$ Program}
+\textbf{System fingerprint: }null
+\\\textbf{ID: }chatcmpl-DnLEHZaBZmqJ3c4RiYhcPdbAn2KhE
+\\\textbf{Model: }gpt-5.5-2026-04-23
+\\\textbf{Created at: }1780652049
+\\\textbf{Finish reason: }stop
+\\\textbf{Usage: }903 tokens in, and 1317 tokens out
+\begin{lstlisting}
+{
+  powers := new int[21];
+  powers[0] := 1;
+  assert powers[0] == pow(2, 0);
+
+  var i := 1;
+  while i < powers.Length
+    invariant powers.Length == 21
+    invariant 1 <= i <= powers.Length
+    invariant forall j :: 0 <= j < i ==> powers[j] == pow(2, j)
+  {
+    powers[i] := 2 * powers[i - 1];
+    assert 0 <= i - 1;
+    assert powers[i - 1] == pow(2, i - 1);
+    assert pow(2, i) == 2 * pow(2, i - 1);
+    assert powers[i] == pow(2, i);
+    assert forall j :: 0 <= j < i + 1 ==> powers[j] == pow(2, j) by {
+      if j < i {
+        assert powers[j] == pow(2, j);
+      } else {
+        assert j == i;
+        assert powers[j] == pow(2, j);
+      }
+    }
+    i := i + 1;
+  }
+}
+\end{lstlisting}
+\subsection*{Program $\rightarrow$ GenAI}
+\begin{lstlisting}
+When using dafny resolve, the below error is emitted and resolve fails:
+
+problem_data/p_4_1_c_powers_of_two_array/program.dfy(28,9): Error: unresolved identifier: j
+   |
+28 |       if j < i {
+   |          ^
+
+problem_data/p_4_1_c_powers_of_two_array/program.dfy(29,22): Error: unresolved identifier: j
+   |
+29 |         assert powers[j] == pow(2, j);
+   |                       ^
+
+problem_data/p_4_1_c_powers_of_two_array/program.dfy(29,35): Error: unresolved identifier: j
+   |
+29 |         assert powers[j] == pow(2, j);
+   |                                    ^
+
+problem_data/p_4_1_c_powers_of_two_array/program.dfy(31,15): Error: unresolved identifier: j
+   |
+31 |         assert j == i;
+   |                ^
+
+problem_data/p_4_1_c_powers_of_two_array/program.dfy(32,22): Error: unresolved identifier: j
+   |
+32 |         assert powers[j] == pow(2, j);
+   |                       ^
+
+problem_data/p_4_1_c_powers_of_two_array/program.dfy(32,35): Error: unresolved identifier: j
+   |
+32 |         assert powers[j] == pow(2, j);
+   |                                    ^
+
+6 resolution/type errors detected in program.dfy
+
+Correct the error in code by altering only the method body. Produce and show only the Dafny body, including the curly braces that surround it. Do not show the signature nor contract. You must not use 'assume' nor 'expect' anywhere in your code.
+\end{lstlisting}
+\subsection*{GenAI $\rightarrow$ Program}
+\textbf{System fingerprint: }null
+\\\textbf{ID: }chatcmpl-DnLEtntZ0nR4PhKdHgy2eoVuhsHxQ
+\\\textbf{Model: }gpt-5.5-2026-04-23
+\\\textbf{Created at: }1780652087
+\\\textbf{Finish reason: }stop
+\\\textbf{Usage: }1714 tokens in, and 1359 tokens out
+\begin{lstlisting}
+{
+  powers := new int[21];
+  powers[0] := 1;
+  assert powers[0] == pow(2, 0);
+
+  var i := 1;
+  while i < powers.Length
+    invariant powers.Length == 21
+    invariant 1 <= i <= powers.Length
+    invariant forall j :: 0 <= j < i ==> powers[j] == pow(2, j)
+  {
+    powers[i] := 2 * powers[i - 1];
+    assert 0 <= i - 1;
+    assert powers[i - 1] == pow(2, i - 1);
+    assert i != 0;
+    assert pow(2, i) == 2 * pow(2, i - 1);
+    assert powers[i] == pow(2, i);
+
+    assert forall j :: 0 <= j < i + 1 ==> powers[j] == pow(2, j) by {
+      forall j | 0 <= j < i + 1
+        ensures powers[j] == pow(2, j)
+      {
+        if j < i {
+          assert powers[j] == pow(2, j);
+        } else {
+          assert j == i;
+          assert powers[j] == pow(2, j);
+        }
+      }
+    }
+    i := i + 1;
+  }
+}
+\end{lstlisting}
+\section*{Final Program}
+\begin{lstlisting}
+function pow(base: int, exp: int): int
+  requires  0 <= exp
+  decreases exp
+{
+  if exp == 0 then 1 else base * pow(base, exp - 1)
+}
+
+method p_4_1_c_powers_of_two_array() returns (powers: array<int>)
+	ensures powers.Length == 21
+	ensures forall i :: 0 <= i < powers.Length ==> powers[i] == pow(2, i)
+{
+  powers := new int[21];
+  powers[0] := 1;
+  assert powers[0] == pow(2, 0);
+
+  var i := 1;
+  while i < powers.Length
+    invariant powers.Length == 21
+    invariant 1 <= i <= powers.Length
+    invariant forall j :: 0 <= j < i ==> powers[j] == pow(2, j)
+  {
+    powers[i] := 2 * powers[i - 1];
+    assert 0 <= i - 1;
+    assert powers[i - 1] == pow(2, i - 1);
+    assert i != 0;
+    assert pow(2, i) == 2 * pow(2, i - 1);
+    assert powers[i] == pow(2, i);
+
+    assert forall j :: 0 <= j < i + 1 ==> powers[j] == pow(2, j) by {
+      forall j | 0 <= j < i + 1
+        ensures powers[j] == pow(2, j)
+      {
+        if j < i {
+          assert powers[j] == pow(2, j);
+        } else {
+          assert j == i;
+          assert powers[j] == pow(2, j);
+        }
+      }
+    }
+    i := i + 1;
+  }
+}
+\end{lstlisting}
+\section*{Total Token Usage}
+\textbf{Input tokens: }3051
+\\\textbf{Output tokens: }6565
+\\\textbf{Reasoning tokens: }5633
+\\\textbf{Sum of `total tokens': }9616
+\section*{Experiment Timings}
+\textbf{Overall Experiment} started at 1780651931850, ended at 1780652126501, lasting 194651ms (194.65 seconds)
+\\\textbf{Iteration \#1} started at 1780651931853, ended at 1780652047894, lasting 116041ms (116.04 seconds)
+\\\textbf{Iteration \#2} started at 1780652047894, ended at 1780652086616, lasting 38722ms (38.72 seconds)
+\\\textbf{Iteration \#3} started at 1780652086617, ended at 1780652126501, lasting 39884ms (39.88 seconds)
+\end{document}

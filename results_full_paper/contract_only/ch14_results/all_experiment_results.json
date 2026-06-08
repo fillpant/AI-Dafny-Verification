@@ -1,0 +1,315 @@
+[
+  {
+    "experiment_name": "p_14_1_selection_sort_desc_seq",
+    "outcome": "SUCCESS",
+    "usage": {
+      "tokensInput": 308,
+      "tokensOutput": 7362,
+      "tokensTotal": 7670,
+      "totalReasoningTokens": 5725
+    },
+    "badResponses": 0,
+    "verificationAttempts": 1,
+    "resolutionAttempts": 1,
+    "softFailedResolutions": 0,
+    "hardFailedResolutions": 0,
+    "responsesWithAssume": 0,
+    "responsesWithExpect": 0,
+    "experimentTimings": {
+      "events": {
+        "Overall Experiment": {
+          "startTimeMs": 1780668800185,
+          "endTimeMs": 1780668953966,
+          "durationMs": 153781
+        },
+        "Iteration #1": {
+          "startTimeMs": 1780668800196,
+          "endTimeMs": 1780668953966,
+          "durationMs": 153770
+        }
+      }
+    }
+  },
+  {
+    "experiment_name": "p_14_2_selection_sort_interval_array",
+    "outcome": "SUCCESS",
+    "usage": {
+      "tokensInput": 358,
+      "tokensOutput": 10107,
+      "tokensTotal": 10465,
+      "totalReasoningTokens": 8475
+    },
+    "badResponses": 0,
+    "verificationAttempts": 1,
+    "resolutionAttempts": 1,
+    "softFailedResolutions": 0,
+    "hardFailedResolutions": 0,
+    "responsesWithAssume": 0,
+    "responsesWithExpect": 0,
+    "experimentTimings": {
+      "events": {
+        "Overall Experiment": {
+          "startTimeMs": 1780669505281,
+          "endTimeMs": 1780669736279,
+          "durationMs": 230998
+        },
+        "Iteration #1": {
+          "startTimeMs": 1780669505282,
+          "endTimeMs": 1780669736278,
+          "durationMs": 230996
+        }
+      }
+    }
+  },
+  {
+    "experiment_name": "p_14_4_merge_sort_lexicographic_seq",
+    "outcome": "FAILURE_VERIFY",
+    "usage": {
+      "tokensInput": 15221,
+      "tokensOutput": 19727,
+      "tokensTotal": 34948,
+      "totalReasoningTokens": 16509
+    },
+    "badResponses": 1,
+    "verificationAttempts": 2,
+    "resolutionAttempts": 4,
+    "softFailedResolutions": 0,
+    "hardFailedResolutions": 2,
+    "responsesWithAssume": 0,
+    "responsesWithExpect": 0,
+    "experimentTimings": {
+      "events": {
+        "Overall Experiment": {
+          "startTimeMs": 1780669738465,
+          "endTimeMs": 1780670325100,
+          "durationMs": 586635
+        },
+        "Iteration #4": {
+          "startTimeMs": 1780669917767,
+          "endTimeMs": 1780670159571,
+          "durationMs": 241804
+        },
+        "Iteration #5": {
+          "startTimeMs": 1780670159572,
+          "endTimeMs": 1780670325099,
+          "durationMs": 165527
+        },
+        "Iteration #1": {
+          "startTimeMs": 1780669738466,
+          "endTimeMs": 1780669791997,
+          "durationMs": 53531
+        },
+        "Iteration #2": {
+          "startTimeMs": 1780669791998,
+          "endTimeMs": 1780669849799,
+          "durationMs": 57801
+        },
+        "Iteration #3": {
+          "startTimeMs": 1780669849799,
+          "endTimeMs": 1780669917766,
+          "durationMs": 67967
+        }
+      }
+    }
+  },
+  {
+    "experiment_name": "p_14_1_selection_sort_desc_array",
+    "outcome": "SUCCESS",
+    "usage": {
+      "tokensInput": 2245,
+      "tokensOutput": 16203,
+      "tokensTotal": 18448,
+      "totalReasoningTokens": 13130
+    },
+    "badResponses": 0,
+    "verificationAttempts": 2,
+    "resolutionAttempts": 2,
+    "softFailedResolutions": 0,
+    "hardFailedResolutions": 0,
+    "responsesWithAssume": 0,
+    "responsesWithExpect": 0,
+    "experimentTimings": {
+      "events": {
+        "Overall Experiment": {
+          "startTimeMs": 1780668956393,
+          "endTimeMs": 1780669345399,
+          "durationMs": 389006
+        },
+        "Iteration #1": {
+          "startTimeMs": 1780668956395,
+          "endTimeMs": 1780669185759,
+          "durationMs": 229364
+        },
+        "Iteration #2": {
+          "startTimeMs": 1780669185812,
+          "endTimeMs": 1780669345399,
+          "durationMs": 159587
+        }
+      }
+    }
+  },
+  {
+    "experiment_name": "p_14_7_bubble_sort_array",
+    "outcome": "FAILURE_RESOLVE",
+    "usage": {
+      "tokensInput": 23990,
+      "tokensOutput": 16047,
+      "tokensTotal": 40037,
+      "totalReasoningTokens": 10203
+    },
+    "badResponses": 1,
+    "verificationAttempts": 0,
+    "resolutionAttempts": 3,
+    "softFailedResolutions": 0,
+    "hardFailedResolutions": 3,
+    "responsesWithAssume": 0,
+    "responsesWithExpect": 0,
+    "experimentTimings": {
+      "events": {
+        "Overall Experiment": {
+          "startTimeMs": 1780671369432,
+          "endTimeMs": 1780671712254,
+          "durationMs": 342822
+        },
+        "Iteration #4": {
+          "startTimeMs": 1780671688694,
+          "endTimeMs": 1780671712253,
+          "durationMs": 23559
+        },
+        "Iteration #1": {
+          "startTimeMs": 1780671369446,
+          "endTimeMs": 1780671543250,
+          "durationMs": 173804
+        },
+        "Iteration #2": {
+          "startTimeMs": 1780671543250,
+          "endTimeMs": 1780671613783,
+          "durationMs": 70533
+        },
+        "Iteration #3": {
+          "startTimeMs": 1780671613783,
+          "endTimeMs": 1780671688694,
+          "durationMs": 74911
+        }
+      }
+    }
+  },
+  {
+    "experiment_name": "p_14_4_merge_sort_lexicographic_array",
+    "outcome": "FAILURE_VERIFY",
+    "usage": {
+      "tokensInput": 10126,
+      "tokensOutput": 24839,
+      "tokensTotal": 34965,
+      "totalReasoningTokens": 20505
+    },
+    "badResponses": 1,
+    "verificationAttempts": 3,
+    "resolutionAttempts": 3,
+    "softFailedResolutions": 0,
+    "hardFailedResolutions": 0,
+    "responsesWithAssume": 0,
+    "responsesWithExpect": 0,
+    "experimentTimings": {
+      "events": {
+        "Overall Experiment": {
+          "startTimeMs": 1780670333069,
+          "endTimeMs": 1780671004410,
+          "durationMs": 671341
+        },
+        "Iteration #4": {
+          "startTimeMs": 1780670969587,
+          "endTimeMs": 1780671004410,
+          "durationMs": 34823
+        },
+        "Iteration #1": {
+          "startTimeMs": 1780670333084,
+          "endTimeMs": 1780670546703,
+          "durationMs": 213619
+        },
+        "Iteration #2": {
+          "startTimeMs": 1780670546707,
+          "endTimeMs": 1780670742811,
+          "durationMs": 196104
+        },
+        "Iteration #3": {
+          "startTimeMs": 1780670742811,
+          "endTimeMs": 1780670969586,
+          "durationMs": 226775
+        }
+      }
+    }
+  },
+  {
+    "experiment_name": "p_14_7_bubble_sort_seq",
+    "outcome": "SUCCESS",
+    "usage": {
+      "tokensInput": 6832,
+      "tokensOutput": 13151,
+      "tokensTotal": 19983,
+      "totalReasoningTokens": 9535
+    },
+    "badResponses": 0,
+    "verificationAttempts": 2,
+    "resolutionAttempts": 3,
+    "softFailedResolutions": 0,
+    "hardFailedResolutions": 1,
+    "responsesWithAssume": 0,
+    "responsesWithExpect": 0,
+    "experimentTimings": {
+      "events": {
+        "Overall Experiment": {
+          "startTimeMs": 1780671009638,
+          "endTimeMs": 1780671363236,
+          "durationMs": 353598
+        },
+        "Iteration #1": {
+          "startTimeMs": 1780671009843,
+          "endTimeMs": 1780671142181,
+          "durationMs": 132338
+        },
+        "Iteration #2": {
+          "startTimeMs": 1780671142182,
+          "endTimeMs": 1780671235676,
+          "durationMs": 93494
+        },
+        "Iteration #3": {
+          "startTimeMs": 1780671235689,
+          "endTimeMs": 1780671363236,
+          "durationMs": 127547
+        }
+      }
+    }
+  },
+  {
+    "experiment_name": "p_14_2_selection_sort_interval_seq",
+    "outcome": "SUCCESS",
+    "usage": {
+      "tokensInput": 358,
+      "tokensOutput": 7439,
+      "tokensTotal": 7797,
+      "totalReasoningTokens": 6143
+    },
+    "badResponses": 0,
+    "verificationAttempts": 1,
+    "resolutionAttempts": 1,
+    "softFailedResolutions": 0,
+    "hardFailedResolutions": 0,
+    "responsesWithAssume": 0,
+    "responsesWithExpect": 0,
+    "experimentTimings": {
+      "events": {
+        "Overall Experiment": {
+          "startTimeMs": 1780669352432,
+          "endTimeMs": 1780669500966,
+          "durationMs": 148534
+        },
+        "Iteration #1": {
+          "startTimeMs": 1780669352458,
+          "endTimeMs": 1780669500966,
+          "durationMs": 148508
+        }
+      }
+    }
+  }
+]

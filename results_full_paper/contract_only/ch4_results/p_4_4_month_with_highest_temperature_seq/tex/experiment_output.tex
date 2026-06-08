@@ -1,0 +1,222 @@
+\documentclass{article}
+\usepackage{lmodern}
+\usepackage{amsmath}
+\usepackage{listings}
+\usepackage{fullpage}
+\usepackage{parskip}
+\usepackage{xcolor}
+\lstset{
+	basicstyle=\ttfamily,
+	columns=fullflexible,
+	frame=single,
+	breaklines=true,
+	postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},
+}
+\begin{document}
+\title{Experiment `p\_4\_4\_month\_with\_highest\_temperature\_seq' Results}
+\author{\today}
+\date{}
+\maketitle
+\textbf{Experiment outcome: }SUCCESS
+\\\textbf{Bad responses: }0
+\\\textbf{Responses containing}~\texttt{assume}~\textbf{: }0
+\\\textbf{Responses containing}~\texttt{expect}~\textbf{: }0
+\\\textbf{Resolution attempts: }1
+\\\textbf{Hard fails (resolution): }0
+\\\textbf{Soft fails (resolution): }0
+\\\textbf{Verification attempts: }1
+\section*{Problem Specification}
+\textbf{Problem name: }p\_4\_4\_month\_with\_highest\_temperature\_seq
+\\\textbf{Natural language statement: }null
+\\\textbf{Method signature: }p\_4\_4\_month\_with\_highest\_temperature\_seq(inputs: seq<real>) returns (hottest: int)
+\subsection*{Ensures}
+\begin{itemize}
+\item \texttt{1 <= hottest <= 12}
+\item \texttt{forall i :: 0 <= i <= |inputs| - 1 ==> inputs[hottest - 1] >= inputs[i]}
+\end{itemize}
+\subsection*{Requires}
+\begin{itemize}
+\item \texttt{|inputs| == 12}
+\end{itemize}
+\clearpage
+\section*{GenAI interactions}
+Below you will find all interactions between the `user' (program) and the `assistant' (OpenAI).
+\subsection*{Program $\rightarrow$ GenAI}
+\begin{lstlisting}
+You are given the following task to perform in Dafny:
+
+Write a method to satisfy the below requirements.
+
+The signature should be:
+
+p_4_4_month_with_highest_temperature_seq(inputs: seq<real>) returns (hottest: int)
+
+The method should respect the following contract:
+
+requires |inputs| == 12, ensures 1 <= hottest <= 12, ensures forall i :: 0 <= i <= |inputs| - 1 ==> inputs[hottest - 1] >= inputs[i]
+
+Produce and show only the Dafny body of this method, including the curly braces that surround it. Do not show the signature nor contract. You must not use 'assume' nor 'expect' anywhere in your code.
+\end{lstlisting}
+\subsection*{GenAI $\rightarrow$ Program}
+\textbf{System fingerprint: }null
+\\\textbf{ID: }chatcmpl-DnLzqHA5hn1ezF7eNRCRyhTNDCCO2
+\\\textbf{Model: }gpt-5.5-2026-04-23
+\\\textbf{Created at: }1780654998
+\\\textbf{Finish reason: }stop
+\\\textbf{Usage: }330 tokens in, and 4110 tokens out
+\begin{lstlisting}
+{
+  var maxIdx: int := 0;
+  var i: int := 1;
+
+  while i < |inputs|
+    invariant |inputs| == 12
+    invariant 1 <= i <= |inputs|
+    invariant 0 <= maxIdx < i
+    invariant forall j :: 0 <= j < i ==> inputs[maxIdx] >= inputs[j]
+    decreases |inputs| - i
+  {
+    if inputs[i] > inputs[maxIdx] {
+      var prev := maxIdx;
+      assert inputs[i] > inputs[prev];
+      assert forall j :: 0 <= j < i ==> inputs[prev] >= inputs[j];
+
+      maxIdx := i;
+      assert inputs[maxIdx] >= inputs[i];
+
+      assert forall j :: 0 <= j < i ==> inputs[maxIdx] >= inputs[j] by {
+        forall j | 0 <= j < i
+          ensures inputs[maxIdx] >= inputs[j]
+        {
+          assert inputs[prev] >= inputs[j];
+          assert inputs[maxIdx] == inputs[i];
+          assert inputs[i] > inputs[prev];
+        }
+      }
+    } else {
+      assert inputs[maxIdx] >= inputs[i];
+      assert forall j :: 0 <= j < i ==> inputs[maxIdx] >= inputs[j];
+    }
+
+    assert forall j :: 0 <= j < i ==> inputs[maxIdx] >= inputs[j];
+    assert forall j :: 0 <= j < i + 1 ==> inputs[maxIdx] >= inputs[j] by {
+      forall j | 0 <= j < i + 1
+        ensures inputs[maxIdx] >= inputs[j]
+      {
+        if j < i {
+          assert inputs[maxIdx] >= inputs[j];
+        } else {
+          assert j == i;
+          assert inputs[maxIdx] >= inputs[i];
+        }
+      }
+    }
+
+    i := i + 1;
+  }
+
+  hottest := maxIdx + 1;
+  assert i == |inputs|;
+  assert 0 <= maxIdx < |inputs|;
+  assert |inputs| == 12;
+  assert maxIdx < 12;
+  assert maxIdx <= 11;
+  assert 1 <= hottest <= 12;
+  assert hottest - 1 == maxIdx;
+
+  assert forall j :: 0 <= j <= |inputs| - 1 ==> inputs[hottest - 1] >= inputs[j] by {
+    forall j | 0 <= j <= |inputs| - 1
+      ensures inputs[hottest - 1] >= inputs[j]
+    {
+      assert j < |inputs|;
+      assert inputs[maxIdx] >= inputs[j];
+      assert hottest - 1 == maxIdx;
+    }
+  }
+}
+\end{lstlisting}
+\section*{Final Program}
+\begin{lstlisting}
+method p_4_4_month_with_highest_temperature_seq(inputs: seq<real>) returns (hottest: int)
+	requires |inputs| == 12
+	ensures 1 <= hottest <= 12
+	ensures forall i :: 0 <= i <= |inputs| - 1 ==> inputs[hottest - 1] >= inputs[i]
+{
+  var maxIdx: int := 0;
+  var i: int := 1;
+
+  while i < |inputs|
+    invariant |inputs| == 12
+    invariant 1 <= i <= |inputs|
+    invariant 0 <= maxIdx < i
+    invariant forall j :: 0 <= j < i ==> inputs[maxIdx] >= inputs[j]
+    decreases |inputs| - i
+  {
+    if inputs[i] > inputs[maxIdx] {
+      var prev := maxIdx;
+      assert inputs[i] > inputs[prev];
+      assert forall j :: 0 <= j < i ==> inputs[prev] >= inputs[j];
+
+      maxIdx := i;
+      assert inputs[maxIdx] >= inputs[i];
+
+      assert forall j :: 0 <= j < i ==> inputs[maxIdx] >= inputs[j] by {
+        forall j | 0 <= j < i
+          ensures inputs[maxIdx] >= inputs[j]
+        {
+          assert inputs[prev] >= inputs[j];
+          assert inputs[maxIdx] == inputs[i];
+          assert inputs[i] > inputs[prev];
+        }
+      }
+    } else {
+      assert inputs[maxIdx] >= inputs[i];
+      assert forall j :: 0 <= j < i ==> inputs[maxIdx] >= inputs[j];
+    }
+
+    assert forall j :: 0 <= j < i ==> inputs[maxIdx] >= inputs[j];
+    assert forall j :: 0 <= j < i + 1 ==> inputs[maxIdx] >= inputs[j] by {
+      forall j | 0 <= j < i + 1
+        ensures inputs[maxIdx] >= inputs[j]
+      {
+        if j < i {
+          assert inputs[maxIdx] >= inputs[j];
+        } else {
+          assert j == i;
+          assert inputs[maxIdx] >= inputs[i];
+        }
+      }
+    }
+
+    i := i + 1;
+  }
+
+  hottest := maxIdx + 1;
+  assert i == |inputs|;
+  assert 0 <= maxIdx < |inputs|;
+  assert |inputs| == 12;
+  assert maxIdx < 12;
+  assert maxIdx <= 11;
+  assert 1 <= hottest <= 12;
+  assert hottest - 1 == maxIdx;
+
+  assert forall j :: 0 <= j <= |inputs| - 1 ==> inputs[hottest - 1] >= inputs[j] by {
+    forall j | 0 <= j <= |inputs| - 1
+      ensures inputs[hottest - 1] >= inputs[j]
+    {
+      assert j < |inputs|;
+      assert inputs[maxIdx] >= inputs[j];
+      assert hottest - 1 == maxIdx;
+    }
+  }
+}
+\end{lstlisting}
+\section*{Total Token Usage}
+\textbf{Input tokens: }330
+\\\textbf{Output tokens: }4110
+\\\textbf{Reasoning tokens: }3427
+\\\textbf{Sum of `total tokens': }4440
+\section*{Experiment Timings}
+\textbf{Overall Experiment} started at 1780654995350, ended at 1780655099881, lasting 104531ms (104.53 seconds)
+\\\textbf{Iteration \#1} started at 1780654995350, ended at 1780655099880, lasting 104530ms (104.53 seconds)
+\end{document}

@@ -1,0 +1,169 @@
+\documentclass{article}
+\usepackage{lmodern}
+\usepackage{amsmath}
+\usepackage{listings}
+\usepackage{fullpage}
+\usepackage{parskip}
+\usepackage{xcolor}
+\lstset{
+	basicstyle=\ttfamily,
+	columns=fullflexible,
+	frame=single,
+	breaklines=true,
+	postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},
+}
+\begin{document}
+\title{Experiment `p\_4\_3\_e\_positions\_of\_vowels\_array' Results}
+\author{\today}
+\date{}
+\maketitle
+\textbf{Experiment outcome: }SUCCESS
+\\\textbf{Bad responses: }0
+\\\textbf{Responses containing}~\texttt{assume}~\textbf{: }0
+\\\textbf{Responses containing}~\texttt{expect}~\textbf{: }0
+\\\textbf{Resolution attempts: }2
+\\\textbf{Hard fails (resolution): }0
+\\\textbf{Soft fails (resolution): }0
+\\\textbf{Verification attempts: }2
+\section*{Problem Specification}
+\textbf{Problem name: }p\_4\_3\_e\_positions\_of\_vowels\_array
+\\\textbf{Natural language statement: }null
+\\\textbf{Method signature: }p\_4\_3\_e\_positions\_of\_vowels\_array(s: string) returns (positions: array<int>)
+\subsection*{Ensures}
+\begin{itemize}
+\item \texttt{forall p :: p in positions[..] ==> 0 <= p < |s| \&\& s[p] in ['a','e','i','o','u','A','E','I','O','U']}
+\item \texttt{forall i :: 0 <= i < |s| \&\& s[i] in ['a','e','i','o','u','A','E','I','O','U'] ==> i in positions[..]}
+\end{itemize}
+\clearpage
+\section*{GenAI interactions}
+Below you will find all interactions between the `user' (program) and the `assistant' (OpenAI).
+\subsection*{Program $\rightarrow$ GenAI}
+\begin{lstlisting}
+You are given the following task to perform in Dafny:
+
+Write a method to satisfy the below requirements.
+
+The signature should be:
+
+p_4_3_e_positions_of_vowels_array(s: string) returns (positions: array<int>)
+
+The method should respect the following contract:
+
+ensures forall p :: p in positions[..] ==> 0 <= p < |s| && s[p] in ['a','e','i','o','u','A','E','I','O','U'], ensures forall i :: 0 <= i < |s| && s[i] in ['a','e','i','o','u','A','E','I','O','U'] ==> i in positions[..]
+
+Produce and show only the Dafny body of this method, including the curly braces that surround it. Do not show the signature nor contract. You must not use 'assume' nor 'expect' anywhere in your code.
+\end{lstlisting}
+\subsection*{GenAI $\rightarrow$ Program}
+\textbf{System fingerprint: }null
+\\\textbf{ID: }chatcmpl-DnLwJihORMBWU7lzhooM67NgmmuLA
+\\\textbf{Model: }gpt-5.5-2026-04-23
+\\\textbf{Created at: }1780654779
+\\\textbf{Finish reason: }stop
+\\\textbf{Usage: }418 tokens in, and 5552 tokens out
+\begin{lstlisting}
+{
+  var acc: seq<int> := [];
+  var i := 0;
+  while i < |s|
+    invariant 0 <= i <= |s|
+    invariant forall p :: p in acc ==> 0 <= p < i && s[p] in ['a','e','i','o','u','A','E','I','O','U']
+    invariant forall j :: 0 <= j < i && s[j] in ['a','e','i','o','u','A','E','I','O','U'] ==> j in acc
+  {
+    if s[i] in ['a','e','i','o','u','A','E','I','O','U'] {
+      acc := acc + [i];
+    }
+    assert forall p :: p in acc ==> 0 <= p < i + 1 && s[p] in ['a','e','i','o','u','A','E','I','O','U'];
+    assert forall j :: 0 <= j < i + 1 && s[j] in ['a','e','i','o','u','A','E','I','O','U'] ==> j in acc;
+    i := i + 1;
+  }
+
+  positions := new int[|acc|](j => acc[j]);
+  assert positions.Length == |acc|;
+  assert forall j :: 0 <= j < |acc| ==> positions[j] == acc[j];
+  assert forall j :: 0 <= j < |positions[..]| ==> positions[..][j] == acc[j];
+  assert positions[..] == acc;
+}
+\end{lstlisting}
+\subsection*{Program $\rightarrow$ GenAI}
+\begin{lstlisting}
+When using dafny verify, the below error is emitted and verify fails:
+
+problem_data/p_4_3_e_positions_of_vowels_array/program.dfy(20,38): Error: index out of range
+   |
+20 |   positions := new int[|acc|](j => acc[j]);
+   |                                       ^
+
+
+Dafny program verifier finished with 1 verified, 1 error
+
+Correct the error in code by altering only the method body. Produce and show only the Dafny body, including the curly braces that surround it. Do not show the signature nor contract. You must not use 'assume' nor 'expect' anywhere in your code.
+\end{lstlisting}
+\subsection*{GenAI $\rightarrow$ Program}
+\textbf{System fingerprint: }null
+\\\textbf{ID: }chatcmpl-DnLyWamrzHEJ92q28iVzhLhZpjmey
+\\\textbf{Model: }gpt-5.5-2026-04-23
+\\\textbf{Created at: }1780654916
+\\\textbf{Finish reason: }stop
+\\\textbf{Usage: }878 tokens in, and 2449 tokens out
+\begin{lstlisting}
+{
+  var acc: seq<int> := [];
+  var i := 0;
+  while i < |s|
+    invariant 0 <= i <= |s|
+    invariant forall p :: p in acc ==> 0 <= p < i && s[p] in ['a','e','i','o','u','A','E','I','O','U']
+    invariant forall j :: 0 <= j < i && s[j] in ['a','e','i','o','u','A','E','I','O','U'] ==> j in acc
+  {
+    if s[i] in ['a','e','i','o','u','A','E','I','O','U'] {
+      acc := acc + [i];
+    }
+    assert forall p :: p in acc ==> 0 <= p < i + 1 && s[p] in ['a','e','i','o','u','A','E','I','O','U'];
+    assert forall j :: 0 <= j < i + 1 && s[j] in ['a','e','i','o','u','A','E','I','O','U'] ==> j in acc;
+    i := i + 1;
+  }
+
+  positions := new int[|acc|](j => if 0 <= j < |acc| then acc[j] else 0);
+  assert positions.Length == |acc|;
+  assert forall j :: 0 <= j < |acc| ==> positions[j] == acc[j];
+  assert forall j :: 0 <= j < |positions[..]| ==> positions[..][j] == acc[j];
+  assert positions[..] == acc;
+}
+\end{lstlisting}
+\section*{Final Program}
+\begin{lstlisting}
+method p_4_3_e_positions_of_vowels_array(s: string) returns (positions: array<int>)
+	ensures forall p :: p in positions[..] ==> 0 <= p < |s| && s[p] in ['a','e','i','o','u','A','E','I','O','U']
+	ensures forall i :: 0 <= i < |s| && s[i] in ['a','e','i','o','u','A','E','I','O','U'] ==> i in positions[..]
+{
+  var acc: seq<int> := [];
+  var i := 0;
+  while i < |s|
+    invariant 0 <= i <= |s|
+    invariant forall p :: p in acc ==> 0 <= p < i && s[p] in ['a','e','i','o','u','A','E','I','O','U']
+    invariant forall j :: 0 <= j < i && s[j] in ['a','e','i','o','u','A','E','I','O','U'] ==> j in acc
+  {
+    if s[i] in ['a','e','i','o','u','A','E','I','O','U'] {
+      acc := acc + [i];
+    }
+    assert forall p :: p in acc ==> 0 <= p < i + 1 && s[p] in ['a','e','i','o','u','A','E','I','O','U'];
+    assert forall j :: 0 <= j < i + 1 && s[j] in ['a','e','i','o','u','A','E','I','O','U'] ==> j in acc;
+    i := i + 1;
+  }
+
+  positions := new int[|acc|](j => if 0 <= j < |acc| then acc[j] else 0);
+  assert positions.Length == |acc|;
+  assert forall j :: 0 <= j < |acc| ==> positions[j] == acc[j];
+  assert forall j :: 0 <= j < |positions[..]| ==> positions[..][j] == acc[j];
+  assert positions[..] == acc;
+}
+\end{lstlisting}
+\section*{Total Token Usage}
+\textbf{Input tokens: }1296
+\\\textbf{Output tokens: }8001
+\\\textbf{Reasoning tokens: }7161
+\\\textbf{Sum of `total tokens': }9297
+\section*{Experiment Timings}
+\textbf{Overall Experiment} started at 1780654777109, ended at 1780654992354, lasting 215245ms (215.25 seconds)
+\\\textbf{Iteration \#1} started at 1780654777110, ended at 1780654915953, lasting 138843ms (138.84 seconds)
+\\\textbf{Iteration \#2} started at 1780654915953, ended at 1780654992354, lasting 76401ms (76.40 seconds)
+\end{document}

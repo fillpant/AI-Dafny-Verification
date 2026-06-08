@@ -1,0 +1,275 @@
+\documentclass{article}
+\usepackage{lmodern}
+\usepackage{amsmath}
+\usepackage{listings}
+\usepackage{fullpage}
+\usepackage{parskip}
+\usepackage{xcolor}
+\lstset{
+	basicstyle=\ttfamily,
+	columns=fullflexible,
+	frame=single,
+	breaklines=true,
+	postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},
+}
+\begin{document}
+\title{Experiment `p\_3\_3\_number\_of\_digits' Results}
+\author{\today}
+\date{}
+\maketitle
+\textbf{Experiment outcome: }SUCCESS
+\\\textbf{Bad responses: }0
+\\\textbf{Responses containing}~\texttt{assume}~\textbf{: }0
+\\\textbf{Responses containing}~\texttt{expect}~\textbf{: }0
+\\\textbf{Resolution attempts: }2
+\\\textbf{Hard fails (resolution): }0
+\\\textbf{Soft fails (resolution): }0
+\\\textbf{Verification attempts: }2
+\section*{Problem Specification}
+\textbf{Problem name: }p\_3\_3\_number\_of\_digits
+\\\textbf{Natural language statement: }null
+\\\textbf{Method signature: }p\_3\_3\_number\_of\_digits (i: int) returns (n: nat)
+\subsection*{Ensures}
+\begin{itemize}
+\item \texttt{i >= 0 ==> n == digits(i)}
+\item \texttt{i < 0 ==> n == digits(-i)}
+\end{itemize}
+\subsection*{Requires}
+\begin{itemize}
+\item \texttt{10000000000 > i > -10000000000}
+\end{itemize}
+\subsection*{Functional Code Given}
+\begin{lstlisting}
+function digits (n: nat): nat
+{
+    if 0 <= n <= 9 then 1
+    else 1 + digits (n / 10)
+}
+\end{lstlisting}
+\clearpage
+\section*{GenAI interactions}
+Below you will find all interactions between the `user' (program) and the `assistant' (OpenAI).
+\subsection*{Program $\rightarrow$ GenAI}
+\begin{lstlisting}
+You are given the following task to perform in Dafny:
+
+Write a method to satisfy the below requirements.
+
+The signature should be:
+
+p_3_3_number_of_digits (i: int) returns (n: nat)
+
+The method should respect the following contract:
+
+requires 10000000000 > i > -10000000000, ensures i >= 0 ==> n == digits(i), ensures i < 0 ==> n == digits(-i)
+
+The contract uses the following dafny code:
+
+function digits (n: nat): nat
+{
+    if 0 <= n <= 9 then 1
+    else 1 + digits (n / 10)
+}
+
+These function(s) must not be used in your implementation of the method.
+
+Produce and show only the Dafny body of this method, including the curly braces that surround it. Do not show the signature nor contract. You must not use 'assume' nor 'expect' anywhere in your code.
+\end{lstlisting}
+\subsection*{GenAI $\rightarrow$ Program}
+\textbf{System fingerprint: }null
+\\\textbf{ID: }chatcmpl-Dn35i1THYrYDrTz0LVIVD3h6CD7Bg
+\\\textbf{Model: }gpt-5.5-2026-04-23
+\\\textbf{Created at: }1780582326
+\\\textbf{Finish reason: }stop
+\\\textbf{Usage: }428 tokens in, and 747 tokens out
+\begin{lstlisting}
+{
+  var x: int;
+  if i < 0 {
+    x := -i;
+  } else {
+    x := i;
+  }
+
+  if x < 10 {
+    n := 1;
+  } else if x < 100 {
+    n := 2;
+  } else if x < 1000 {
+    n := 3;
+  } else if x < 10000 {
+    n := 4;
+  } else if x < 100000 {
+    n := 5;
+  } else if x < 1000000 {
+    n := 6;
+  } else if x < 10000000 {
+    n := 7;
+  } else if x < 100000000 {
+    n := 8;
+  } else if x < 1000000000 {
+    n := 9;
+  } else {
+    n := 10;
+  }
+}
+\end{lstlisting}
+\subsection*{Program $\rightarrow$ GenAI}
+\begin{lstlisting}
+When using dafny verify, the below error is emitted and verify fails:
+
+problem_data/p_3_3_number_of_digits/program.dfy(11,0): Error: a postcondition could not be proved on this return path
+   |
+11 | {
+   | ^
+
+problem_data/p_3_3_number_of_digits/program.dfy(9,22): Related location: this is the postcondition that could not be proved
+  |
+9 | 	ensures i >= 0 ==> n == digits(i)
+  |                       ^^
+
+problem_data/p_3_3_number_of_digits/program.dfy(11,0): Error: a postcondition could not be proved on this return path
+   |
+11 | {
+   | ^
+
+problem_data/p_3_3_number_of_digits/program.dfy(10,21): Related location: this is the postcondition that could not be proved
+   |
+10 | 	ensures i < 0 ==> n == digits(-i)
+   |                      ^^
+
+
+Dafny program verifier finished with 2 verified, 2 errors
+
+Correct the error in code by altering only the method body. Produce and show only the Dafny body, including the curly braces that surround it. Do not show the signature nor contract. You must not use 'assume' nor 'expect' anywhere in your code.
+\end{lstlisting}
+\subsection*{GenAI $\rightarrow$ Program}
+\textbf{System fingerprint: }null
+\\\textbf{ID: }chatcmpl-Dn36foJ9tz876uteDKk6XoBLpMoHf
+\\\textbf{Model: }gpt-5.5-2026-04-23
+\\\textbf{Created at: }1780582385
+\\\textbf{Finish reason: }stop
+\\\textbf{Usage: }1020 tokens in, and 5033 tokens out
+\begin{lstlisting}
+{
+  var x: nat;
+  if i < 0 {
+    assert -i > 0;
+    x := -i;
+  } else {
+    assert i >= 0;
+    x := i;
+  }
+
+  var y: nat := x;
+  n := 1;
+  while y >= 10
+    invariant n + digits(y) == 1 + digits(x)
+    decreases y
+  {
+    var z: nat := y / 10;
+    assert z < y;
+    assert !(0 <= y <= 9);
+    assert digits(y) == 1 + digits(z);
+    calc {
+      (n + 1) + digits(z);
+      ==
+      n + (1 + digits(z));
+      ==
+      n + digits(y);
+      ==
+      1 + digits(x);
+    }
+    n := n + 1;
+    y := z;
+  }
+
+  assert 0 <= y <= 9;
+  assert digits(y) == 1;
+  assert n + digits(y) == 1 + digits(x);
+  assert n + 1 == 1 + digits(x);
+  assert 1 + digits(x) == digits(x) + 1;
+  assert n + 1 == digits(x) + 1;
+  assert n == digits(x);
+
+  if i >= 0 {
+    assert x == i;
+    assert n == digits(i);
+  } else {
+    assert x == -i;
+    assert n == digits(-i);
+  }
+}
+\end{lstlisting}
+\section*{Final Program}
+\begin{lstlisting}
+function digits (n: nat): nat
+{
+    if 0 <= n <= 9 then 1
+    else 1 + digits (n / 10)
+}
+
+method p_3_3_number_of_digits (i: int) returns (n: nat)
+	requires 10000000000 > i > -10000000000
+	ensures i >= 0 ==> n == digits(i)
+	ensures i < 0 ==> n == digits(-i)
+{
+  var x: nat;
+  if i < 0 {
+    assert -i > 0;
+    x := -i;
+  } else {
+    assert i >= 0;
+    x := i;
+  }
+
+  var y: nat := x;
+  n := 1;
+  while y >= 10
+    invariant n + digits(y) == 1 + digits(x)
+    decreases y
+  {
+    var z: nat := y / 10;
+    assert z < y;
+    assert !(0 <= y <= 9);
+    assert digits(y) == 1 + digits(z);
+    calc {
+      (n + 1) + digits(z);
+      ==
+      n + (1 + digits(z));
+      ==
+      n + digits(y);
+      ==
+      1 + digits(x);
+    }
+    n := n + 1;
+    y := z;
+  }
+
+  assert 0 <= y <= 9;
+  assert digits(y) == 1;
+  assert n + digits(y) == 1 + digits(x);
+  assert n + 1 == 1 + digits(x);
+  assert 1 + digits(x) == digits(x) + 1;
+  assert n + 1 == digits(x) + 1;
+  assert n == digits(x);
+
+  if i >= 0 {
+    assert x == i;
+    assert n == digits(i);
+  } else {
+    assert x == -i;
+    assert n == digits(-i);
+  }
+}
+\end{lstlisting}
+\section*{Total Token Usage}
+\textbf{Input tokens: }1448
+\\\textbf{Output tokens: }5780
+\\\textbf{Reasoning tokens: }5120
+\\\textbf{Sum of `total tokens': }7228
+\section*{Experiment Timings}
+\textbf{Overall Experiment} started at 1780582323650, ended at 1780582555663, lasting 232013ms (232.01 seconds)
+\\\textbf{Iteration \#1} started at 1780582323677, ended at 1780582384977, lasting 61300ms (61.30 seconds)
+\\\textbf{Iteration \#2} started at 1780582384988, ended at 1780582555663, lasting 170675ms (170.68 seconds)
+\end{document}

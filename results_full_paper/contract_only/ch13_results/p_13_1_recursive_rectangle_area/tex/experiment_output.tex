@@ -1,0 +1,100 @@
+\documentclass{article}
+\usepackage{lmodern}
+\usepackage{amsmath}
+\usepackage{listings}
+\usepackage{fullpage}
+\usepackage{parskip}
+\usepackage{xcolor}
+\lstset{
+	basicstyle=\ttfamily,
+	columns=fullflexible,
+	frame=single,
+	breaklines=true,
+	postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},
+}
+\begin{document}
+\title{Experiment `p\_13\_1\_recursive\_rectangle\_area' Results}
+\author{\today}
+\date{}
+\maketitle
+\textbf{Experiment outcome: }SUCCESS
+\\\textbf{Bad responses: }0
+\\\textbf{Responses containing}~\texttt{assume}~\textbf{: }0
+\\\textbf{Responses containing}~\texttt{expect}~\textbf{: }0
+\\\textbf{Resolution attempts: }1
+\\\textbf{Hard fails (resolution): }0
+\\\textbf{Soft fails (resolution): }0
+\\\textbf{Verification attempts: }1
+\section*{Problem Specification}
+\textbf{Problem name: }p\_13\_1\_recursive\_rectangle\_area
+\\\textbf{Natural language statement: }null
+\\\textbf{Method signature: }p\_13\_1\_recursive\_rectangle\_area(width: nat, height: nat) returns (area: nat)
+\subsection*{Ensures}
+\begin{itemize}
+\item \texttt{area == width * height}
+\end{itemize}
+\subsection*{Requires}
+\begin{itemize}
+\item \texttt{1 <= width}
+\item \texttt{1 <= height}
+\end{itemize}
+\clearpage
+\section*{GenAI interactions}
+Below you will find all interactions between the `user' (program) and the `assistant' (OpenAI).
+\subsection*{Program $\rightarrow$ GenAI}
+\begin{lstlisting}
+You are given the following task to perform in Dafny:
+
+Write a method to satisfy the below requirements.
+
+The signature should be:
+
+p_13_1_recursive_rectangle_area(width: nat, height: nat) returns (area: nat)
+
+The method should respect the following contract:
+
+requires 1 <= width, requires 1 <= height, ensures area == width * height
+
+Produce and show only the Dafny body of this method, including the curly braces that surround it. Do not show the signature nor contract. You must not use 'assume' nor 'expect' anywhere in your code.
+\end{lstlisting}
+\subsection*{GenAI $\rightarrow$ Program}
+\textbf{System fingerprint: }null
+\\\textbf{ID: }chatcmpl-DnOmn7tLHaGgPo438kWbFLHTJipQo
+\\\textbf{Model: }gpt-5.5-2026-04-23
+\\\textbf{Created at: }1780665721
+\\\textbf{Finish reason: }stop
+\\\textbf{Usage: }276 tokens in, and 490 tokens out
+\begin{lstlisting}
+{
+  if height == 1 {
+    area := width;
+  } else {
+    var smallerArea := p_13_1_recursive_rectangle_area(width, height - 1);
+    area := smallerArea + width;
+  }
+}
+\end{lstlisting}
+\section*{Final Program}
+\begin{lstlisting}
+method p_13_1_recursive_rectangle_area(width: nat, height: nat) returns (area: nat)
+	requires 1 <= width
+	requires 1 <= height
+	ensures area == width * height
+{
+  if height == 1 {
+    area := width;
+  } else {
+    var smallerArea := p_13_1_recursive_rectangle_area(width, height - 1);
+    area := smallerArea + width;
+  }
+}
+\end{lstlisting}
+\section*{Total Token Usage}
+\textbf{Input tokens: }276
+\\\textbf{Output tokens: }490
+\\\textbf{Reasoning tokens: }418
+\\\textbf{Sum of `total tokens': }766
+\section*{Experiment Timings}
+\textbf{Overall Experiment} started at 1780665701034, ended at 1780665776386, lasting 75352ms (75.35 seconds)
+\\\textbf{Iteration \#1} started at 1780665701634, ended at 1780665776386, lasting 74752ms (74.75 seconds)
+\end{document}

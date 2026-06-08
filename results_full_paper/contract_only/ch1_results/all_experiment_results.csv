@@ -1,0 +1,11 @@
+Experiment,Outcome,Input tokens, Output tokens, Total reasoning tokens,Total tokens,Bad response cnt,Verification attempts,Resolution attempts,Soft-failed resolution cnt,Hard-failed resolution cnt,Responses with 'assume',Experiment time (ms),Iteration 1 time (ms),Iteration 2 time (ms),Iteration 3 time (ms),Iteration 4 time (ms),Iteration 5 time (ms),Iteration 6 time (ms),Iteration 7 time (ms),Iteration 8 time (ms)
+p_1_10_animal_speaking,SUCCESS,1115,7967,7676,9082,0,2,2,0,0,0,249402,127975,121422,,,,,,
+p_1_1_greeting,SUCCESS,238,23,0,261,0,1,1,0,0,0,45834,45802,,,,,,,
+p_1_2_sum,SUCCESS,248,76,42,324,0,1,1,0,0,0,38982,38981,,,,,,,
+p_1_3_product,SUCCESS,348,541,512,889,0,1,1,0,0,0,57444,57270,,,,,,,
+p_1_4_account_balance,SUCCESS,328,185,118,513,0,1,1,0,0,0,40796,40795,,,,,,,
+p_1_5_box,SUCCESS,254,96,56,350,0,1,1,0,0,0,72824,72778,,,,,,,
+p_1_6_large_letters,SUCCESS,400,204,93,604,0,1,1,0,0,0,51796,51766,,,,,,,
+p_1_7_face,SUCCESS,300,443,372,743,0,1,1,0,0,0,40041,39972,,,,,,,
+p_1_8_painting,SUCCESS,378,493,398,871,0,1,1,0,0,0,59124,59116,,,,,,,
+p_1_9_house,SUCCESS,296,57,0,353,0,1,1,0,0,0,31857,31853,,,,,,,

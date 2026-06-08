@@ -1,0 +1,10 @@
+[
+  {
+    "role": "user",
+    "content": "You are given the following task to perform in Dafny:\n\nWrite a method that computes and returns the perimeter of a letter-size (8.5 x 11 inches) sheet of paper and the length of its diagonal with a residual error less than 0.01.\n\nThe signature should be:\n\np_2_2_letter_perimeter() returns (perimeter: real, diagonal: real)\n\nThe method should respect the following contract:\n\nensures perimeter \u003d\u003d (8.5 + 11.0) * 2.0, ensures -0.01 \u003c (diagonal * diagonal) - ((8.5 * 8.5) + (11.0 * 11.0)) \u003c 0.01\n\nProduce and show only the Dafny body of this method, including the curly braces that surround it. Do not show the signature nor contract. You must not use \u0027assume\u0027 nor \u0027expect\u0027 anywhere in your code."
+  },
+  {
+    "role": "assistant",
+    "content": "{\"method_body\":\"{\\n  perimeter :\u003d (8.5 + 11.0) * 2.0;\\n  diagonal :\u003d 13.9014;\\n\\n  assert diagonal * diagonal \u003d\u003d 193.24892196;\\n  assert (8.5 * 8.5) + (11.0 * 11.0) \u003d\u003d 193.25;\\n  assert (diagonal * diagonal) - ((8.5 * 8.5) + (11.0 * 11.0)) \u003d\u003d -0.00107804;\\n  assert -0.01 \u003c -0.00107804;\\n  assert -0.00107804 \u003c 0.01;\\n}\"}"
+  }
+]

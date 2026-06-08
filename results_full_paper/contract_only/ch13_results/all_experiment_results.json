@@ -1,0 +1,373 @@
+[
+  {
+    "experiment_name": "p_13_10_recursive_area_polygon_seq",
+    "outcome": "SUCCESS",
+    "usage": {
+      "tokensInput": 6764,
+      "tokensOutput": 16864,
+      "tokensTotal": 23628,
+      "totalReasoningTokens": 14386
+    },
+    "badResponses": 0,
+    "verificationAttempts": 4,
+    "resolutionAttempts": 4,
+    "softFailedResolutions": 0,
+    "hardFailedResolutions": 0,
+    "responsesWithAssume": 0,
+    "responsesWithExpect": 0,
+    "experimentTimings": {
+      "events": {
+        "Overall Experiment": {
+          "startTimeMs": 1780667623432,
+          "endTimeMs": 1780668070384,
+          "durationMs": 446952
+        },
+        "Iteration #4": {
+          "startTimeMs": 1780667890319,
+          "endTimeMs": 1780668070384,
+          "durationMs": 180065
+        },
+        "Iteration #1": {
+          "startTimeMs": 1780667623433,
+          "endTimeMs": 1780667676577,
+          "durationMs": 53144
+        },
+        "Iteration #2": {
+          "startTimeMs": 1780667676580,
+          "endTimeMs": 1780667784433,
+          "durationMs": 107853
+        },
+        "Iteration #3": {
+          "startTimeMs": 1780667784433,
+          "endTimeMs": 1780667890298,
+          "durationMs": 105865
+        }
+      }
+    }
+  },
+  {
+    "experiment_name": "p_13_8_recursive_largest_array",
+    "outcome": "SUCCESS",
+    "usage": {
+      "tokensInput": 524,
+      "tokensOutput": 6642,
+      "tokensTotal": 7166,
+      "totalReasoningTokens": 6141
+    },
+    "badResponses": 0,
+    "verificationAttempts": 1,
+    "resolutionAttempts": 1,
+    "softFailedResolutions": 0,
+    "hardFailedResolutions": 0,
+    "responsesWithAssume": 0,
+    "responsesWithExpect": 0,
+    "experimentTimings": {
+      "events": {
+        "Overall Experiment": {
+          "startTimeMs": 1780666780499,
+          "endTimeMs": 1780666944671,
+          "durationMs": 164172
+        },
+        "Iteration #1": {
+          "startTimeMs": 1780666780500,
+          "endTimeMs": 1780666944521,
+          "durationMs": 164021
+        }
+      }
+    }
+  },
+  {
+    "experiment_name": "p_13_6_recursive_find",
+    "outcome": "SUCCESS",
+    "usage": {
+      "tokensInput": 426,
+      "tokensOutput": 4828,
+      "tokensTotal": 5254,
+      "totalReasoningTokens": 4608
+    },
+    "badResponses": 0,
+    "verificationAttempts": 1,
+    "resolutionAttempts": 1,
+    "softFailedResolutions": 0,
+    "hardFailedResolutions": 0,
+    "responsesWithAssume": 0,
+    "responsesWithExpect": 0,
+    "experimentTimings": {
+      "events": {
+        "Overall Experiment": {
+          "startTimeMs": 1780679421150,
+          "endTimeMs": 1780679580725,
+          "durationMs": 159575
+        },
+        "Iteration #1": {
+          "startTimeMs": 1780679421293,
+          "endTimeMs": 1780679580716,
+          "durationMs": 159423
+        }
+      }
+    }
+  },
+  {
+    "experiment_name": "p_13_1_recursive_rectangle_area",
+    "outcome": "SUCCESS",
+    "usage": {
+      "tokensInput": 276,
+      "tokensOutput": 490,
+      "tokensTotal": 766,
+      "totalReasoningTokens": 418
+    },
+    "badResponses": 0,
+    "verificationAttempts": 1,
+    "resolutionAttempts": 1,
+    "softFailedResolutions": 0,
+    "hardFailedResolutions": 0,
+    "responsesWithAssume": 0,
+    "responsesWithExpect": 0,
+    "experimentTimings": {
+      "events": {
+        "Overall Experiment": {
+          "startTimeMs": 1780665701034,
+          "endTimeMs": 1780665776386,
+          "durationMs": 75352
+        },
+        "Iteration #1": {
+          "startTimeMs": 1780665701634,
+          "endTimeMs": 1780665776386,
+          "durationMs": 74752
+        }
+      }
+    }
+  },
+  {
+    "experiment_name": "p_13_2_recursive_square_area",
+    "outcome": "SUCCESS",
+    "usage": {
+      "tokensInput": 256,
+      "tokensOutput": 1510,
+      "tokensTotal": 1766,
+      "totalReasoningTokens": 1470
+    },
+    "badResponses": 0,
+    "verificationAttempts": 1,
+    "resolutionAttempts": 1,
+    "softFailedResolutions": 0,
+    "hardFailedResolutions": 0,
+    "responsesWithAssume": 0,
+    "responsesWithExpect": 0,
+    "experimentTimings": {
+      "events": {
+        "Overall Experiment": {
+          "startTimeMs": 1780665797441,
+          "endTimeMs": 1780665892979,
+          "durationMs": 95538
+        },
+        "Iteration #1": {
+          "startTimeMs": 1780665797444,
+          "endTimeMs": 1780665892972,
+          "durationMs": 95528
+        }
+      }
+    }
+  },
+  {
+    "experiment_name": "p_13_8_recursive_largest_seq",
+    "outcome": "SUCCESS",
+    "usage": {
+      "tokensInput": 524,
+      "tokensOutput": 648,
+      "tokensTotal": 1172,
+      "totalReasoningTokens": 512
+    },
+    "badResponses": 0,
+    "verificationAttempts": 1,
+    "resolutionAttempts": 1,
+    "softFailedResolutions": 0,
+    "hardFailedResolutions": 0,
+    "responsesWithAssume": 0,
+    "responsesWithExpect": 0,
+    "experimentTimings": {
+      "events": {
+        "Overall Experiment": {
+          "startTimeMs": 1780666718757,
+          "endTimeMs": 1780666778446,
+          "durationMs": 59689
+        },
+        "Iteration #1": {
+          "startTimeMs": 1780666718887,
+          "endTimeMs": 1780666778446,
+          "durationMs": 59559
+        }
+      }
+    }
+  },
+  {
+    "experiment_name": "p_13_7_recursive_index_of",
+    "outcome": "SUCCESS",
+    "usage": {
+      "tokensInput": 694,
+      "tokensOutput": 9054,
+      "tokensTotal": 9748,
+      "totalReasoningTokens": 8188
+    },
+    "badResponses": 0,
+    "verificationAttempts": 1,
+    "resolutionAttempts": 1,
+    "softFailedResolutions": 0,
+    "hardFailedResolutions": 0,
+    "responsesWithAssume": 0,
+    "responsesWithExpect": 0,
+    "experimentTimings": {
+      "events": {
+        "Overall Experiment": {
+          "startTimeMs": 1780666492215,
+          "endTimeMs": 1780666712744,
+          "durationMs": 220529
+        },
+        "Iteration #1": {
+          "startTimeMs": 1780666492249,
+          "endTimeMs": 1780666712744,
+          "durationMs": 220495
+        }
+      }
+    }
+  },
+  {
+    "experiment_name": "p_13_3_recursive_reverse_string",
+    "outcome": "SUCCESS",
+    "usage": {
+      "tokensInput": 310,
+      "tokensOutput": 5206,
+      "tokensTotal": 5516,
+      "totalReasoningTokens": 4778
+    },
+    "badResponses": 0,
+    "verificationAttempts": 1,
+    "resolutionAttempts": 1,
+    "softFailedResolutions": 0,
+    "hardFailedResolutions": 0,
+    "responsesWithAssume": 0,
+    "responsesWithExpect": 0,
+    "experimentTimings": {
+      "events": {
+        "Overall Experiment": {
+          "startTimeMs": 1780665895067,
+          "endTimeMs": 1780666045546,
+          "durationMs": 150479
+        },
+        "Iteration #1": {
+          "startTimeMs": 1780665895068,
+          "endTimeMs": 1780666045546,
+          "durationMs": 150478
+        }
+      }
+    }
+  },
+  {
+    "experiment_name": "p_13_9_recursive_sum_array",
+    "outcome": "SUCCESS",
+    "usage": {
+      "tokensInput": 436,
+      "tokensOutput": 3871,
+      "tokensTotal": 4307,
+      "totalReasoningTokens": 3584
+    },
+    "badResponses": 0,
+    "verificationAttempts": 1,
+    "resolutionAttempts": 1,
+    "softFailedResolutions": 0,
+    "hardFailedResolutions": 0,
+    "responsesWithAssume": 0,
+    "responsesWithExpect": 0,
+    "experimentTimings": {
+      "events": {
+        "Overall Experiment": {
+          "startTimeMs": 1780679583763,
+          "endTimeMs": 1780679714155,
+          "durationMs": 130392
+        },
+        "Iteration #1": {
+          "startTimeMs": 1780679583764,
+          "endTimeMs": 1780679714155,
+          "durationMs": 130391
+        }
+      }
+    }
+  },
+  {
+    "experiment_name": "p_13_9_recursive_sum_seq",
+    "outcome": "SUCCESS",
+    "usage": {
+      "tokensInput": 434,
+      "tokensOutput": 543,
+      "tokensTotal": 977,
+      "totalReasoningTokens": 466
+    },
+    "badResponses": 0,
+    "verificationAttempts": 1,
+    "resolutionAttempts": 1,
+    "softFailedResolutions": 0,
+    "hardFailedResolutions": 0,
+    "responsesWithAssume": 0,
+    "responsesWithExpect": 0,
+    "experimentTimings": {
+      "events": {
+        "Overall Experiment": {
+          "startTimeMs": 1780666949798,
+          "endTimeMs": 1780667000909,
+          "durationMs": 51111
+        },
+        "Iteration #1": {
+          "startTimeMs": 1780666949919,
+          "endTimeMs": 1780667000908,
+          "durationMs": 50989
+        }
+      }
+    }
+  },
+  {
+    "experiment_name": "p_13_10_recursive_area_polygon_array",
+    "outcome": "FAILURE_VERIFY",
+    "usage": {
+      "tokensInput": 10413,
+      "tokensOutput": 22230,
+      "tokensTotal": 32643,
+      "totalReasoningTokens": 16761
+    },
+    "badResponses": 0,
+    "verificationAttempts": 4,
+    "resolutionAttempts": 4,
+    "softFailedResolutions": 0,
+    "hardFailedResolutions": 0,
+    "responsesWithAssume": 0,
+    "responsesWithExpect": 0,
+    "experimentTimings": {
+      "events": {
+        "Overall Experiment": {
+          "startTimeMs": 1780668076607,
+          "endTimeMs": 1780668643967,
+          "durationMs": 567360
+        },
+        "Iteration #4": {
+          "startTimeMs": 1780668468671,
+          "endTimeMs": 1780668643966,
+          "durationMs": 175295
+        },
+        "Iteration #1": {
+          "startTimeMs": 1780668076610,
+          "endTimeMs": 1780668234586,
+          "durationMs": 157976
+        },
+        "Iteration #2": {
+          "startTimeMs": 1780668234669,
+          "endTimeMs": 1780668335070,
+          "durationMs": 100401
+        },
+        "Iteration #3": {
+          "startTimeMs": 1780668335071,
+          "endTimeMs": 1780668468671,
+          "durationMs": 133600
+        }
+      }
+    }
+  }
+]

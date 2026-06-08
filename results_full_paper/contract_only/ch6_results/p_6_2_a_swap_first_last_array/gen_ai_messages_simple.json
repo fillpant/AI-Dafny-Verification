@@ -1,0 +1,10 @@
+[
+  {
+    "role": "user",
+    "content": "You are given the following task to perform in Dafny:\n\nWrite a method to satisfy the below requirements.\n\nThe signature should be:\n\np_6_2_a_swap_first_last_array(inputs: array\u003cint\u003e) returns (result: array\u003cint\u003e)\n\nThe method should respect the following contract:\n\nrequires inputs.Length \u003e\u003d 2, ensures result.Length \u003d\u003d inputs.Length, ensures result[0] \u003d\u003d inputs[inputs.Length - 1], ensures result[inputs.Length - 1] \u003d\u003d inputs[0], ensures forall i :: 1 \u003c\u003d i \u003c inputs.Length - 1 \u003d\u003d\u003e result[i] \u003d\u003d inputs[i]\n\nProduce and show only the Dafny body of this method, including the curly braces that surround it. Do not show the signature nor contract. You must not use \u0027assume\u0027 nor \u0027expect\u0027 anywhere in your code."
+  },
+  {
+    "role": "assistant",
+    "content": "{\"method_body\":\"{\\n  result :\u003d new int[inputs.Length];\\n  var n :\u003d inputs.Length;\\n  result[0] :\u003d inputs[n - 1];\\n  result[n - 1] :\u003d inputs[0];\\n\\n  var i :\u003d 1;\\n  while i \u003c n - 1\\n    invariant 1 \u003c\u003d i \u003c\u003d n - 1\\n    invariant result.Length \u003d\u003d n\\n    invariant result[0] \u003d\u003d inputs[n - 1]\\n    invariant result[n - 1] \u003d\u003d inputs[0]\\n    invariant forall j :: 1 \u003c\u003d j \u003c i \u003d\u003d\u003e result[j] \u003d\u003d inputs[j]\\n  {\\n    result[i] :\u003d inputs[i];\\n    i :\u003d i + 1;\\n  }\\n}\"}"
+  }
+]

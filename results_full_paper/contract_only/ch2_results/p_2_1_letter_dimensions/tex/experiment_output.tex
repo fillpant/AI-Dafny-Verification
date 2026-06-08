@@ -1,0 +1,87 @@
+\documentclass{article}
+\usepackage{lmodern}
+\usepackage{amsmath}
+\usepackage{listings}
+\usepackage{fullpage}
+\usepackage{parskip}
+\usepackage{xcolor}
+\lstset{
+	basicstyle=\ttfamily,
+	columns=fullflexible,
+	frame=single,
+	breaklines=true,
+	postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},
+}
+\begin{document}
+\title{Experiment `p\_2\_1\_letter\_dimensions' Results}
+\author{\today}
+\date{}
+\maketitle
+\textbf{Experiment outcome: }SUCCESS
+\\\textbf{Bad responses: }0
+\\\textbf{Responses containing}~\texttt{assume}~\textbf{: }0
+\\\textbf{Responses containing}~\texttt{expect}~\textbf{: }0
+\\\textbf{Resolution attempts: }1
+\\\textbf{Hard fails (resolution): }0
+\\\textbf{Soft fails (resolution): }0
+\\\textbf{Verification attempts: }1
+\section*{Problem Specification}
+\textbf{Problem name: }p\_2\_1\_letter\_dimensions
+\\\textbf{Natural language statement: }null
+\\\textbf{Method signature: }p\_2\_1\_letter\_dimensions() returns (width: real, height: real)
+\subsection*{Ensures}
+\begin{itemize}
+\item \texttt{width == 8.5 * 25.4}
+\item \texttt{height == 11.0 * 25.4}
+\end{itemize}
+\clearpage
+\section*{GenAI interactions}
+Below you will find all interactions between the `user' (program) and the `assistant' (OpenAI).
+\subsection*{Program $\rightarrow$ GenAI}
+\begin{lstlisting}
+You are given the following task to perform in Dafny:
+
+Write a method to satisfy the below requirements.
+
+The signature should be:
+
+p_2_1_letter_dimensions() returns (width: real, height: real)
+
+The method should respect the following contract:
+
+ensures width == 8.5 * 25.4, ensures height == 11.0 * 25.4
+
+Produce and show only the Dafny body of this method, including the curly braces that surround it. Do not show the signature nor contract. You must not use 'assume' nor 'expect' anywhere in your code.
+\end{lstlisting}
+\subsection*{GenAI $\rightarrow$ Program}
+\textbf{System fingerprint: }null
+\\\textbf{ID: }chatcmpl-Dn2f6XKZM9hCQnUXbaHPDw2Q3bmRf
+\\\textbf{Model: }gpt-5.5-2026-04-23
+\\\textbf{Created at: }1780580676
+\\\textbf{Finish reason: }stop
+\\\textbf{Usage: }284 tokens in, and 211 tokens out
+\begin{lstlisting}
+{
+  width := 8.5 * 25.4;
+  height := 11.0 * 25.4;
+}
+\end{lstlisting}
+\section*{Final Program}
+\begin{lstlisting}
+method p_2_1_letter_dimensions() returns (width: real, height: real)
+	ensures width == 8.5 * 25.4
+	ensures height == 11.0 * 25.4
+{
+  width := 8.5 * 25.4;
+  height := 11.0 * 25.4;
+}
+\end{lstlisting}
+\section*{Total Token Usage}
+\textbf{Input tokens: }284
+\\\textbf{Output tokens: }211
+\\\textbf{Reasoning tokens: }163
+\\\textbf{Sum of `total tokens': }495
+\section*{Experiment Timings}
+\textbf{Overall Experiment} started at 1780580674149, ended at 1780580717971, lasting 43822ms (43.82 seconds)
+\\\textbf{Iteration \#1} started at 1780580674224, ended at 1780580717969, lasting 43745ms (43.75 seconds)
+\end{document}

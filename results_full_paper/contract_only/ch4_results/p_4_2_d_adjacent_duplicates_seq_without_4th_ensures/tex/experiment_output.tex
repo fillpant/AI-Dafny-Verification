@@ -1,0 +1,115 @@
+\documentclass{article}
+\usepackage{lmodern}
+\usepackage{amsmath}
+\usepackage{listings}
+\usepackage{fullpage}
+\usepackage{parskip}
+\usepackage{xcolor}
+\lstset{
+	basicstyle=\ttfamily,
+	columns=fullflexible,
+	frame=single,
+	breaklines=true,
+	postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},
+}
+\begin{document}
+\title{Experiment `p\_4\_2\_d\_adjacent\_duplicates\_seq\_without\_4th\_ensures' Results}
+\author{\today}
+\date{}
+\maketitle
+\textbf{Experiment outcome: }SUCCESS
+\\\textbf{Bad responses: }0
+\\\textbf{Responses containing}~\texttt{assume}~\textbf{: }0
+\\\textbf{Responses containing}~\texttt{expect}~\textbf{: }0
+\\\textbf{Resolution attempts: }1
+\\\textbf{Hard fails (resolution): }0
+\\\textbf{Soft fails (resolution): }0
+\\\textbf{Verification attempts: }1
+\section*{Problem Specification}
+\textbf{Problem name: }p\_4\_2\_d\_adjacent\_duplicates\_seq\_without\_4th\_ensures
+\\\textbf{Natural language statement: }null
+\\\textbf{Method signature: }p\_4\_2\_d\_adjacent\_duplicates\_seq\_without\_4th\_ensures(inputs: seq<int>) returns (duplicates: seq<int>)
+\subsection*{Ensures}
+\begin{itemize}
+\item \texttt{forall d :: d in duplicates ==> d in inputs}
+\item \texttt{forall i :: 0 <= i < |inputs| - 1 \&\& inputs[i] == inputs[i + 1] ==> inputs[i] in duplicates}
+\item \texttt{forall d :: d in duplicates ==> exists i :: 0 <= i < |inputs| - 1 \&\& inputs[i] == inputs[i + 1] \&\& inputs[i] == d}
+\end{itemize}
+\clearpage
+\section*{GenAI interactions}
+Below you will find all interactions between the `user' (program) and the `assistant' (OpenAI).
+\subsection*{Program $\rightarrow$ GenAI}
+\begin{lstlisting}
+You are given the following task to perform in Dafny:
+
+Write a method to satisfy the below requirements.
+
+The signature should be:
+
+p_4_2_d_adjacent_duplicates_seq_without_4th_ensures(inputs: seq<int>) returns (duplicates: seq<int>)
+
+The method should respect the following contract:
+
+ensures forall d :: d in duplicates ==> d in inputs, ensures forall i :: 0 <= i < |inputs| - 1 && inputs[i] == inputs[i + 1] ==> inputs[i] in duplicates, ensures forall d :: d in duplicates ==> exists i :: 0 <= i < |inputs| - 1 && inputs[i] == inputs[i + 1] && inputs[i] == d
+
+Produce and show only the Dafny body of this method, including the curly braces that surround it. Do not show the signature nor contract. You must not use 'assume' nor 'expect' anywhere in your code.
+\end{lstlisting}
+\subsection*{GenAI $\rightarrow$ Program}
+\textbf{System fingerprint: }null
+\\\textbf{ID: }chatcmpl-DnLeb1KjrN6zprYcpxhphnY8Iqgra
+\\\textbf{Model: }gpt-5.5-2026-04-23
+\\\textbf{Created at: }1780653681
+\\\textbf{Finish reason: }stop
+\\\textbf{Usage: }426 tokens in, and 6414 tokens out
+\begin{lstlisting}
+{
+  duplicates := [];
+  var i := 0;
+
+  while i < |inputs| - 1
+    invariant 0 <= i <= |inputs|
+    invariant forall d :: d in duplicates ==> d in inputs
+    invariant forall d :: d in duplicates ==> exists j :: 0 <= j < i && j < |inputs| - 1 && inputs[j] == inputs[j + 1] && inputs[j] == d
+    invariant forall j :: 0 <= j < i && j < |inputs| - 1 && inputs[j] == inputs[j + 1] ==> inputs[j] in duplicates
+    decreases |inputs| - i
+  {
+    if inputs[i] == inputs[i + 1] {
+      duplicates := duplicates + [inputs[i]];
+    }
+    i := i + 1;
+  }
+}
+\end{lstlisting}
+\section*{Final Program}
+\begin{lstlisting}
+method p_4_2_d_adjacent_duplicates_seq_without_4th_ensures(inputs: seq<int>) returns (duplicates: seq<int>)
+	ensures forall d :: d in duplicates ==> d in inputs
+	ensures forall i :: 0 <= i < |inputs| - 1 && inputs[i] == inputs[i + 1] ==> inputs[i] in duplicates
+	ensures forall d :: d in duplicates ==> exists i :: 0 <= i < |inputs| - 1 && inputs[i] == inputs[i + 1] && inputs[i] == d
+{
+  duplicates := [];
+  var i := 0;
+
+  while i < |inputs| - 1
+    invariant 0 <= i <= |inputs|
+    invariant forall d :: d in duplicates ==> d in inputs
+    invariant forall d :: d in duplicates ==> exists j :: 0 <= j < i && j < |inputs| - 1 && inputs[j] == inputs[j + 1] && inputs[j] == d
+    invariant forall j :: 0 <= j < i && j < |inputs| - 1 && inputs[j] == inputs[j + 1] ==> inputs[j] in duplicates
+    decreases |inputs| - i
+  {
+    if inputs[i] == inputs[i + 1] {
+      duplicates := duplicates + [inputs[i]];
+    }
+    i := i + 1;
+  }
+}
+\end{lstlisting}
+\section*{Total Token Usage}
+\textbf{Input tokens: }426
+\\\textbf{Output tokens: }6414
+\\\textbf{Reasoning tokens: }6141
+\\\textbf{Sum of `total tokens': }6840
+\section*{Experiment Timings}
+\textbf{Overall Experiment} started at 1780653680997, ended at 1780653829121, lasting 148124ms (148.12 seconds)
+\\\textbf{Iteration \#1} started at 1780653680998, ended at 1780653829120, lasting 148122ms (148.12 seconds)
+\end{document}

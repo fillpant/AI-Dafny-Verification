@@ -1,0 +1,124 @@
+\documentclass{article}
+\usepackage{lmodern}
+\usepackage{amsmath}
+\usepackage{listings}
+\usepackage{fullpage}
+\usepackage{parskip}
+\usepackage{xcolor}
+\lstset{
+	basicstyle=\ttfamily,
+	columns=fullflexible,
+	frame=single,
+	breaklines=true,
+	postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},
+}
+\begin{document}
+\title{Experiment `p\_13\_6\_recursive\_find' Results}
+\author{\today}
+\date{}
+\maketitle
+\textbf{Experiment outcome: }SUCCESS
+\\\textbf{Bad responses: }0
+\\\textbf{Responses containing}~\texttt{assume}~\textbf{: }0
+\\\textbf{Responses containing}~\texttt{expect}~\textbf{: }0
+\\\textbf{Resolution attempts: }1
+\\\textbf{Hard fails (resolution): }0
+\\\textbf{Soft fails (resolution): }0
+\\\textbf{Verification attempts: }1
+\section*{Problem Specification}
+\textbf{Problem name: }p\_13\_6\_recursive\_find
+\\\textbf{Natural language statement: }Write a recursive method that tests whether a given text contains a string. For example, find("Mississippi", "sip") returns true. Hint: If the text starts with the string you want to match, then you are done. If not, consider the text that you obtain by removing the first character.
+\\\textbf{Method signature: }p\_13\_6\_recursive\_find(text: string, str: string) returns (found: bool)
+\subsection*{Ensures}
+\begin{itemize}
+\item \texttt{found == find(text, str)}
+\end{itemize}
+\subsection*{Requires}
+\begin{itemize}
+\item \texttt{1 <= |str| <= |text|}
+\end{itemize}
+\subsection*{Functional Code Given}
+\begin{lstlisting}
+function find(text: string, str: string): bool{
+  if |text| < |str| then false
+  else if text[0 .. |str|] == str then true
+  else find(text[1..], str)
+}
+\end{lstlisting}
+\clearpage
+\section*{GenAI interactions}
+Below you will find all interactions between the `user' (program) and the `assistant' (OpenAI).
+\subsection*{Program $\rightarrow$ GenAI}
+\begin{lstlisting}
+You are given the following task to perform in Dafny:
+
+Write a recursive method that tests whether a given text contains a string. For example, find("Mississippi", "sip") returns true. Hint: If the text starts with the string you want to match, then you are done. If not, consider the text that you obtain by removing the first character.
+
+The signature should be:
+
+p_13_6_recursive_find(text: string, str: string) returns (found: bool)
+
+The method should respect the following contract:
+
+requires 1 <= |str| <= |text|, ensures found == find(text, str)
+
+The contract uses the following dafny code:
+
+function find(text: string, str: string): bool{
+  if |text| < |str| then false
+  else if text[0 .. |str|] == str then true
+  else find(text[1..], str)
+}
+
+These function(s) must not be used in your implementation of the method.
+
+Produce and show only the Dafny body of this method, including the curly braces that surround it. Do not show the signature nor contract. You must not use 'assume' nor 'expect' anywhere in your code.
+\end{lstlisting}
+\subsection*{GenAI $\rightarrow$ Program}
+\textbf{System fingerprint: }null
+\\\textbf{ID: }chatcmpl-DnSIZfPRyKRDbCHiS7m8bcLoUHMWJ
+\\\textbf{Model: }gpt-5.5-2026-04-23
+\\\textbf{Created at: }1780679223
+\\\textbf{Finish reason: }stop
+\\\textbf{Usage: }532 tokens in, and 1106 tokens out
+\begin{lstlisting}
+{
+  if text[0 .. |str|] == str {
+    found := true;
+  } else if |text| == |str| {
+    found := false;
+  } else {
+    found := p_13_6_recursive_find(text[1..], str);
+  }
+}
+\end{lstlisting}
+\section*{Final Program}
+\begin{lstlisting}
+function find(text: string, str: string): bool{
+  if |text| < |str| then false
+  else if text[0 .. |str|] == str then true
+  else find(text[1..], str)
+}
+
+method p_13_6_recursive_find(text: string, str: string) returns (found: bool)
+	requires 1 <= |str| <= |text|
+	ensures found == find(text, str)
+{
+  if text[0 .. |str|] == str {
+    found := true;
+  } else if |text| == |str| {
+    found := false;
+  } else {
+    found := p_13_6_recursive_find(text[1..], str);
+  }
+}
+\end{lstlisting}
+\section*{Total Token Usage}
+\textbf{Input tokens: }532
+\\\textbf{Output tokens: }1106
+\\\textbf{Reasoning tokens: }1015
+\\\textbf{Sum of `total tokens': }1638
+\section*{Experiment Timings}
+\textbf{Overall Experiment} started at 1780679212375, ended at 1780679281418, lasting 69043ms (69.04 seconds)
+\\\textbf{Iteration \#1} started at 1780679212379, ended at 1780679281412, lasting 69033ms (69.03 seconds)
+\end{document}

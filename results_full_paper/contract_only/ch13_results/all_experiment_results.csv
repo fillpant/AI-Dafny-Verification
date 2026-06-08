@@ -1,0 +1,12 @@
+Experiment,Outcome,Input tokens, Output tokens, Total reasoning tokens,Total tokens,Bad response cnt,Verification attempts,Resolution attempts,Soft-failed resolution cnt,Hard-failed resolution cnt,Responses with 'assume',Experiment time (ms),Iteration 1 time (ms),Iteration 2 time (ms),Iteration 3 time (ms),Iteration 4 time (ms),Iteration 5 time (ms),Iteration 6 time (ms),Iteration 7 time (ms),Iteration 8 time (ms)
+p_13_10_recursive_area_polygon_array,FAILURE_VERIFY,10413,22230,16761,32643,0,4,4,0,0,0,567360,157976,100401,133600,175295,,,,
+p_13_10_recursive_area_polygon_seq,SUCCESS,6764,16864,14386,23628,0,4,4,0,0,0,446952,53144,107853,105865,180065,,,,
+p_13_1_recursive_rectangle_area,SUCCESS,276,490,418,766,0,1,1,0,0,0,75352,74752,,,,,,,
+p_13_2_recursive_square_area,SUCCESS,256,1510,1470,1766,0,1,1,0,0,0,95538,95528,,,,,,,
+p_13_3_recursive_reverse_string,SUCCESS,310,5206,4778,5516,0,1,1,0,0,0,150479,150478,,,,,,,
+p_13_6_recursive_find,SUCCESS,426,4828,4608,5254,0,1,1,0,0,0,159575,159423,,,,,,,
+p_13_7_recursive_index_of,SUCCESS,694,9054,8188,9748,0,1,1,0,0,0,220529,220495,,,,,,,
+p_13_8_recursive_largest_array,SUCCESS,524,6642,6141,7166,0,1,1,0,0,0,164172,164021,,,,,,,
+p_13_8_recursive_largest_seq,SUCCESS,524,648,512,1172,0,1,1,0,0,0,59689,59559,,,,,,,
+p_13_9_recursive_sum_array,SUCCESS,436,3871,3584,4307,0,1,1,0,0,0,130392,130391,,,,,,,
+p_13_9_recursive_sum_seq,SUCCESS,434,543,466,977,0,1,1,0,0,0,51111,50989,,,,,,,

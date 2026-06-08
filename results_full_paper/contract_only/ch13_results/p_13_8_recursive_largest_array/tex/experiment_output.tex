@@ -1,0 +1,209 @@
+\documentclass{article}
+\usepackage{lmodern}
+\usepackage{amsmath}
+\usepackage{listings}
+\usepackage{fullpage}
+\usepackage{parskip}
+\usepackage{xcolor}
+\lstset{
+	basicstyle=\ttfamily,
+	columns=fullflexible,
+	frame=single,
+	breaklines=true,
+	postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},
+}
+\begin{document}
+\title{Experiment `p\_13\_8\_recursive\_largest\_array' Results}
+\author{\today}
+\date{}
+\maketitle
+\textbf{Experiment outcome: }SUCCESS
+\\\textbf{Bad responses: }0
+\\\textbf{Responses containing}~\texttt{assume}~\textbf{: }0
+\\\textbf{Responses containing}~\texttt{expect}~\textbf{: }0
+\\\textbf{Resolution attempts: }1
+\\\textbf{Hard fails (resolution): }0
+\\\textbf{Soft fails (resolution): }0
+\\\textbf{Verification attempts: }1
+\section*{Problem Specification}
+\textbf{Problem name: }p\_13\_8\_recursive\_largest\_array
+\\\textbf{Natural language statement: }null
+\\\textbf{Method signature: }p\_13\_8\_recursive\_largest\_array(inputs: array<int>) returns (largest: int)
+\subsection*{Ensures}
+\begin{itemize}
+\item \texttt{largest == find\_largest(inputs[..])}
+\end{itemize}
+\subsection*{Requires}
+\begin{itemize}
+\item \texttt{inputs.Length >= 1}
+\end{itemize}
+\subsection*{Functional Code Given}
+\begin{lstlisting}
+function find_largest(inputs: seq<int>): int
+  requires |inputs| >= 1
+  ensures forall x :: x in inputs ==> find_largest(inputs) >= x
+{
+  if |inputs| == 1 then inputs[0]
+  else 
+      assert inputs == [inputs[0]] + inputs[1..];
+      var sub_largest := find_largest(inputs[1..]) ;
+      if inputs[0] >= sub_largest then inputs[0] else sub_largest
+}
+\end{lstlisting}
+\clearpage
+\section*{GenAI interactions}
+Below you will find all interactions between the `user' (program) and the `assistant' (OpenAI).
+\subsection*{Program $\rightarrow$ GenAI}
+\begin{lstlisting}
+You are given the following task to perform in Dafny:
+
+Write a method to satisfy the below requirements.
+
+The signature should be:
+
+p_13_8_recursive_largest_array(inputs: array<int>) returns (largest: int)
+
+The method should respect the following contract:
+
+requires inputs.Length >= 1, ensures largest == find_largest(inputs[..])
+
+The contract uses the following dafny code:
+
+function find_largest(inputs: seq<int>): int
+  requires |inputs| >= 1
+  ensures forall x :: x in inputs ==> find_largest(inputs) >= x
+{
+  if |inputs| == 1 then inputs[0]
+  else 
+      assert inputs == [inputs[0]] + inputs[1..];
+      var sub_largest := find_largest(inputs[1..]) ;
+      if inputs[0] >= sub_largest then inputs[0] else sub_largest
+}
+
+These function(s) must not be used in your implementation of the method.
+
+Produce and show only the Dafny body of this method, including the curly braces that surround it. Do not show the signature nor contract. You must not use 'assume' nor 'expect' anywhere in your code.
+\end{lstlisting}
+\subsection*{GenAI $\rightarrow$ Program}
+\textbf{System fingerprint: }null
+\\\textbf{ID: }chatcmpl-DnP3txdTI9DOLA9rECphojclkl17y
+\\\textbf{Model: }gpt-5.5-2026-04-23
+\\\textbf{Created at: }1780666781
+\\\textbf{Finish reason: }stop
+\\\textbf{Usage: }524 tokens in, and 6642 tokens out
+\begin{lstlisting}
+{
+  var i := inputs.Length - 1;
+  largest := inputs[i];
+
+  var init := inputs[i..];
+  assert |init| == 1;
+  assert init[0] == inputs[i];
+  assert find_largest(init) == inputs[i];
+  assert largest == find_largest(inputs[i..]);
+
+  while i > 0
+    invariant 0 <= i < inputs.Length
+    invariant largest == find_largest(inputs[i..])
+    decreases i
+  {
+    var subLargest := largest;
+    i := i - 1;
+
+    assert 0 <= i < inputs.Length;
+    assert i + 1 < inputs.Length;
+    assert subLargest == find_largest(inputs[i + 1..]);
+
+    var s := inputs[i..];
+    assert |s| > 1;
+    assert s == [s[0]] + s[1..];
+    assert s[0] == inputs[i];
+    assert s[1..] == inputs[i + 1..];
+    assert find_largest(s) == (if s[0] >= find_largest(s[1..]) then s[0] else find_largest(s[1..]));
+    assert find_largest(inputs[i..]) == (if inputs[i] >= subLargest then inputs[i] else subLargest);
+
+    if inputs[i] >= subLargest {
+      largest := inputs[i];
+    } else {
+      largest := subLargest;
+    }
+
+    assert largest == (if inputs[i] >= subLargest then inputs[i] else subLargest);
+    assert largest == find_largest(inputs[i..]);
+  }
+
+  assert i == 0;
+  assert inputs[i..] == inputs[..];
+  assert largest == find_largest(inputs[..]);
+}
+\end{lstlisting}
+\section*{Final Program}
+\begin{lstlisting}
+function find_largest(inputs: seq<int>): int
+  requires |inputs| >= 1
+  ensures forall x :: x in inputs ==> find_largest(inputs) >= x
+{
+  if |inputs| == 1 then inputs[0]
+  else 
+      assert inputs == [inputs[0]] + inputs[1..];
+      var sub_largest := find_largest(inputs[1..]) ;
+      if inputs[0] >= sub_largest then inputs[0] else sub_largest
+}
+
+method p_13_8_recursive_largest_array(inputs: array<int>) returns (largest: int)
+	requires inputs.Length >= 1
+	ensures largest == find_largest(inputs[..])
+{
+  var i := inputs.Length - 1;
+  largest := inputs[i];
+
+  var init := inputs[i..];
+  assert |init| == 1;
+  assert init[0] == inputs[i];
+  assert find_largest(init) == inputs[i];
+  assert largest == find_largest(inputs[i..]);
+
+  while i > 0
+    invariant 0 <= i < inputs.Length
+    invariant largest == find_largest(inputs[i..])
+    decreases i
+  {
+    var subLargest := largest;
+    i := i - 1;
+
+    assert 0 <= i < inputs.Length;
+    assert i + 1 < inputs.Length;
+    assert subLargest == find_largest(inputs[i + 1..]);
+
+    var s := inputs[i..];
+    assert |s| > 1;
+    assert s == [s[0]] + s[1..];
+    assert s[0] == inputs[i];
+    assert s[1..] == inputs[i + 1..];
+    assert find_largest(s) == (if s[0] >= find_largest(s[1..]) then s[0] else find_largest(s[1..]));
+    assert find_largest(inputs[i..]) == (if inputs[i] >= subLargest then inputs[i] else subLargest);
+
+    if inputs[i] >= subLargest {
+      largest := inputs[i];
+    } else {
+      largest := subLargest;
+    }
+
+    assert largest == (if inputs[i] >= subLargest then inputs[i] else subLargest);
+    assert largest == find_largest(inputs[i..]);
+  }
+
+  assert i == 0;
+  assert inputs[i..] == inputs[..];
+  assert largest == find_largest(inputs[..]);
+}
+\end{lstlisting}
+\section*{Total Token Usage}
+\textbf{Input tokens: }524
+\\\textbf{Output tokens: }6642
+\\\textbf{Reasoning tokens: }6141
+\\\textbf{Sum of `total tokens': }7166
+\section*{Experiment Timings}
+\textbf{Overall Experiment} started at 1780666780499, ended at 1780666944671, lasting 164172ms (164.17 seconds)
+\\\textbf{Iteration \#1} started at 1780666780500, ended at 1780666944521, lasting 164021ms (164.02 seconds)
+\end{document}

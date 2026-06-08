@@ -1,0 +1,10 @@
+[
+  {
+    "role": "user",
+    "content": "You are given the following task to perform in Dafny:\n\nWrite a method returning true if the arguments are all different.\n\nThe signature should be:\n\np_5_2_b_all_different(x: real, y: real, z: real) returns (all_diff: bool)\n\nThe method should respect the following contract:\n\nensures all_diff \u003d\u003d (x !\u003d y \u0026\u0026 y !\u003d z \u0026\u0026 x !\u003d z)\n\nProduce and show only the Dafny body of this method, including the curly braces that surround it. Do not show the signature nor contract. You must not use \u0027assume\u0027 nor \u0027expect\u0027 anywhere in your code."
+  },
+  {
+    "role": "assistant",
+    "content": "{\"method_body\":\"{\\n  all_diff :\u003d x !\u003d y \u0026\u0026 y !\u003d z \u0026\u0026 x !\u003d z;\\n}\"}"
+  }
+]

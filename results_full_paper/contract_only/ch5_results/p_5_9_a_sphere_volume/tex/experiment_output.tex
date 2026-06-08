@@ -1,0 +1,83 @@
+\documentclass{article}
+\usepackage{lmodern}
+\usepackage{amsmath}
+\usepackage{listings}
+\usepackage{fullpage}
+\usepackage{parskip}
+\usepackage{xcolor}
+\lstset{
+	basicstyle=\ttfamily,
+	columns=fullflexible,
+	frame=single,
+	breaklines=true,
+	postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},
+}
+\begin{document}
+\title{Experiment `p\_5\_9\_a\_sphere\_volume' Results}
+\author{\today}
+\date{}
+\maketitle
+\textbf{Experiment outcome: }SUCCESS
+\\\textbf{Bad responses: }0
+\\\textbf{Responses containing}~\texttt{assume}~\textbf{: }0
+\\\textbf{Responses containing}~\texttt{expect}~\textbf{: }0
+\\\textbf{Resolution attempts: }1
+\\\textbf{Hard fails (resolution): }0
+\\\textbf{Soft fails (resolution): }0
+\\\textbf{Verification attempts: }1
+\section*{Problem Specification}
+\textbf{Problem name: }p\_5\_9\_a\_sphere\_volume
+\\\textbf{Natural language statement: }null
+\\\textbf{Method signature: }p\_5\_9\_a\_sphere\_volume(r: real) returns (volume: real)
+\subsection*{Ensures}
+\begin{itemize}
+\item \texttt{volume == (4.0 / 3.0) * 3.14159 * r * r * r}
+\end{itemize}
+\clearpage
+\section*{GenAI interactions}
+Below you will find all interactions between the `user' (program) and the `assistant' (OpenAI).
+\subsection*{Program $\rightarrow$ GenAI}
+\begin{lstlisting}
+You are given the following task to perform in Dafny:
+
+Write a method to satisfy the below requirements.
+
+The signature should be:
+
+p_5_9_a_sphere_volume(r: real) returns (volume: real)
+
+The method should respect the following contract:
+
+ensures volume == (4.0 / 3.0) * 3.14159 * r * r * r
+
+Produce and show only the Dafny body of this method, including the curly braces that surround it. Do not show the signature nor contract. You must not use 'assume' nor 'expect' anywhere in your code.
+\end{lstlisting}
+\subsection*{GenAI $\rightarrow$ Program}
+\textbf{System fingerprint: }null
+\\\textbf{ID: }chatcmpl-DnR8h4e2FxqWzBjOIgUq598h51EeU
+\\\textbf{Model: }gpt-5.5-2026-04-23
+\\\textbf{Created at: }1780674767
+\\\textbf{Finish reason: }stop
+\\\textbf{Usage: }286 tokens in, and 115 tokens out
+\begin{lstlisting}
+{
+  volume := (4.0 / 3.0) * 3.14159 * r * r * r;
+}
+\end{lstlisting}
+\section*{Final Program}
+\begin{lstlisting}
+method p_5_9_a_sphere_volume(r: real) returns (volume: real)
+	ensures volume == (4.0 / 3.0) * 3.14159 * r * r * r
+{
+  volume := (4.0 / 3.0) * 3.14159 * r * r * r;
+}
+\end{lstlisting}
+\section*{Total Token Usage}
+\textbf{Input tokens: }286
+\\\textbf{Output tokens: }115
+\\\textbf{Reasoning tokens: }68
+\\\textbf{Sum of `total tokens': }401
+\section*{Experiment Timings}
+\textbf{Overall Experiment} started at 1780674766447, ended at 1780674791212, lasting 24765ms (24.77 seconds)
+\\\textbf{Iteration \#1} started at 1780674766451, ended at 1780674791212, lasting 24761ms (24.76 seconds)
+\end{document}

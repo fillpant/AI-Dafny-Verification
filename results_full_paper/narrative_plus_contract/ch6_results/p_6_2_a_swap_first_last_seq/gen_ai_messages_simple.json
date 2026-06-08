@@ -1,0 +1,10 @@
+[
+  {
+    "role": "user",
+    "content": "You are given the following task to perform in Dafny:\n\nWrite a method to swap the first and last elements in an array.\n\nThe signature should be:\n\np_6_2_a_swap_first_last_seq(inputs: seq\u003cint\u003e) returns (result: seq\u003cint\u003e)\n\nThe method should respect the following contract:\n\nrequires |inputs| \u003e\u003d 2, ensures |result| \u003d\u003d |inputs|, ensures result[0] \u003d\u003d inputs[|inputs| - 1], ensures result[|inputs| - 1] \u003d\u003d inputs[0], ensures forall i :: 1 \u003c\u003d i \u003c |inputs| - 1 \u003d\u003d\u003e result[i] \u003d\u003d inputs[i]\n\nProduce and show only the Dafny body of this method, including the curly braces that surround it. Do not show the signature nor contract. You must not use \u0027assume\u0027 nor \u0027expect\u0027 anywhere in your code."
+  },
+  {
+    "role": "assistant",
+    "content": "{\"method_body\":\"{\\n  var n :\u003d |inputs|;\\n\\n  assert 0 \u003c\u003d 0 \u003c |inputs|;\\n  assert 0 \u003c\u003d n - 1 \u003c |inputs|;\\n  var tmp :\u003d inputs[0 :\u003d inputs[n - 1]];\\n  assert |tmp| \u003d\u003d n;\\n\\n  assert 0 \u003c\u003d n - 1 \u003c |tmp|;\\n  result :\u003d tmp[n - 1 :\u003d inputs[0]];\\n  assert |result| \u003d\u003d n;\\n\\n  assert 1 \u003c\u003d n - 1;\\n  assert n - 1 !\u003d 0;\\n  assert 0 \u003c\u003d 0 \u003c |result|;\\n  assert 0 \u003c\u003d 0 \u003c |tmp|;\\n  assert result[0] \u003d\u003d tmp[0];\\n  assert tmp[0] \u003d\u003d inputs[n - 1];\\n  assert result[0] \u003d\u003d inputs[n - 1];\\n\\n  assert 0 \u003c\u003d n - 1 \u003c |result|;\\n  assert result[n - 1] \u003d\u003d inputs[0];\\n\\n  forall i | 1 \u003c\u003d i \u003c n - 1\\n    ensures result[i] \u003d\u003d inputs[i]\\n  {\\n    assert 0 \u003c\u003d i;\\n    assert i \u003c n;\\n    assert i \u003c |result|;\\n    assert i \u003c |tmp|;\\n    assert i \u003c |inputs|;\\n    assert i !\u003d n - 1;\\n    assert i !\u003d 0;\\n    assert result[i] \u003d\u003d tmp[i];\\n    assert tmp[i] \u003d\u003d inputs[i];\\n  }\\n}\"}"
+  }
+]

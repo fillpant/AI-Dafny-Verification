@@ -1,0 +1,274 @@
+\documentclass{article}
+\usepackage{lmodern}
+\usepackage{amsmath}
+\usepackage{listings}
+\usepackage{fullpage}
+\usepackage{parskip}
+\usepackage{xcolor}
+\lstset{
+	basicstyle=\ttfamily,
+	columns=fullflexible,
+	frame=single,
+	breaklines=true,
+	postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},
+}
+\begin{document}
+\title{Experiment `p\_6\_2\_e\_remove\_middle\_array' Results}
+\author{\today}
+\date{}
+\maketitle
+\textbf{Experiment outcome: }SUCCESS
+\\\textbf{Bad responses: }0
+\\\textbf{Responses containing}~\texttt{assume}~\textbf{: }0
+\\\textbf{Responses containing}~\texttt{expect}~\textbf{: }0
+\\\textbf{Resolution attempts: }1
+\\\textbf{Hard fails (resolution): }0
+\\\textbf{Soft fails (resolution): }0
+\\\textbf{Verification attempts: }1
+\section*{Problem Specification}
+\textbf{Problem name: }p\_6\_2\_e\_remove\_middle\_array
+\\\textbf{Natural language statement: }null
+\\\textbf{Method signature: }p\_6\_2\_e\_remove\_middle\_array(inputs: array<int>) returns (result: array<int>)
+\subsection*{Ensures}
+\begin{itemize}
+\item \texttt{result.Length == if inputs.Length \% 2 == 1 then inputs.Length - 1 else inputs.Length - 2}
+\item \texttt{inputs.Length \% 2 == 1 ==> forall i :: 0 <= i < inputs.Length / 2 ==> result[i] == inputs[i] \&\& forall j :: inputs.Length / 2 <= j < result.Length ==> result[j] == inputs[j + 1]}
+\item \texttt{inputs.Length \% 2 == 0 ==> forall i :: 0 <= i < inputs.Length / 2 - 1 ==> result[i] == inputs[i] \&\& forall j :: inputs.Length / 2 - 1 <= j < result.Length ==> result[j] == inputs[j + 2]}
+\end{itemize}
+\subsection*{Requires}
+\begin{itemize}
+\item \texttt{inputs.Length >= 1}
+\end{itemize}
+\clearpage
+\section*{GenAI interactions}
+Below you will find all interactions between the `user' (program) and the `assistant' (OpenAI).
+\subsection*{Program $\rightarrow$ GenAI}
+\begin{lstlisting}
+You are given the following task to perform in Dafny:
+
+Write a method to satisfy the below requirements.
+
+The signature should be:
+
+p_6_2_e_remove_middle_array(inputs: array<int>) returns (result: array<int>)
+
+The method should respect the following contract:
+
+requires inputs.Length >= 1, ensures result.Length == if inputs.Length % 2 == 1 then inputs.Length - 1 else inputs.Length - 2, ensures inputs.Length % 2 == 1 ==> forall i :: 0 <= i < inputs.Length / 2 ==> result[i] == inputs[i] && forall j :: inputs.Length / 2 <= j < result.Length ==> result[j] == inputs[j + 1], ensures inputs.Length % 2 == 0 ==> forall i :: 0 <= i < inputs.Length / 2 - 1 ==> result[i] == inputs[i] && forall j :: inputs.Length / 2 - 1 <= j < result.Length ==> result[j] == inputs[j + 2]
+
+Produce and show only the Dafny body of this method, including the curly braces that surround it. Do not show the signature nor contract. You must not use 'assume' nor 'expect' anywhere in your code.
+\end{lstlisting}
+\subsection*{GenAI $\rightarrow$ Program}
+\textbf{System fingerprint: }null
+\\\textbf{ID: }chatcmpl-DnNqWg53RqKEwSv3tRuiC1EmLb3gn
+\\\textbf{Model: }gpt-5.5-2026-04-23
+\\\textbf{Created at: }1780662108
+\\\textbf{Finish reason: }stop
+\\\textbf{Usage: }540 tokens in, and 6416 tokens out
+\begin{lstlisting}
+{
+  var n := inputs.Length;
+
+  if n % 2 == 1 {
+    var mid := n / 2;
+    assert n == (n / 2) * 2 + n % 2;
+    assert n == mid * 2 + 1;
+
+    result := new int[n - 1];
+    assert result.Length == n - 1;
+    assert result.Length == 2 * mid;
+    assert 0 <= mid;
+    assert mid <= result.Length;
+
+    var k := 0;
+    while k < result.Length
+      invariant n == inputs.Length
+      invariant n % 2 == 1
+      invariant mid == n / 2
+      invariant result.Length == n - 1
+      invariant result.Length == 2 * mid
+      invariant mid <= result.Length
+      invariant 0 <= k <= result.Length
+      invariant forall t :: 0 <= t < k && t < mid ==> result[t] == inputs[t]
+      invariant forall t :: 0 <= t < k && mid <= t ==> result[t] == inputs[t + 1]
+    {
+      if k < mid {
+        result[k] := inputs[k];
+      } else {
+        assert k < result.Length;
+        assert result.Length == n - 1;
+        assert k < n - 1;
+        assert k + 1 < n;
+        result[k] := inputs[k + 1];
+      }
+      k := k + 1;
+    }
+
+    assert k == result.Length;
+    assert forall i :: 0 <= i < mid ==> result[i] == inputs[i];
+    assert forall j :: mid <= j < result.Length ==> result[j] == inputs[j + 1];
+  } else {
+    assert n % 2 != 1;
+    assert 0 <= n % 2 < 2;
+    assert n % 2 == 0;
+    if n == 1 {
+      assert n % 2 == 1;
+      assert false;
+    }
+    assert n >= 2;
+
+    var mid := n / 2;
+    assert n == (n / 2) * 2 + n % 2;
+    assert n == mid * 2;
+    assert 1 <= mid;
+
+    var cut := mid - 1;
+    assert 0 <= cut;
+
+    result := new int[n - 2];
+    assert result.Length == n - 2;
+    assert result.Length == 2 * cut;
+    assert cut <= result.Length;
+
+    var k := 0;
+    while k < result.Length
+      invariant n == inputs.Length
+      invariant n % 2 == 0
+      invariant mid == n / 2
+      invariant cut == mid - 1
+      invariant 0 <= cut <= result.Length
+      invariant result.Length == n - 2
+      invariant result.Length == 2 * cut
+      invariant 0 <= k <= result.Length
+      invariant forall t :: 0 <= t < k && t < cut ==> result[t] == inputs[t]
+      invariant forall t :: 0 <= t < k && cut <= t ==> result[t] == inputs[t + 2]
+    {
+      if k < cut {
+        result[k] := inputs[k];
+      } else {
+        assert k < result.Length;
+        assert result.Length == n - 2;
+        assert k < n - 2;
+        assert k + 2 < n;
+        result[k] := inputs[k + 2];
+      }
+      k := k + 1;
+    }
+
+    assert k == result.Length;
+    assert forall i :: 0 <= i < cut ==> result[i] == inputs[i];
+    assert forall j :: cut <= j < result.Length ==> result[j] == inputs[j + 2];
+  }
+}
+\end{lstlisting}
+\section*{Final Program}
+\begin{lstlisting}
+method p_6_2_e_remove_middle_array(inputs: array<int>) returns (result: array<int>)
+	requires inputs.Length >= 1
+	ensures result.Length == if inputs.Length % 2 == 1 then inputs.Length - 1 else inputs.Length - 2
+	ensures inputs.Length % 2 == 1 ==> forall i :: 0 <= i < inputs.Length / 2 ==> result[i] == inputs[i] && forall j :: inputs.Length / 2 <= j < result.Length ==> result[j] == inputs[j + 1]
+	ensures inputs.Length % 2 == 0 ==> forall i :: 0 <= i < inputs.Length / 2 - 1 ==> result[i] == inputs[i] && forall j :: inputs.Length / 2 - 1 <= j < result.Length ==> result[j] == inputs[j + 2]
+{
+  var n := inputs.Length;
+
+  if n % 2 == 1 {
+    var mid := n / 2;
+    assert n == (n / 2) * 2 + n % 2;
+    assert n == mid * 2 + 1;
+
+    result := new int[n - 1];
+    assert result.Length == n - 1;
+    assert result.Length == 2 * mid;
+    assert 0 <= mid;
+    assert mid <= result.Length;
+
+    var k := 0;
+    while k < result.Length
+      invariant n == inputs.Length
+      invariant n % 2 == 1
+      invariant mid == n / 2
+      invariant result.Length == n - 1
+      invariant result.Length == 2 * mid
+      invariant mid <= result.Length
+      invariant 0 <= k <= result.Length
+      invariant forall t :: 0 <= t < k && t < mid ==> result[t] == inputs[t]
+      invariant forall t :: 0 <= t < k && mid <= t ==> result[t] == inputs[t + 1]
+    {
+      if k < mid {
+        result[k] := inputs[k];
+      } else {
+        assert k < result.Length;
+        assert result.Length == n - 1;
+        assert k < n - 1;
+        assert k + 1 < n;
+        result[k] := inputs[k + 1];
+      }
+      k := k + 1;
+    }
+
+    assert k == result.Length;
+    assert forall i :: 0 <= i < mid ==> result[i] == inputs[i];
+    assert forall j :: mid <= j < result.Length ==> result[j] == inputs[j + 1];
+  } else {
+    assert n % 2 != 1;
+    assert 0 <= n % 2 < 2;
+    assert n % 2 == 0;
+    if n == 1 {
+      assert n % 2 == 1;
+      assert false;
+    }
+    assert n >= 2;
+
+    var mid := n / 2;
+    assert n == (n / 2) * 2 + n % 2;
+    assert n == mid * 2;
+    assert 1 <= mid;
+
+    var cut := mid - 1;
+    assert 0 <= cut;
+
+    result := new int[n - 2];
+    assert result.Length == n - 2;
+    assert result.Length == 2 * cut;
+    assert cut <= result.Length;
+
+    var k := 0;
+    while k < result.Length
+      invariant n == inputs.Length
+      invariant n % 2 == 0
+      invariant mid == n / 2
+      invariant cut == mid - 1
+      invariant 0 <= cut <= result.Length
+      invariant result.Length == n - 2
+      invariant result.Length == 2 * cut
+      invariant 0 <= k <= result.Length
+      invariant forall t :: 0 <= t < k && t < cut ==> result[t] == inputs[t]
+      invariant forall t :: 0 <= t < k && cut <= t ==> result[t] == inputs[t + 2]
+    {
+      if k < cut {
+        result[k] := inputs[k];
+      } else {
+        assert k < result.Length;
+        assert result.Length == n - 2;
+        assert k < n - 2;
+        assert k + 2 < n;
+        result[k] := inputs[k + 2];
+      }
+      k := k + 1;
+    }
+
+    assert k == result.Length;
+    assert forall i :: 0 <= i < cut ==> result[i] == inputs[i];
+    assert forall j :: cut <= j < result.Length ==> result[j] == inputs[j + 2];
+  }
+}
+\end{lstlisting}
+\section*{Total Token Usage}
+\textbf{Input tokens: }540
+\\\textbf{Output tokens: }6416
+\\\textbf{Reasoning tokens: }5467
+\\\textbf{Sum of `total tokens': }6956
+\section*{Experiment Timings}
+\textbf{Overall Experiment} started at 1780662108565, ended at 1780662264698, lasting 156133ms (156.13 seconds)
+\\\textbf{Iteration \#1} started at 1780662108566, ended at 1780662264697, lasting 156131ms (156.13 seconds)
+\end{document}

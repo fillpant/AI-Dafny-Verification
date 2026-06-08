@@ -1,0 +1,114 @@
+\documentclass{article}
+\usepackage{lmodern}
+\usepackage{amsmath}
+\usepackage{listings}
+\usepackage{fullpage}
+\usepackage{parskip}
+\usepackage{xcolor}
+\lstset{
+	basicstyle=\ttfamily,
+	columns=fullflexible,
+	frame=single,
+	breaklines=true,
+	postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},
+}
+\begin{document}
+\title{Experiment `p\_5\_4\_middle' Results}
+\author{\today}
+\date{}
+\maketitle
+\textbf{Experiment outcome: }SUCCESS
+\\\textbf{Bad responses: }0
+\\\textbf{Responses containing}~\texttt{assume}~\textbf{: }0
+\\\textbf{Responses containing}~\texttt{expect}~\textbf{: }0
+\\\textbf{Resolution attempts: }1
+\\\textbf{Hard fails (resolution): }0
+\\\textbf{Soft fails (resolution): }0
+\\\textbf{Verification attempts: }1
+\section*{Problem Specification}
+\textbf{Problem name: }p\_5\_4\_middle
+\\\textbf{Natural language statement: }null
+\\\textbf{Method signature: }p\_5\_4\_middle(str: string) returns (middle\_str: string)
+\subsection*{Ensures}
+\begin{itemize}
+\item \texttt{if |str| \% 2 == 1 then |middle\_str| == 1 else |middle\_str| == 2}
+\item \texttt{if |str| \% 2 == 1 then middle\_str[0] == str[|str| / 2] else middle\_str == str[|str| / 2 - 1 .. (|str| / 2) + 1]}
+\end{itemize}
+\subsection*{Requires}
+\begin{itemize}
+\item \texttt{0 < |str|}
+\end{itemize}
+\clearpage
+\section*{GenAI interactions}
+Below you will find all interactions between the `user' (program) and the `assistant' (OpenAI).
+\subsection*{Program $\rightarrow$ GenAI}
+\begin{lstlisting}
+You are given the following task to perform in Dafny:
+
+Write a method to satisfy the below requirements.
+
+The signature should be:
+
+p_5_4_middle(str: string) returns (middle_str: string)
+
+The method should respect the following contract:
+
+requires 0 < |str|, ensures if |str| % 2 == 1 then |middle_str| == 1 else |middle_str| == 2, ensures if |str| % 2 == 1 then middle_str[0] == str[|str| / 2] else middle_str == str[|str| / 2 - 1 .. (|str| / 2) + 1]
+
+Produce and show only the Dafny body of this method, including the curly braces that surround it. Do not show the signature nor contract. You must not use 'assume' nor 'expect' anywhere in your code.
+\end{lstlisting}
+\subsection*{GenAI $\rightarrow$ Program}
+\textbf{System fingerprint: }null
+\\\textbf{ID: }chatcmpl-DnQuo7C7XhA8jeyp7UHl5wF5aRQAM
+\\\textbf{Model: }gpt-5.5-2026-04-23
+\\\textbf{Created at: }1780673906
+\\\textbf{Finish reason: }stop
+\\\textbf{Usage: }410 tokens in, and 674 tokens out
+\begin{lstlisting}
+{
+  var mid := |str| / 2;
+  if |str| % 2 == 1 {
+    middle_str := str[mid .. mid + 1];
+    assert |middle_str| == 1;
+    assert middle_str[0] == str[mid];
+  } else {
+    assert |str| % 2 == 0;
+    assert 2 <= |str|;
+    assert 1 <= mid;
+    assert mid + 1 <= |str|;
+    middle_str := str[mid - 1 .. mid + 1];
+    assert |middle_str| == 2;
+  }
+}
+\end{lstlisting}
+\section*{Final Program}
+\begin{lstlisting}
+method p_5_4_middle(str: string) returns (middle_str: string)
+	requires 0 < |str|
+	ensures if |str| % 2 == 1 then |middle_str| == 1 else |middle_str| == 2
+	ensures if |str| % 2 == 1 then middle_str[0] == str[|str| / 2] else middle_str == str[|str| / 2 - 1 .. (|str| / 2) + 1]
+{
+  var mid := |str| / 2;
+  if |str| % 2 == 1 {
+    middle_str := str[mid .. mid + 1];
+    assert |middle_str| == 1;
+    assert middle_str[0] == str[mid];
+  } else {
+    assert |str| % 2 == 0;
+    assert 2 <= |str|;
+    assert 1 <= mid;
+    assert mid + 1 <= |str|;
+    middle_str := str[mid - 1 .. mid + 1];
+    assert |middle_str| == 2;
+  }
+}
+\end{lstlisting}
+\section*{Total Token Usage}
+\textbf{Input tokens: }410
+\\\textbf{Output tokens: }674
+\\\textbf{Reasoning tokens: }512
+\\\textbf{Sum of `total tokens': }1084
+\section*{Experiment Timings}
+\textbf{Overall Experiment} started at 1780673906254, ended at 1780673949102, lasting 42848ms (42.85 seconds)
+\\\textbf{Iteration \#1} started at 1780673906261, ended at 1780673949102, lasting 42841ms (42.84 seconds)
+\end{document}

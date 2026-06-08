@@ -1,0 +1,10 @@
+[
+  {
+    "role": "user",
+    "content": "You are given the following task to perform in Dafny:\n\nWrite a method that takes an array of ten integers and then returns every element at an even index.\n\nThe signature should be:\n\np_6_1_a_process_array_even_indexed_seq(inputs: seq\u003cint\u003e) returns (even_indexed: seq\u003cint\u003e)\n\nThe method should respect the following contract:\n\nrequires |inputs| \u003d\u003d 10, ensures even_indexed \u003d\u003d [inputs[0], inputs[2], inputs[4], inputs[6], inputs[8]]\n\nProduce and show only the Dafny body of this method, including the curly braces that surround it. Do not show the signature nor contract. You must not use \u0027assume\u0027 nor \u0027expect\u0027 anywhere in your code."
+  },
+  {
+    "role": "assistant",
+    "content": "{\"method_body\":\"{\\n  even_indexed :\u003d [inputs[0], inputs[2], inputs[4], inputs[6], inputs[8]];\\n}\"}"
+  }
+]

@@ -1,0 +1,436 @@
+\documentclass{article}
+\usepackage{lmodern}
+\usepackage{amsmath}
+\usepackage{listings}
+\usepackage{fullpage}
+\usepackage{parskip}
+\usepackage{xcolor}
+\lstset{
+	basicstyle=\ttfamily,
+	columns=fullflexible,
+	frame=single,
+	breaklines=true,
+	postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},
+}
+\begin{document}
+\title{Experiment `p\_5\_9\_f\_cone\_surface' Results}
+\author{\today}
+\date{}
+\maketitle
+\textbf{Experiment outcome: }FAILURE\_VERIFY
+\\\textbf{Bad responses: }1
+\\\textbf{Responses containing}~\texttt{assume}~\textbf{: }0
+\\\textbf{Responses containing}~\texttt{expect}~\textbf{: }0
+\\\textbf{Resolution attempts: }3
+\\\textbf{Hard fails (resolution): }0
+\\\textbf{Soft fails (resolution): }0
+\\\textbf{Verification attempts: }3
+\section*{Problem Specification}
+\textbf{Problem name: }p\_5\_9\_f\_cone\_surface
+\\\textbf{Natural language statement: }Write a method that computes the surface area of a cone with a circular base with a residual error less than 0.01, given radius and height.
+\\\textbf{Method signature: }p\_5\_9\_f\_cone\_surface(r: real, h: real) returns (surface: real)
+\subsection*{Ensures}
+\begin{itemize}
+\item \texttt{-0.01 < (((surface / (3.14159 * r)) - r) * ((surface / (3.14159 * r)) - r)) - ((h * h) + (r * r)) < 0.01}
+\end{itemize}
+\subsection*{Requires}
+\begin{itemize}
+\item \texttt{r > 0.0}
+\end{itemize}
+\clearpage
+\section*{GenAI interactions}
+Below you will find all interactions between the `user' (program) and the `assistant' (OpenAI).
+\subsection*{Program $\rightarrow$ GenAI}
+\begin{lstlisting}
+You are given the following task to perform in Dafny:
+
+Write a method that computes the surface area of a cone with a circular base with a residual error less than 0.01, given radius and height.
+
+The signature should be:
+
+p_5_9_f_cone_surface(r: real, h: real) returns (surface: real)
+
+The method should respect the following contract:
+
+requires r > 0.0, ensures -0.01 < (((surface / (3.14159 * r)) - r) * ((surface / (3.14159 * r)) - r)) - ((h * h) + (r * r)) < 0.01
+
+Produce and show only the Dafny body of this method, including the curly braces that surround it. Do not show the signature nor contract. You must not use 'assume' nor 'expect' anywhere in your code.
+\end{lstlisting}
+\subsection*{GenAI $\rightarrow$ Program}
+\textbf{System fingerprint: }null
+\\\textbf{ID: }chatcmpl-DnjeqsqtSOBAttJh7Tx3qTzxDtET8
+\\\textbf{Model: }gpt-5.5-2026-04-23
+\\\textbf{Created at: }1780745952
+\\\textbf{Finish reason: }stop
+\\\textbf{Usage: }406 tokens in, and 4299 tokens out
+\begin{lstlisting}
+{
+  var s: real :| s * s == h * h + r * r;
+  surface := 3.14159 * r * (r + s);
+
+  assert 3.14159 * r != 0.0;
+  assert surface / (3.14159 * r) == r + s;
+  assert (surface / (3.14159 * r)) - r == s;
+  assert (((surface / (3.14159 * r)) - r) * ((surface / (3.14159 * r)) - r)) - ((h * h) + (r * r)) == 0.0;
+}
+\end{lstlisting}
+\subsection*{Program $\rightarrow$ GenAI}
+\begin{lstlisting}
+When using dafny verify, the below error is emitted and verify fails:
+
+problem_data/p_5_9_f_cone_surface/program.dfy(5,14): Error: cannot establish the existence of LHS values that satisfy the such-that predicate. Note, no trigger was found for the such-that predicate, which may be the reason the proof failed. To give a trigger explicitly, use the {:trigger} attribute. For more information, see the section on quantifier instantiation rules in the reference manual.
+  |
+5 |   var s: real :| s * s == h * h + r * r;
+  |               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+Dafny program verifier finished with 1 verified, 1 error
+
+Correct the error in code by altering only the method body. Produce and show only the Dafny body, including the curly braces that surround it. Do not show the signature nor contract. You must not use 'assume' nor 'expect' anywhere in your code.
+\end{lstlisting}
+\subsection*{GenAI $\rightarrow$ Program}
+\textbf{System fingerprint: }null
+\\\textbf{ID: }chatcmpl-DnjgkbpOegzufzVmS6R0VyAFoPZ0e
+\\\textbf{Model: }gpt-5.5-2026-04-23
+\\\textbf{Created at: }1780746070
+\\\textbf{Finish reason: }stop
+\\\textbf{Usage: }791 tokens in, and 10345 tokens out
+\begin{lstlisting}
+{
+  var y := h * h + r * r;
+  assert h * h >= 0.0;
+  assert r * r > 0.0;
+  assert y > 0.0;
+
+  var low := 0.0;
+  var high := 1.0;
+
+  while high * high < y
+    invariant low == 0.0
+    invariant low <= high
+    invariant high > 0.0
+    invariant low * low <= y
+    decreases y - high * high
+  {
+    var oldHigh := high;
+    assert oldHigh > 0.0;
+    assert oldHigh * oldHigh < (2.0 * oldHigh) * (2.0 * oldHigh);
+    high := 2.0 * oldHigh;
+    assert y - high * high < y - oldHigh * oldHigh;
+  }
+
+  assert low * low <= y;
+  assert y <= high * high;
+
+  while high * high - low * low >= 0.01
+    invariant 0.0 <= low
+    invariant low <= high
+    invariant high > 0.0
+    invariant low * low <= y
+    invariant y <= high * high
+    decreases high * high - low * low
+  {
+    var oldLow := low;
+    var oldHigh := high;
+    var mid := (oldLow + oldHigh) / 2.0;
+
+    assert oldHigh * oldHigh - oldLow * oldLow >= 0.01;
+    assert oldLow < oldHigh;
+    assert mid - oldLow == (oldHigh - oldLow) / 2.0;
+    assert oldHigh - mid == (oldHigh - oldLow) / 2.0;
+    assert oldLow < mid;
+    assert mid < oldHigh;
+    assert mid > 0.0;
+
+    if mid * mid <= y {
+      assert mid * mid - oldLow * oldLow == (mid - oldLow) * (mid + oldLow);
+      assert mid * mid - oldLow * oldLow > 0.0;
+      low := mid;
+      assert oldHigh * oldHigh - low * low < oldHigh * oldHigh - oldLow * oldLow;
+    } else {
+      assert oldHigh * oldHigh - mid * mid == (oldHigh - mid) * (oldHigh + mid);
+      assert oldHigh * oldHigh - mid * mid > 0.0;
+      high := mid;
+      assert high * high - oldLow * oldLow < oldHigh * oldHigh - oldLow * oldLow;
+    }
+  }
+
+  assert high * high - low * low < 0.01;
+  assert high * high - y >= 0.0;
+  assert high * high - y <= high * high - low * low;
+  assert high * high - y < 0.01;
+
+  surface := 3.14159 * r * (r + high);
+
+  assert 3.14159 > 0.0;
+  assert 3.14159 * r > 0.0;
+  assert 3.14159 * r != 0.0;
+  assert surface == (3.14159 * r) * (r + high);
+  assert surface / (3.14159 * r) == r + high;
+  assert (surface / (3.14159 * r)) - r == high;
+  assert (((surface / (3.14159 * r)) - r) * ((surface / (3.14159 * r)) - r)) - ((h * h) + (r * r)) == high * high - y;
+  assert -0.01 < high * high - y;
+  assert high * high - y < 0.01;
+}
+\end{lstlisting}
+\subsection*{Program $\rightarrow$ GenAI}
+\begin{lstlisting}
+When using dafny verify, the below error is emitted and verify fails:
+
+problem_data/p_5_9_f_cone_surface/program.dfy(8,2): Error: assertion might not hold
+  |
+8 |   assert y > 0.0;
+  |   ^^^^^^
+
+problem_data/p_5_9_f_cone_surface/program.dfy(30,2): Error: decreases expression might not decrease
+   |
+30 |   while high * high - low * low >= 0.01
+   |   ^^^^^
+
+problem_data/p_5_9_f_cone_surface/program.dfy(74,2): Error: assertion might not hold
+   |
+74 |   assert surface / (3.14159 * r) == r + high;
+   |   ^^^^^^
+
+
+Dafny program verifier finished with 1 verified, 3 errors
+
+Correct the error in code by altering only the method body. Produce and show only the Dafny body, including the curly braces that surround it. Do not show the signature nor contract. You must not use 'assume' nor 'expect' anywhere in your code.
+\end{lstlisting}
+\subsection*{GenAI $\rightarrow$ Program}
+\textbf{System fingerprint: }null
+\\\textbf{ID: }chatcmpl-Dnjkiex2veAsp8NcJ23noYmZHrHfr
+\\\textbf{Model: }gpt-5.5-2026-04-23
+\\\textbf{Created at: }1780746316
+\\\textbf{Finish reason: }stop
+\\\textbf{Usage: }1928 tokens in, and 6498 tokens out
+\begin{lstlisting}
+{
+  var y := h * h + r * r;
+
+  assert h * h >= 0.0;
+  assert r * r > 0.0;
+  assert h * h + r * r >= r * r;
+  assert h * h + r * r > 0.0;
+  assert y > 0.0;
+  assert y >= 0.0;
+
+  var low := 0.0;
+  var high := y + 1.0;
+
+  assert low * low <= y;
+  assert high > 0.0;
+  assert low <= high;
+  assert y * y >= 0.0;
+  assert (y + 1.0) * (y + 1.0) - y == y * y + y + 1.0;
+  assert (y + 1.0) * (y + 1.0) >= y;
+  assert y <= high * high;
+
+  while high * high - low * low >= 0.01
+    invariant 0.0 <= low
+    invariant low <= high
+    invariant high > 0.0
+    invariant low * low <= y
+    invariant y <= high * high
+    decreases high - low
+  {
+    var oldLow := low;
+    var oldHigh := high;
+    var mid := (oldLow + oldHigh) / 2.0;
+
+    assert oldHigh * oldHigh - oldLow * oldLow >= 0.01;
+    assert oldHigh * oldHigh - oldLow * oldLow > 0.0;
+    if oldLow == oldHigh {
+      assert oldHigh * oldHigh - oldLow * oldLow == 0.0;
+      assert false;
+    }
+    assert oldLow < oldHigh;
+    assert mid == oldLow + (oldHigh - oldLow) / 2.0;
+    assert oldLow < mid;
+    assert mid < oldHigh;
+    assert mid > 0.0;
+
+    if mid * mid <= y {
+      low := mid;
+      assert low * low <= y;
+      assert y <= high * high;
+    } else {
+      high := mid;
+      assert y < high * high;
+      assert y <= high * high;
+      assert low * low <= y;
+    }
+
+    assert high - low == (oldHigh - oldLow) / 2.0;
+    assert oldHigh - oldLow > 0.0;
+    assert (oldHigh - oldLow) / 2.0 < oldHigh - oldLow;
+    assert high - low < oldHigh - oldLow;
+  }
+
+  assert high * high - low * low < 0.01;
+  assert high * high - y >= 0.0;
+  assert high * high - y <= high * high - low * low;
+  assert high * high - y < 0.01;
+
+  var denom := 3.14159 * r;
+  var z := r + high;
+  surface := denom * z;
+
+  assert 3.14159 > 0.0;
+  assert denom > 0.0;
+  assert denom != 0.0;
+  assert denom / denom == 1.0;
+  assert (denom * z) / denom == (denom / denom) * z;
+  assert (denom * z) / denom == z;
+  assert surface / denom == z;
+  assert denom == 3.14159 * r;
+  assert surface / (3.14159 * r) == z;
+  assert (surface / (3.14159 * r)) - r == high;
+  assert (((surface / (3.14159 * r)) - r) * ((surface / (3.14159 * r)) - r)) - ((h * h) + (r * r)) == high * high - y;
+  assert -0.01 < high * high - y;
+  assert high * high - y < 0.01;
+}
+\end{lstlisting}
+\subsection*{Program $\rightarrow$ GenAI}
+\begin{lstlisting}
+When using dafny verify, the below error is emitted and verify fails:
+
+problem_data/p_5_9_f_cone_surface/program.dfy(11,2): Error: assertion might not hold
+   |
+11 |   assert y > 0.0;
+   |   ^^^^^^
+
+problem_data/p_5_9_f_cone_surface/program.dfy(25,2): Error: decreases expression might not decrease
+   |
+25 |   while high * high - low * low >= 0.01
+   |   ^^^^^
+
+problem_data/p_5_9_f_cone_surface/program.dfy(78,2): Error: assertion might not hold
+   |
+78 |   assert denom / denom == 1.0;
+   |   ^^^^^^
+
+problem_data/p_5_9_f_cone_surface/program.dfy(79,2): Error: assertion might not hold
+   |
+79 |   assert (denom * z) / denom == (denom / denom) * z;
+   |   ^^^^^^
+
+
+Dafny program verifier finished with 1 verified, 4 errors
+
+Correct the error in code by altering only the method body. Produce and show only the Dafny body, including the curly braces that surround it. Do not show the signature nor contract. You must not use 'assume' nor 'expect' anywhere in your code.
+\end{lstlisting}
+\subsection*{GenAI $\rightarrow$ Program}
+\textbf{System fingerprint: }null
+\\\textbf{ID: }chatcmpl-Dnjn6aGMhUMtBkPfv8YkSjH5SYRFG
+\\\textbf{Model: }gpt-5.5-2026-04-23
+\\\textbf{Created at: }1780746464
+\\\textbf{Finish reason: }length
+\\\textbf{Usage: }3193 tokens in, and 5733 tokens out
+\\\textcolor{red}{\textbf{The below is a raw response from GenAI that could not be parsed. It is likely that GenAI got 'stuck' in a loop and hit the pre-set token limit (i.e., finish reason is 'length').}}
+\begin{lstlisting}
+
+\end{lstlisting}
+\section*{Final Program}
+\begin{lstlisting}
+method p_5_9_f_cone_surface(r: real, h: real) returns (surface: real)
+	requires r > 0.0
+	ensures -0.01 < (((surface / (3.14159 * r)) - r) * ((surface / (3.14159 * r)) - r)) - ((h * h) + (r * r)) < 0.01
+{
+  var y := h * h + r * r;
+
+  assert h * h >= 0.0;
+  assert r * r > 0.0;
+  assert h * h + r * r >= r * r;
+  assert h * h + r * r > 0.0;
+  assert y > 0.0;
+  assert y >= 0.0;
+
+  var low := 0.0;
+  var high := y + 1.0;
+
+  assert low * low <= y;
+  assert high > 0.0;
+  assert low <= high;
+  assert y * y >= 0.0;
+  assert (y + 1.0) * (y + 1.0) - y == y * y + y + 1.0;
+  assert (y + 1.0) * (y + 1.0) >= y;
+  assert y <= high * high;
+
+  while high * high - low * low >= 0.01
+    invariant 0.0 <= low
+    invariant low <= high
+    invariant high > 0.0
+    invariant low * low <= y
+    invariant y <= high * high
+    decreases high - low
+  {
+    var oldLow := low;
+    var oldHigh := high;
+    var mid := (oldLow + oldHigh) / 2.0;
+
+    assert oldHigh * oldHigh - oldLow * oldLow >= 0.01;
+    assert oldHigh * oldHigh - oldLow * oldLow > 0.0;
+    if oldLow == oldHigh {
+      assert oldHigh * oldHigh - oldLow * oldLow == 0.0;
+      assert false;
+    }
+    assert oldLow < oldHigh;
+    assert mid == oldLow + (oldHigh - oldLow) / 2.0;
+    assert oldLow < mid;
+    assert mid < oldHigh;
+    assert mid > 0.0;
+
+    if mid * mid <= y {
+      low := mid;
+      assert low * low <= y;
+      assert y <= high * high;
+    } else {
+      high := mid;
+      assert y < high * high;
+      assert y <= high * high;
+      assert low * low <= y;
+    }
+
+    assert high - low == (oldHigh - oldLow) / 2.0;
+    assert oldHigh - oldLow > 0.0;
+    assert (oldHigh - oldLow) / 2.0 < oldHigh - oldLow;
+    assert high - low < oldHigh - oldLow;
+  }
+
+  assert high * high - low * low < 0.01;
+  assert high * high - y >= 0.0;
+  assert high * high - y <= high * high - low * low;
+  assert high * high - y < 0.01;
+
+  var denom := 3.14159 * r;
+  var z := r + high;
+  surface := denom * z;
+
+  assert 3.14159 > 0.0;
+  assert denom > 0.0;
+  assert denom != 0.0;
+  assert denom / denom == 1.0;
+  assert (denom * z) / denom == (denom / denom) * z;
+  assert (denom * z) / denom == z;
+  assert surface / denom == z;
+  assert denom == 3.14159 * r;
+  assert surface / (3.14159 * r) == z;
+  assert (surface / (3.14159 * r)) - r == high;
+  assert (((surface / (3.14159 * r)) - r) * ((surface / (3.14159 * r)) - r)) - ((h * h) + (r * r)) == high * high - y;
+  assert -0.01 < high * high - y;
+  assert high * high - y < 0.01;
+}
+\end{lstlisting}
+\section*{Total Token Usage}
+\textbf{Input tokens: }6318
+\\\textbf{Output tokens: }26875
+\\\textbf{Reasoning tokens: }24699
+\\\textbf{Sum of `total tokens': }33193
+\section*{Experiment Timings}
+\textbf{Overall Experiment} started at 1780745951909, ended at 1780746604058, lasting 652149ms (652.15 seconds)
+\\\textbf{Iteration \#4} started at 1780746464246, ended at 1780746604058, lasting 139812ms (139.81 seconds)
+\\\textbf{Iteration \#1} started at 1780745951912, ended at 1780746070548, lasting 118636ms (118.64 seconds)
+\\\textbf{Iteration \#2} started at 1780746070549, ended at 1780746315725, lasting 245176ms (245.18 seconds)
+\\\textbf{Iteration \#3} started at 1780746315725, ended at 1780746464245, lasting 148520ms (148.52 seconds)
+\end{document}

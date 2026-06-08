@@ -1,0 +1,150 @@
+\documentclass{article}
+\usepackage{lmodern}
+\usepackage{amsmath}
+\usepackage{listings}
+\usepackage{fullpage}
+\usepackage{parskip}
+\usepackage{xcolor}
+\lstset{
+	basicstyle=\ttfamily,
+	columns=fullflexible,
+	frame=single,
+	breaklines=true,
+	postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},
+}
+\begin{document}
+\title{Experiment `p\_13\_9\_recursive\_sum\_array' Results}
+\author{\today}
+\date{}
+\maketitle
+\textbf{Experiment outcome: }SUCCESS
+\\\textbf{Bad responses: }0
+\\\textbf{Responses containing}~\texttt{assume}~\textbf{: }0
+\\\textbf{Responses containing}~\texttt{expect}~\textbf{: }0
+\\\textbf{Resolution attempts: }1
+\\\textbf{Hard fails (resolution): }0
+\\\textbf{Soft fails (resolution): }0
+\\\textbf{Verification attempts: }1
+\section*{Problem Specification}
+\textbf{Problem name: }p\_13\_9\_recursive\_sum\_array
+\\\textbf{Natural language statement: }null
+\\\textbf{Method signature: }p\_13\_9\_recursive\_sum\_array(inputs: array<int>) returns (sum: int)
+\subsection*{Ensures}
+\begin{itemize}
+\item \texttt{sum == sum\_array(inputs[..])}
+\end{itemize}
+\subsection*{Functional Code Given}
+\begin{lstlisting}
+function sum_array(inputs: seq<int>): int
+  ensures sum_array(inputs) == (if |inputs| == 0 then 0 else inputs[0] + sum_array(inputs[1..]))
+{
+  if |inputs| == 0 then 0
+  else inputs[0] + sum_array(inputs[1..])
+}
+\end{lstlisting}
+\clearpage
+\section*{GenAI interactions}
+Below you will find all interactions between the `user' (program) and the `assistant' (OpenAI).
+\subsection*{Program $\rightarrow$ GenAI}
+\begin{lstlisting}
+You are given the following task to perform in Dafny:
+
+Write a method to satisfy the below requirements.
+
+The signature should be:
+
+p_13_9_recursive_sum_array(inputs: array<int>) returns (sum: int)
+
+The method should respect the following contract:
+
+ensures sum == sum_array(inputs[..])
+
+The contract uses the following dafny code:
+
+function sum_array(inputs: seq<int>): int
+  ensures sum_array(inputs) == (if |inputs| == 0 then 0 else inputs[0] + sum_array(inputs[1..]))
+{
+  if |inputs| == 0 then 0
+  else inputs[0] + sum_array(inputs[1..])
+}
+
+These function(s) must not be used in your implementation of the method.
+
+Produce and show only the Dafny body of this method, including the curly braces that surround it. Do not show the signature nor contract. You must not use 'assume' nor 'expect' anywhere in your code.
+\end{lstlisting}
+\subsection*{GenAI $\rightarrow$ Program}
+\textbf{System fingerprint: }null
+\\\textbf{ID: }chatcmpl-DnSOOZt1MpGn3fZ8ftlv4ibjtYdmK
+\\\textbf{Model: }gpt-5.5-2026-04-23
+\\\textbf{Created at: }1780679584
+\\\textbf{Finish reason: }stop
+\\\textbf{Usage: }436 tokens in, and 3871 tokens out
+\begin{lstlisting}
+{
+  sum := 0;
+  var i := inputs.Length;
+  while i > 0
+    invariant 0 <= i <= inputs.Length
+    invariant sum == sum_array(inputs[i..])
+    decreases i
+  {
+    var oldI := i;
+    i := i - 1;
+    assert oldI == i + 1;
+    assert sum == sum_array(inputs[oldI..]);
+    assert sum == sum_array(inputs[i + 1..]);
+    assert inputs[i..] == [inputs[i]] + inputs[i + 1..];
+    assert inputs[i..][0] == inputs[i];
+    assert inputs[i..][1..] == inputs[i + 1..];
+    assert sum_array(inputs[i..]) == inputs[i] + sum_array(inputs[i + 1..]);
+    sum := inputs[i] + sum;
+    assert sum == sum_array(inputs[i..]);
+  }
+  assert i == 0;
+  assert inputs[i..] == inputs[..];
+}
+\end{lstlisting}
+\section*{Final Program}
+\begin{lstlisting}
+function sum_array(inputs: seq<int>): int
+  ensures sum_array(inputs) == (if |inputs| == 0 then 0 else inputs[0] + sum_array(inputs[1..]))
+{
+  if |inputs| == 0 then 0
+  else inputs[0] + sum_array(inputs[1..])
+}
+
+method p_13_9_recursive_sum_array(inputs: array<int>) returns (sum: int)
+	ensures sum == sum_array(inputs[..])
+{
+  sum := 0;
+  var i := inputs.Length;
+  while i > 0
+    invariant 0 <= i <= inputs.Length
+    invariant sum == sum_array(inputs[i..])
+    decreases i
+  {
+    var oldI := i;
+    i := i - 1;
+    assert oldI == i + 1;
+    assert sum == sum_array(inputs[oldI..]);
+    assert sum == sum_array(inputs[i + 1..]);
+    assert inputs[i..] == [inputs[i]] + inputs[i + 1..];
+    assert inputs[i..][0] == inputs[i];
+    assert inputs[i..][1..] == inputs[i + 1..];
+    assert sum_array(inputs[i..]) == inputs[i] + sum_array(inputs[i + 1..]);
+    sum := inputs[i] + sum;
+    assert sum == sum_array(inputs[i..]);
+  }
+  assert i == 0;
+  assert inputs[i..] == inputs[..];
+}
+\end{lstlisting}
+\section*{Total Token Usage}
+\textbf{Input tokens: }436
+\\\textbf{Output tokens: }3871
+\\\textbf{Reasoning tokens: }3584
+\\\textbf{Sum of `total tokens': }4307
+\section*{Experiment Timings}
+\textbf{Overall Experiment} started at 1780679583763, ended at 1780679714155, lasting 130392ms (130.39 seconds)
+\\\textbf{Iteration \#1} started at 1780679583764, ended at 1780679714155, lasting 130391ms (130.39 seconds)
+\end{document}

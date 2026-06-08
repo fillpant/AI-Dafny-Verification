@@ -1,0 +1,10 @@
+[
+  {
+    "role": "user",
+    "content": "You are given the following task to perform in Dafny:\n\nWrite a method to satisfy the below requirements.\n\nThe signature should be:\n\np_13_8_recursive_largest_seq(inputs: seq\u003cint\u003e) returns (largest: int)\n\nThe method should respect the following contract:\n\nrequires |inputs| \u003e\u003d 1, ensures largest \u003d\u003d find_largest(inputs)\n\nThe contract uses the following dafny code:\n\nfunction find_largest(inputs: seq\u003cint\u003e): int\n  requires |inputs| \u003e\u003d 1\n  ensures forall x :: x in inputs \u003d\u003d\u003e find_largest(inputs) \u003e\u003d x\n{\n  if |inputs| \u003d\u003d 1 then inputs[0]\n  else \n      assert inputs \u003d\u003d [inputs[0]] + inputs[1..];\n      var sub_largest :\u003d find_largest(inputs[1..]) ;\n      if inputs[0] \u003e\u003d sub_largest then inputs[0] else sub_largest\n}\n\nThese function(s) must not be used in your implementation of the method.\n\nProduce and show only the Dafny body of this method, including the curly braces that surround it. Do not show the signature nor contract. You must not use \u0027assume\u0027 nor \u0027expect\u0027 anywhere in your code."
+  },
+  {
+    "role": "assistant",
+    "content": "{\"method_body\":\"{\\n  if |inputs| \u003d\u003d 1 {\\n    largest :\u003d inputs[0];\\n  } else {\\n    assert |inputs[1..]| \u003e\u003d 1;\\n    var sub_largest :\u003d p_13_8_recursive_largest_seq(inputs[1..]);\\n    assert inputs \u003d\u003d [inputs[0]] + inputs[1..];\\n    if inputs[0] \u003e\u003d sub_largest {\\n      largest :\u003d inputs[0];\\n    } else {\\n      largest :\u003d sub_largest;\\n    }\\n  }\\n}\"}"
+  }
+]

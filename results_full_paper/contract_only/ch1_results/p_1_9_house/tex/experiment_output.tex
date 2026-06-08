@@ -1,0 +1,83 @@
+\documentclass{article}
+\usepackage{lmodern}
+\usepackage{amsmath}
+\usepackage{listings}
+\usepackage{fullpage}
+\usepackage{parskip}
+\usepackage{xcolor}
+\lstset{
+	basicstyle=\ttfamily,
+	columns=fullflexible,
+	frame=single,
+	breaklines=true,
+	postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},
+}
+\begin{document}
+\title{Experiment `p\_1\_9\_house' Results}
+\author{\today}
+\date{}
+\maketitle
+\textbf{Experiment outcome: }SUCCESS
+\\\textbf{Bad responses: }0
+\\\textbf{Responses containing}~\texttt{assume}~\textbf{: }0
+\\\textbf{Responses containing}~\texttt{expect}~\textbf{: }0
+\\\textbf{Resolution attempts: }1
+\\\textbf{Hard fails (resolution): }0
+\\\textbf{Soft fails (resolution): }0
+\\\textbf{Verification attempts: }1
+\section*{Problem Specification}
+\textbf{Problem name: }p\_1\_9\_house
+\\\textbf{Natural language statement: }null
+\\\textbf{Method signature: }p\_1\_9\_house() returns (s: string)
+\subsection*{Ensures}
+\begin{itemize}
+\item \texttt{s == "   +\textbackslash{}n  + +\textbackslash{}n +   +\textbackslash{}n+-----+\textbackslash{}n| .-. |\textbackslash{}n| | | |\textbackslash{}n+-+-+-+\textbackslash{}n"}
+\end{itemize}
+\clearpage
+\section*{GenAI interactions}
+Below you will find all interactions between the `user' (program) and the `assistant' (OpenAI).
+\subsection*{Program $\rightarrow$ GenAI}
+\begin{lstlisting}
+You are given the following task to perform in Dafny:
+
+Write a method to satisfy the below requirements.
+
+The signature should be:
+
+p_1_9_house() returns (s: string)
+
+The method should respect the following contract:
+
+ensures s == "   +\n  + +\n +   +\n+-----+\n| .-. |\n| | | |\n+-+-+-+\n"
+
+Produce and show only the Dafny body of this method, including the curly braces that surround it. Do not show the signature nor contract. You must not use 'assume' nor 'expect' anywhere in your code.
+\end{lstlisting}
+\subsection*{GenAI $\rightarrow$ Program}
+\textbf{System fingerprint: }null
+\\\textbf{ID: }chatcmpl-Dn2IPmvrx5FzJ3cvjbnU4Rlu41DEE
+\\\textbf{Model: }gpt-5.5-2026-04-23
+\\\textbf{Created at: }1780579269
+\\\textbf{Finish reason: }stop
+\\\textbf{Usage: }296 tokens in, and 57 tokens out
+\begin{lstlisting}
+{
+  s := "   +\n  + +\n +   +\n+-----+\n| .-. |\n| | | |\n+-+-+-+\n";
+}
+\end{lstlisting}
+\section*{Final Program}
+\begin{lstlisting}
+method p_1_9_house() returns (s: string)
+	ensures s == "   +\n  + +\n +   +\n+-----+\n| .-. |\n| | | |\n+-+-+-+\n"
+{
+  s := "   +\n  + +\n +   +\n+-----+\n| .-. |\n| | | |\n+-+-+-+\n";
+}
+\end{lstlisting}
+\section*{Total Token Usage}
+\textbf{Input tokens: }296
+\\\textbf{Output tokens: }57
+\\\textbf{Reasoning tokens: }0
+\\\textbf{Sum of `total tokens': }353
+\section*{Experiment Timings}
+\textbf{Overall Experiment} started at 1780579267850, ended at 1780579299707, lasting 31857ms (31.86 seconds)
+\\\textbf{Iteration \#1} started at 1780579267854, ended at 1780579299707, lasting 31853ms (31.85 seconds)
+\end{document}

@@ -1,0 +1,151 @@
+\documentclass{article}
+\usepackage{lmodern}
+\usepackage{amsmath}
+\usepackage{listings}
+\usepackage{fullpage}
+\usepackage{parskip}
+\usepackage{xcolor}
+\lstset{
+	basicstyle=\ttfamily,
+	columns=fullflexible,
+	frame=single,
+	breaklines=true,
+	postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},
+}
+\begin{document}
+\title{Experiment `p\_4\_2\_b\_count\_even\_odd\_seq' Results}
+\author{\today}
+\date{}
+\maketitle
+\textbf{Experiment outcome: }SUCCESS
+\\\textbf{Bad responses: }0
+\\\textbf{Responses containing}~\texttt{assume}~\textbf{: }0
+\\\textbf{Responses containing}~\texttt{expect}~\textbf{: }0
+\\\textbf{Resolution attempts: }1
+\\\textbf{Hard fails (resolution): }0
+\\\textbf{Soft fails (resolution): }0
+\\\textbf{Verification attempts: }1
+\section*{Problem Specification}
+\textbf{Problem name: }p\_4\_2\_b\_count\_even\_odd\_seq
+\\\textbf{Natural language statement: }Write a method that takes a sequence of integers and returns the number of even and odd inputs.
+\\\textbf{Method signature: }p\_4\_2\_b\_count\_even\_odd\_seq(inputs: seq<int>) returns (even\_count: int, odd\_count: int)
+\subsection*{Ensures}
+\begin{itemize}
+\item \texttt{even\_count == number\_even(inputs)}
+\item \texttt{odd\_count == number\_odd(inputs)}
+\end{itemize}
+\subsection*{Functional Code Given}
+\begin{lstlisting}
+function number_odd(s: seq<int>): int
+{ if s == [] then 0
+  else if s[0] % 2 == 1 then 1 + number_odd(s[1..])
+  else number_odd(s[1..])
+}
+
+function number_even (s: seq<int>): int
+{ if s == [] then 0
+  else if s[0] % 2 == 0 then 1 + number_even(s[1..])
+  else number_even(s[1..])
+}
+\end{lstlisting}
+\clearpage
+\section*{GenAI interactions}
+Below you will find all interactions between the `user' (program) and the `assistant' (OpenAI).
+\subsection*{Program $\rightarrow$ GenAI}
+\begin{lstlisting}
+You are given the following task to perform in Dafny:
+
+Write a method that takes a sequence of integers and returns the number of even and odd inputs.
+
+The signature should be:
+
+p_4_2_b_count_even_odd_seq(inputs: seq<int>) returns (even_count: int, odd_count: int)
+
+The method should respect the following contract:
+
+ensures even_count == number_even(inputs), ensures odd_count == number_odd(inputs)
+
+The contract uses the following dafny code:
+
+function number_odd(s: seq<int>): int
+{ if s == [] then 0
+  else if s[0] % 2 == 1 then 1 + number_odd(s[1..])
+  else number_odd(s[1..])
+}
+
+function number_even (s: seq<int>): int
+{ if s == [] then 0
+  else if s[0] % 2 == 0 then 1 + number_even(s[1..])
+  else number_even(s[1..])
+}
+
+These function(s) must not be used in your implementation of the method.
+
+Produce and show only the Dafny body of this method, including the curly braces that surround it. Do not show the signature nor contract. You must not use 'assume' nor 'expect' anywhere in your code.
+\end{lstlisting}
+\subsection*{GenAI $\rightarrow$ Program}
+\textbf{System fingerprint: }null
+\\\textbf{ID: }chatcmpl-Dme5kB14evLzNLjfgisogQkBJDFts
+\\\textbf{Model: }gpt-5.5-2026-04-23
+\\\textbf{Created at: }1780486228
+\\\textbf{Finish reason: }stop
+\\\textbf{Usage: }574 tokens in, and 643 tokens out
+\begin{lstlisting}
+{
+  if inputs == [] {
+    even_count := 0;
+    odd_count := 0;
+  } else {
+    var e, o := p_4_2_b_count_even_odd_seq(inputs[1..]);
+    if inputs[0] % 2 == 0 {
+      even_count := e + 1;
+      odd_count := o;
+    } else {
+      even_count := e;
+      odd_count := o + 1;
+    }
+  }
+}
+\end{lstlisting}
+\section*{Final Program}
+\begin{lstlisting}
+function number_odd(s: seq<int>): int
+{ if s == [] then 0
+  else if s[0] % 2 == 1 then 1 + number_odd(s[1..])
+  else number_odd(s[1..])
+}
+
+function number_even (s: seq<int>): int
+{ if s == [] then 0
+  else if s[0] % 2 == 0 then 1 + number_even(s[1..])
+  else number_even(s[1..])
+}
+
+method p_4_2_b_count_even_odd_seq(inputs: seq<int>) returns (even_count: int, odd_count: int)
+	ensures even_count == number_even(inputs)
+	ensures odd_count == number_odd(inputs)
+{
+  if inputs == [] {
+    even_count := 0;
+    odd_count := 0;
+  } else {
+    var e, o := p_4_2_b_count_even_odd_seq(inputs[1..]);
+    if inputs[0] % 2 == 0 {
+      even_count := e + 1;
+      odd_count := o;
+    } else {
+      even_count := e;
+      odd_count := o + 1;
+    }
+  }
+}
+\end{lstlisting}
+\section*{Total Token Usage}
+\textbf{Input tokens: }574
+\\\textbf{Output tokens: }643
+\\\textbf{Reasoning tokens: }512
+\\\textbf{Sum of `total tokens': }1217
+\section*{Experiment Timings}
+\textbf{Overall Experiment} started at 1780486228144, ended at 1780486245777, lasting 17633ms (17.63 seconds)
+\\\textbf{Iteration \#1} started at 1780486228145, ended at 1780486245777, lasting 17632ms (17.63 seconds)
+\end{document}

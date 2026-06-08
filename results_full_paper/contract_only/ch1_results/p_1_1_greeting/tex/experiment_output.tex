@@ -1,0 +1,83 @@
+\documentclass{article}
+\usepackage{lmodern}
+\usepackage{amsmath}
+\usepackage{listings}
+\usepackage{fullpage}
+\usepackage{parskip}
+\usepackage{xcolor}
+\lstset{
+	basicstyle=\ttfamily,
+	columns=fullflexible,
+	frame=single,
+	breaklines=true,
+	postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},
+}
+\begin{document}
+\title{Experiment `p\_1\_1\_greeting' Results}
+\author{\today}
+\date{}
+\maketitle
+\textbf{Experiment outcome: }SUCCESS
+\\\textbf{Bad responses: }0
+\\\textbf{Responses containing}~\texttt{assume}~\textbf{: }0
+\\\textbf{Responses containing}~\texttt{expect}~\textbf{: }0
+\\\textbf{Resolution attempts: }1
+\\\textbf{Hard fails (resolution): }0
+\\\textbf{Soft fails (resolution): }0
+\\\textbf{Verification attempts: }1
+\section*{Problem Specification}
+\textbf{Problem name: }p\_1\_1\_greeting
+\\\textbf{Natural language statement: }null
+\\\textbf{Method signature: }p\_1\_1\_greeting() returns (s: string)
+\subsection*{Ensures}
+\begin{itemize}
+\item \texttt{s == "Hugo"}
+\end{itemize}
+\clearpage
+\section*{GenAI interactions}
+Below you will find all interactions between the `user' (program) and the `assistant' (OpenAI).
+\subsection*{Program $\rightarrow$ GenAI}
+\begin{lstlisting}
+You are given the following task to perform in Dafny:
+
+Write a method to satisfy the below requirements.
+
+The signature should be:
+
+p_1_1_greeting() returns (s: string)
+
+The method should respect the following contract:
+
+ensures s == "Hugo"
+
+Produce and show only the Dafny body of this method, including the curly braces that surround it. Do not show the signature nor contract. You must not use 'assume' nor 'expect' anywhere in your code.
+\end{lstlisting}
+\subsection*{GenAI $\rightarrow$ Program}
+\textbf{System fingerprint: }null
+\\\textbf{ID: }chatcmpl-Dn2BHf1HGwhU3M8N1ksOVlnXy057y
+\\\textbf{Model: }gpt-5.5-2026-04-23
+\\\textbf{Created at: }1780578827
+\\\textbf{Finish reason: }stop
+\\\textbf{Usage: }238 tokens in, and 23 tokens out
+\begin{lstlisting}
+{
+  s := "Hugo";
+}
+\end{lstlisting}
+\section*{Final Program}
+\begin{lstlisting}
+method p_1_1_greeting() returns (s: string)
+	ensures s == "Hugo"
+{
+  s := "Hugo";
+}
+\end{lstlisting}
+\section*{Total Token Usage}
+\textbf{Input tokens: }238
+\\\textbf{Output tokens: }23
+\\\textbf{Reasoning tokens: }0
+\\\textbf{Sum of `total tokens': }261
+\section*{Experiment Timings}
+\textbf{Overall Experiment} started at 1780578818414, ended at 1780578864248, lasting 45834ms (45.83 seconds)
+\\\textbf{Iteration \#1} started at 1780578818445, ended at 1780578864247, lasting 45802ms (45.80 seconds)
+\end{document}

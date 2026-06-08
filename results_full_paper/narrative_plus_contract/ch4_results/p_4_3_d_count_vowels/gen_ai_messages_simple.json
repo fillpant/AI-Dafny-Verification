@@ -1,0 +1,10 @@
+[
+  {
+    "role": "user",
+    "content": "You are given the following task to perform in Dafny:\n\nWrite a method that takes a string and returns the number of vowels in the string.\n\nThe signature should be:\n\np_4_3_d_count_vowels(s: string) returns (count: int)\n\nThe method should respect the following contract:\n\nensures count \u003d\u003d count_vowels(s) \n\nThe contract uses the following dafny code:\n\nfunction count_vowels(s: string): int {\n  if s \u003d\u003d \"\" then 0\n  else if s[0] in [\u0027a\u0027,\u0027e\u0027,\u0027i\u0027,\u0027o\u0027,\u0027u\u0027,\u0027A\u0027,\u0027E\u0027,\u0027I\u0027,\u0027O\u0027,\u0027U\u0027] then count_vowels(s[1..]) + 1\n  else count_vowels(s[1..])\n}\n\nThese function(s) must not be used in your implementation of the method.\n\nProduce and show only the Dafny body of this method, including the curly braces that surround it. Do not show the signature nor contract. You must not use \u0027assume\u0027 nor \u0027expect\u0027 anywhere in your code."
+  },
+  {
+    "role": "assistant",
+    "content": "{\"method_body\":\"{\\n  if s \u003d\u003d \\\"\\\" {\\n    count :\u003d 0;\\n  } else {\\n    var restCount :\u003d p_4_3_d_count_vowels(s[1..]);\\n    if s[0] in [\u0027a\u0027,\u0027e\u0027,\u0027i\u0027,\u0027o\u0027,\u0027u\u0027,\u0027A\u0027,\u0027E\u0027,\u0027I\u0027,\u0027O\u0027,\u0027U\u0027] {\\n      count :\u003d restCount + 1;\\n    } else {\\n      count :\u003d restCount;\\n    }\\n  }\\n}\"}"
+  }
+]

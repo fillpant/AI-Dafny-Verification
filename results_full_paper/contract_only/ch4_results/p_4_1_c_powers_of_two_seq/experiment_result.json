@@ -1,0 +1,35 @@
+{
+  "outcome": "SUCCESS",
+  "usage": {
+    "tokensInput": 1222,
+    "tokensOutput": 4982,
+    "tokensTotal": 6204,
+    "totalReasoningTokens": 3169
+  },
+  "badResponses": 0,
+  "verificationAttempts": 2,
+  "resolutionAttempts": 2,
+  "softFailedResolutions": 0,
+  "hardFailedResolutions": 0,
+  "responsesWithAssume": 0,
+  "responsesWithExpect": 0,
+  "experimentTimings": {
+    "events": {
+      "Overall Experiment": {
+        "startTimeMs": 1780651797454,
+        "endTimeMs": 1780651930632,
+        "durationMs": 133178
+      },
+      "Iteration #1": {
+        "startTimeMs": 1780651797460,
+        "endTimeMs": 1780651846772,
+        "durationMs": 49312
+      },
+      "Iteration #2": {
+        "startTimeMs": 1780651846781,
+        "endTimeMs": 1780651930632,
+        "durationMs": 83851
+      }
+    }
+  }
+}

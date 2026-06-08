@@ -1,0 +1,83 @@
+\documentclass{article}
+\usepackage{lmodern}
+\usepackage{amsmath}
+\usepackage{listings}
+\usepackage{fullpage}
+\usepackage{parskip}
+\usepackage{xcolor}
+\lstset{
+	basicstyle=\ttfamily,
+	columns=fullflexible,
+	frame=single,
+	breaklines=true,
+	postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},
+}
+\begin{document}
+\title{Experiment `p\_4\_1\_a\_sum\_even\_numbers' Results}
+\author{\today}
+\date{}
+\maketitle
+\textbf{Experiment outcome: }SUCCESS
+\\\textbf{Bad responses: }0
+\\\textbf{Responses containing}~\texttt{assume}~\textbf{: }0
+\\\textbf{Responses containing}~\texttt{expect}~\textbf{: }0
+\\\textbf{Resolution attempts: }1
+\\\textbf{Hard fails (resolution): }0
+\\\textbf{Soft fails (resolution): }0
+\\\textbf{Verification attempts: }1
+\section*{Problem Specification}
+\textbf{Problem name: }p\_4\_1\_a\_sum\_even\_numbers
+\\\textbf{Natural language statement: }null
+\\\textbf{Method signature: }p\_4\_1\_a\_sum\_even\_numbers() returns (sum: int)
+\subsection*{Ensures}
+\begin{itemize}
+\item \texttt{sum == 2550}
+\end{itemize}
+\clearpage
+\section*{GenAI interactions}
+Below you will find all interactions between the `user' (program) and the `assistant' (OpenAI).
+\subsection*{Program $\rightarrow$ GenAI}
+\begin{lstlisting}
+You are given the following task to perform in Dafny:
+
+Write a method to satisfy the below requirements.
+
+The signature should be:
+
+p_4_1_a_sum_even_numbers() returns (sum: int)
+
+The method should respect the following contract:
+
+ensures sum == 2550
+
+Produce and show only the Dafny body of this method, including the curly braces that surround it. Do not show the signature nor contract. You must not use 'assume' nor 'expect' anywhere in your code.
+\end{lstlisting}
+\subsection*{GenAI $\rightarrow$ Program}
+\textbf{System fingerprint: }null
+\\\textbf{ID: }chatcmpl-DnL9MBVSiHPtsYBJuIjb7XQRTY9Uk
+\\\textbf{Model: }gpt-5.5-2026-04-23
+\\\textbf{Created at: }1780651744
+\\\textbf{Finish reason: }stop
+\\\textbf{Usage: }242 tokens in, and 102 tokens out
+\begin{lstlisting}
+{
+  sum := 2550;
+}
+\end{lstlisting}
+\section*{Final Program}
+\begin{lstlisting}
+method p_4_1_a_sum_even_numbers() returns (sum: int)
+	ensures sum == 2550
+{
+  sum := 2550;
+}
+\end{lstlisting}
+\section*{Total Token Usage}
+\textbf{Input tokens: }242
+\\\textbf{Output tokens: }102
+\\\textbf{Reasoning tokens: }74
+\\\textbf{Sum of `total tokens': }344
+\section*{Experiment Timings}
+\textbf{Overall Experiment} started at 1780651737192, ended at 1780651769382, lasting 32190ms (32.19 seconds)
+\\\textbf{Iteration \#1} started at 1780651737198, ended at 1780651769381, lasting 32183ms (32.18 seconds)
+\end{document}

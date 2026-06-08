@@ -1,0 +1,10 @@
+[
+  {
+    "role": "user",
+    "content": "You are given the following task to perform in Dafny:\n\nWrite a method to satisfy the below requirements.\n\nThe signature should be:\n\np_4_6_find_minimum_array(inputs: array\u003cint\u003e) returns (min: int)\n\nThe method should respect the following contract:\n\nrequires 0 \u003c inputs.Length, ensures forall i :: 0 \u003c\u003d i \u003c inputs.Length \u003d\u003d\u003e min \u003c\u003d inputs[i], ensures exists i :: 0 \u003c\u003d i \u003c inputs.Length \u0026\u0026 min \u003d\u003d inputs[i]\n\nProduce and show only the Dafny body of this method, including the curly braces that surround it. Do not show the signature nor contract. You must not use \u0027assume\u0027 nor \u0027expect\u0027 anywhere in your code."
+  },
+  {
+    "role": "assistant",
+    "content": "{\"method_body\":\"{\\n  min :\u003d inputs[0];\\n  var idx :\u003d 1;\\n  while idx \u003c inputs.Length\\n    invariant 1 \u003c\u003d idx \u003c\u003d inputs.Length\\n    invariant forall i :: 0 \u003c\u003d i \u003c idx \u003d\u003d\u003e min \u003c\u003d inputs[i]\\n    invariant exists i :: 0 \u003c\u003d i \u003c idx \u0026\u0026 min \u003d\u003d inputs[i]\\n  {\\n    if inputs[idx] \u003c min {\\n      min :\u003d inputs[idx];\\n    }\\n    idx :\u003d idx + 1;\\n  }\\n}\"}"
+  }
+]

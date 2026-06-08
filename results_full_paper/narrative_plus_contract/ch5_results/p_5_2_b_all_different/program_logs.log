@@ -1,0 +1,58 @@
+[04/06/26 11:08:48.863] [Experiment 'p_5_2_b_all_different'] [INFO]: Experiment created.
+[04/06/26 11:08:48.867] [Experiment 'p_5_2_b_all_different'] [INFO]: Experiment started.
+[04/06/26 11:08:48.867] [Experiment 'p_5_2_b_all_different'] [INFO]: Using initial prompt: You are given the following task to perform in Dafny:
+
+Write a method returning true if the arguments are all different.
+
+The signature should be:
+
+p_5_2_b_all_different(x: real, y: real, z: real) returns (all_diff: bool)
+
+The method should respect the following contract:
+
+ensures all_diff == (x != y && y != z && x != z)
+
+Produce and show only the Dafny body of this method, including the curly braces that surround it. Do not show the signature nor contract. You must not use 'assume' nor 'expect' anywhere in your code.
+[04/06/26 11:08:48.867] [Experiment 'p_5_2_b_all_different'] [INFO]: There are 30000 left in the jar, for the rest of this experiment.
+[04/06/26 11:08:48.867] [Experiment 'p_5_2_b_all_different'] [INFO]: Querrying GenAI...
+[04/06/26 11:08:48.867] [Experiment 'p_5_2_b_all_different'] [FINE]: Constructing message for GenAI
+[04/06/26 11:08:48.868] [Experiment 'p_5_2_b_all_different'] [INFO]: Context is on, attaching 1 previous messages in the request to GenAI.
+[04/06/26 11:08:48.868] [Experiment 'p_5_2_b_all_different'] [INFO]: A reasoning model is chosen, but no reasoning effort value is set. Setting reasoning to 'medium'
+[04/06/26 11:08:48.941] [Experiment 'p_5_2_b_all_different'] [FINE]: Setting max tokens for the request to 30000
+[04/06/26 11:08:48.942] [Experiment 'p_5_2_b_all_different'] [FINE]: Using model gpt-5.5. Awaiting response...
+[04/06/26 11:08:52.212] [Experiment 'p_5_2_b_all_different'] [FINE]: Got response with 65 characters.
+[04/06/26 11:08:52.213] [Experiment 'p_5_2_b_all_different'] [FINE]: Saving gen_ai_messages.json
+[04/06/26 11:08:52.214] [Experiment 'p_5_2_b_all_different'] [FINE]: Saved 1906 characters to file gen_ai_messages.json
+[04/06/26 11:08:52.214] [Experiment 'p_5_2_b_all_different'] [FINE]: Saving gen_ai_messages_simple.json
+[04/06/26 11:08:52.214] [Experiment 'p_5_2_b_all_different'] [FINE]: Saved 812 characters to file gen_ai_messages_simple.json
+[04/06/26 11:08:52.214] [Experiment 'p_5_2_b_all_different'] [INFO]: Converting GenAI response to a program...
+[04/06/26 11:08:52.259] [Experiment 'p_5_2_b_all_different'] [INFO]: Treating GenAIs response as a partial method, not a complete program (Since, the problem spec has a method signature).
+[04/06/26 11:08:52.261] [Experiment 'p_5_2_b_all_different'] [FINE]: Saving program.dfy
+[04/06/26 11:08:52.269] [Experiment 'p_5_2_b_all_different'] [FINE]: Saved 176 characters to file program.dfy
+[04/06/26 11:08:52.301] [Experiment 'p_5_2_b_all_different'] [INFO]: Context is treated as being fully enabled, meaning that subsequent prompts do not include the full code.
+[04/06/26 11:08:52.313] [Experiment 'p_5_2_b_all_different'] [INFO]: Checking the code for the presence of the 'assume' or 'expect' keyword...
+[04/06/26 11:08:52.344] [Experiment 'p_5_2_b_all_different'] [INFO]: Calling dafny to resolve the generated code...
+[04/06/26 11:08:58.092] [Experiment 'p_5_2_b_all_different'] [INFO]: Program exited with code 0
+[04/06/26 11:08:58.093] [Experiment 'p_5_2_b_all_different'] [INFO]: Program stdout: 
+Dafny program verifier did not attempt verification
+[04/06/26 11:08:58.093] [Experiment 'p_5_2_b_all_different'] [INFO]: Calling dafny to resolve the generated code, but with warnings allowed...
+[04/06/26 11:09:05.910] [Experiment 'p_5_2_b_all_different'] [INFO]: Program exited with code 0
+[04/06/26 11:09:05.912] [Experiment 'p_5_2_b_all_different'] [INFO]: Program stdout: 
+Dafny program verifier did not attempt verification
+[04/06/26 11:09:05.913] [Experiment 'p_5_2_b_all_different'] [INFO]: Resolution passes without warnings.
+[04/06/26 11:09:05.914] [Experiment 'p_5_2_b_all_different'] [INFO]: Dafny resolution check passed.
+[04/06/26 11:09:05.914] [Experiment 'p_5_2_b_all_different'] [INFO]: Calling dafny to verify the generated code...
+[04/06/26 11:09:14.351] [Experiment 'p_5_2_b_all_different'] [INFO]: Program exited with code 0
+[04/06/26 11:09:14.352] [Experiment 'p_5_2_b_all_different'] [INFO]: Program stdout: 
+Dafny program verifier finished with 1 verified, 0 errors
+[04/06/26 11:09:14.352] [Experiment 'p_5_2_b_all_different'] [INFO]: Dafny verification check passed.
+[04/06/26 11:09:14.394] [Experiment 'p_5_2_b_all_different'] [INFO]: Experiment finished.
+[04/06/26 11:09:14.394] [Experiment 'p_5_2_b_all_different'] [FINE]: Saving gen_ai_messages.json
+[04/06/26 11:09:14.395] [Experiment 'p_5_2_b_all_different'] [FINE]: Saved 1906 characters to file gen_ai_messages.json
+[04/06/26 11:09:14.395] [Experiment 'p_5_2_b_all_different'] [FINE]: Saving gen_ai_messages_simple.json
+[04/06/26 11:09:14.396] [Experiment 'p_5_2_b_all_different'] [FINE]: Saved 812 characters to file gen_ai_messages_simple.json
+[04/06/26 11:09:14.457] [Experiment 'p_5_2_b_all_different'] [FINE]: Saving experiment_result.json
+[04/06/26 11:09:14.458] [Experiment 'p_5_2_b_all_different'] [FINE]: Saved 667 characters to file experiment_result.json
+[04/06/26 11:09:17.746] [Experiment 'p_5_2_b_all_different'] [INFO]: Compilation of experiment report tex file successful
+[04/06/26 17:35:37.751] [Experiment 'p_5_2_b_all_different'] [INFO]: Experiment created.
+[05/06/26 18:59:55.908] [Experiment 'p_5_2_b_all_different'] [INFO]: Experiment created.

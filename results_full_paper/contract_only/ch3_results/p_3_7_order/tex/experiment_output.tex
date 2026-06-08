@@ -1,0 +1,91 @@
+\documentclass{article}
+\usepackage{lmodern}
+\usepackage{amsmath}
+\usepackage{listings}
+\usepackage{fullpage}
+\usepackage{parskip}
+\usepackage{xcolor}
+\lstset{
+	basicstyle=\ttfamily,
+	columns=fullflexible,
+	frame=single,
+	breaklines=true,
+	postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},
+}
+\begin{document}
+\title{Experiment `p\_3\_7\_order' Results}
+\author{\today}
+\date{}
+\maketitle
+\textbf{Experiment outcome: }SUCCESS
+\\\textbf{Bad responses: }0
+\\\textbf{Responses containing}~\texttt{assume}~\textbf{: }0
+\\\textbf{Responses containing}~\texttt{expect}~\textbf{: }0
+\\\textbf{Resolution attempts: }1
+\\\textbf{Hard fails (resolution): }0
+\\\textbf{Soft fails (resolution): }0
+\\\textbf{Verification attempts: }1
+\section*{Problem Specification}
+\textbf{Problem name: }p\_3\_7\_order
+\\\textbf{Natural language statement: }null
+\\\textbf{Method signature: }p\_3\_7\_order (i: int, j: int, k: int) returns (s: string)
+\subsection*{Ensures}
+\begin{itemize}
+\item \texttt{if (i < j < k) || (i > j > k) then s == "in order" else s == "not in order"}
+\end{itemize}
+\clearpage
+\section*{GenAI interactions}
+Below you will find all interactions between the `user' (program) and the `assistant' (OpenAI).
+\subsection*{Program $\rightarrow$ GenAI}
+\begin{lstlisting}
+You are given the following task to perform in Dafny:
+
+Write a method to satisfy the below requirements.
+
+The signature should be:
+
+p_3_7_order (i: int, j: int, k: int) returns (s: string)
+
+The method should respect the following contract:
+
+ensures if (i < j < k) || (i > j > k) then s == "in order" else s == "not in order"
+
+Produce and show only the Dafny body of this method, including the curly braces that surround it. Do not show the signature nor contract. You must not use 'assume' nor 'expect' anywhere in your code.
+\end{lstlisting}
+\subsection*{GenAI $\rightarrow$ Program}
+\textbf{System fingerprint: }null
+\\\textbf{ID: }chatcmpl-Dn3CAcFktC1z0P6YXa9o7wcjBVO1F
+\\\textbf{Model: }gpt-5.5-2026-04-23
+\\\textbf{Created at: }1780582726
+\\\textbf{Finish reason: }stop
+\\\textbf{Usage: }310 tokens in, and 212 tokens out
+\begin{lstlisting}
+{
+  if (i < j && j < k) || (i > j && j > k) {
+    s := "in order";
+  } else {
+    s := "not in order";
+  }
+}
+\end{lstlisting}
+\section*{Final Program}
+\begin{lstlisting}
+method p_3_7_order (i: int, j: int, k: int) returns (s: string)
+	ensures if (i < j < k) || (i > j > k) then s == "in order" else s == "not in order"
+{
+  if (i < j && j < k) || (i > j && j > k) {
+    s := "in order";
+  } else {
+    s := "not in order";
+  }
+}
+\end{lstlisting}
+\section*{Total Token Usage}
+\textbf{Input tokens: }310
+\\\textbf{Output tokens: }212
+\\\textbf{Reasoning tokens: }142
+\\\textbf{Sum of `total tokens': }522
+\section*{Experiment Timings}
+\textbf{Overall Experiment} started at 1780582725622, ended at 1780582763603, lasting 37981ms (37.98 seconds)
+\\\textbf{Iteration \#1} started at 1780582725623, ended at 1780582763600, lasting 37977ms (37.98 seconds)
+\end{document}

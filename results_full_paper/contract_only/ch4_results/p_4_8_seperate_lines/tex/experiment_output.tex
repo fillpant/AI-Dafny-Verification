@@ -1,0 +1,89 @@
+\documentclass{article}
+\usepackage{lmodern}
+\usepackage{amsmath}
+\usepackage{listings}
+\usepackage{fullpage}
+\usepackage{parskip}
+\usepackage{xcolor}
+\lstset{
+	basicstyle=\ttfamily,
+	columns=fullflexible,
+	frame=single,
+	breaklines=true,
+	postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},
+}
+\begin{document}
+\title{Experiment `p\_4\_8\_seperate\_lines' Results}
+\author{\today}
+\date{}
+\maketitle
+\textbf{Experiment outcome: }SUCCESS
+\\\textbf{Bad responses: }0
+\\\textbf{Responses containing}~\texttt{assume}~\textbf{: }0
+\\\textbf{Responses containing}~\texttt{expect}~\textbf{: }0
+\\\textbf{Resolution attempts: }1
+\\\textbf{Hard fails (resolution): }0
+\\\textbf{Soft fails (resolution): }0
+\\\textbf{Verification attempts: }1
+\section*{Problem Specification}
+\textbf{Problem name: }p\_4\_8\_seperate\_lines
+\\\textbf{Natural language statement: }null
+\\\textbf{Method signature: }p\_4\_8\_seperate\_lines(s: string) returns (chars: string)
+\subsection*{Ensures}
+\begin{itemize}
+\item \texttt{|chars| == 2 * |s|}
+\item \texttt{forall i :: 0 <= i < |s| ==> i \% 2 == 1 ==> chars[i] == '\textbackslash{}n'}
+\item \texttt{forall i :: 0 <= i < |s| ==> i \% 2 == 0 ==> chars[i] == s[i / 2]}
+\end{itemize}
+\clearpage
+\section*{GenAI interactions}
+Below you will find all interactions between the `user' (program) and the `assistant' (OpenAI).
+\subsection*{Program $\rightarrow$ GenAI}
+\begin{lstlisting}
+You are given the following task to perform in Dafny:
+
+Write a method to satisfy the below requirements.
+
+The signature should be:
+
+p_4_8_seperate_lines(s: string) returns (chars: string)
+
+The method should respect the following contract:
+
+ensures |chars| == 2 * |s|, ensures forall i :: 0 <= i < |s| ==> i % 2 == 1 ==> chars[i] == '\n', ensures forall i :: 0 <= i < |s| ==> i % 2 == 0 ==> chars[i] == s[i / 2]
+
+Produce and show only the Dafny body of this method, including the curly braces that surround it. Do not show the signature nor contract. You must not use 'assume' nor 'expect' anywhere in your code.
+\end{lstlisting}
+\subsection*{GenAI $\rightarrow$ Program}
+\textbf{System fingerprint: }null
+\\\textbf{ID: }chatcmpl-DnMFRk4H1ZDLDY637i98uUCbqmKl7
+\\\textbf{Model: }gpt-5.5-2026-04-23
+\\\textbf{Created at: }1780655965
+\\\textbf{Finish reason: }stop
+\\\textbf{Usage: }374 tokens in, and 1099 tokens out
+\begin{lstlisting}
+{
+  chars := seq(2 * |s|, i requires 0 <= i < 2 * |s| =>
+    if i % 2 == 0 then s[i / 2] else '\n');
+}
+\end{lstlisting}
+\section*{Final Program}
+\begin{lstlisting}
+method p_4_8_seperate_lines(s: string) returns (chars: string)
+	ensures |chars| == 2 * |s|
+	ensures forall i :: 0 <= i < |s| ==> i % 2 == 1 ==> chars[i] == '\n'
+	ensures forall i :: 0 <= i < |s| ==> i % 2 == 0 ==> chars[i] == s[i / 2]
+{
+  chars := seq(2 * |s|, i requires 0 <= i < 2 * |s| =>
+    if i % 2 == 0 then s[i / 2] else '\n');
+}
+\end{lstlisting}
+\section*{Total Token Usage}
+\textbf{Input tokens: }374
+\\\textbf{Output tokens: }1099
+\\\textbf{Reasoning tokens: }1024
+\\\textbf{Sum of `total tokens': }1473
+\section*{Experiment Timings}
+\textbf{Overall Experiment} started at 1780655965283, ended at 1780656004710, lasting 39427ms (39.43 seconds)
+\\\textbf{Iteration \#1} started at 1780655965286, ended at 1780656004710, lasting 39424ms (39.42 seconds)
+\end{document}

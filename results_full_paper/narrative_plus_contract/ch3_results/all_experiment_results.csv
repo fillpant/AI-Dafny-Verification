@@ -1,0 +1,11 @@
+Experiment,Outcome,Input tokens, Output tokens, Total reasoning tokens,Total tokens,Bad response cnt,Verification attempts,Resolution attempts,Soft-failed resolution cnt,Hard-failed resolution cnt,Responses with 'assume',Experiment time (ms),Iteration 1 time (ms),Iteration 2 time (ms),Iteration 3 time (ms),Iteration 4 time (ms),Iteration 5 time (ms),Iteration 6 time (ms),Iteration 7 time (ms),Iteration 8 time (ms)
+p_3_10_temperature_altitude,SUCCESS,548,578,438,1126,0,1,1,0,0,0,16995,16994,,,,,,,
+p_3_1_classify_int,SUCCESS,320,136,66,456,0,1,1,0,0,0,8315,8310,,,,,,,
+p_3_2_classify_real,SUCCESS,580,593,413,1173,0,1,1,0,0,0,14702,14700,,,,,,,
+p_3_3_number_of_digits,SUCCESS,1746,8992,6080,10738,0,2,2,0,0,0,170136,76139,93994,,,,,,
+p_3_4_classification,SUCCESS,390,214,130,604,0,1,1,0,0,0,9600,9592,,,,,,,
+p_3_5_order,SUCCESS,446,227,148,673,0,1,1,0,0,0,10420,10420,,,,,,,
+p_3_6_parametrised_order,SUCCESS,596,693,512,1289,0,1,1,0,0,0,15964,15963,,,,,,,
+p_3_7_order,SUCCESS,354,208,138,562,0,1,1,0,0,0,8480,8479,,,,,,,
+p_3_8_two_pairs,SUCCESS,398,191,111,589,0,1,1,0,0,0,11327,11326,,,,,,,
+p_3_9_temperature,SUCCESS,696,597,354,1293,0,1,1,0,0,0,14781,14778,,,,,,,

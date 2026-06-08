@@ -1,0 +1,10 @@
+[
+  {
+    "role": "user",
+    "content": "You are given the following task to perform in Dafny:\n\nWrite a method that reads a word and returns each character of the word on a separate line.\n\nThe signature should be:\n\np_4_8_seperate_lines(s: string) returns (chars: string)\n\nThe method should respect the following contract:\n\nensures |chars| \u003d\u003d 2 * |s|, ensures forall i :: 0 \u003c\u003d i \u003c |s| \u003d\u003d\u003e i % 2 \u003d\u003d 1 \u003d\u003d\u003e chars[i] \u003d\u003d \u0027\\n\u0027, ensures forall i :: 0 \u003c\u003d i \u003c |s| \u003d\u003d\u003e i % 2 \u003d\u003d 0 \u003d\u003d\u003e chars[i] \u003d\u003d s[i / 2]\n\nProduce and show only the Dafny body of this method, including the curly braces that surround it. Do not show the signature nor contract. You must not use \u0027assume\u0027 nor \u0027expect\u0027 anywhere in your code."
+  },
+  {
+    "role": "assistant",
+    "content": "{\"method_body\":\"{\\n  chars :\u003d seq(2 * |s|, i requires 0 \u003c\u003d i \u003c 2 * |s| \u003d\u003e if i % 2 \u003d\u003d 0 then s[i / 2] else \u0027\\\\n\u0027);\\n}\"}"
+  }
+]

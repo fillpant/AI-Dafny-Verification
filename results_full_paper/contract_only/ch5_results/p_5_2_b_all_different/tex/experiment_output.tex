@@ -1,0 +1,83 @@
+\documentclass{article}
+\usepackage{lmodern}
+\usepackage{amsmath}
+\usepackage{listings}
+\usepackage{fullpage}
+\usepackage{parskip}
+\usepackage{xcolor}
+\lstset{
+	basicstyle=\ttfamily,
+	columns=fullflexible,
+	frame=single,
+	breaklines=true,
+	postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},
+}
+\begin{document}
+\title{Experiment `p\_5\_2\_b\_all\_different' Results}
+\author{\today}
+\date{}
+\maketitle
+\textbf{Experiment outcome: }SUCCESS
+\\\textbf{Bad responses: }0
+\\\textbf{Responses containing}~\texttt{assume}~\textbf{: }0
+\\\textbf{Responses containing}~\texttt{expect}~\textbf{: }0
+\\\textbf{Resolution attempts: }1
+\\\textbf{Hard fails (resolution): }0
+\\\textbf{Soft fails (resolution): }0
+\\\textbf{Verification attempts: }1
+\section*{Problem Specification}
+\textbf{Problem name: }p\_5\_2\_b\_all\_different
+\\\textbf{Natural language statement: }null
+\\\textbf{Method signature: }p\_5\_2\_b\_all\_different(x: real, y: real, z: real) returns (all\_diff: bool)
+\subsection*{Ensures}
+\begin{itemize}
+\item \texttt{all\_diff == (x != y \&\& y != z \&\& x != z)}
+\end{itemize}
+\clearpage
+\section*{GenAI interactions}
+Below you will find all interactions between the `user' (program) and the `assistant' (OpenAI).
+\subsection*{Program $\rightarrow$ GenAI}
+\begin{lstlisting}
+You are given the following task to perform in Dafny:
+
+Write a method to satisfy the below requirements.
+
+The signature should be:
+
+p_5_2_b_all_different(x: real, y: real, z: real) returns (all_diff: bool)
+
+The method should respect the following contract:
+
+ensures all_diff == (x != y && y != z && x != z)
+
+Produce and show only the Dafny body of this method, including the curly braces that surround it. Do not show the signature nor contract. You must not use 'assume' nor 'expect' anywhere in your code.
+\end{lstlisting}
+\subsection*{GenAI $\rightarrow$ Program}
+\textbf{System fingerprint: }null
+\\\textbf{ID: }chatcmpl-DnQt3ZGMlJJ4qFaizMvTKaS3X7piB
+\\\textbf{Model: }gpt-5.5-2026-04-23
+\\\textbf{Created at: }1780673797
+\\\textbf{Finish reason: }stop
+\\\textbf{Usage: }286 tokens in, and 94 tokens out
+\begin{lstlisting}
+{
+  all_diff := x != y && y != z && x != z;
+}
+\end{lstlisting}
+\section*{Final Program}
+\begin{lstlisting}
+method p_5_2_b_all_different(x: real, y: real, z: real) returns (all_diff: bool)
+	ensures all_diff == (x != y && y != z && x != z)
+{
+  all_diff := x != y && y != z && x != z;
+}
+\end{lstlisting}
+\section*{Total Token Usage}
+\textbf{Input tokens: }286
+\\\textbf{Output tokens: }94
+\\\textbf{Reasoning tokens: }57
+\\\textbf{Sum of `total tokens': }380
+\section*{Experiment Timings}
+\textbf{Overall Experiment} started at 1780673796434, ended at 1780673817214, lasting 20780ms (20.78 seconds)
+\\\textbf{Iteration \#1} started at 1780673796436, ended at 1780673817214, lasting 20778ms (20.78 seconds)
+\end{document}

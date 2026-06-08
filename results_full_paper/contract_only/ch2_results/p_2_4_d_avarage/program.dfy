@@ -1,0 +1,5 @@
+method p_2_4_d_avarage(x: int, y: int) returns (result: real)
+	ensures result == (x + y) as real / 2.0
+{
+  result := (x + y) as real / 2.0;
+}

@@ -1,0 +1,10 @@
+[
+  {
+    "role": "user",
+    "content": "You are given the following task to perform in Dafny:\n\nWrite a method that finds the minimum value from a list of inputs into a method.\n\nThe signature should be:\n\np_4_6_find_minimum_seq(inputs: seq\u003cint\u003e) returns (min: int)\n\nThe method should respect the following contract:\n\nrequires 0 \u003c |inputs|, ensures forall i :: 0 \u003c\u003d i \u003c |inputs| \u003d\u003d\u003e min \u003c\u003d inputs[i], ensures exists i :: 0 \u003c\u003d i \u003c |inputs| \u0026\u0026 min \u003d\u003d inputs[i]\n\nProduce and show only the Dafny body of this method, including the curly braces that surround it. Do not show the signature nor contract. You must not use \u0027assume\u0027 nor \u0027expect\u0027 anywhere in your code."
+  },
+  {
+    "role": "assistant",
+    "content": "{\"method_body\":\"{\\n  min :\u003d inputs[0];\\n  var i :\u003d 1;\\n  var k :\u003d 0;\\n\\n  while i \u003c |inputs|\\n    invariant 1 \u003c\u003d i \u003c\u003d |inputs|\\n    invariant 0 \u003c\u003d k \u003c i\\n    invariant min \u003d\u003d inputs[k]\\n    invariant forall j :: 0 \u003c\u003d j \u003c i \u003d\u003d\u003e min \u003c\u003d inputs[j]\\n  {\\n    if inputs[i] \u003c min {\\n      min :\u003d inputs[i];\\n      k :\u003d i;\\n    }\\n    i :\u003d i + 1;\\n  }\\n\\n  assert 0 \u003c\u003d k \u003c |inputs| \u0026\u0026 min \u003d\u003d inputs[k];\\n  assert exists j :: 0 \u003c\u003d j \u003c |inputs| \u0026\u0026 min \u003d\u003d inputs[j];\\n}\"}"
+  }
+]

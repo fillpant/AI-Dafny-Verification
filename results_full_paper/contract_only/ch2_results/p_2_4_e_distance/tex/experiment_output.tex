@@ -1,0 +1,93 @@
+\documentclass{article}
+\usepackage{lmodern}
+\usepackage{amsmath}
+\usepackage{listings}
+\usepackage{fullpage}
+\usepackage{parskip}
+\usepackage{xcolor}
+\lstset{
+	basicstyle=\ttfamily,
+	columns=fullflexible,
+	frame=single,
+	breaklines=true,
+	postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},
+}
+\begin{document}
+\title{Experiment `p\_2\_4\_e\_distance' Results}
+\author{\today}
+\date{}
+\maketitle
+\textbf{Experiment outcome: }SUCCESS
+\\\textbf{Bad responses: }0
+\\\textbf{Responses containing}~\texttt{assume}~\textbf{: }0
+\\\textbf{Responses containing}~\texttt{expect}~\textbf{: }0
+\\\textbf{Resolution attempts: }1
+\\\textbf{Hard fails (resolution): }0
+\\\textbf{Soft fails (resolution): }0
+\\\textbf{Verification attempts: }1
+\section*{Problem Specification}
+\textbf{Problem name: }p\_2\_4\_e\_distance
+\\\textbf{Natural language statement: }null
+\\\textbf{Method signature: }p\_2\_4\_e\_distance(x: int, y: int) returns (result: int)
+\subsection*{Ensures}
+\begin{itemize}
+\item \texttt{result >= 0}
+\item \texttt{if x >= y then result == x - y else result == y - x}
+\end{itemize}
+\clearpage
+\section*{GenAI interactions}
+Below you will find all interactions between the `user' (program) and the `assistant' (OpenAI).
+\subsection*{Program $\rightarrow$ GenAI}
+\begin{lstlisting}
+You are given the following task to perform in Dafny:
+
+Write a method to satisfy the below requirements.
+
+The signature should be:
+
+p_2_4_e_distance(x: int, y: int) returns (result: int)
+
+The method should respect the following contract:
+
+ensures result >= 0, ensures if x >= y then result == x - y else result == y - x
+
+Produce and show only the Dafny body of this method, including the curly braces that surround it. Do not show the signature nor contract. You must not use 'assume' nor 'expect' anywhere in your code.
+\end{lstlisting}
+\subsection*{GenAI $\rightarrow$ Program}
+\textbf{System fingerprint: }null
+\\\textbf{ID: }chatcmpl-Dn2jo2lO9Em7iZD2hdE1P2vNKuDr7
+\\\textbf{Model: }gpt-5.5-2026-04-23
+\\\textbf{Created at: }1780580968
+\\\textbf{Finish reason: }stop
+\\\textbf{Usage: }286 tokens in, and 158 tokens out
+\begin{lstlisting}
+{
+  if x >= y {
+    result := x - y;
+  } else {
+    result := y - x;
+  }
+}
+\end{lstlisting}
+\section*{Final Program}
+\begin{lstlisting}
+method p_2_4_e_distance(x: int, y: int) returns (result: int)
+	ensures result >= 0
+	ensures if x >= y then result == x - y else result == y - x
+{
+  if x >= y {
+    result := x - y;
+  } else {
+    result := y - x;
+  }
+}
+\end{lstlisting}
+\section*{Total Token Usage}
+\textbf{Input tokens: }286
+\\\textbf{Output tokens: }158
+\\\textbf{Reasoning tokens: }107
+\\\textbf{Sum of `total tokens': }444
+\section*{Experiment Timings}
+\textbf{Overall Experiment} started at 1780580966160, ended at 1780581002473, lasting 36313ms (36.31 seconds)
+\\\textbf{Iteration \#1} started at 1780580966162, ended at 1780581002473, lasting 36311ms (36.31 seconds)
+\end{document}

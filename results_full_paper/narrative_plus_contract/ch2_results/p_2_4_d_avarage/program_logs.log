@@ -1,0 +1,56 @@
+[03/06/26 12:54:49.885] [Experiment 'p_2_4_d_avarage'] [INFO]: Experiment created.
+[03/06/26 12:54:49.885] [Experiment 'p_2_4_d_avarage'] [INFO]: Experiment started.
+[03/06/26 12:54:49.885] [Experiment 'p_2_4_d_avarage'] [INFO]: Using initial prompt: You are given the following task to perform in Dafny:
+
+Write a method that takes two integers and then returns the average.
+
+The signature should be:
+
+p_2_4_d_avarage(x: int, y: int) returns (result: real)
+
+The method should respect the following contract:
+
+ensures result == (x + y) as real / 2.0
+
+Produce and show only the Dafny body of this method, including the curly braces that surround it. Do not show the signature nor contract. You must not use 'assume' nor 'expect' anywhere in your code.
+[03/06/26 12:54:49.885] [Experiment 'p_2_4_d_avarage'] [INFO]: There are 30000 left in the jar, for the rest of this experiment.
+[03/06/26 12:54:49.885] [Experiment 'p_2_4_d_avarage'] [INFO]: Querrying GenAI...
+[03/06/26 12:54:49.885] [Experiment 'p_2_4_d_avarage'] [FINE]: Constructing message for GenAI
+[03/06/26 12:54:49.886] [Experiment 'p_2_4_d_avarage'] [INFO]: Context is on, attaching 1 previous messages in the request to GenAI.
+[03/06/26 12:54:49.886] [Experiment 'p_2_4_d_avarage'] [INFO]: A reasoning model is chosen, but no reasoning effort value is set. Setting reasoning to 'medium'
+[03/06/26 12:54:49.886] [Experiment 'p_2_4_d_avarage'] [FINE]: Setting max tokens for the request to 30000
+[03/06/26 12:54:49.886] [Experiment 'p_2_4_d_avarage'] [FINE]: Using model gpt-5.5. Awaiting response...
+[03/06/26 12:54:55.874] [Experiment 'p_2_4_d_avarage'] [FINE]: Got response with 60 characters.
+[03/06/26 12:54:55.875] [Experiment 'p_2_4_d_avarage'] [FINE]: Saving gen_ai_messages.json
+[03/06/26 12:54:55.875] [Experiment 'p_2_4_d_avarage'] [FINE]: Saved 1768 characters to file gen_ai_messages.json
+[03/06/26 12:54:55.876] [Experiment 'p_2_4_d_avarage'] [FINE]: Saving gen_ai_messages_simple.json
+[03/06/26 12:54:55.876] [Experiment 'p_2_4_d_avarage'] [FINE]: Saved 712 characters to file gen_ai_messages_simple.json
+[03/06/26 12:54:55.876] [Experiment 'p_2_4_d_avarage'] [INFO]: Converting GenAI response to a program...
+[03/06/26 12:54:55.876] [Experiment 'p_2_4_d_avarage'] [INFO]: Treating GenAIs response as a partial method, not a complete program (Since, the problem spec has a method signature).
+[03/06/26 12:54:55.876] [Experiment 'p_2_4_d_avarage'] [FINE]: Saving program.dfy
+[03/06/26 12:54:55.877] [Experiment 'p_2_4_d_avarage'] [FINE]: Saved 143 characters to file program.dfy
+[03/06/26 12:54:55.878] [Experiment 'p_2_4_d_avarage'] [INFO]: Context is treated as being fully enabled, meaning that subsequent prompts do not include the full code.
+[03/06/26 12:54:55.878] [Experiment 'p_2_4_d_avarage'] [INFO]: Checking the code for the presence of the 'assume' or 'expect' keyword...
+[03/06/26 12:54:55.878] [Experiment 'p_2_4_d_avarage'] [INFO]: Calling dafny to resolve the generated code...
+[03/06/26 12:54:56.928] [Experiment 'p_2_4_d_avarage'] [INFO]: Program exited with code 0
+[03/06/26 12:54:56.929] [Experiment 'p_2_4_d_avarage'] [INFO]: Program stdout: 
+Dafny program verifier did not attempt verification
+[03/06/26 12:54:56.929] [Experiment 'p_2_4_d_avarage'] [INFO]: Calling dafny to resolve the generated code, but with warnings allowed...
+[03/06/26 12:54:57.953] [Experiment 'p_2_4_d_avarage'] [INFO]: Program exited with code 0
+[03/06/26 12:54:57.953] [Experiment 'p_2_4_d_avarage'] [INFO]: Program stdout: 
+Dafny program verifier did not attempt verification
+[03/06/26 12:54:57.954] [Experiment 'p_2_4_d_avarage'] [INFO]: Resolution passes without warnings.
+[03/06/26 12:54:57.954] [Experiment 'p_2_4_d_avarage'] [INFO]: Dafny resolution check passed.
+[03/06/26 12:54:57.954] [Experiment 'p_2_4_d_avarage'] [INFO]: Calling dafny to verify the generated code...
+[03/06/26 12:54:59.891] [Experiment 'p_2_4_d_avarage'] [INFO]: Program exited with code 0
+[03/06/26 12:54:59.892] [Experiment 'p_2_4_d_avarage'] [INFO]: Program stdout: 
+Dafny program verifier finished with 2 verified, 0 errors
+[03/06/26 12:54:59.892] [Experiment 'p_2_4_d_avarage'] [INFO]: Dafny verification check passed.
+[03/06/26 12:54:59.892] [Experiment 'p_2_4_d_avarage'] [INFO]: Experiment finished.
+[03/06/26 12:54:59.892] [Experiment 'p_2_4_d_avarage'] [FINE]: Saving gen_ai_messages.json
+[03/06/26 12:54:59.893] [Experiment 'p_2_4_d_avarage'] [FINE]: Saved 1768 characters to file gen_ai_messages.json
+[03/06/26 12:54:59.894] [Experiment 'p_2_4_d_avarage'] [FINE]: Saving gen_ai_messages_simple.json
+[03/06/26 12:54:59.895] [Experiment 'p_2_4_d_avarage'] [FINE]: Saved 712 characters to file gen_ai_messages_simple.json
+[03/06/26 12:54:59.895] [Experiment 'p_2_4_d_avarage'] [FINE]: Saving experiment_result.json
+[03/06/26 12:54:59.896] [Experiment 'p_2_4_d_avarage'] [FINE]: Saved 669 characters to file experiment_result.json
+[03/06/26 12:55:00.562] [Experiment 'p_2_4_d_avarage'] [INFO]: Compilation of experiment report tex file successful

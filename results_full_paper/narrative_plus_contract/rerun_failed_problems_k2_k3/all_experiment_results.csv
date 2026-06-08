@@ -1,0 +1,13 @@
+Experiment,Outcome,Input tokens, Output tokens, Total reasoning tokens,Total tokens,Bad response cnt,Verification attempts,Resolution attempts,Soft-failed resolution cnt,Hard-failed resolution cnt,Responses with 'assume',Experiment time (ms),Iteration 1 time (ms),Iteration 2 time (ms),Iteration 3 time (ms),Iteration 4 time (ms),Iteration 5 time (ms),Iteration 6 time (ms),Iteration 7 time (ms),Iteration 8 time (ms)
+p_13_10_recursive_area_polygon_array,FAILURE_VERIFY,10185,22188,16856,32373,0,4,4,0,0,0,471471,159374,149245,77902,84944,,,,
+p_13_10_recursive_area_polygon_array_RERUN-1,SUCCESS,6170,18634,15753,24804,0,3,3,0,0,0,425457,173611,161944,89900,,,,,
+p_14_2_selection_sort_interval_array,FAILURE_VERIFY,8605,21884,15836,30489,0,2,3,0,1,0,484760,215471,86907,182336,,,,,
+p_14_2_selection_sort_interval_array_RERUN-1,SUCCESS,380,10636,8590,11016,0,1,1,0,0,0,201261,201258,,,,,,,
+p_14_4_merge_sort_lexicographic_array,FAILURE_VERIFY,18685,19873,13634,38558,0,2,4,0,2,0,407892,139886,56466,126626,84911,,,,
+p_14_4_merge_sort_lexicographic_array_RERUN-1,FAILURE_VERIFY,11545,22095,19532,33640,1,2,4,0,2,0,592486,63746,225101,225367,53507,24763,,,
+p_14_4_merge_sort_lexicographic_seq,FAILURE_VERIFY,22761,17394,11466,40155,1,2,3,0,1,0,357506,133296,103090,74968,46134,,,,
+p_14_4_merge_sort_lexicographic_seq_RERUN-1,FAILURE_VERIFY,16506,16689,10751,33195,0,3,4,0,1,0,358464,110851,41961,116367,89279,,,,
+p_5_5_repeat,FAILURE_VERIFY,8120,25826,22868,33946,1,2,3,1,0,0,737148,213521,163440,242281,117728,,,,
+p_5_5_repeat_RERUN-1,FAILURE_VERIFY,13272,21689,18946,34961,1,2,3,0,1,0,489696,159848,48018,182558,99269,,,,
+p_5_9_f_cone_surface,FAILURE_VERIFY,6318,26875,24699,33193,1,3,3,0,0,0,652149,118636,245176,148520,139812,,,,
+p_5_9_f_cone_surface_RERUN-1,FAILURE_INTERNAL_ERROR,2633,24260,22867,26893,0,3,3,0,0,0,697564,110714,292796,214121,0,,,,

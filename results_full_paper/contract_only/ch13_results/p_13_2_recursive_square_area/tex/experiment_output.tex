@@ -1,0 +1,88 @@
+\documentclass{article}
+\usepackage{lmodern}
+\usepackage{amsmath}
+\usepackage{listings}
+\usepackage{fullpage}
+\usepackage{parskip}
+\usepackage{xcolor}
+\lstset{
+	basicstyle=\ttfamily,
+	columns=fullflexible,
+	frame=single,
+	breaklines=true,
+	postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},
+}
+\begin{document}
+\title{Experiment `p\_13\_2\_recursive\_square\_area' Results}
+\author{\today}
+\date{}
+\maketitle
+\textbf{Experiment outcome: }SUCCESS
+\\\textbf{Bad responses: }0
+\\\textbf{Responses containing}~\texttt{assume}~\textbf{: }0
+\\\textbf{Responses containing}~\texttt{expect}~\textbf{: }0
+\\\textbf{Resolution attempts: }1
+\\\textbf{Hard fails (resolution): }0
+\\\textbf{Soft fails (resolution): }0
+\\\textbf{Verification attempts: }1
+\section*{Problem Specification}
+\textbf{Problem name: }p\_13\_2\_recursive\_square\_area
+\\\textbf{Natural language statement: }null
+\\\textbf{Method signature: }p\_13\_2\_recursive\_square\_area(width: nat) returns (area: nat)
+\subsection*{Ensures}
+\begin{itemize}
+\item \texttt{area == width * width}
+\end{itemize}
+\subsection*{Requires}
+\begin{itemize}
+\item \texttt{1 <= width}
+\end{itemize}
+\clearpage
+\section*{GenAI interactions}
+Below you will find all interactions between the `user' (program) and the `assistant' (OpenAI).
+\subsection*{Program $\rightarrow$ GenAI}
+\begin{lstlisting}
+You are given the following task to perform in Dafny:
+
+Write a method to satisfy the below requirements.
+
+The signature should be:
+
+p_13_2_recursive_square_area(width: nat) returns (area: nat)
+
+The method should respect the following contract:
+
+requires 1 <= width, ensures area == width * width
+
+Produce and show only the Dafny body of this method, including the curly braces that surround it. Do not show the signature nor contract. You must not use 'assume' nor 'expect' anywhere in your code.
+\end{lstlisting}
+\subsection*{GenAI $\rightarrow$ Program}
+\textbf{System fingerprint: }null
+\\\textbf{ID: }chatcmpl-DnOo4CEkZ4rGrPtousPTi4Nq7Wvrr
+\\\textbf{Model: }gpt-5.5-2026-04-23
+\\\textbf{Created at: }1780665800
+\\\textbf{Finish reason: }stop
+\\\textbf{Usage: }256 tokens in, and 1510 tokens out
+\begin{lstlisting}
+{
+  area := width * width;
+}
+\end{lstlisting}
+\section*{Final Program}
+\begin{lstlisting}
+method p_13_2_recursive_square_area(width: nat) returns (area: nat)
+	requires 1 <= width
+	ensures area == width * width
+{
+  area := width * width;
+}
+\end{lstlisting}
+\section*{Total Token Usage}
+\textbf{Input tokens: }256
+\\\textbf{Output tokens: }1510
+\\\textbf{Reasoning tokens: }1470
+\\\textbf{Sum of `total tokens': }1766
+\section*{Experiment Timings}
+\textbf{Overall Experiment} started at 1780665797441, ended at 1780665892979, lasting 95538ms (95.54 seconds)
+\\\textbf{Iteration \#1} started at 1780665797444, ended at 1780665892972, lasting 95528ms (95.53 seconds)
+\end{document}

@@ -1,0 +1,49 @@
+[
+  {
+    "message": {
+      "role": "user",
+      "content": "You are given the following task to perform in Dafny:\n\nWrite a method to satisfy the below requirements.\n\nThe signature should be:\n\np_13_7_recursive_index_of(text: string, str: string) returns (index: int)\n\nThe method should respect the following contract:\n\nrequires 1 \u003c\u003d |str| \u003c\u003d |text|, ensures index \u003d\u003d find_index(text, str, 0)\n\nThe contract uses the following dafny code:\n\nfunction starts_with(text: string, str: string) : (b: bool)\n  ensures b \u003d\u003d (|str| \u003c\u003d |text| \u0026\u0026 forall i :: 0 \u003c\u003d i \u003c |str| \u003d\u003d\u003e text[i] \u003d\u003d str[i])\n{\n  if |str| \u003d\u003d 0 then true\n  else if |text| \u003d\u003d 0 then false\n  else if text[0] \u003d\u003d str[0] then starts_with(text[1..], str[1..])\n  else false\n}\n\nfunction find_index(text: string, str: string, index: nat) : (ret : int)\n   ensures starts_with(text, str) \u003d\u003d\u003e ret \u003d\u003d index \n{\n  if |text| \u003c |str| then -1\n  else if starts_with(text, str) then index\n  else find_index(text[1..], str, index + 1)\n}\n\nThese function(s) must not be used in your implementation of the method.\n\nProduce and show only the Dafny body of this method, including the curly braces that surround it. Do not show the signature nor contract. You must not use \u0027assume\u0027 nor \u0027expect\u0027 anywhere in your code."
+    }
+  },
+  {
+    "message": {
+      "role": "assistant",
+      "content": "{\"method_body\":\"{\\n  var pos: nat :\u003d 0;\\n  assert text[0..] \u003d\u003d text;\\n\\n  while pos + |str| \u003c\u003d |text| \u0026\u0026 text[pos..pos + |str|] !\u003d str\\n    invariant pos \u003c\u003d |text|\\n    invariant 1 \u003c\u003d |str| \u003c\u003d |text|\\n    invariant find_index(text, str, 0) \u003d\u003d find_index(text[pos..], str, pos)\\n    decreases |text| - pos\\n  {\\n    ghost var s :\u003d text[pos..];\\n    assert |str| \u003c\u003d |s|;\\n    assert s[..|str|] \u003d\u003d text[pos..pos + |str|];\\n    assert s[..|str|] !\u003d str;\\n\\n    if starts_with(s, str) {\\n      assert |str| \u003c\u003d |s| \u0026\u0026 forall k :: 0 \u003c\u003d k \u003c |str| \u003d\u003d\u003e s[k] \u003d\u003d str[k];\\n      forall k | 0 \u003c\u003d k \u003c |str|\\n        ensures s[..|str|][k] \u003d\u003d str[k]\\n      {\\n        assert s[..|str|][k] \u003d\u003d s[k];\\n      }\\n      assert |s[..|str|]| \u003d\u003d |str|;\\n      assert s[..|str|] \u003d\u003d str;\\n      assert false;\\n    }\\n    assert !starts_with(s, str);\\n    assert find_index(s, str, pos) \u003d\u003d find_index(s[1..], str, pos + 1);\\n    assert s[1..] \u003d\u003d text[pos + 1..];\\n    assert find_index(s, str, pos) \u003d\u003d find_index(text[pos + 1..], str, pos + 1);\\n    assert find_index(text, str, 0) \u003d\u003d find_index(text[pos + 1..], str, pos + 1);\\n    assert pos \u003c |text|;\\n    pos :\u003d pos + 1;\\n  }\\n\\n  assert !(pos + |str| \u003c\u003d |text| \u0026\u0026 text[pos..pos + |str|] !\u003d str);\\n  ghost var s :\u003d text[pos..];\\n\\n  if pos + |str| \u003c\u003d |text| {\\n    assert text[pos..pos + |str|] \u003d\u003d str;\\n    assert |str| \u003c\u003d |s|;\\n    assert s[..|str|] \u003d\u003d text[pos..pos + |str|];\\n    assert s[..|str|] \u003d\u003d str;\\n    forall k | 0 \u003c\u003d k \u003c |str|\\n      ensures s[k] \u003d\u003d str[k]\\n    {\\n      assert s[..|str|][k] \u003d\u003d str[k];\\n      assert s[..|str|][k] \u003d\u003d s[k];\\n    }\\n    assert forall k :: 0 \u003c\u003d k \u003c |str| \u003d\u003d\u003e s[k] \u003d\u003d str[k];\\n    assert starts_with(s, str);\\n    assert find_index(s, str, pos) \u003d\u003d pos;\\n    index :\u003d pos;\\n  } else {\\n    assert pos + |str| \u003e |text|;\\n    assert |s| \u003d\u003d |text| - pos;\\n    assert |s| \u003c |str|;\\n    assert find_index(s, str, pos) \u003d\u003d -1;\\n    index :\u003d -1;\\n  }\\n\\n  assert index \u003d\u003d find_index(s, str, pos);\\n  assert find_index(text, str, 0) \u003d\u003d find_index(s, str, pos);\\n  assert index \u003d\u003d find_index(text, str, 0);\\n}\"}",
+      "annotations": []
+    },
+    "openAIResponseDetails": {
+      "id": "chatcmpl-DnOzFuBfIi8S4bCEZMo6Y3QoEiK9Q",
+      "object": "chat.completion",
+      "created": 1780666493,
+      "model": "gpt-5.5-2026-04-23",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"method_body\":\"{\\n  var pos: nat :\u003d 0;\\n  assert text[0..] \u003d\u003d text;\\n\\n  while pos + |str| \u003c\u003d |text| \u0026\u0026 text[pos..pos + |str|] !\u003d str\\n    invariant pos \u003c\u003d |text|\\n    invariant 1 \u003c\u003d |str| \u003c\u003d |text|\\n    invariant find_index(text, str, 0) \u003d\u003d find_index(text[pos..], str, pos)\\n    decreases |text| - pos\\n  {\\n    ghost var s :\u003d text[pos..];\\n    assert |str| \u003c\u003d |s|;\\n    assert s[..|str|] \u003d\u003d text[pos..pos + |str|];\\n    assert s[..|str|] !\u003d str;\\n\\n    if starts_with(s, str) {\\n      assert |str| \u003c\u003d |s| \u0026\u0026 forall k :: 0 \u003c\u003d k \u003c |str| \u003d\u003d\u003e s[k] \u003d\u003d str[k];\\n      forall k | 0 \u003c\u003d k \u003c |str|\\n        ensures s[..|str|][k] \u003d\u003d str[k]\\n      {\\n        assert s[..|str|][k] \u003d\u003d s[k];\\n      }\\n      assert |s[..|str|]| \u003d\u003d |str|;\\n      assert s[..|str|] \u003d\u003d str;\\n      assert false;\\n    }\\n    assert !starts_with(s, str);\\n    assert find_index(s, str, pos) \u003d\u003d find_index(s[1..], str, pos + 1);\\n    assert s[1..] \u003d\u003d text[pos + 1..];\\n    assert find_index(s, str, pos) \u003d\u003d find_index(text[pos + 1..], str, pos + 1);\\n    assert find_index(text, str, 0) \u003d\u003d find_index(text[pos + 1..], str, pos + 1);\\n    assert pos \u003c |text|;\\n    pos :\u003d pos + 1;\\n  }\\n\\n  assert !(pos + |str| \u003c\u003d |text| \u0026\u0026 text[pos..pos + |str|] !\u003d str);\\n  ghost var s :\u003d text[pos..];\\n\\n  if pos + |str| \u003c\u003d |text| {\\n    assert text[pos..pos + |str|] \u003d\u003d str;\\n    assert |str| \u003c\u003d |s|;\\n    assert s[..|str|] \u003d\u003d text[pos..pos + |str|];\\n    assert s[..|str|] \u003d\u003d str;\\n    forall k | 0 \u003c\u003d k \u003c |str|\\n      ensures s[k] \u003d\u003d str[k]\\n    {\\n      assert s[..|str|][k] \u003d\u003d str[k];\\n      assert s[..|str|][k] \u003d\u003d s[k];\\n    }\\n    assert forall k :: 0 \u003c\u003d k \u003c |str| \u003d\u003d\u003e s[k] \u003d\u003d str[k];\\n    assert starts_with(s, str);\\n    assert find_index(s, str, pos) \u003d\u003d pos;\\n    index :\u003d pos;\\n  } else {\\n    assert pos + |str| \u003e |text|;\\n    assert |s| \u003d\u003d |text| - pos;\\n    assert |s| \u003c |str|;\\n    assert find_index(s, str, pos) \u003d\u003d -1;\\n    index :\u003d -1;\\n  }\\n\\n  assert index \u003d\u003d find_index(s, str, pos);\\n  assert find_index(text, str, 0) \u003d\u003d find_index(s, str, pos);\\n  assert index \u003d\u003d find_index(text, str, 0);\\n}\"}",
+            "annotations": []
+          },
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 694,
+        "completion_tokens": 9054,
+        "total_tokens": 9748,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "audio_tokens": 0
+        },
+        "completion_tokens_details": {
+          "cached_tokens": 0,
+          "reasoning_tokens": 8188,
+          "audio_tokens": 0,
+          "accepted_prediction_tokens": 0,
+          "rejected_prediction_tokens": 0
+        }
+      },
+      "service_tier": "default"
+    }
+  }
+]

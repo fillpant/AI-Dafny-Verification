@@ -1,0 +1,154 @@
+[05/06/26 10:48:27.927] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [INFO]: Experiment created.
+[05/06/26 10:48:27.927] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [INFO]: Experiment started.
+[05/06/26 10:48:27.927] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [INFO]: Using initial prompt: You are given the following task to perform in Dafny:
+
+Write a method that implements the merge sort algorithm to sort an array of strings in lexicographic order.
+
+The signature should be:
+
+p_14_4_merge_sort_lexicographic_seq(inputs: seq<string>) returns (sorted: seq<string>)
+
+The method should respect the following contract:
+
+ensures forall i, j :: 0 <= i < j < |sorted| ==> sorted[i] <= sorted[j], ensures multiset(inputs) == multiset(sorted)
+
+Produce and show only the Dafny body of this method, including the curly braces that surround it. Do not show the signature nor contract. You must not use 'assume' nor 'expect' anywhere in your code.
+[05/06/26 10:48:27.929] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [INFO]: There are 30000 left in the jar, for the rest of this experiment.
+[05/06/26 10:48:27.929] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [INFO]: Querrying GenAI...
+[05/06/26 10:48:27.930] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [FINE]: Constructing message for GenAI
+[05/06/26 10:48:27.931] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [INFO]: Context is on, attaching 1 previous messages in the request to GenAI.
+[05/06/26 10:48:27.931] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [INFO]: A reasoning model is chosen, but no reasoning effort value is set. Setting reasoning to 'medium'
+[05/06/26 10:48:27.931] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [FINE]: Setting max tokens for the request to 30000
+[05/06/26 10:48:27.932] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [FINE]: Using model gpt-5.5. Awaiting response...
+[05/06/26 10:51:02.975] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [FINE]: Got response with 5915 characters.
+[05/06/26 10:51:02.981] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [FINE]: Saving gen_ai_messages.json
+[05/06/26 10:51:02.983] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [FINE]: Saved 17055 characters to file gen_ai_messages.json
+[05/06/26 10:51:02.997] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [FINE]: Saving gen_ai_messages_simple.json
+[05/06/26 10:51:02.999] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [FINE]: Saved 8461 characters to file gen_ai_messages_simple.json
+[05/06/26 10:51:03.000] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [INFO]: Converting GenAI response to a program...
+[05/06/26 10:51:03.001] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [INFO]: Treating GenAIs response as a partial method, not a complete program (Since, the problem spec has a method signature).
+[05/06/26 10:51:03.001] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [FINE]: Saving program.dfy
+[05/06/26 10:51:03.002] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [FINE]: Saved 5918 characters to file program.dfy
+[05/06/26 10:51:03.003] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [INFO]: Context is treated as being fully enabled, meaning that subsequent prompts do not include the full code.
+[05/06/26 10:51:03.003] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [INFO]: Checking the code for the presence of the 'assume' or 'expect' keyword...
+[05/06/26 10:51:03.007] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [INFO]: Calling dafny to resolve the generated code...
+[05/06/26 10:51:12.507] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [INFO]: Program exited with code 0
+[05/06/26 10:51:12.507] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [INFO]: Program stdout: 
+Dafny program verifier did not attempt verification
+[05/06/26 10:51:12.508] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [INFO]: Calling dafny to resolve the generated code, but with warnings allowed...
+[05/06/26 10:51:20.622] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [INFO]: Program exited with code 0
+[05/06/26 10:51:20.656] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [INFO]: Program stdout: 
+Dafny program verifier did not attempt verification
+[05/06/26 10:51:20.656] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [INFO]: Resolution passes without warnings.
+[05/06/26 10:51:20.656] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [INFO]: Dafny resolution check passed.
+[05/06/26 10:51:20.656] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [INFO]: Calling dafny to verify the generated code...
+[05/06/26 10:51:40.792] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [SEVERE]: Program exited with code 4
+[05/06/26 10:51:40.793] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [SEVERE]: Program stdout: problem_data/p_14_4_merge_sort_lexicographic_seq/program.dfy(46,8): Error: assertion might not hold
+   |
+46 |         assert right[j] <= left[i];
+   |         ^^^^^^
+
+
+Dafny program verifier finished with 1 verified, 1 error
+[05/06/26 10:51:40.793] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [WARNING]: Failed to verify the generated code. Preparing GenAI prompt to fix...
+[05/06/26 10:51:40.793] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [INFO]: There are 21912 left in the jar, for the rest of this experiment.
+[05/06/26 10:51:40.793] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [INFO]: Previous iteration lasted 192864ms
+[05/06/26 10:51:40.793] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [INFO]: Querrying GenAI...
+[05/06/26 10:51:40.793] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [FINE]: Constructing message for GenAI
+[05/06/26 10:51:40.793] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [INFO]: Context is on, attaching 3 previous messages in the request to GenAI.
+[05/06/26 10:51:40.794] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [INFO]: A reasoning model is chosen, but no reasoning effort value is set. Setting reasoning to 'medium'
+[05/06/26 10:51:40.794] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [FINE]: Setting max tokens for the request to 21912
+[05/06/26 10:51:40.794] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [FINE]: Using model gpt-5.5. Awaiting response...
+[05/06/26 10:53:02.945] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [FINE]: Got response with 6062 characters.
+[05/06/26 10:53:03.015] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [FINE]: Saving gen_ai_messages.json
+[05/06/26 10:53:03.342] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [FINE]: Saved 34300 characters to file gen_ai_messages.json
+[05/06/26 10:53:03.343] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [FINE]: Saving gen_ai_messages_simple.json
+[05/06/26 10:53:03.347] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [FINE]: Saved 16929 characters to file gen_ai_messages_simple.json
+[05/06/26 10:53:03.348] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [INFO]: Converting GenAI response to a program...
+[05/06/26 10:53:03.348] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [INFO]: Treating GenAIs response as a partial method, not a complete program (Since, the problem spec has a method signature).
+[05/06/26 10:53:03.348] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [FINE]: Saving program.dfy
+[05/06/26 10:53:03.349] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [FINE]: Saved 6060 characters to file program.dfy
+[05/06/26 10:53:03.350] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [INFO]: Context is treated as being fully enabled, meaning that subsequent prompts do not include the full code.
+[05/06/26 10:53:03.350] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [INFO]: Checking the code for the presence of the 'assume' or 'expect' keyword...
+[05/06/26 10:53:03.353] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [INFO]: Calling dafny to resolve the generated code...
+[05/06/26 10:53:16.726] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [INFO]: Program exited with code 0
+[05/06/26 10:53:17.012] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [INFO]: Program stdout: 
+Dafny program verifier did not attempt verification
+[05/06/26 10:53:17.012] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [INFO]: Calling dafny to resolve the generated code, but with warnings allowed...
+[05/06/26 10:53:22.848] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [INFO]: Program exited with code 0
+[05/06/26 10:53:22.851] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [INFO]: Program stdout: 
+Dafny program verifier did not attempt verification
+[05/06/26 10:53:22.851] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [INFO]: Resolution passes without warnings.
+[05/06/26 10:53:23.051] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [INFO]: Dafny resolution check passed.
+[05/06/26 10:53:23.051] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [INFO]: Calling dafny to verify the generated code...
+[05/06/26 10:53:47.338] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [SEVERE]: Program exited with code 4
+[05/06/26 10:53:47.339] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [SEVERE]: Program stdout: problem_data/p_14_4_merge_sort_lexicographic_seq/program.dfy(46,8): Error: assertion might not hold
+   |
+46 |         assert left[i] <= right[j] || right[j] <= left[i];
+   |         ^^^^^^
+
+
+Dafny program verifier finished with 1 verified, 1 error
+[05/06/26 10:53:47.339] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [WARNING]: Failed to verify the generated code. Preparing GenAI prompt to fix...
+[05/06/26 10:53:47.339] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [INFO]: There are 15971 left in the jar, for the rest of this experiment.
+[05/06/26 10:53:47.343] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [INFO]: Previous iteration lasted 126546ms
+[05/06/26 10:53:47.343] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [INFO]: Querrying GenAI...
+[05/06/26 10:53:47.343] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [FINE]: Constructing message for GenAI
+[05/06/26 10:53:47.344] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [INFO]: Context is on, attaching 5 previous messages in the request to GenAI.
+[05/06/26 10:53:47.344] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [INFO]: A reasoning model is chosen, but no reasoning effort value is set. Setting reasoning to 'medium'
+[05/06/26 10:53:47.344] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [FINE]: Setting max tokens for the request to 15971
+[05/06/26 10:53:47.345] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [FINE]: Using model gpt-5.5. Awaiting response...
+[05/06/26 10:58:27.975] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [FINE]: Got response with 5924 characters.
+[05/06/26 10:58:27.998] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [FINE]: Saving gen_ai_messages.json
+[05/06/26 10:58:28.003] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [FINE]: Saved 51234 characters to file gen_ai_messages.json
+[05/06/26 10:58:28.004] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [FINE]: Saving gen_ai_messages_simple.json
+[05/06/26 10:58:28.011] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [FINE]: Saved 25257 characters to file gen_ai_messages_simple.json
+[05/06/26 10:58:28.011] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [INFO]: Converting GenAI response to a program...
+[05/06/26 10:58:28.012] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [INFO]: Treating GenAIs response as a partial method, not a complete program (Since, the problem spec has a method signature).
+[05/06/26 10:58:28.012] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [FINE]: Saving program.dfy
+[05/06/26 10:58:28.013] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [FINE]: Saved 5927 characters to file program.dfy
+[05/06/26 10:58:28.013] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [INFO]: Context is treated as being fully enabled, meaning that subsequent prompts do not include the full code.
+[05/06/26 10:58:28.013] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [INFO]: Checking the code for the presence of the 'assume' or 'expect' keyword...
+[05/06/26 10:58:28.019] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [INFO]: Calling dafny to resolve the generated code...
+[05/06/26 10:58:30.679] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [INFO]: Program exited with code 0
+[05/06/26 10:58:30.679] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [INFO]: Program stdout: 
+Dafny program verifier did not attempt verification
+[05/06/26 10:58:30.679] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [INFO]: Calling dafny to resolve the generated code, but with warnings allowed...
+[05/06/26 10:58:33.785] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [INFO]: Program exited with code 0
+[05/06/26 10:58:33.786] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [INFO]: Program stdout: 
+Dafny program verifier did not attempt verification
+[05/06/26 10:58:33.793] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [INFO]: Resolution passes without warnings.
+[05/06/26 10:58:33.793] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [INFO]: Dafny resolution check passed.
+[05/06/26 10:58:33.793] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [INFO]: Calling dafny to verify the generated code...
+[05/06/26 10:58:48.319] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [SEVERE]: Program exited with code 4
+[05/06/26 10:58:48.322] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [SEVERE]: Program stdout: problem_data/p_14_4_merge_sort_lexicographic_seq/program.dfy(46,8): Error: assertion might not hold
+   |
+46 |         assert {:axiom} right[j] <= left[i];
+   |         ^^^^^^
+
+
+Dafny program verifier finished with 1 verified, 1 error
+[05/06/26 10:58:48.326] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [WARNING]: Failed to verify the generated code. Preparing GenAI prompt to fix...
+[05/06/26 10:58:48.326] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [INFO]: There are 1094 left in the jar, for the rest of this experiment.
+[05/06/26 10:58:48.331] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [INFO]: Previous iteration lasted 300983ms
+[05/06/26 10:58:48.338] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [INFO]: Querrying GenAI...
+[05/06/26 10:58:48.338] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [FINE]: Constructing message for GenAI
+[05/06/26 10:58:48.339] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [INFO]: Context is on, attaching 7 previous messages in the request to GenAI.
+[05/06/26 10:58:48.339] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [INFO]: A reasoning model is chosen, but no reasoning effort value is set. Setting reasoning to 'medium'
+[05/06/26 10:58:48.340] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [FINE]: Setting max tokens for the request to 1094
+[05/06/26 10:58:48.340] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [FINE]: Using model gpt-5.5. Awaiting response...
+[05/06/26 10:59:19.927] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [SEVERE]: Model finished with non 'stop' reason: length.
+[05/06/26 10:59:19.949] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [FINE]: Saving gen_ai_messages.json
+[05/06/26 10:59:20.033] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [FINE]: Saved 52917 characters to file gen_ai_messages.json
+[05/06/26 10:59:20.034] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [FINE]: Saving gen_ai_messages_simple.json
+[05/06/26 10:59:20.035] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [FINE]: Saved 25946 characters to file gen_ai_messages_simple.json
+[05/06/26 10:59:20.035] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [SEVERE]: Failed to aquire code from GenAI. Will re-try up to limit.
+[05/06/26 10:59:20.058] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [WARNING]: Experiment stopped after using 36218 tokens, which exceeds the limit specified. 
+[05/06/26 10:59:20.179] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [FINE]: Saving gen_ai_messages.json
+[05/06/26 10:59:20.179] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [FINE]: Saved 52917 characters to file gen_ai_messages.json
+[05/06/26 10:59:20.180] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [FINE]: Saving gen_ai_messages_simple.json
+[05/06/26 10:59:20.181] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [FINE]: Saved 25946 characters to file gen_ai_messages_simple.json
+[05/06/26 10:59:20.182] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [FINE]: Saving experiment_result.json
+[05/06/26 10:59:20.182] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [FINE]: Saved 1093 characters to file experiment_result.json
+[05/06/26 10:59:20.184] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [FINE]: Failed to parse GenAI response for LaTeX report generation. Dumping raw JSON
+[05/06/26 10:59:25.601] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [INFO]: Compilation of experiment report tex file successful

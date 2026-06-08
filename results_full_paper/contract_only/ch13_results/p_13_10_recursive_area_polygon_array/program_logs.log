@@ -1,0 +1,218 @@
+[05/06/26 16:01:16.607] [Experiment 'p_13_10_recursive_area_polygon_array'] [INFO]: Experiment created.
+[05/06/26 16:01:16.607] [Experiment 'p_13_10_recursive_area_polygon_array'] [INFO]: Experiment started.
+[05/06/26 16:01:16.608] [Experiment 'p_13_10_recursive_area_polygon_array'] [INFO]: Using initial prompt: You are given the following task to perform in Dafny:
+
+Write a method to satisfy the below requirements.
+
+The signature should be:
+
+p_13_10_recursive_area_polygon_array(points: array<(real, real)>) returns (area: real)
+
+The method should respect the following contract:
+
+requires points.Length >= 3, ensures area == polygon_area(points[..])
+
+The contract uses the following dafny code:
+
+function polygon_area(points: seq<(real, real)>): real
+  decreases |points|
+  requires |points| >= 3
+  ensures polygon_area(points) >= 0.0
+{
+  if |points| == 3 then 
+    var (x1, y1) := points[0];
+    var (x2, y2) := points[1];
+    var (x3, y3) := points[2];
+    var sign : real := x1 * (y2 - y3) + x2 * (y3 - y1) + x3 * (y1 - y2);
+    if sign < 0.0 then -sign / 2.0 else sign / 2.0 as real 
+  else 
+    var (x1, y1) := points[0];
+    var (x2, y2) := points[1];
+    var (x3, y3) := points[2];
+    var sign : real := x1 * (y2 - y3) + x2 * (y3 - y1) + x3 * (y1 - y2);
+    var triangle_area := if sign < 0.0 then -sign / 2.0 else sign / 2.0 as real;
+    triangle_area + polygon_area([points[0]] + points[2..])
+}
+
+These function(s) must not be used in your implementation of the method.
+
+Produce and show only the Dafny body of this method, including the curly braces that surround it. Do not show the signature nor contract. You must not use 'assume' nor 'expect' anywhere in your code.
+[05/06/26 16:01:16.609] [Experiment 'p_13_10_recursive_area_polygon_array'] [INFO]: There are 30000 left in the jar, for the rest of this experiment.
+[05/06/26 16:01:16.610] [Experiment 'p_13_10_recursive_area_polygon_array'] [INFO]: Querrying GenAI...
+[05/06/26 16:01:16.610] [Experiment 'p_13_10_recursive_area_polygon_array'] [FINE]: Constructing message for GenAI
+[05/06/26 16:01:16.610] [Experiment 'p_13_10_recursive_area_polygon_array'] [INFO]: Context is on, attaching 1 previous messages in the request to GenAI.
+[05/06/26 16:01:16.613] [Experiment 'p_13_10_recursive_area_polygon_array'] [INFO]: A reasoning model is chosen, but no reasoning effort value is set. Setting reasoning to 'medium'
+[05/06/26 16:01:16.613] [Experiment 'p_13_10_recursive_area_polygon_array'] [FINE]: Setting max tokens for the request to 30000
+[05/06/26 16:01:16.613] [Experiment 'p_13_10_recursive_area_polygon_array'] [FINE]: Using model gpt-5.5. Awaiting response...
+[05/06/26 16:03:27.008] [Experiment 'p_13_10_recursive_area_polygon_array'] [FINE]: Got response with 2101 characters.
+[05/06/26 16:03:27.038] [Experiment 'p_13_10_recursive_area_polygon_array'] [FINE]: Saving gen_ai_messages.json
+[05/06/26 16:03:27.039] [Experiment 'p_13_10_recursive_area_polygon_array'] [FINE]: Saved 7768 characters to file gen_ai_messages.json
+[05/06/26 16:03:27.039] [Experiment 'p_13_10_recursive_area_polygon_array'] [FINE]: Saving gen_ai_messages_simple.json
+[05/06/26 16:03:27.040] [Experiment 'p_13_10_recursive_area_polygon_array'] [FINE]: Saved 4216 characters to file gen_ai_messages_simple.json
+[05/06/26 16:03:27.040] [Experiment 'p_13_10_recursive_area_polygon_array'] [INFO]: Converting GenAI response to a program...
+[05/06/26 16:03:27.040] [Experiment 'p_13_10_recursive_area_polygon_array'] [INFO]: Treating GenAIs response as a partial method, not a complete program (Since, the problem spec has a method signature).
+[05/06/26 16:03:27.070] [Experiment 'p_13_10_recursive_area_polygon_array'] [FINE]: Saving program.dfy
+[05/06/26 16:03:27.072] [Experiment 'p_13_10_recursive_area_polygon_array'] [FINE]: Saved 2899 characters to file program.dfy
+[05/06/26 16:03:27.072] [Experiment 'p_13_10_recursive_area_polygon_array'] [INFO]: Context is treated as being fully enabled, meaning that subsequent prompts do not include the full code.
+[05/06/26 16:03:27.072] [Experiment 'p_13_10_recursive_area_polygon_array'] [INFO]: Checking the code for the presence of the 'assume' or 'expect' keyword...
+[05/06/26 16:03:27.073] [Experiment 'p_13_10_recursive_area_polygon_array'] [INFO]: Calling dafny to resolve the generated code...
+[05/06/26 16:03:34.563] [Experiment 'p_13_10_recursive_area_polygon_array'] [INFO]: Program exited with code 0
+[05/06/26 16:03:34.564] [Experiment 'p_13_10_recursive_area_polygon_array'] [INFO]: Program stdout: 
+Dafny program verifier did not attempt verification
+[05/06/26 16:03:34.564] [Experiment 'p_13_10_recursive_area_polygon_array'] [INFO]: Calling dafny to resolve the generated code, but with warnings allowed...
+[05/06/26 16:03:38.058] [Experiment 'p_13_10_recursive_area_polygon_array'] [INFO]: Program exited with code 0
+[05/06/26 16:03:38.058] [Experiment 'p_13_10_recursive_area_polygon_array'] [INFO]: Program stdout: 
+Dafny program verifier did not attempt verification
+[05/06/26 16:03:38.058] [Experiment 'p_13_10_recursive_area_polygon_array'] [INFO]: Resolution passes without warnings.
+[05/06/26 16:03:38.059] [Experiment 'p_13_10_recursive_area_polygon_array'] [INFO]: Dafny resolution check passed.
+[05/06/26 16:03:38.061] [Experiment 'p_13_10_recursive_area_polygon_array'] [INFO]: Calling dafny to verify the generated code...
+[05/06/26 16:03:54.585] [Experiment 'p_13_10_recursive_area_polygon_array'] [SEVERE]: Program exited with code 4
+[05/06/26 16:03:54.585] [Experiment 'p_13_10_recursive_area_polygon_array'] [SEVERE]: Program stdout: problem_data/p_13_10_recursive_area_polygon_array/program.dfy(59,29): Error: assertion might not hold
+   |
+59 |     assert polygon_area(rem) == triangle_area + polygon_area([points[0]] + points[i + 1..]);
+   |                              ^^
+
+
+Dafny program verifier finished with 2 verified, 1 error
+[05/06/26 16:03:54.585] [Experiment 'p_13_10_recursive_area_polygon_array'] [WARNING]: Failed to verify the generated code. Preparing GenAI prompt to fix...
+[05/06/26 16:03:54.644] [Experiment 'p_13_10_recursive_area_polygon_array'] [INFO]: There are 22663 left in the jar, for the rest of this experiment.
+[05/06/26 16:03:54.669] [Experiment 'p_13_10_recursive_area_polygon_array'] [INFO]: Previous iteration lasted 157976ms
+[05/06/26 16:03:54.669] [Experiment 'p_13_10_recursive_area_polygon_array'] [INFO]: Querrying GenAI...
+[05/06/26 16:03:54.669] [Experiment 'p_13_10_recursive_area_polygon_array'] [FINE]: Constructing message for GenAI
+[05/06/26 16:03:54.670] [Experiment 'p_13_10_recursive_area_polygon_array'] [INFO]: Context is on, attaching 3 previous messages in the request to GenAI.
+[05/06/26 16:03:54.904] [Experiment 'p_13_10_recursive_area_polygon_array'] [INFO]: A reasoning model is chosen, but no reasoning effort value is set. Setting reasoning to 'medium'
+[05/06/26 16:03:54.904] [Experiment 'p_13_10_recursive_area_polygon_array'] [FINE]: Setting max tokens for the request to 22663
+[05/06/26 16:03:54.904] [Experiment 'p_13_10_recursive_area_polygon_array'] [FINE]: Using model gpt-5.5. Awaiting response...
+[05/06/26 16:05:02.690] [Experiment 'p_13_10_recursive_area_polygon_array'] [FINE]: Got response with 2879 characters.
+[05/06/26 16:05:02.691] [Experiment 'p_13_10_recursive_area_polygon_array'] [FINE]: Saving gen_ai_messages.json
+[05/06/26 16:05:02.691] [Experiment 'p_13_10_recursive_area_polygon_array'] [FINE]: Saved 16561 characters to file gen_ai_messages.json
+[05/06/26 16:05:02.692] [Experiment 'p_13_10_recursive_area_polygon_array'] [FINE]: Saving gen_ai_messages_simple.json
+[05/06/26 16:05:02.692] [Experiment 'p_13_10_recursive_area_polygon_array'] [FINE]: Saved 8496 characters to file gen_ai_messages_simple.json
+[05/06/26 16:05:02.692] [Experiment 'p_13_10_recursive_area_polygon_array'] [INFO]: Converting GenAI response to a program...
+[05/06/26 16:05:02.692] [Experiment 'p_13_10_recursive_area_polygon_array'] [INFO]: Treating GenAIs response as a partial method, not a complete program (Since, the problem spec has a method signature).
+[05/06/26 16:05:02.692] [Experiment 'p_13_10_recursive_area_polygon_array'] [FINE]: Saving program.dfy
+[05/06/26 16:05:02.692] [Experiment 'p_13_10_recursive_area_polygon_array'] [FINE]: Saved 3655 characters to file program.dfy
+[05/06/26 16:05:02.692] [Experiment 'p_13_10_recursive_area_polygon_array'] [INFO]: Context is treated as being fully enabled, meaning that subsequent prompts do not include the full code.
+[05/06/26 16:05:02.692] [Experiment 'p_13_10_recursive_area_polygon_array'] [INFO]: Checking the code for the presence of the 'assume' or 'expect' keyword...
+[05/06/26 16:05:02.939] [Experiment 'p_13_10_recursive_area_polygon_array'] [INFO]: Calling dafny to resolve the generated code...
+[05/06/26 16:05:12.221] [Experiment 'p_13_10_recursive_area_polygon_array'] [INFO]: Program exited with code 0
+[05/06/26 16:05:12.221] [Experiment 'p_13_10_recursive_area_polygon_array'] [INFO]: Program stdout: 
+Dafny program verifier did not attempt verification
+[05/06/26 16:05:12.221] [Experiment 'p_13_10_recursive_area_polygon_array'] [INFO]: Calling dafny to resolve the generated code, but with warnings allowed...
+[05/06/26 16:05:15.837] [Experiment 'p_13_10_recursive_area_polygon_array'] [INFO]: Program exited with code 0
+[05/06/26 16:05:15.838] [Experiment 'p_13_10_recursive_area_polygon_array'] [INFO]: Program stdout: 
+Dafny program verifier did not attempt verification
+[05/06/26 16:05:15.838] [Experiment 'p_13_10_recursive_area_polygon_array'] [INFO]: Resolution passes without warnings.
+[05/06/26 16:05:15.838] [Experiment 'p_13_10_recursive_area_polygon_array'] [INFO]: Dafny resolution check passed.
+[05/06/26 16:05:15.838] [Experiment 'p_13_10_recursive_area_polygon_array'] [INFO]: Calling dafny to verify the generated code...
+[05/06/26 16:05:35.068] [Experiment 'p_13_10_recursive_area_polygon_array'] [SEVERE]: Program exited with code 4
+[05/06/26 16:05:35.068] [Experiment 'p_13_10_recursive_area_polygon_array'] [SEVERE]: Program stdout: problem_data/p_13_10_recursive_area_polygon_array/program.dfy(51,4): Error: assertion might not hold
+   |
+51 |     assert points[i..] == points[i..i + 1] + points[i + 1..];
+   |     ^^^^^^
+
+problem_data/p_13_10_recursive_area_polygon_array/program.dfy(65,31): Error: assertion might not hold
+   |
+65 |       assert polygon_area(rem) == -sign / 2.0 + polygon_area([rem[0]] + rem[2..]);
+   |                                ^^
+
+problem_data/p_13_10_recursive_area_polygon_array/program.dfy(68,31): Error: assertion might not hold
+   |
+68 |       assert polygon_area(rem) == sign / 2.0 + polygon_area([rem[0]] + rem[2..]);
+   |                                ^^
+
+problem_data/p_13_10_recursive_area_polygon_array/program.dfy(100,29): Error: assertion might not hold
+    |
+100 |     assert polygon_area(rem) == sign / 2.0;
+    |                              ^^
+
+
+Dafny program verifier finished with 2 verified, 4 errors
+[05/06/26 16:05:35.068] [Experiment 'p_13_10_recursive_area_polygon_array'] [WARNING]: Failed to verify the generated code. Preparing GenAI prompt to fix...
+[05/06/26 16:05:35.070] [Experiment 'p_13_10_recursive_area_polygon_array'] [INFO]: There are 17376 left in the jar, for the rest of this experiment.
+[05/06/26 16:05:35.070] [Experiment 'p_13_10_recursive_area_polygon_array'] [INFO]: Previous iteration lasted 100401ms
+[05/06/26 16:05:35.071] [Experiment 'p_13_10_recursive_area_polygon_array'] [INFO]: Querrying GenAI...
+[05/06/26 16:05:35.071] [Experiment 'p_13_10_recursive_area_polygon_array'] [FINE]: Constructing message for GenAI
+[05/06/26 16:05:35.072] [Experiment 'p_13_10_recursive_area_polygon_array'] [INFO]: Context is on, attaching 5 previous messages in the request to GenAI.
+[05/06/26 16:05:35.072] [Experiment 'p_13_10_recursive_area_polygon_array'] [INFO]: A reasoning model is chosen, but no reasoning effort value is set. Setting reasoning to 'medium'
+[05/06/26 16:05:35.073] [Experiment 'p_13_10_recursive_area_polygon_array'] [FINE]: Setting max tokens for the request to 17376
+[05/06/26 16:05:35.073] [Experiment 'p_13_10_recursive_area_polygon_array'] [FINE]: Using model gpt-5.5. Awaiting response...
+[05/06/26 16:07:24.237] [Experiment 'p_13_10_recursive_area_polygon_array'] [FINE]: Got response with 3987 characters.
+[05/06/26 16:07:24.249] [Experiment 'p_13_10_recursive_area_polygon_array'] [FINE]: Saving gen_ai_messages.json
+[05/06/26 16:07:24.250] [Experiment 'p_13_10_recursive_area_polygon_array'] [FINE]: Saved 28770 characters to file gen_ai_messages.json
+[05/06/26 16:07:24.251] [Experiment 'p_13_10_recursive_area_polygon_array'] [FINE]: Saving gen_ai_messages_simple.json
+[05/06/26 16:07:24.252] [Experiment 'p_13_10_recursive_area_polygon_array'] [FINE]: Saved 14814 characters to file gen_ai_messages_simple.json
+[05/06/26 16:07:24.252] [Experiment 'p_13_10_recursive_area_polygon_array'] [INFO]: Converting GenAI response to a program...
+[05/06/26 16:07:24.253] [Experiment 'p_13_10_recursive_area_polygon_array'] [INFO]: Treating GenAIs response as a partial method, not a complete program (Since, the problem spec has a method signature).
+[05/06/26 16:07:24.253] [Experiment 'p_13_10_recursive_area_polygon_array'] [FINE]: Saving program.dfy
+[05/06/26 16:07:24.254] [Experiment 'p_13_10_recursive_area_polygon_array'] [FINE]: Saved 4733 characters to file program.dfy
+[05/06/26 16:07:24.254] [Experiment 'p_13_10_recursive_area_polygon_array'] [INFO]: Context is treated as being fully enabled, meaning that subsequent prompts do not include the full code.
+[05/06/26 16:07:24.254] [Experiment 'p_13_10_recursive_area_polygon_array'] [INFO]: Checking the code for the presence of the 'assume' or 'expect' keyword...
+[05/06/26 16:07:24.255] [Experiment 'p_13_10_recursive_area_polygon_array'] [INFO]: Calling dafny to resolve the generated code...
+[05/06/26 16:07:29.039] [Experiment 'p_13_10_recursive_area_polygon_array'] [INFO]: Program exited with code 0
+[05/06/26 16:07:29.040] [Experiment 'p_13_10_recursive_area_polygon_array'] [INFO]: Program stdout: 
+Dafny program verifier did not attempt verification
+[05/06/26 16:07:29.044] [Experiment 'p_13_10_recursive_area_polygon_array'] [INFO]: Calling dafny to resolve the generated code, but with warnings allowed...
+[05/06/26 16:07:32.404] [Experiment 'p_13_10_recursive_area_polygon_array'] [INFO]: Program exited with code 0
+[05/06/26 16:07:32.405] [Experiment 'p_13_10_recursive_area_polygon_array'] [INFO]: Program stdout: 
+Dafny program verifier did not attempt verification
+[05/06/26 16:07:32.405] [Experiment 'p_13_10_recursive_area_polygon_array'] [INFO]: Resolution passes without warnings.
+[05/06/26 16:07:32.405] [Experiment 'p_13_10_recursive_area_polygon_array'] [INFO]: Dafny resolution check passed.
+[05/06/26 16:07:32.405] [Experiment 'p_13_10_recursive_area_polygon_array'] [INFO]: Calling dafny to verify the generated code...
+[05/06/26 16:07:48.670] [Experiment 'p_13_10_recursive_area_polygon_array'] [SEVERE]: Program exited with code 4
+[05/06/26 16:07:48.670] [Experiment 'p_13_10_recursive_area_polygon_array'] [SEVERE]: Program stdout: problem_data/p_13_10_recursive_area_polygon_array/program.dfy(94,29): Error: assertion might not hold
+   |
+94 |     assert polygon_area(rem) == rtri + polygon_area([rem[0]] + rem[2..]);
+   |                              ^^
+
+
+Dafny program verifier finished with 2 verified, 1 error
+[05/06/26 16:07:48.670] [Experiment 'p_13_10_recursive_area_polygon_array'] [WARNING]: Failed to verify the generated code. Preparing GenAI prompt to fix...
+[05/06/26 16:07:48.671] [Experiment 'p_13_10_recursive_area_polygon_array'] [INFO]: There are 8203 left in the jar, for the rest of this experiment.
+[05/06/26 16:07:48.671] [Experiment 'p_13_10_recursive_area_polygon_array'] [INFO]: Previous iteration lasted 133600ms
+[05/06/26 16:07:48.671] [Experiment 'p_13_10_recursive_area_polygon_array'] [INFO]: Querrying GenAI...
+[05/06/26 16:07:48.671] [Experiment 'p_13_10_recursive_area_polygon_array'] [FINE]: Constructing message for GenAI
+[05/06/26 16:07:48.682] [Experiment 'p_13_10_recursive_area_polygon_array'] [INFO]: Context is on, attaching 7 previous messages in the request to GenAI.
+[05/06/26 16:07:48.685] [Experiment 'p_13_10_recursive_area_polygon_array'] [INFO]: A reasoning model is chosen, but no reasoning effort value is set. Setting reasoning to 'medium'
+[05/06/26 16:07:48.685] [Experiment 'p_13_10_recursive_area_polygon_array'] [FINE]: Setting max tokens for the request to 8203
+[05/06/26 16:07:48.685] [Experiment 'p_13_10_recursive_area_polygon_array'] [FINE]: Using model gpt-5.5. Awaiting response...
+[05/06/26 16:09:47.763] [Experiment 'p_13_10_recursive_area_polygon_array'] [FINE]: Got response with 4395 characters.
+[05/06/26 16:09:47.919] [Experiment 'p_13_10_recursive_area_polygon_array'] [FINE]: Saving gen_ai_messages.json
+[05/06/26 16:09:48.155] [Experiment 'p_13_10_recursive_area_polygon_array'] [FINE]: Saved 41333 characters to file gen_ai_messages.json
+[05/06/26 16:09:48.156] [Experiment 'p_13_10_recursive_area_polygon_array'] [FINE]: Saving gen_ai_messages_simple.json
+[05/06/26 16:09:48.156] [Experiment 'p_13_10_recursive_area_polygon_array'] [FINE]: Saved 20969 characters to file gen_ai_messages_simple.json
+[05/06/26 16:09:48.156] [Experiment 'p_13_10_recursive_area_polygon_array'] [INFO]: Converting GenAI response to a program...
+[05/06/26 16:09:48.156] [Experiment 'p_13_10_recursive_area_polygon_array'] [INFO]: Treating GenAIs response as a partial method, not a complete program (Since, the problem spec has a method signature).
+[05/06/26 16:09:48.157] [Experiment 'p_13_10_recursive_area_polygon_array'] [FINE]: Saving program.dfy
+[05/06/26 16:09:48.157] [Experiment 'p_13_10_recursive_area_polygon_array'] [FINE]: Saved 5133 characters to file program.dfy
+[05/06/26 16:09:48.157] [Experiment 'p_13_10_recursive_area_polygon_array'] [INFO]: Context is treated as being fully enabled, meaning that subsequent prompts do not include the full code.
+[05/06/26 16:09:48.157] [Experiment 'p_13_10_recursive_area_polygon_array'] [INFO]: Checking the code for the presence of the 'assume' or 'expect' keyword...
+[05/06/26 16:09:48.158] [Experiment 'p_13_10_recursive_area_polygon_array'] [INFO]: Calling dafny to resolve the generated code...
+[05/06/26 16:09:53.765] [Experiment 'p_13_10_recursive_area_polygon_array'] [INFO]: Program exited with code 0
+[05/06/26 16:09:53.773] [Experiment 'p_13_10_recursive_area_polygon_array'] [INFO]: Program stdout: 
+Dafny program verifier did not attempt verification
+[05/06/26 16:09:53.773] [Experiment 'p_13_10_recursive_area_polygon_array'] [INFO]: Calling dafny to resolve the generated code, but with warnings allowed...
+[05/06/26 16:09:57.844] [Experiment 'p_13_10_recursive_area_polygon_array'] [INFO]: Program exited with code 0
+[05/06/26 16:09:57.851] [Experiment 'p_13_10_recursive_area_polygon_array'] [INFO]: Program stdout: 
+Dafny program verifier did not attempt verification
+[05/06/26 16:09:57.851] [Experiment 'p_13_10_recursive_area_polygon_array'] [INFO]: Resolution passes without warnings.
+[05/06/26 16:09:57.851] [Experiment 'p_13_10_recursive_area_polygon_array'] [INFO]: Dafny resolution check passed.
+[05/06/26 16:09:57.851] [Experiment 'p_13_10_recursive_area_polygon_array'] [INFO]: Calling dafny to verify the generated code...
+[05/06/26 16:10:43.934] [Experiment 'p_13_10_recursive_area_polygon_array'] [SEVERE]: Program exited with code 4
+[05/06/26 16:10:43.965] [Experiment 'p_13_10_recursive_area_polygon_array'] [SEVERE]: Program stdout: problem_data/p_13_10_recursive_area_polygon_array/program.dfy(97,29): Error: assertion might not hold
+   |
+97 |     assert polygon_area(rem) == (if |rem| == 3 then rtri else rtri + polygon_area([rem[0]] + rem[2..]));
+   |                              ^^
+
+
+Dafny program verifier finished with 2 verified, 1 error
+[05/06/26 16:10:43.965] [Experiment 'p_13_10_recursive_area_polygon_array'] [WARNING]: Failed to verify the generated code. Preparing GenAI prompt to fix...
+[05/06/26 16:10:43.967] [Experiment 'p_13_10_recursive_area_polygon_array'] [WARNING]: Experiment stopped after using 32643 tokens, which exceeds the limit specified. 
+[05/06/26 16:10:43.981] [Experiment 'p_13_10_recursive_area_polygon_array'] [FINE]: Saving gen_ai_messages.json
+[05/06/26 16:10:44.013] [Experiment 'p_13_10_recursive_area_polygon_array'] [FINE]: Saved 41333 characters to file gen_ai_messages.json
+[05/06/26 16:10:44.014] [Experiment 'p_13_10_recursive_area_polygon_array'] [FINE]: Saving gen_ai_messages_simple.json
+[05/06/26 16:10:44.036] [Experiment 'p_13_10_recursive_area_polygon_array'] [FINE]: Saved 20969 characters to file gen_ai_messages_simple.json
+[05/06/26 16:10:44.040] [Experiment 'p_13_10_recursive_area_polygon_array'] [FINE]: Saving experiment_result.json
+[05/06/26 16:10:44.049] [Experiment 'p_13_10_recursive_area_polygon_array'] [FINE]: Saved 1094 characters to file experiment_result.json
+[05/06/26 16:10:45.796] [Experiment 'p_13_10_recursive_area_polygon_array'] [INFO]: Compilation of experiment report tex file successful
+[05/06/26 19:15:15.749] [Experiment 'p_13_10_recursive_area_polygon_array'] [INFO]: Experiment created.

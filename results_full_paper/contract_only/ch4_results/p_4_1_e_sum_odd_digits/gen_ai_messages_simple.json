@@ -1,0 +1,10 @@
+[
+  {
+    "role": "user",
+    "content": "You are given the following task to perform in Dafny:\n\nWrite a method to satisfy the below requirements.\n\nThe signature should be:\n\np_4_1_e_sum_odd_digits(a: int) returns (sum: int)\n\nThe method should respect the following contract:\n\nrequires a \u003e\u003d 0, ensures sum \u003e\u003d 0, ensures sum \u003d\u003d s_o_d(a)\n\nThe contract uses the following dafny code:\n\nfunction s_o_d(a: int): int\nrequires a \u003e\u003d 0\n{\n  if a \u003d\u003d 0 then 0\n  else if a % 2 \u003d\u003d 0 then s_o_d(a / 10)\n  else a % 10 + s_o_d(a / 10)\n}\n\nThese function(s) must not be used in your implementation of the method.\n\nProduce and show only the Dafny body of this method, including the curly braces that surround it. Do not show the signature nor contract. You must not use \u0027assume\u0027 nor \u0027expect\u0027 anywhere in your code."
+  },
+  {
+    "role": "assistant",
+    "content": "{\"method_body\":\"{\\n  if a \u003d\u003d 0 {\\n    sum :\u003d 0;\\n  } else if a % 2 \u003d\u003d 0 {\\n    sum :\u003d p_4_1_e_sum_odd_digits(a / 10);\\n  } else {\\n    var rest :\u003d p_4_1_e_sum_odd_digits(a / 10);\\n    sum :\u003d a % 10 + rest;\\n  }\\n}\"}"
+  }
+]

@@ -1,0 +1,10 @@
+[
+  {
+    "role": "user",
+    "content": "You are given the following task to perform in Dafny:\n\nWrite a method to satisfy the below requirements.\n\nThe signature should be:\n\np_13_9_recursive_sum_seq(inputs: seq\u003cint\u003e) returns (sum: int)\n\nThe method should respect the following contract:\n\nensures sum \u003d\u003d sum_array(inputs)\n\nThe contract uses the following dafny code:\n\nfunction sum_array(inputs: seq\u003cint\u003e): int\n  ensures sum_array(inputs) \u003d\u003d (if |inputs| \u003d\u003d 0 then 0 else inputs[0] + sum_array(inputs[1..]))\n{\n  if |inputs| \u003d\u003d 0 then 0\n  else inputs[0] + sum_array(inputs[1..])\n}\n\nThese function(s) must not be used in your implementation of the method.\n\nProduce and show only the Dafny body of this method, including the curly braces that surround it. Do not show the signature nor contract. You must not use \u0027assume\u0027 nor \u0027expect\u0027 anywhere in your code."
+  },
+  {
+    "role": "assistant",
+    "content": "{\"method_body\":\"{\\n  if |inputs| \u003d\u003d 0 {\\n    sum :\u003d 0;\\n  } else {\\n    var tailSum :\u003d p_13_9_recursive_sum_seq(inputs[1..]);\\n    sum :\u003d inputs[0] + tailSum;\\n  }\\n}\"}"
+  }
+]

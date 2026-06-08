@@ -1,0 +1,274 @@
+\documentclass{article}
+\usepackage{lmodern}
+\usepackage{amsmath}
+\usepackage{listings}
+\usepackage{fullpage}
+\usepackage{parskip}
+\usepackage{xcolor}
+\lstset{
+	basicstyle=\ttfamily,
+	columns=fullflexible,
+	frame=single,
+	breaklines=true,
+	postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},
+}
+\begin{document}
+\title{Experiment `p\_6\_4\_sum\_without\_smallest\_array' Results}
+\author{\today}
+\date{}
+\maketitle
+\textbf{Experiment outcome: }SUCCESS
+\\\textbf{Bad responses: }0
+\\\textbf{Responses containing}~\texttt{assume}~\textbf{: }0
+\\\textbf{Responses containing}~\texttt{expect}~\textbf{: }0
+\\\textbf{Resolution attempts: }1
+\\\textbf{Hard fails (resolution): }0
+\\\textbf{Soft fails (resolution): }0
+\\\textbf{Verification attempts: }1
+\section*{Problem Specification}
+\textbf{Problem name: }p\_6\_4\_sum\_without\_smallest\_array
+\\\textbf{Natural language statement: }null
+\\\textbf{Method signature: }p\_6\_4\_sum\_without\_smallest\_array(inputs: array<int>) returns (sum: int)
+\subsection*{Ensures}
+\begin{itemize}
+\item \texttt{sum == sum\_array(inputs[..]) - find\_smallest(inputs[..])}
+\end{itemize}
+\subsection*{Requires}
+\begin{itemize}
+\item \texttt{inputs.Length >= 1}
+\end{itemize}
+\subsection*{Functional Code Given}
+\begin{lstlisting}
+function find_smallest(inputs: seq<int>): (ret: int)
+  requires |inputs| >= 1
+  ensures forall x :: x in inputs ==> ret <= x 
+{
+  if |inputs| == 1 then inputs[0]
+  else 
+    assert 2 <= |inputs|;
+    var rest_smallest := find_smallest(inputs[1..]);
+    var ret: int := if inputs[0] <= rest_smallest then inputs[0] else rest_smallest;
+    assert inputs == [inputs[0]] + inputs[1..]; 
+    assert ret == if inputs[0] <= rest_smallest then inputs[0] else rest_smallest;
+    ret 
+}
+
+function sum_array(inputs: seq<int>): int
+{
+  if |inputs| == 0 then 0
+  else  inputs[0] + sum_array(inputs[1..])
+}
+\end{lstlisting}
+\clearpage
+\section*{GenAI interactions}
+Below you will find all interactions between the `user' (program) and the `assistant' (OpenAI).
+\subsection*{Program $\rightarrow$ GenAI}
+\begin{lstlisting}
+You are given the following task to perform in Dafny:
+
+Write a method to satisfy the below requirements.
+
+The signature should be:
+
+p_6_4_sum_without_smallest_array(inputs: array<int>) returns (sum: int)
+
+The method should respect the following contract:
+
+requires inputs.Length >= 1, ensures sum == sum_array(inputs[..]) - find_smallest(inputs[..])
+
+The contract uses the following dafny code:
+
+function find_smallest(inputs: seq<int>): (ret: int)
+  requires |inputs| >= 1
+  ensures forall x :: x in inputs ==> ret <= x 
+{
+  if |inputs| == 1 then inputs[0]
+  else 
+    assert 2 <= |inputs|;
+    var rest_smallest := find_smallest(inputs[1..]);
+    var ret: int := if inputs[0] <= rest_smallest then inputs[0] else rest_smallest;
+    assert inputs == [inputs[0]] + inputs[1..]; 
+    assert ret == if inputs[0] <= rest_smallest then inputs[0] else rest_smallest;
+    ret 
+}
+
+function sum_array(inputs: seq<int>): int
+{
+  if |inputs| == 0 then 0
+  else  inputs[0] + sum_array(inputs[1..])
+}
+
+These function(s) must not be used in your implementation of the method.
+
+Produce and show only the Dafny body of this method, including the curly braces that surround it. Do not show the signature nor contract. You must not use 'assume' nor 'expect' anywhere in your code.
+\end{lstlisting}
+\subsection*{GenAI $\rightarrow$ Program}
+\textbf{System fingerprint: }null
+\\\textbf{ID: }chatcmpl-DnOHHEfpUYoWl0FNEA98eKg0CSH6i
+\\\textbf{Model: }gpt-5.5-2026-04-23
+\\\textbf{Created at: }1780663767
+\\\textbf{Finish reason: }stop
+\\\textbf{Usage: }692 tokens in, and 6880 tokens out
+\begin{lstlisting}
+{
+  var n := inputs.Length;
+  var i := n - 1;
+  var smallest := inputs[i];
+  sum := inputs[i];
+
+  assert i + 1 == n;
+  var s0 := inputs[i..];
+  assert |s0| == 1;
+  assert s0[0] == inputs[i];
+  assert s0[1..] == [];
+  assert s0 == [s0[0]];
+  assert s0 == [inputs[i]];
+  assert sum_array(s0) == inputs[i];
+  assert find_smallest(s0) == inputs[i];
+  assert sum == sum_array(inputs[i..]);
+  assert smallest == find_smallest(inputs[i..]);
+
+  while i > 0
+    invariant n == inputs.Length
+    invariant 0 <= i < n
+    invariant sum == sum_array(inputs[i..])
+    invariant smallest == find_smallest(inputs[i..])
+  {
+    var restSum := sum;
+    var restSmallest := smallest;
+    i := i - 1;
+
+    assert restSum == sum_array(inputs[i + 1..]);
+    assert restSmallest == find_smallest(inputs[i + 1..]);
+    assert 0 <= i;
+    assert i + 1 < n;
+
+    var s := inputs[i..];
+    assert |s| >= 2;
+    assert s[0] == inputs[i];
+    assert s[1..] == inputs[i + 1..];
+    assert s == [s[0]] + s[1..];
+    assert s == [inputs[i]] + inputs[i + 1..];
+
+    assert sum_array(s) == inputs[i] + sum_array(inputs[i + 1..]);
+    assert find_smallest(s) == (if inputs[i] <= find_smallest(inputs[i + 1..]) then inputs[i] else find_smallest(inputs[i + 1..]));
+
+    sum := inputs[i] + restSum;
+    if inputs[i] <= restSmallest {
+      smallest := inputs[i];
+    } else {
+      smallest := restSmallest;
+    }
+
+    assert sum == inputs[i] + sum_array(inputs[i + 1..]);
+    assert sum == sum_array(inputs[i..]);
+    assert smallest == (if inputs[i] <= restSmallest then inputs[i] else restSmallest);
+    assert smallest == (if inputs[i] <= find_smallest(inputs[i + 1..]) then inputs[i] else find_smallest(inputs[i + 1..]));
+    assert smallest == find_smallest(inputs[i..]);
+  }
+
+  assert i == 0;
+  assert inputs[i..] == inputs[..];
+  assert sum == sum_array(inputs[..]);
+  assert smallest == find_smallest(inputs[..]);
+  sum := sum - smallest;
+}
+\end{lstlisting}
+\section*{Final Program}
+\begin{lstlisting}
+function find_smallest(inputs: seq<int>): (ret: int)
+  requires |inputs| >= 1
+  ensures forall x :: x in inputs ==> ret <= x 
+{
+  if |inputs| == 1 then inputs[0]
+  else 
+    assert 2 <= |inputs|;
+    var rest_smallest := find_smallest(inputs[1..]);
+    var ret: int := if inputs[0] <= rest_smallest then inputs[0] else rest_smallest;
+    assert inputs == [inputs[0]] + inputs[1..]; 
+    assert ret == if inputs[0] <= rest_smallest then inputs[0] else rest_smallest;
+    ret 
+}
+
+function sum_array(inputs: seq<int>): int
+{
+  if |inputs| == 0 then 0
+  else  inputs[0] + sum_array(inputs[1..])
+}
+
+method p_6_4_sum_without_smallest_array(inputs: array<int>) returns (sum: int)
+	requires inputs.Length >= 1
+	ensures sum == sum_array(inputs[..]) - find_smallest(inputs[..])
+{
+  var n := inputs.Length;
+  var i := n - 1;
+  var smallest := inputs[i];
+  sum := inputs[i];
+
+  assert i + 1 == n;
+  var s0 := inputs[i..];
+  assert |s0| == 1;
+  assert s0[0] == inputs[i];
+  assert s0[1..] == [];
+  assert s0 == [s0[0]];
+  assert s0 == [inputs[i]];
+  assert sum_array(s0) == inputs[i];
+  assert find_smallest(s0) == inputs[i];
+  assert sum == sum_array(inputs[i..]);
+  assert smallest == find_smallest(inputs[i..]);
+
+  while i > 0
+    invariant n == inputs.Length
+    invariant 0 <= i < n
+    invariant sum == sum_array(inputs[i..])
+    invariant smallest == find_smallest(inputs[i..])
+  {
+    var restSum := sum;
+    var restSmallest := smallest;
+    i := i - 1;
+
+    assert restSum == sum_array(inputs[i + 1..]);
+    assert restSmallest == find_smallest(inputs[i + 1..]);
+    assert 0 <= i;
+    assert i + 1 < n;
+
+    var s := inputs[i..];
+    assert |s| >= 2;
+    assert s[0] == inputs[i];
+    assert s[1..] == inputs[i + 1..];
+    assert s == [s[0]] + s[1..];
+    assert s == [inputs[i]] + inputs[i + 1..];
+
+    assert sum_array(s) == inputs[i] + sum_array(inputs[i + 1..]);
+    assert find_smallest(s) == (if inputs[i] <= find_smallest(inputs[i + 1..]) then inputs[i] else find_smallest(inputs[i + 1..]));
+
+    sum := inputs[i] + restSum;
+    if inputs[i] <= restSmallest {
+      smallest := inputs[i];
+    } else {
+      smallest := restSmallest;
+    }
+
+    assert sum == inputs[i] + sum_array(inputs[i + 1..]);
+    assert sum == sum_array(inputs[i..]);
+    assert smallest == (if inputs[i] <= restSmallest then inputs[i] else restSmallest);
+    assert smallest == (if inputs[i] <= find_smallest(inputs[i + 1..]) then inputs[i] else find_smallest(inputs[i + 1..]));
+    assert smallest == find_smallest(inputs[i..]);
+  }
+
+  assert i == 0;
+  assert inputs[i..] == inputs[..];
+  assert sum == sum_array(inputs[..]);
+  assert smallest == find_smallest(inputs[..]);
+  sum := sum - smallest;
+}
+\end{lstlisting}
+\section*{Total Token Usage}
+\textbf{Input tokens: }692
+\\\textbf{Output tokens: }6880
+\\\textbf{Reasoning tokens: }6135
+\\\textbf{Sum of `total tokens': }7572
+\section*{Experiment Timings}
+\textbf{Overall Experiment} started at 1780663767258, ended at 1780663936419, lasting 169161ms (169.16 seconds)
+\\\textbf{Iteration \#1} started at 1780663767259, ended at 1780663936419, lasting 169160ms (169.16 seconds)
+\end{document}

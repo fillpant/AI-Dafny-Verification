@@ -1,0 +1,10 @@
+[
+  {
+    "role": "user",
+    "content": "You are given the following task to perform in Dafny:\n\nWrite a method to satisfy the below requirements.\n\nThe signature should be:\n\np_13_3_recursive_reverse_string(text: string) returns (reversed: string)\n\nThe method should respect the following contract:\n\nensures |reversed| \u003d\u003d |text|, ensures forall i :: 0 \u003c\u003d i \u003c |text| \u003d\u003d\u003e reversed[i] \u003d\u003d text[|text| - 1 - i]\n\nProduce and show only the Dafny body of this method, including the curly braces that surround it. Do not show the signature nor contract. You must not use \u0027assume\u0027 nor \u0027expect\u0027 anywhere in your code."
+  },
+  {
+    "role": "assistant",
+    "content": "{\"method_body\":\"{\\n  reversed :\u003d \\\"\\\";\\n  var i :\u003d 0;\\n  while i \u003c |text|\\n    invariant 0 \u003c\u003d i \u003c\u003d |text|\\n    invariant |reversed| \u003d\u003d i\\n    invariant forall j :: 0 \u003c\u003d j \u003c i \u003d\u003d\u003e reversed[j] \u003d\u003d text[i - 1 - j]\\n  {\\n    assert 0 \u003c\u003d i \u003c |text|;\\n    var prev :\u003d reversed;\\n    reversed :\u003d text[i..i+1] + prev;\\n    assert |text[i..i+1]| \u003d\u003d 1;\\n    assert (text[i..i+1])[0] \u003d\u003d text[i];\\n    assert |reversed| \u003d\u003d i + 1;\\n\\n    forall j | 0 \u003c\u003d j \u003c i + 1\\n      ensures reversed[j] \u003d\u003d text[i - j]\\n    {\\n      if j \u003d\u003d 0 {\\n        assert reversed[j] \u003d\u003d (text[i..i+1])[0];\\n        assert (text[i..i+1])[0] \u003d\u003d text[i];\\n        assert i - j \u003d\u003d i;\\n        assert reversed[j] \u003d\u003d text[i - j];\\n      } else {\\n        assert 0 \u003c\u003d j - 1 \u003c i;\\n        assert reversed[j] \u003d\u003d prev[j - 1];\\n        assert prev[j - 1] \u003d\u003d text[i - 1 - (j - 1)];\\n        assert i - 1 - (j - 1) \u003d\u003d i - j;\\n        assert reversed[j] \u003d\u003d text[i - j];\\n      }\\n    }\\n\\n    i :\u003d i + 1;\\n  }\\n}\"}"
+  }
+]

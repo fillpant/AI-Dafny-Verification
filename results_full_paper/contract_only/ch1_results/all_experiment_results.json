@@ -1,0 +1,317 @@
+[
+  {
+    "experiment_name": "p_1_4_account_balance",
+    "outcome": "SUCCESS",
+    "usage": {
+      "tokensInput": 328,
+      "tokensOutput": 185,
+      "tokensTotal": 513,
+      "totalReasoningTokens": 118
+    },
+    "badResponses": 0,
+    "verificationAttempts": 1,
+    "resolutionAttempts": 1,
+    "softFailedResolutions": 0,
+    "hardFailedResolutions": 0,
+    "responsesWithAssume": 0,
+    "responsesWithExpect": 0,
+    "experimentTimings": {
+      "events": {
+        "Overall Experiment": {
+          "startTimeMs": 1780578969282,
+          "endTimeMs": 1780579010078,
+          "durationMs": 40796
+        },
+        "Iteration #1": {
+          "startTimeMs": 1780578969283,
+          "endTimeMs": 1780579010078,
+          "durationMs": 40795
+        }
+      }
+    }
+  },
+  {
+    "experiment_name": "p_1_5_box",
+    "outcome": "SUCCESS",
+    "usage": {
+      "tokensInput": 254,
+      "tokensOutput": 96,
+      "tokensTotal": 350,
+      "totalReasoningTokens": 56
+    },
+    "badResponses": 0,
+    "verificationAttempts": 1,
+    "resolutionAttempts": 1,
+    "softFailedResolutions": 0,
+    "hardFailedResolutions": 0,
+    "responsesWithAssume": 0,
+    "responsesWithExpect": 0,
+    "experimentTimings": {
+      "events": {
+        "Overall Experiment": {
+          "startTimeMs": 1780579014447,
+          "endTimeMs": 1780579087271,
+          "durationMs": 72824
+        },
+        "Iteration #1": {
+          "startTimeMs": 1780579014489,
+          "endTimeMs": 1780579087267,
+          "durationMs": 72778
+        }
+      }
+    }
+  },
+  {
+    "experiment_name": "p_1_1_greeting",
+    "outcome": "SUCCESS",
+    "usage": {
+      "tokensInput": 238,
+      "tokensOutput": 23,
+      "tokensTotal": 261,
+      "totalReasoningTokens": 0
+    },
+    "badResponses": 0,
+    "verificationAttempts": 1,
+    "resolutionAttempts": 1,
+    "softFailedResolutions": 0,
+    "hardFailedResolutions": 0,
+    "responsesWithAssume": 0,
+    "responsesWithExpect": 0,
+    "experimentTimings": {
+      "events": {
+        "Overall Experiment": {
+          "startTimeMs": 1780578818414,
+          "endTimeMs": 1780578864248,
+          "durationMs": 45834
+        },
+        "Iteration #1": {
+          "startTimeMs": 1780578818445,
+          "endTimeMs": 1780578864247,
+          "durationMs": 45802
+        }
+      }
+    }
+  },
+  {
+    "experiment_name": "p_1_6_large_letters",
+    "outcome": "SUCCESS",
+    "usage": {
+      "tokensInput": 400,
+      "tokensOutput": 204,
+      "tokensTotal": 604,
+      "totalReasoningTokens": 93
+    },
+    "badResponses": 0,
+    "verificationAttempts": 1,
+    "resolutionAttempts": 1,
+    "softFailedResolutions": 0,
+    "hardFailedResolutions": 0,
+    "responsesWithAssume": 0,
+    "responsesWithExpect": 0,
+    "experimentTimings": {
+      "events": {
+        "Overall Experiment": {
+          "startTimeMs": 1780579105759,
+          "endTimeMs": 1780579157555,
+          "durationMs": 51796
+        },
+        "Iteration #1": {
+          "startTimeMs": 1780579105788,
+          "endTimeMs": 1780579157554,
+          "durationMs": 51766
+        }
+      }
+    }
+  },
+  {
+    "experiment_name": "p_1_3_product",
+    "outcome": "SUCCESS",
+    "usage": {
+      "tokensInput": 348,
+      "tokensOutput": 541,
+      "tokensTotal": 889,
+      "totalReasoningTokens": 512
+    },
+    "badResponses": 0,
+    "verificationAttempts": 1,
+    "resolutionAttempts": 1,
+    "softFailedResolutions": 0,
+    "hardFailedResolutions": 0,
+    "responsesWithAssume": 0,
+    "responsesWithExpect": 0,
+    "experimentTimings": {
+      "events": {
+        "Overall Experiment": {
+          "startTimeMs": 1780578910348,
+          "endTimeMs": 1780578967792,
+          "durationMs": 57444
+        },
+        "Iteration #1": {
+          "startTimeMs": 1780578910521,
+          "endTimeMs": 1780578967791,
+          "durationMs": 57270
+        }
+      }
+    }
+  },
+  {
+    "experiment_name": "p_1_2_sum",
+    "outcome": "SUCCESS",
+    "usage": {
+      "tokensInput": 248,
+      "tokensOutput": 76,
+      "tokensTotal": 324,
+      "totalReasoningTokens": 42
+    },
+    "badResponses": 0,
+    "verificationAttempts": 1,
+    "resolutionAttempts": 1,
+    "softFailedResolutions": 0,
+    "hardFailedResolutions": 0,
+    "responsesWithAssume": 0,
+    "responsesWithExpect": 0,
+    "experimentTimings": {
+      "events": {
+        "Overall Experiment": {
+          "startTimeMs": 1780578865732,
+          "endTimeMs": 1780578904714,
+          "durationMs": 38982
+        },
+        "Iteration #1": {
+          "startTimeMs": 1780578865733,
+          "endTimeMs": 1780578904714,
+          "durationMs": 38981
+        }
+      }
+    }
+  },
+  {
+    "experiment_name": "p_1_9_house",
+    "outcome": "SUCCESS",
+    "usage": {
+      "tokensInput": 296,
+      "tokensOutput": 57,
+      "tokensTotal": 353,
+      "totalReasoningTokens": 0
+    },
+    "badResponses": 0,
+    "verificationAttempts": 1,
+    "resolutionAttempts": 1,
+    "softFailedResolutions": 0,
+    "hardFailedResolutions": 0,
+    "responsesWithAssume": 0,
+    "responsesWithExpect": 0,
+    "experimentTimings": {
+      "events": {
+        "Overall Experiment": {
+          "startTimeMs": 1780579267850,
+          "endTimeMs": 1780579299707,
+          "durationMs": 31857
+        },
+        "Iteration #1": {
+          "startTimeMs": 1780579267854,
+          "endTimeMs": 1780579299707,
+          "durationMs": 31853
+        }
+      }
+    }
+  },
+  {
+    "experiment_name": "p_1_7_face",
+    "outcome": "SUCCESS",
+    "usage": {
+      "tokensInput": 300,
+      "tokensOutput": 443,
+      "tokensTotal": 743,
+      "totalReasoningTokens": 372
+    },
+    "badResponses": 0,
+    "verificationAttempts": 1,
+    "resolutionAttempts": 1,
+    "softFailedResolutions": 0,
+    "hardFailedResolutions": 0,
+    "responsesWithAssume": 0,
+    "responsesWithExpect": 0,
+    "experimentTimings": {
+      "events": {
+        "Overall Experiment": {
+          "startTimeMs": 1780579162148,
+          "endTimeMs": 1780579202189,
+          "durationMs": 40041
+        },
+        "Iteration #1": {
+          "startTimeMs": 1780579162217,
+          "endTimeMs": 1780579202189,
+          "durationMs": 39972
+        }
+      }
+    }
+  },
+  {
+    "experiment_name": "p_1_10_animal_speaking",
+    "outcome": "SUCCESS",
+    "usage": {
+      "tokensInput": 1115,
+      "tokensOutput": 7967,
+      "tokensTotal": 9082,
+      "totalReasoningTokens": 7676
+    },
+    "badResponses": 0,
+    "verificationAttempts": 2,
+    "resolutionAttempts": 2,
+    "softFailedResolutions": 0,
+    "hardFailedResolutions": 0,
+    "responsesWithAssume": 0,
+    "responsesWithExpect": 0,
+    "experimentTimings": {
+      "events": {
+        "Overall Experiment": {
+          "startTimeMs": 1780579304333,
+          "endTimeMs": 1780579553735,
+          "durationMs": 249402
+        },
+        "Iteration #1": {
+          "startTimeMs": 1780579304334,
+          "endTimeMs": 1780579432309,
+          "durationMs": 127975
+        },
+        "Iteration #2": {
+          "startTimeMs": 1780579432312,
+          "endTimeMs": 1780579553734,
+          "durationMs": 121422
+        }
+      }
+    }
+  },
+  {
+    "experiment_name": "p_1_8_painting",
+    "outcome": "SUCCESS",
+    "usage": {
+      "tokensInput": 378,
+      "tokensOutput": 493,
+      "tokensTotal": 871,
+      "totalReasoningTokens": 398
+    },
+    "badResponses": 0,
+    "verificationAttempts": 1,
+    "resolutionAttempts": 1,
+    "softFailedResolutions": 0,
+    "hardFailedResolutions": 0,
+    "responsesWithAssume": 0,
+    "responsesWithExpect": 0,
+    "experimentTimings": {
+      "events": {
+        "Overall Experiment": {
+          "startTimeMs": 1780579206875,
+          "endTimeMs": 1780579265999,
+          "durationMs": 59124
+        },
+        "Iteration #1": {
+          "startTimeMs": 1780579206883,
+          "endTimeMs": 1780579265999,
+          "durationMs": 59116
+        }
+      }
+    }
+  }
+]

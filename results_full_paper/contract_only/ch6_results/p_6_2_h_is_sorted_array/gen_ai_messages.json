@@ -1,0 +1,49 @@
+[
+  {
+    "message": {
+      "role": "user",
+      "content": "You are given the following task to perform in Dafny:\n\nWrite a method to satisfy the below requirements.\n\nThe signature should be:\n\np_6_2_h_is_sorted_array(inputs: array\u003cint\u003e) returns (is_sorted: bool)\n\nThe method should respect the following contract:\n\nensures is_sorted \u003d\u003d (forall i :: 0 \u003c\u003d i \u003c inputs.Length - 1 \u003d\u003d\u003e inputs[i] \u003c\u003d inputs[i + 1])\n\nProduce and show only the Dafny body of this method, including the curly braces that surround it. Do not show the signature nor contract. You must not use \u0027assume\u0027 nor \u0027expect\u0027 anywhere in your code."
+    }
+  },
+  {
+    "message": {
+      "role": "assistant",
+      "content": "{\"method_body\":\"{\\n  var i :\u003d 0;\\n  while i \u003c inputs.Length - 1\\n    invariant 0 \u003c\u003d i \u003c\u003d inputs.Length\\n    invariant forall j :: 0 \u003c\u003d j \u003c i \u0026\u0026 j + 1 \u003c inputs.Length \u003d\u003d\u003e inputs[j] \u003c\u003d inputs[j + 1]\\n  {\\n    if inputs[i] \u003e inputs[i + 1] {\\n      is_sorted :\u003d false;\\n      assert 0 \u003c\u003d i \u003c inputs.Length - 1;\\n      assert !(forall j :: 0 \u003c\u003d j \u003c inputs.Length - 1 \u003d\u003d\u003e inputs[j] \u003c\u003d inputs[j + 1]) by {\\n        if forall j :: 0 \u003c\u003d j \u003c inputs.Length - 1 \u003d\u003d\u003e inputs[j] \u003c\u003d inputs[j + 1] {\\n          assert inputs[i] \u003c\u003d inputs[i + 1];\\n          assert false;\\n        }\\n      }\\n      return;\\n    }\\n\\n    var old_i :\u003d i;\\n    assert inputs[old_i] \u003c\u003d inputs[old_i + 1];\\n    i :\u003d i + 1;\\n    assert forall j :: 0 \u003c\u003d j \u003c i \u0026\u0026 j + 1 \u003c inputs.Length \u003d\u003d\u003e inputs[j] \u003c\u003d inputs[j + 1] by {\\n      forall j | 0 \u003c\u003d j \u003c i \u0026\u0026 j + 1 \u003c inputs.Length\\n        ensures inputs[j] \u003c\u003d inputs[j + 1]\\n      {\\n        if j \u003d\u003d old_i {\\n          assert inputs[j] \u003c\u003d inputs[j + 1];\\n        } else {\\n          assert j \u003c old_i;\\n          assert inputs[j] \u003c\u003d inputs[j + 1];\\n        }\\n      }\\n    }\\n  }\\n\\n  is_sorted :\u003d true;\\n  assert forall j :: 0 \u003c\u003d j \u003c inputs.Length - 1 \u003d\u003d\u003e inputs[j] \u003c\u003d inputs[j + 1] by {\\n    forall j | 0 \u003c\u003d j \u003c inputs.Length - 1\\n      ensures inputs[j] \u003c\u003d inputs[j + 1]\\n    {\\n      assert !(i \u003c inputs.Length - 1);\\n      assert inputs.Length - 1 \u003c\u003d i;\\n      assert j \u003c i;\\n      assert j + 1 \u003c inputs.Length;\\n      assert inputs[j] \u003c\u003d inputs[j + 1];\\n    }\\n  }\\n}\"}",
+      "annotations": []
+    },
+    "openAIResponseDetails": {
+      "id": "chatcmpl-DnO4t0Vwge1bCJTI3vgBJJ52ZtgaA",
+      "object": "chat.completion",
+      "created": 1780662999,
+      "model": "gpt-5.5-2026-04-23",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"method_body\":\"{\\n  var i :\u003d 0;\\n  while i \u003c inputs.Length - 1\\n    invariant 0 \u003c\u003d i \u003c\u003d inputs.Length\\n    invariant forall j :: 0 \u003c\u003d j \u003c i \u0026\u0026 j + 1 \u003c inputs.Length \u003d\u003d\u003e inputs[j] \u003c\u003d inputs[j + 1]\\n  {\\n    if inputs[i] \u003e inputs[i + 1] {\\n      is_sorted :\u003d false;\\n      assert 0 \u003c\u003d i \u003c inputs.Length - 1;\\n      assert !(forall j :: 0 \u003c\u003d j \u003c inputs.Length - 1 \u003d\u003d\u003e inputs[j] \u003c\u003d inputs[j + 1]) by {\\n        if forall j :: 0 \u003c\u003d j \u003c inputs.Length - 1 \u003d\u003d\u003e inputs[j] \u003c\u003d inputs[j + 1] {\\n          assert inputs[i] \u003c\u003d inputs[i + 1];\\n          assert false;\\n        }\\n      }\\n      return;\\n    }\\n\\n    var old_i :\u003d i;\\n    assert inputs[old_i] \u003c\u003d inputs[old_i + 1];\\n    i :\u003d i + 1;\\n    assert forall j :: 0 \u003c\u003d j \u003c i \u0026\u0026 j + 1 \u003c inputs.Length \u003d\u003d\u003e inputs[j] \u003c\u003d inputs[j + 1] by {\\n      forall j | 0 \u003c\u003d j \u003c i \u0026\u0026 j + 1 \u003c inputs.Length\\n        ensures inputs[j] \u003c\u003d inputs[j + 1]\\n      {\\n        if j \u003d\u003d old_i {\\n          assert inputs[j] \u003c\u003d inputs[j + 1];\\n        } else {\\n          assert j \u003c old_i;\\n          assert inputs[j] \u003c\u003d inputs[j + 1];\\n        }\\n      }\\n    }\\n  }\\n\\n  is_sorted :\u003d true;\\n  assert forall j :: 0 \u003c\u003d j \u003c inputs.Length - 1 \u003d\u003d\u003e inputs[j] \u003c\u003d inputs[j + 1] by {\\n    forall j | 0 \u003c\u003d j \u003c inputs.Length - 1\\n      ensures inputs[j] \u003c\u003d inputs[j + 1]\\n    {\\n      assert !(i \u003c inputs.Length - 1);\\n      assert inputs.Length - 1 \u003c\u003d i;\\n      assert j \u003c i;\\n      assert j + 1 \u003c inputs.Length;\\n      assert inputs[j] \u003c\u003d inputs[j + 1];\\n    }\\n  }\\n}\"}",
+            "annotations": []
+          },
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 296,
+        "completion_tokens": 3530,
+        "total_tokens": 3826,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "audio_tokens": 0
+        },
+        "completion_tokens_details": {
+          "cached_tokens": 0,
+          "reasoning_tokens": 2997,
+          "audio_tokens": 0,
+          "accepted_prediction_tokens": 0,
+          "rejected_prediction_tokens": 0
+        }
+      },
+      "service_tier": "default"
+    }
+  }
+]

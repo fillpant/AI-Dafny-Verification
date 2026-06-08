@@ -1,0 +1,56 @@
+[03/06/26 13:14:31.283] [Experiment 'p_3_6_parametrised_order'] [INFO]: Experiment created.
+[03/06/26 13:14:31.283] [Experiment 'p_3_6_parametrised_order'] [INFO]: Experiment started.
+[03/06/26 13:14:31.284] [Experiment 'p_3_6_parametrised_order'] [INFO]: Using initial prompt: You are given the following task to perform in Dafny:
+
+Write a method that takes three numbers and returns "increasing" if they are in increasing order, "decreasing" if they are in decreasing order, and "neither" otherwise. A Boolean parameter triggers the method to be "strict" or "lenient". In lenient mode, the sequence 3 4 4 is increasing and the sequence 4 4 4 is both increasing and decreasing.
+
+The signature should be:
+
+p_3_6_parametrised_order (i: int, j: int, k: int, strict: bool ) returns (s: string)
+
+The method should respect the following contract:
+
+ensures if strict then if i < j < k then s == "increasing" else if i > j && j > k then s == "decreasing" else s == "neither" else if i <= j <= k then if i == j == k then s == "increasing and decreasing" else s == "increasing" else if i >= j && j >= k then s == "decreasing" else s == "neither"
+
+Produce and show only the Dafny body of this method, including the curly braces that surround it. Do not show the signature nor contract. You must not use 'assume' nor 'expect' anywhere in your code.
+[03/06/26 13:14:31.284] [Experiment 'p_3_6_parametrised_order'] [INFO]: There are 30000 left in the jar, for the rest of this experiment.
+[03/06/26 13:14:31.284] [Experiment 'p_3_6_parametrised_order'] [INFO]: Querrying GenAI...
+[03/06/26 13:14:31.285] [Experiment 'p_3_6_parametrised_order'] [FINE]: Constructing message for GenAI
+[03/06/26 13:14:31.285] [Experiment 'p_3_6_parametrised_order'] [INFO]: Context is on, attaching 1 previous messages in the request to GenAI.
+[03/06/26 13:14:31.285] [Experiment 'p_3_6_parametrised_order'] [INFO]: A reasoning model is chosen, but no reasoning effort value is set. Setting reasoning to 'medium'
+[03/06/26 13:14:31.286] [Experiment 'p_3_6_parametrised_order'] [FINE]: Setting max tokens for the request to 30000
+[03/06/26 13:14:31.287] [Experiment 'p_3_6_parametrised_order'] [FINE]: Using model gpt-5.5. Awaiting response...
+[03/06/26 13:14:42.857] [Experiment 'p_3_6_parametrised_order'] [FINE]: Got response with 477 characters.
+[03/06/26 13:14:42.859] [Experiment 'p_3_6_parametrised_order'] [FINE]: Saving gen_ai_messages.json
+[03/06/26 13:14:42.859] [Experiment 'p_3_6_parametrised_order'] [FINE]: Saved 3764 characters to file gen_ai_messages.json
+[03/06/26 13:14:42.859] [Experiment 'p_3_6_parametrised_order'] [FINE]: Saving gen_ai_messages_simple.json
+[03/06/26 13:14:42.860] [Experiment 'p_3_6_parametrised_order'] [FINE]: Saved 2082 characters to file gen_ai_messages_simple.json
+[03/06/26 13:14:42.860] [Experiment 'p_3_6_parametrised_order'] [INFO]: Converting GenAI response to a program...
+[03/06/26 13:14:42.860] [Experiment 'p_3_6_parametrised_order'] [INFO]: Treating GenAIs response as a partial method, not a complete program (Since, the problem spec has a method signature).
+[03/06/26 13:14:42.861] [Experiment 'p_3_6_parametrised_order'] [FINE]: Saving program.dfy
+[03/06/26 13:14:42.861] [Experiment 'p_3_6_parametrised_order'] [FINE]: Saved 810 characters to file program.dfy
+[03/06/26 13:14:42.861] [Experiment 'p_3_6_parametrised_order'] [INFO]: Context is treated as being fully enabled, meaning that subsequent prompts do not include the full code.
+[03/06/26 13:14:42.861] [Experiment 'p_3_6_parametrised_order'] [INFO]: Checking the code for the presence of the 'assume' or 'expect' keyword...
+[03/06/26 13:14:42.862] [Experiment 'p_3_6_parametrised_order'] [INFO]: Calling dafny to resolve the generated code...
+[03/06/26 13:14:44.004] [Experiment 'p_3_6_parametrised_order'] [INFO]: Program exited with code 0
+[03/06/26 13:14:44.004] [Experiment 'p_3_6_parametrised_order'] [INFO]: Program stdout: 
+Dafny program verifier did not attempt verification
+[03/06/26 13:14:44.004] [Experiment 'p_3_6_parametrised_order'] [INFO]: Calling dafny to resolve the generated code, but with warnings allowed...
+[03/06/26 13:14:45.096] [Experiment 'p_3_6_parametrised_order'] [INFO]: Program exited with code 0
+[03/06/26 13:14:45.096] [Experiment 'p_3_6_parametrised_order'] [INFO]: Program stdout: 
+Dafny program verifier did not attempt verification
+[03/06/26 13:14:45.096] [Experiment 'p_3_6_parametrised_order'] [INFO]: Resolution passes without warnings.
+[03/06/26 13:14:45.097] [Experiment 'p_3_6_parametrised_order'] [INFO]: Dafny resolution check passed.
+[03/06/26 13:14:45.097] [Experiment 'p_3_6_parametrised_order'] [INFO]: Calling dafny to verify the generated code...
+[03/06/26 13:14:47.246] [Experiment 'p_3_6_parametrised_order'] [INFO]: Program exited with code 0
+[03/06/26 13:14:47.246] [Experiment 'p_3_6_parametrised_order'] [INFO]: Program stdout: 
+Dafny program verifier finished with 1 verified, 0 errors
+[03/06/26 13:14:47.247] [Experiment 'p_3_6_parametrised_order'] [INFO]: Dafny verification check passed.
+[03/06/26 13:14:47.247] [Experiment 'p_3_6_parametrised_order'] [INFO]: Experiment finished.
+[03/06/26 13:14:47.247] [Experiment 'p_3_6_parametrised_order'] [FINE]: Saving gen_ai_messages.json
+[03/06/26 13:14:47.248] [Experiment 'p_3_6_parametrised_order'] [FINE]: Saved 3764 characters to file gen_ai_messages.json
+[03/06/26 13:14:47.248] [Experiment 'p_3_6_parametrised_order'] [FINE]: Saving gen_ai_messages_simple.json
+[03/06/26 13:14:47.252] [Experiment 'p_3_6_parametrised_order'] [FINE]: Saved 2082 characters to file gen_ai_messages_simple.json
+[03/06/26 13:14:47.253] [Experiment 'p_3_6_parametrised_order'] [FINE]: Saving experiment_result.json
+[03/06/26 13:14:47.253] [Experiment 'p_3_6_parametrised_order'] [FINE]: Saved 670 characters to file experiment_result.json
+[03/06/26 13:14:48.099] [Experiment 'p_3_6_parametrised_order'] [INFO]: Compilation of experiment report tex file successful

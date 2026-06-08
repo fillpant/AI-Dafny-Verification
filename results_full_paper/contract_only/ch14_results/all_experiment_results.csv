@@ -1,0 +1,9 @@
+Experiment,Outcome,Input tokens, Output tokens, Total reasoning tokens,Total tokens,Bad response cnt,Verification attempts,Resolution attempts,Soft-failed resolution cnt,Hard-failed resolution cnt,Responses with 'assume',Experiment time (ms),Iteration 1 time (ms),Iteration 2 time (ms),Iteration 3 time (ms),Iteration 4 time (ms),Iteration 5 time (ms),Iteration 6 time (ms),Iteration 7 time (ms),Iteration 8 time (ms)
+p_14_1_selection_sort_desc_array,SUCCESS,2245,16203,13130,18448,0,2,2,0,0,0,389006,229364,159587,,,,,,
+p_14_1_selection_sort_desc_seq,SUCCESS,308,7362,5725,7670,0,1,1,0,0,0,153781,153770,,,,,,,
+p_14_2_selection_sort_interval_array,SUCCESS,358,10107,8475,10465,0,1,1,0,0,0,230998,230996,,,,,,,
+p_14_2_selection_sort_interval_seq,SUCCESS,358,7439,6143,7797,0,1,1,0,0,0,148534,148508,,,,,,,
+p_14_4_merge_sort_lexicographic_array,FAILURE_VERIFY,10126,24839,20505,34965,1,3,3,0,0,0,671341,213619,196104,226775,34823,,,,
+p_14_4_merge_sort_lexicographic_seq,FAILURE_VERIFY,15221,19727,16509,34948,1,2,4,0,2,0,586635,53531,57801,67967,241804,165527,,,
+p_14_7_bubble_sort_array,FAILURE_RESOLVE,23990,16047,10203,40037,1,0,3,0,3,0,342822,173804,70533,74911,23559,,,,
+p_14_7_bubble_sort_seq,SUCCESS,6832,13151,9535,19983,0,2,3,0,1,0,353598,132338,93494,127547,,,,,

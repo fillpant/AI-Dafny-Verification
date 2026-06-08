@@ -1,0 +1,67 @@
+[04/06/26 13:21:31.833] [Experiment 'p_6_2_f_move_even_to_front_array'] [INFO]: Experiment created.
+[04/06/26 13:21:31.837] [Experiment 'p_6_2_f_move_even_to_front_array'] [INFO]: Experiment started.
+[04/06/26 13:21:31.854] [Experiment 'p_6_2_f_move_even_to_front_array'] [INFO]: Using initial prompt: You are given the following task to perform in Dafny:
+
+Write a method to move all even elements in an array to the front, otherwise preserving the order of the elements.
+
+The signature should be:
+
+p_6_2_f_move_even_to_front_array(inputs: array<int>) returns (result: array<int>)
+
+The method should respect the following contract:
+
+ensures result[..] == evens(inputs[..]) + odds(inputs[..])
+
+The contract uses the following dafny code:
+
+function evens(s: seq<int>): seq<int>
+{
+  if |s| == 0 then []
+  else if s[0] % 2 == 0
+       then [s[0]] + evens(s[1..])
+       else evens(s[1..])
+}
+
+function odds(s: seq<int>): seq<int>
+{
+  if |s| == 0 then []
+  else if s[0] % 2 != 0
+       then [s[0]] + odds(s[1..])
+       else odds(s[1..])
+}
+
+These function(s) must not be used in your implementation of the method.
+
+Produce and show only the Dafny body of this method, including the curly braces that surround it. Do not show the signature nor contract. You must not use 'assume' nor 'expect' anywhere in your code.
+[04/06/26 13:21:31.865] [Experiment 'p_6_2_f_move_even_to_front_array'] [INFO]: There are 30000 left in the jar, for the rest of this experiment.
+[04/06/26 13:21:31.865] [Experiment 'p_6_2_f_move_even_to_front_array'] [INFO]: Querrying GenAI...
+[04/06/26 13:21:31.865] [Experiment 'p_6_2_f_move_even_to_front_array'] [FINE]: Constructing message for GenAI
+[04/06/26 13:21:31.865] [Experiment 'p_6_2_f_move_even_to_front_array'] [INFO]: Context is on, attaching 1 previous messages in the request to GenAI.
+[04/06/26 13:21:31.865] [Experiment 'p_6_2_f_move_even_to_front_array'] [INFO]: A reasoning model is chosen, but no reasoning effort value is set. Setting reasoning to 'medium'
+[04/06/26 13:21:31.865] [Experiment 'p_6_2_f_move_even_to_front_array'] [FINE]: Setting max tokens for the request to 30000
+[04/06/26 13:21:31.866] [Experiment 'p_6_2_f_move_even_to_front_array'] [FINE]: Using model gpt-5.5. Awaiting response...
+[04/06/26 13:21:32.539] [Experiment 'p_6_2_f_move_even_to_front_array'] [SEVERE]: Experiment terminated exceptionally
+java.util.concurrent.ExecutionException: java.lang.IllegalStateException: Got HTTP code 429 with body {
+    "error": {
+        "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "insufficient_quota"
+    }
+}
+
+	-> java.base/java.util.concurrent.CompletableFuture.wrapInExecutionException(CompletableFuture.java:345)
+	-> java.base/java.util.concurrent.CompletableFuture.reportGet(CompletableFuture.java:440)
+	-> java.base/java.util.concurrent.CompletableFuture.get(CompletableFuture.java:2094)
+	-> click.nullpointer.genaidafny.dafny.experiments.DafnyExperiment.generateResponse(DafnyExperiment.java:386)
+	-> click.nullpointer.genaidafny.dafny.experiments.DafnyExperiment.execute(DafnyExperiment.java:118)
+	-> click.nullpointer.genaidafny.Main.processAllProblems(Main.java:172)
+	-> click.nullpointer.genaidafny.Main.main(Main.java:54)
+
+[04/06/26 13:21:32.540] [Experiment 'p_6_2_f_move_even_to_front_array'] [FINE]: Saving gen_ai_messages.json
+[04/06/26 13:21:32.540] [Experiment 'p_6_2_f_move_even_to_front_array'] [FINE]: Saved 1239 characters to file gen_ai_messages.json
+[04/06/26 13:21:32.602] [Experiment 'p_6_2_f_move_even_to_front_array'] [FINE]: Saving gen_ai_messages_simple.json
+[04/06/26 13:21:32.690] [Experiment 'p_6_2_f_move_even_to_front_array'] [FINE]: Saved 1212 characters to file gen_ai_messages_simple.json
+[04/06/26 13:21:32.714] [Experiment 'p_6_2_f_move_even_to_front_array'] [FINE]: Saving experiment_result.json
+[04/06/26 13:21:32.715] [Experiment 'p_6_2_f_move_even_to_front_array'] [FINE]: Saved 658 characters to file experiment_result.json
+[04/06/26 13:21:35.976] [Experiment 'p_6_2_f_move_even_to_front_array'] [INFO]: Compilation of experiment report tex file successful

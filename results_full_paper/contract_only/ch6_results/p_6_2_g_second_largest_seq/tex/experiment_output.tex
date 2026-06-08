@@ -1,0 +1,343 @@
+\documentclass{article}
+\usepackage{lmodern}
+\usepackage{amsmath}
+\usepackage{listings}
+\usepackage{fullpage}
+\usepackage{parskip}
+\usepackage{xcolor}
+\lstset{
+	basicstyle=\ttfamily,
+	columns=fullflexible,
+	frame=single,
+	breaklines=true,
+	postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},
+}
+\begin{document}
+\title{Experiment `p\_6\_2\_g\_second\_largest\_seq' Results}
+\author{\today}
+\date{}
+\maketitle
+\textbf{Experiment outcome: }SUCCESS
+\\\textbf{Bad responses: }0
+\\\textbf{Responses containing}~\texttt{assume}~\textbf{: }0
+\\\textbf{Responses containing}~\texttt{expect}~\textbf{: }0
+\\\textbf{Resolution attempts: }2
+\\\textbf{Hard fails (resolution): }0
+\\\textbf{Soft fails (resolution): }1
+\\\textbf{Verification attempts: }1
+\section*{Problem Specification}
+\textbf{Problem name: }p\_6\_2\_g\_second\_largest\_seq
+\\\textbf{Natural language statement: }null
+\\\textbf{Method signature: }p\_6\_2\_g\_second\_largest\_seq(inputs: seq<int>) returns (second\_largest: int)
+\subsection*{Ensures}
+\begin{itemize}
+\item \texttt{second\_largest <= find\_largest(inputs)}
+\item \texttt{forall x :: x in inputs ==> x < find\_largest(inputs) ==> x <= second\_largest}
+\end{itemize}
+\subsection*{Requires}
+\begin{itemize}
+\item \texttt{|inputs| >= 2}
+\end{itemize}
+\subsection*{Functional Code Given}
+\begin{lstlisting}
+function find_largest(inputs: seq<int>): (ret: int)
+  requires |inputs| >= 1
+  ensures forall x :: x in inputs ==> x <= ret
+{
+  if |inputs| == 1 then inputs[0]
+  else 
+    assert 2 <= |inputs|;
+    var rest_largest := find_largest(inputs[1..]);
+    var ret: int := if inputs[0] >= rest_largest then inputs[0] else rest_largest;
+    assert inputs == [inputs[0]] + inputs[1..]; 
+    ret 
+} 
+\end{lstlisting}
+\clearpage
+\section*{GenAI interactions}
+Below you will find all interactions between the `user' (program) and the `assistant' (OpenAI).
+\subsection*{Program $\rightarrow$ GenAI}
+\begin{lstlisting}
+You are given the following task to perform in Dafny:
+
+Write a method to satisfy the below requirements.
+
+The signature should be:
+
+p_6_2_g_second_largest_seq(inputs: seq<int>) returns (second_largest: int)
+
+The method should respect the following contract:
+
+requires |inputs| >= 2, ensures second_largest <= find_largest(inputs), ensures forall x :: x in inputs ==> x < find_largest(inputs) ==> x <= second_largest
+
+The contract uses the following dafny code:
+
+function find_largest(inputs: seq<int>): (ret: int)
+  requires |inputs| >= 1
+  ensures forall x :: x in inputs ==> x <= ret
+{
+  if |inputs| == 1 then inputs[0]
+  else 
+    assert 2 <= |inputs|;
+    var rest_largest := find_largest(inputs[1..]);
+    var ret: int := if inputs[0] >= rest_largest then inputs[0] else rest_largest;
+    assert inputs == [inputs[0]] + inputs[1..]; 
+    ret 
+} 
+
+These function(s) must not be used in your implementation of the method.
+
+Produce and show only the Dafny body of this method, including the curly braces that surround it. Do not show the signature nor contract. You must not use 'assume' nor 'expect' anywhere in your code.
+\end{lstlisting}
+\subsection*{GenAI $\rightarrow$ Program}
+\textbf{System fingerprint: }null
+\\\textbf{ID: }chatcmpl-DnNz2RdfX6wjy2fPFsgtxnckoWpai
+\\\textbf{Model: }gpt-5.5-2026-04-23
+\\\textbf{Created at: }1780662636
+\\\textbf{Finish reason: }stop
+\\\textbf{Usage: }610 tokens in, and 3626 tokens out
+\begin{lstlisting}
+{
+  var i := 1;
+  second_largest := inputs[0];
+
+  while i < |inputs|
+    invariant 1 <= i <= |inputs|
+    invariant second_largest in inputs[..i]
+    invariant forall x :: x in inputs[..i] ==> x <= second_largest
+    decreases |inputs| - i
+  {
+    var oldSecond := second_largest;
+
+    if inputs[i] > oldSecond {
+      second_largest := inputs[i];
+    }
+
+    assert inputs[..i + 1] == inputs[..i] + [inputs[i]];
+
+    assert second_largest in inputs[..i + 1] by {
+      if inputs[i] > oldSecond {
+        assert second_largest == inputs[i];
+        assert second_largest in [inputs[i]];
+        assert second_largest in inputs[..i] + [inputs[i]];
+      } else {
+        assert second_largest == oldSecond;
+        assert second_largest in inputs[..i];
+        assert second_largest in inputs[..i] + [inputs[i]];
+      }
+    }
+
+    assert forall x :: x in inputs[..i + 1] ==> x <= second_largest by {
+      forall x | x in inputs[..i + 1]
+        ensures x <= second_largest
+      {
+        assert x in inputs[..i] + [inputs[i]];
+        if x in inputs[..i] {
+          assert x <= oldSecond;
+          if inputs[i] > oldSecond {
+            assert oldSecond < second_largest;
+          } else {
+            assert second_largest == oldSecond;
+          }
+        } else {
+          assert x in [inputs[i]];
+          assert x == inputs[i];
+          if inputs[i] > oldSecond {
+            assert second_largest == inputs[i];
+          } else {
+            assert second_largest == oldSecond;
+            assert inputs[i] <= second_largest;
+          }
+        }
+      }
+    }
+
+    i := i + 1;
+  }
+
+  assert inputs[..i] == inputs;
+  assert second_largest in inputs;
+  assert forall x :: x in inputs ==> x <= second_largest;
+}
+\end{lstlisting}
+\subsection*{Program $\rightarrow$ GenAI}
+\begin{lstlisting}
+When using dafny resolve, the below error is emitted and resolve fails:
+
+problem_data/p_6_2_g_second_largest_seq/program.dfy(48,11): Warning: Could not find a trigger for this quantifier. Without a trigger, the quantifier may cause brittle verification. To silence this warning, add an explicit trigger using the {:trigger} attribute. For more information, see the section on quantifier instantiation rules in the reference manual.
+   |
+48 |     assert forall x :: x in inputs[..i + 1] ==> x <= second_largest by {
+   |            ^^^^^^
+
+problem_data/p_6_2_g_second_largest_seq/program.dfy(49,6): Warning: Could not find a trigger for this quantifier. Without a trigger, the quantifier may cause brittle verification. To silence this warning, add an explicit trigger using the {:trigger} attribute. For more information, see the section on quantifier instantiation rules in the reference manual.
+   |
+49 |       forall x | x in inputs[..i + 1]
+   |       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Compilation failed because warnings were found and --allow-warnings is false
+
+Correct the error in code by altering only the method body. Produce and show only the Dafny body, including the curly braces that surround it. Do not show the signature nor contract. You must not use 'assume' nor 'expect' anywhere in your code.
+\end{lstlisting}
+\subsection*{GenAI $\rightarrow$ Program}
+\textbf{System fingerprint: }null
+\\\textbf{ID: }chatcmpl-DnO0WsGDimYKXiHQGmhgHNXpMAMx9
+\\\textbf{Model: }gpt-5.5-2026-04-23
+\\\textbf{Created at: }1780662728
+\\\textbf{Finish reason: }stop
+\\\textbf{Usage: }1442 tokens in, and 1590 tokens out
+\begin{lstlisting}
+{
+  var i := 1;
+  second_largest := inputs[0];
+
+  while i < |inputs|
+    invariant 1 <= i <= |inputs|
+    invariant second_largest in inputs[..i]
+    invariant forall x {:trigger x in inputs[..i]} :: x in inputs[..i] ==> x <= second_largest
+    decreases |inputs| - i
+  {
+    var oldSecond := second_largest;
+
+    if inputs[i] > oldSecond {
+      second_largest := inputs[i];
+    }
+
+    assert inputs[..i + 1] == inputs[..i] + [inputs[i]];
+
+    assert second_largest in inputs[..i + 1] by {
+      if inputs[i] > oldSecond {
+        assert second_largest == inputs[i];
+        assert second_largest in [inputs[i]];
+        assert second_largest in inputs[..i] + [inputs[i]];
+      } else {
+        assert second_largest == oldSecond;
+        assert second_largest in inputs[..i];
+        assert second_largest in inputs[..i] + [inputs[i]];
+      }
+    }
+
+    assert forall x {:trigger x in inputs[..i + 1]} :: x in inputs[..i + 1] ==> x <= second_largest by {
+      forall x {:trigger x in inputs[..i + 1]} | x in inputs[..i + 1]
+        ensures x <= second_largest
+      {
+        assert x in inputs[..i] + [inputs[i]];
+        if x in inputs[..i] {
+          assert x <= oldSecond;
+          if inputs[i] > oldSecond {
+            assert oldSecond < second_largest;
+          } else {
+            assert second_largest == oldSecond;
+          }
+        } else {
+          assert x in [inputs[i]];
+          assert x == inputs[i];
+          if inputs[i] > oldSecond {
+            assert second_largest == inputs[i];
+          } else {
+            assert second_largest == oldSecond;
+            assert inputs[i] <= second_largest;
+          }
+        }
+      }
+    }
+
+    i := i + 1;
+  }
+
+  assert inputs[..i] == inputs;
+  assert second_largest in inputs;
+  assert forall x {:trigger x in inputs} :: x in inputs ==> x <= second_largest;
+}
+\end{lstlisting}
+\section*{Final Program}
+\begin{lstlisting}
+function find_largest(inputs: seq<int>): (ret: int)
+  requires |inputs| >= 1
+  ensures forall x :: x in inputs ==> x <= ret
+{
+  if |inputs| == 1 then inputs[0]
+  else 
+    assert 2 <= |inputs|;
+    var rest_largest := find_largest(inputs[1..]);
+    var ret: int := if inputs[0] >= rest_largest then inputs[0] else rest_largest;
+    assert inputs == [inputs[0]] + inputs[1..]; 
+    ret 
+} 
+
+method p_6_2_g_second_largest_seq(inputs: seq<int>) returns (second_largest: int)
+	requires |inputs| >= 2
+	ensures second_largest <= find_largest(inputs)
+	ensures forall x :: x in inputs ==> x < find_largest(inputs) ==> x <= second_largest
+{
+  var i := 1;
+  second_largest := inputs[0];
+
+  while i < |inputs|
+    invariant 1 <= i <= |inputs|
+    invariant second_largest in inputs[..i]
+    invariant forall x {:trigger x in inputs[..i]} :: x in inputs[..i] ==> x <= second_largest
+    decreases |inputs| - i
+  {
+    var oldSecond := second_largest;
+
+    if inputs[i] > oldSecond {
+      second_largest := inputs[i];
+    }
+
+    assert inputs[..i + 1] == inputs[..i] + [inputs[i]];
+
+    assert second_largest in inputs[..i + 1] by {
+      if inputs[i] > oldSecond {
+        assert second_largest == inputs[i];
+        assert second_largest in [inputs[i]];
+        assert second_largest in inputs[..i] + [inputs[i]];
+      } else {
+        assert second_largest == oldSecond;
+        assert second_largest in inputs[..i];
+        assert second_largest in inputs[..i] + [inputs[i]];
+      }
+    }
+
+    assert forall x {:trigger x in inputs[..i + 1]} :: x in inputs[..i + 1] ==> x <= second_largest by {
+      forall x {:trigger x in inputs[..i + 1]} | x in inputs[..i + 1]
+        ensures x <= second_largest
+      {
+        assert x in inputs[..i] + [inputs[i]];
+        if x in inputs[..i] {
+          assert x <= oldSecond;
+          if inputs[i] > oldSecond {
+            assert oldSecond < second_largest;
+          } else {
+            assert second_largest == oldSecond;
+          }
+        } else {
+          assert x in [inputs[i]];
+          assert x == inputs[i];
+          if inputs[i] > oldSecond {
+            assert second_largest == inputs[i];
+          } else {
+            assert second_largest == oldSecond;
+            assert inputs[i] <= second_largest;
+          }
+        }
+      }
+    }
+
+    i := i + 1;
+  }
+
+  assert inputs[..i] == inputs;
+  assert second_largest in inputs;
+  assert forall x {:trigger x in inputs} :: x in inputs ==> x <= second_largest;
+}
+\end{lstlisting}
+\section*{Total Token Usage}
+\textbf{Input tokens: }2052
+\\\textbf{Output tokens: }5216
+\\\textbf{Reasoning tokens: }4098
+\\\textbf{Sum of `total tokens': }7268
+\section*{Experiment Timings}
+\textbf{Overall Experiment} started at 1780662635936, ended at 1780662775524, lasting 139588ms (139.59 seconds)
+\\\textbf{Iteration \#1} started at 1780662635940, ended at 1780662724676, lasting 88736ms (88.74 seconds)
+\\\textbf{Iteration \#2} started at 1780662724676, ended at 1780662775523, lasting 50847ms (50.85 seconds)
+\end{document}

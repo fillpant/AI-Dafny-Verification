@@ -1,0 +1,119 @@
+\documentclass{article}
+\usepackage{lmodern}
+\usepackage{amsmath}
+\usepackage{listings}
+\usepackage{fullpage}
+\usepackage{parskip}
+\usepackage{xcolor}
+\lstset{
+	basicstyle=\ttfamily,
+	columns=fullflexible,
+	frame=single,
+	breaklines=true,
+	postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},
+}
+\begin{document}
+\title{Experiment `p\_1\_10\_animal\_speaking' Results}
+\author{\today}
+\date{}
+\maketitle
+\textbf{Experiment outcome: }SUCCESS
+\\\textbf{Bad responses: }0
+\\\textbf{Responses containing}~\texttt{assume}~\textbf{: }0
+\\\textbf{Responses containing}~\texttt{expect}~\textbf{: }0
+\\\textbf{Resolution attempts: }2
+\\\textbf{Hard fails (resolution): }0
+\\\textbf{Soft fails (resolution): }0
+\\\textbf{Verification attempts: }2
+\section*{Problem Specification}
+\textbf{Problem name: }p\_1\_10\_animal\_speaking
+\\\textbf{Natural language statement: }null
+\\\textbf{Method signature: }p\_1\_10\_animal\_speaking() returns (s: string)
+\subsection*{Ensures}
+\begin{itemize}
+\item \texttt{s == "  /\textbackslash{}\textbackslash{}\_/\textbackslash{}\textbackslash{}     /---\textbackslash{}\textbackslash{}\textbackslash{}n ( ' ' )  / Hello \textbackslash{}\textbackslash{}\textbackslash{}n (  -  )  |  New  |\textbackslash{}n  | | |   \textbackslash{}\textbackslash{} Coder /\textbackslash{}n (\_\_|\_\_)    \textbackslash{}\textbackslash{}----/\textbackslash{}n"}
+\end{itemize}
+\clearpage
+\section*{GenAI interactions}
+Below you will find all interactions between the `user' (program) and the `assistant' (OpenAI).
+\subsection*{Program $\rightarrow$ GenAI}
+\begin{lstlisting}
+You are given the following task to perform in Dafny:
+
+Write a method to satisfy the below requirements.
+
+The signature should be:
+
+p_1_10_animal_speaking() returns (s: string)
+
+The method should respect the following contract:
+
+ensures s == "  /\\_/\\     /---\\\n ( ' ' )  / Hello \\\n (  -  )  |  New  |\n  | | |   \\ Coder /\n (__|__)    \\----/\n"
+
+Produce and show only the Dafny body of this method, including the curly braces that surround it. Do not show the signature nor contract. You must not use 'assume' nor 'expect' anywhere in your code.
+\end{lstlisting}
+\subsection*{GenAI $\rightarrow$ Program}
+\textbf{System fingerprint: }null
+\\\textbf{ID: }chatcmpl-Dn2IzX9jDlpf4Hf5bSgOqV7tKceAW
+\\\textbf{Model: }gpt-5.5-2026-04-23
+\\\textbf{Created at: }1780579305
+\\\textbf{Finish reason: }stop
+\\\textbf{Usage: }342 tokens in, and 4261 tokens out
+\begin{lstlisting}
+{
+  s := "  /\\_/\\     /---\\" + "\n" +
+       " ( ' ' )  / Hello \\" + "\n" +
+       " (  -  )  |  New  |" + "\n" +
+       "  | | |   \\ Coder /" + "\n" +
+       " (__|__)    \\----/" + "\n";
+}
+\end{lstlisting}
+\subsection*{Program $\rightarrow$ GenAI}
+\begin{lstlisting}
+When using dafny verify, the below error is emitted and verify fails:
+
+problem_data/p_1_10_animal_speaking/program.dfy(3,0): Error: a postcondition could not be proved on this return path
+  |
+3 | {
+  | ^
+
+problem_data/p_1_10_animal_speaking/program.dfy(2,11): Related location: this is the postcondition that could not be proved
+  |
+2 | 	ensures s == "  /\\_/\\     /---\\\n ( ' ' )  / Hello \\\n (  -  )  |  New  |\n  | | |   \\ Coder /\n (__|__)    \\----/\n"
+  |            ^^
+
+
+Dafny program verifier finished with 0 verified, 1 error
+
+Correct the error in code by altering only the method body. Produce and show only the Dafny body, including the curly braces that surround it. Do not show the signature nor contract. You must not use 'assume' nor 'expect' anywhere in your code.
+\end{lstlisting}
+\subsection*{GenAI $\rightarrow$ Program}
+\textbf{System fingerprint: }null
+\\\textbf{ID: }chatcmpl-Dn2L4HXMSWvglN72Go5hHMBIBD4qa
+\\\textbf{Model: }gpt-5.5-2026-04-23
+\\\textbf{Created at: }1780579434
+\\\textbf{Finish reason: }stop
+\\\textbf{Usage: }773 tokens in, and 3706 tokens out
+\begin{lstlisting}
+{
+  s := "  /\\_/\\     /---\\\n ( ' ' )  / Hello \\\n (  -  )  |  New  |\n  | | |   \\ Coder /\n (__|__)    \\----/\n";
+}
+\end{lstlisting}
+\section*{Final Program}
+\begin{lstlisting}
+method p_1_10_animal_speaking() returns (s: string)
+	ensures s == "  /\\_/\\     /---\\\n ( ' ' )  / Hello \\\n (  -  )  |  New  |\n  | | |   \\ Coder /\n (__|__)    \\----/\n"
+{
+  s := "  /\\_/\\     /---\\\n ( ' ' )  / Hello \\\n (  -  )  |  New  |\n  | | |   \\ Coder /\n (__|__)    \\----/\n";
+}
+\end{lstlisting}
+\section*{Total Token Usage}
+\textbf{Input tokens: }1115
+\\\textbf{Output tokens: }7967
+\\\textbf{Reasoning tokens: }7676
+\\\textbf{Sum of `total tokens': }9082
+\section*{Experiment Timings}
+\textbf{Overall Experiment} started at 1780579304333, ended at 1780579553735, lasting 249402ms (249.40 seconds)
+\\\textbf{Iteration \#1} started at 1780579304334, ended at 1780579432309, lasting 127975ms (127.98 seconds)
+\\\textbf{Iteration \#2} started at 1780579432312, ended at 1780579553734, lasting 121422ms (121.42 seconds)
+\end{document}

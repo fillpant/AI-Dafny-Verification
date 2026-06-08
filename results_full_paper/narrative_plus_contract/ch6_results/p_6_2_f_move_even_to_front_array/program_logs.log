@@ -1,0 +1,257 @@
+[04/06/26 13:57:07.701] [Experiment 'p_6_2_f_move_even_to_front_array'] [INFO]: Experiment created.
+[04/06/26 13:57:07.701] [Experiment 'p_6_2_f_move_even_to_front_array'] [INFO]: Experiment started.
+[04/06/26 13:57:07.702] [Experiment 'p_6_2_f_move_even_to_front_array'] [INFO]: Using initial prompt: You are given the following task to perform in Dafny:
+
+Write a method to move all even elements in an array to the front, otherwise preserving the order of the elements.
+
+The signature should be:
+
+p_6_2_f_move_even_to_front_array(inputs: array<int>) returns (result: array<int>)
+
+The method should respect the following contract:
+
+ensures result[..] == evens(inputs[..]) + odds(inputs[..])
+
+The contract uses the following dafny code:
+
+function evens(s: seq<int>): seq<int>
+{
+  if |s| == 0 then []
+  else if s[0] % 2 == 0
+       then [s[0]] + evens(s[1..])
+       else evens(s[1..])
+}
+
+function odds(s: seq<int>): seq<int>
+{
+  if |s| == 0 then []
+  else if s[0] % 2 != 0
+       then [s[0]] + odds(s[1..])
+       else odds(s[1..])
+}
+
+These function(s) must not be used in your implementation of the method.
+
+Produce and show only the Dafny body of this method, including the curly braces that surround it. Do not show the signature nor contract. You must not use 'assume' nor 'expect' anywhere in your code.
+[04/06/26 13:57:07.702] [Experiment 'p_6_2_f_move_even_to_front_array'] [INFO]: There are 30000 left in the jar, for the rest of this experiment.
+[04/06/26 13:57:07.702] [Experiment 'p_6_2_f_move_even_to_front_array'] [INFO]: Querrying GenAI...
+[04/06/26 13:57:07.702] [Experiment 'p_6_2_f_move_even_to_front_array'] [FINE]: Constructing message for GenAI
+[04/06/26 13:57:07.949] [Experiment 'p_6_2_f_move_even_to_front_array'] [INFO]: Context is on, attaching 1 previous messages in the request to GenAI.
+[04/06/26 13:57:07.950] [Experiment 'p_6_2_f_move_even_to_front_array'] [INFO]: A reasoning model is chosen, but no reasoning effort value is set. Setting reasoning to 'medium'
+[04/06/26 13:57:07.951] [Experiment 'p_6_2_f_move_even_to_front_array'] [FINE]: Setting max tokens for the request to 30000
+[04/06/26 13:57:07.960] [Experiment 'p_6_2_f_move_even_to_front_array'] [FINE]: Using model gpt-5.5. Awaiting response...
+[04/06/26 14:00:01.373] [Experiment 'p_6_2_f_move_even_to_front_array'] [FINE]: Got response with 1768 characters.
+[04/06/26 14:00:01.706] [Experiment 'p_6_2_f_move_even_to_front_array'] [FINE]: Saving gen_ai_messages.json
+[04/06/26 14:00:01.709] [Experiment 'p_6_2_f_move_even_to_front_array'] [FINE]: Saved 6922 characters to file gen_ai_messages.json
+[04/06/26 14:00:01.710] [Experiment 'p_6_2_f_move_even_to_front_array'] [FINE]: Saving gen_ai_messages_simple.json
+[04/06/26 14:00:01.718] [Experiment 'p_6_2_f_move_even_to_front_array'] [FINE]: Saved 3599 characters to file gen_ai_messages_simple.json
+[04/06/26 14:00:01.727] [Experiment 'p_6_2_f_move_even_to_front_array'] [INFO]: Converting GenAI response to a program...
+[04/06/26 14:00:01.727] [Experiment 'p_6_2_f_move_even_to_front_array'] [INFO]: Treating GenAIs response as a partial method, not a complete program (Since, the problem spec has a method signature).
+[04/06/26 14:00:01.728] [Experiment 'p_6_2_f_move_even_to_front_array'] [FINE]: Saving program.dfy
+[04/06/26 14:00:01.728] [Experiment 'p_6_2_f_move_even_to_front_array'] [FINE]: Saved 2133 characters to file program.dfy
+[04/06/26 14:00:01.728] [Experiment 'p_6_2_f_move_even_to_front_array'] [INFO]: Context is treated as being fully enabled, meaning that subsequent prompts do not include the full code.
+[04/06/26 14:00:01.728] [Experiment 'p_6_2_f_move_even_to_front_array'] [INFO]: Checking the code for the presence of the 'assume' or 'expect' keyword...
+[04/06/26 14:00:01.734] [Experiment 'p_6_2_f_move_even_to_front_array'] [INFO]: Calling dafny to resolve the generated code...
+[04/06/26 14:00:06.790] [Experiment 'p_6_2_f_move_even_to_front_array'] [SEVERE]: Program exited with code 2
+[04/06/26 14:00:06.791] [Experiment 'p_6_2_f_move_even_to_front_array'] [SEVERE]: Program stdout: problem_data/p_6_2_f_move_even_to_front_array/program.dfy(82,0): Error: invalid UnaryExpression
+   |
+82 | }
+   | ^
+
+problem_data/p_6_2_f_move_even_to_front_array/program.dfy(81,57): Error: expected either 'by' or a semicolon following the assert expression
+   |
+81 |   assert combined == evens(inputs[..]) + odds(inputs[..]);
+   |                                                          ^
+
+2 parse errors detected in program.dfy
+[04/06/26 14:00:06.791] [Experiment 'p_6_2_f_move_even_to_front_array'] [INFO]: Calling dafny to resolve the generated code, but with warnings allowed...
+[04/06/26 14:00:16.656] [Experiment 'p_6_2_f_move_even_to_front_array'] [SEVERE]: Program exited with code 2
+[04/06/26 14:00:16.658] [Experiment 'p_6_2_f_move_even_to_front_array'] [SEVERE]: Program stdout: problem_data/p_6_2_f_move_even_to_front_array/program.dfy(82,0): Error: invalid UnaryExpression
+   |
+82 | }
+   | ^
+
+problem_data/p_6_2_f_move_even_to_front_array/program.dfy(81,57): Error: expected either 'by' or a semicolon following the assert expression
+   |
+81 |   assert combined == evens(inputs[..]) + odds(inputs[..]);
+   |                                                          ^
+
+2 parse errors detected in program.dfy
+[04/06/26 14:00:16.659] [Experiment 'p_6_2_f_move_even_to_front_array'] [INFO]: Resolution fails as a result of an error.
+[04/06/26 14:00:16.659] [Experiment 'p_6_2_f_move_even_to_front_array'] [WARNING]: Treating resolution as failed for the generated code. Preparing GenAI prompt to fix...
+[04/06/26 14:00:16.661] [Experiment 'p_6_2_f_move_even_to_front_array'] [INFO]: There are 20682 left in the jar, for the rest of this experiment.
+[04/06/26 14:00:16.661] [Experiment 'p_6_2_f_move_even_to_front_array'] [INFO]: Previous iteration lasted 188959ms
+[04/06/26 14:00:16.662] [Experiment 'p_6_2_f_move_even_to_front_array'] [INFO]: Querrying GenAI...
+[04/06/26 14:00:16.662] [Experiment 'p_6_2_f_move_even_to_front_array'] [FINE]: Constructing message for GenAI
+[04/06/26 14:00:16.662] [Experiment 'p_6_2_f_move_even_to_front_array'] [INFO]: Context is on, attaching 3 previous messages in the request to GenAI.
+[04/06/26 14:00:16.663] [Experiment 'p_6_2_f_move_even_to_front_array'] [INFO]: A reasoning model is chosen, but no reasoning effort value is set. Setting reasoning to 'medium'
+[04/06/26 14:00:16.663] [Experiment 'p_6_2_f_move_even_to_front_array'] [FINE]: Setting max tokens for the request to 20682
+[04/06/26 14:00:16.663] [Experiment 'p_6_2_f_move_even_to_front_array'] [FINE]: Using model gpt-5.5. Awaiting response...
+[04/06/26 14:00:32.230] [Experiment 'p_6_2_f_move_even_to_front_array'] [FINE]: Got response with 1770 characters.
+[04/06/26 14:00:32.231] [Experiment 'p_6_2_f_move_even_to_front_array'] [FINE]: Saving gen_ai_messages.json
+[04/06/26 14:00:32.237] [Experiment 'p_6_2_f_move_even_to_front_array'] [FINE]: Saved 13485 characters to file gen_ai_messages.json
+[04/06/26 14:00:32.237] [Experiment 'p_6_2_f_move_even_to_front_array'] [FINE]: Saving gen_ai_messages_simple.json
+[04/06/26 14:00:32.238] [Experiment 'p_6_2_f_move_even_to_front_array'] [FINE]: Saved 6837 characters to file gen_ai_messages_simple.json
+[04/06/26 14:00:32.238] [Experiment 'p_6_2_f_move_even_to_front_array'] [INFO]: Converting GenAI response to a program...
+[04/06/26 14:00:32.238] [Experiment 'p_6_2_f_move_even_to_front_array'] [INFO]: Treating GenAIs response as a partial method, not a complete program (Since, the problem spec has a method signature).
+[04/06/26 14:00:32.238] [Experiment 'p_6_2_f_move_even_to_front_array'] [FINE]: Saving program.dfy
+[04/06/26 14:00:32.238] [Experiment 'p_6_2_f_move_even_to_front_array'] [FINE]: Saved 2135 characters to file program.dfy
+[04/06/26 14:00:32.239] [Experiment 'p_6_2_f_move_even_to_front_array'] [INFO]: Context is treated as being fully enabled, meaning that subsequent prompts do not include the full code.
+[04/06/26 14:00:32.239] [Experiment 'p_6_2_f_move_even_to_front_array'] [INFO]: Checking the code for the presence of the 'assume' or 'expect' keyword...
+[04/06/26 14:00:32.272] [Experiment 'p_6_2_f_move_even_to_front_array'] [INFO]: Calling dafny to resolve the generated code...
+[04/06/26 14:00:39.128] [Experiment 'p_6_2_f_move_even_to_front_array'] [SEVERE]: Program exited with code 2
+[04/06/26 14:00:39.129] [Experiment 'p_6_2_f_move_even_to_front_array'] [SEVERE]: Program stdout: problem_data/p_6_2_f_move_even_to_front_array/program.dfy(82,0): Error: invalid UnaryExpression
+   |
+82 | }
+   | ^
+
+problem_data/p_6_2_f_move_even_to_front_array/program.dfy(81,59): Error: expected either 'by' or a semicolon following the assert expression
+   |
+81 |   assert combined == (evens(inputs[..]) + odds(inputs[..]));
+   |                                                            ^
+
+2 parse errors detected in program.dfy
+[04/06/26 14:00:39.129] [Experiment 'p_6_2_f_move_even_to_front_array'] [INFO]: Calling dafny to resolve the generated code, but with warnings allowed...
+[04/06/26 14:00:46.763] [Experiment 'p_6_2_f_move_even_to_front_array'] [SEVERE]: Program exited with code 2
+[04/06/26 14:00:46.767] [Experiment 'p_6_2_f_move_even_to_front_array'] [SEVERE]: Program stdout: problem_data/p_6_2_f_move_even_to_front_array/program.dfy(82,0): Error: invalid UnaryExpression
+   |
+82 | }
+   | ^
+
+problem_data/p_6_2_f_move_even_to_front_array/program.dfy(81,59): Error: expected either 'by' or a semicolon following the assert expression
+   |
+81 |   assert combined == (evens(inputs[..]) + odds(inputs[..]));
+   |                                                            ^
+
+2 parse errors detected in program.dfy
+[04/06/26 14:00:46.767] [Experiment 'p_6_2_f_move_even_to_front_array'] [INFO]: Resolution fails as a result of an error.
+[04/06/26 14:00:46.767] [Experiment 'p_6_2_f_move_even_to_front_array'] [WARNING]: Treating resolution as failed for the generated code. Preparing GenAI prompt to fix...
+[04/06/26 14:00:46.767] [Experiment 'p_6_2_f_move_even_to_front_array'] [INFO]: There are 18371 left in the jar, for the rest of this experiment.
+[04/06/26 14:00:46.768] [Experiment 'p_6_2_f_move_even_to_front_array'] [INFO]: Previous iteration lasted 30105ms
+[04/06/26 14:00:46.768] [Experiment 'p_6_2_f_move_even_to_front_array'] [INFO]: Querrying GenAI...
+[04/06/26 14:00:46.768] [Experiment 'p_6_2_f_move_even_to_front_array'] [FINE]: Constructing message for GenAI
+[04/06/26 14:00:46.768] [Experiment 'p_6_2_f_move_even_to_front_array'] [INFO]: Context is on, attaching 5 previous messages in the request to GenAI.
+[04/06/26 14:00:46.769] [Experiment 'p_6_2_f_move_even_to_front_array'] [INFO]: A reasoning model is chosen, but no reasoning effort value is set. Setting reasoning to 'medium'
+[04/06/26 14:00:46.770] [Experiment 'p_6_2_f_move_even_to_front_array'] [FINE]: Setting max tokens for the request to 18371
+[04/06/26 14:00:46.770] [Experiment 'p_6_2_f_move_even_to_front_array'] [FINE]: Using model gpt-5.5. Awaiting response...
+[04/06/26 14:01:39.786] [Experiment 'p_6_2_f_move_even_to_front_array'] [FINE]: Got response with 1708 characters.
+[04/06/26 14:01:39.801] [Experiment 'p_6_2_f_move_even_to_front_array'] [FINE]: Saving gen_ai_messages.json
+[04/06/26 14:01:39.802] [Experiment 'p_6_2_f_move_even_to_front_array'] [FINE]: Saved 19907 characters to file gen_ai_messages.json
+[04/06/26 14:01:39.804] [Experiment 'p_6_2_f_move_even_to_front_array'] [FINE]: Saving gen_ai_messages_simple.json
+[04/06/26 14:01:39.804] [Experiment 'p_6_2_f_move_even_to_front_array'] [FINE]: Saved 10006 characters to file gen_ai_messages_simple.json
+[04/06/26 14:01:39.804] [Experiment 'p_6_2_f_move_even_to_front_array'] [INFO]: Converting GenAI response to a program...
+[04/06/26 14:01:39.805] [Experiment 'p_6_2_f_move_even_to_front_array'] [INFO]: Treating GenAIs response as a partial method, not a complete program (Since, the problem spec has a method signature).
+[04/06/26 14:01:39.805] [Experiment 'p_6_2_f_move_even_to_front_array'] [FINE]: Saving program.dfy
+[04/06/26 14:01:39.805] [Experiment 'p_6_2_f_move_even_to_front_array'] [FINE]: Saved 2074 characters to file program.dfy
+[04/06/26 14:01:39.807] [Experiment 'p_6_2_f_move_even_to_front_array'] [INFO]: Context is treated as being fully enabled, meaning that subsequent prompts do not include the full code.
+[04/06/26 14:01:39.807] [Experiment 'p_6_2_f_move_even_to_front_array'] [INFO]: Checking the code for the presence of the 'assume' or 'expect' keyword...
+[04/06/26 14:01:39.808] [Experiment 'p_6_2_f_move_even_to_front_array'] [INFO]: Calling dafny to resolve the generated code...
+[04/06/26 14:01:42.425] [Experiment 'p_6_2_f_move_even_to_front_array'] [SEVERE]: Program exited with code 2
+[04/06/26 14:01:42.425] [Experiment 'p_6_2_f_move_even_to_front_array'] [SEVERE]: Program stdout: problem_data/p_6_2_f_move_even_to_front_array/program.dfy(81,0): Error: invalid UnaryExpression
+   |
+81 | }
+   | ^
+
+problem_data/p_6_2_f_move_even_to_front_array/program.dfy(80,31): Error: expected either 'by' or a semicolon following the assert expression
+   |
+80 |   assert result[..] == combined;
+   |                                ^
+
+2 parse errors detected in program.dfy
+[04/06/26 14:01:42.470] [Experiment 'p_6_2_f_move_even_to_front_array'] [INFO]: Calling dafny to resolve the generated code, but with warnings allowed...
+[04/06/26 14:01:44.493] [Experiment 'p_6_2_f_move_even_to_front_array'] [SEVERE]: Program exited with code 2
+[04/06/26 14:01:44.493] [Experiment 'p_6_2_f_move_even_to_front_array'] [SEVERE]: Program stdout: problem_data/p_6_2_f_move_even_to_front_array/program.dfy(81,0): Error: invalid UnaryExpression
+   |
+81 | }
+   | ^
+
+problem_data/p_6_2_f_move_even_to_front_array/program.dfy(80,31): Error: expected either 'by' or a semicolon following the assert expression
+   |
+80 |   assert result[..] == combined;
+   |                                ^
+
+2 parse errors detected in program.dfy
+[04/06/26 14:01:44.498] [Experiment 'p_6_2_f_move_even_to_front_array'] [INFO]: Resolution fails as a result of an error.
+[04/06/26 14:01:44.514] [Experiment 'p_6_2_f_move_even_to_front_array'] [WARNING]: Treating resolution as failed for the generated code. Preparing GenAI prompt to fix...
+[04/06/26 14:01:44.514] [Experiment 'p_6_2_f_move_even_to_front_array'] [INFO]: There are 13701 left in the jar, for the rest of this experiment.
+[04/06/26 14:01:44.514] [Experiment 'p_6_2_f_move_even_to_front_array'] [INFO]: Previous iteration lasted 57746ms
+[04/06/26 14:01:44.515] [Experiment 'p_6_2_f_move_even_to_front_array'] [INFO]: Querrying GenAI...
+[04/06/26 14:01:44.515] [Experiment 'p_6_2_f_move_even_to_front_array'] [FINE]: Constructing message for GenAI
+[04/06/26 14:01:44.515] [Experiment 'p_6_2_f_move_even_to_front_array'] [INFO]: Context is on, attaching 7 previous messages in the request to GenAI.
+[04/06/26 14:01:44.545] [Experiment 'p_6_2_f_move_even_to_front_array'] [INFO]: A reasoning model is chosen, but no reasoning effort value is set. Setting reasoning to 'medium'
+[04/06/26 14:01:44.545] [Experiment 'p_6_2_f_move_even_to_front_array'] [FINE]: Setting max tokens for the request to 13701
+[04/06/26 14:01:44.545] [Experiment 'p_6_2_f_move_even_to_front_array'] [FINE]: Using model gpt-5.5. Awaiting response...
+[04/06/26 14:02:51.140] [Experiment 'p_6_2_f_move_even_to_front_array'] [FINE]: Got response with 1676 characters.
+[04/06/26 14:02:51.191] [Experiment 'p_6_2_f_move_even_to_front_array'] [FINE]: Saving gen_ai_messages.json
+[04/06/26 14:02:51.240] [Experiment 'p_6_2_f_move_even_to_front_array'] [FINE]: Saved 26220 characters to file gen_ai_messages.json
+[04/06/26 14:02:51.240] [Experiment 'p_6_2_f_move_even_to_front_array'] [FINE]: Saving gen_ai_messages_simple.json
+[04/06/26 14:02:51.265] [Experiment 'p_6_2_f_move_even_to_front_array'] [FINE]: Saved 13091 characters to file gen_ai_messages_simple.json
+[04/06/26 14:02:51.266] [Experiment 'p_6_2_f_move_even_to_front_array'] [INFO]: Converting GenAI response to a program...
+[04/06/26 14:02:51.292] [Experiment 'p_6_2_f_move_even_to_front_array'] [INFO]: Treating GenAIs response as a partial method, not a complete program (Since, the problem spec has a method signature).
+[04/06/26 14:02:51.304] [Experiment 'p_6_2_f_move_even_to_front_array'] [FINE]: Saving program.dfy
+[04/06/26 14:02:51.315] [Experiment 'p_6_2_f_move_even_to_front_array'] [FINE]: Saved 2043 characters to file program.dfy
+[04/06/26 14:02:51.316] [Experiment 'p_6_2_f_move_even_to_front_array'] [INFO]: Context is treated as being fully enabled, meaning that subsequent prompts do not include the full code.
+[04/06/26 14:02:51.316] [Experiment 'p_6_2_f_move_even_to_front_array'] [INFO]: Checking the code for the presence of the 'assume' or 'expect' keyword...
+[04/06/26 14:02:51.337] [Experiment 'p_6_2_f_move_even_to_front_array'] [INFO]: Calling dafny to resolve the generated code...
+[04/06/26 14:03:00.761] [Experiment 'p_6_2_f_move_even_to_front_array'] [INFO]: Program exited with code 0
+[04/06/26 14:03:00.763] [Experiment 'p_6_2_f_move_even_to_front_array'] [INFO]: Program stdout: 
+Dafny program verifier did not attempt verification
+[04/06/26 14:03:00.765] [Experiment 'p_6_2_f_move_even_to_front_array'] [INFO]: Calling dafny to resolve the generated code, but with warnings allowed...
+[04/06/26 14:03:09.818] [Experiment 'p_6_2_f_move_even_to_front_array'] [INFO]: Program exited with code 0
+[04/06/26 14:03:09.820] [Experiment 'p_6_2_f_move_even_to_front_array'] [INFO]: Program stdout: 
+Dafny program verifier did not attempt verification
+[04/06/26 14:03:09.837] [Experiment 'p_6_2_f_move_even_to_front_array'] [INFO]: Resolution passes without warnings.
+[04/06/26 14:03:09.837] [Experiment 'p_6_2_f_move_even_to_front_array'] [INFO]: Dafny resolution check passed.
+[04/06/26 14:03:09.837] [Experiment 'p_6_2_f_move_even_to_front_array'] [INFO]: Calling dafny to verify the generated code...
+[04/06/26 14:03:28.131] [Experiment 'p_6_2_f_move_even_to_front_array'] [SEVERE]: Program exited with code 4
+[04/06/26 14:03:28.141] [Experiment 'p_6_2_f_move_even_to_front_array'] [SEVERE]: Program stdout: problem_data/p_6_2_f_move_even_to_front_array/program.dfy(72,45): Error: index out of range
+   |
+72 |   result := new int[|combined|](j => combined[j]);
+   |                                              ^
+
+
+Dafny program verifier finished with 3 verified, 1 error
+[04/06/26 14:03:28.141] [Experiment 'p_6_2_f_move_even_to_front_array'] [WARNING]: Failed to verify the generated code. Preparing GenAI prompt to fix...
+[04/06/26 14:03:28.146] [Experiment 'p_6_2_f_move_even_to_front_array'] [INFO]: There are 7703 left in the jar, for the rest of this experiment.
+[04/06/26 14:03:28.152] [Experiment 'p_6_2_f_move_even_to_front_array'] [INFO]: Previous iteration lasted 103627ms
+[04/06/26 14:03:28.160] [Experiment 'p_6_2_f_move_even_to_front_array'] [INFO]: Querrying GenAI...
+[04/06/26 14:03:28.161] [Experiment 'p_6_2_f_move_even_to_front_array'] [FINE]: Constructing message for GenAI
+[04/06/26 14:03:28.161] [Experiment 'p_6_2_f_move_even_to_front_array'] [INFO]: Context is on, attaching 9 previous messages in the request to GenAI.
+[04/06/26 14:03:28.166] [Experiment 'p_6_2_f_move_even_to_front_array'] [INFO]: A reasoning model is chosen, but no reasoning effort value is set. Setting reasoning to 'medium'
+[04/06/26 14:03:28.167] [Experiment 'p_6_2_f_move_even_to_front_array'] [FINE]: Setting max tokens for the request to 7703
+[04/06/26 14:03:28.167] [Experiment 'p_6_2_f_move_even_to_front_array'] [FINE]: Using model gpt-5.5. Awaiting response...
+[04/06/26 14:04:52.104] [Experiment 'p_6_2_f_move_even_to_front_array'] [FINE]: Got response with 2045 characters.
+[04/06/26 14:04:52.138] [Experiment 'p_6_2_f_move_even_to_front_array'] [FINE]: Saving gen_ai_messages.json
+[04/06/26 14:04:52.142] [Experiment 'p_6_2_f_move_even_to_front_array'] [FINE]: Saved 33460 characters to file gen_ai_messages.json
+[04/06/26 14:04:52.143] [Experiment 'p_6_2_f_move_even_to_front_array'] [FINE]: Saving gen_ai_messages_simple.json
+[04/06/26 14:04:52.144] [Experiment 'p_6_2_f_move_even_to_front_array'] [FINE]: Saved 16577 characters to file gen_ai_messages_simple.json
+[04/06/26 14:04:52.144] [Experiment 'p_6_2_f_move_even_to_front_array'] [INFO]: Converting GenAI response to a program...
+[04/06/26 14:04:52.144] [Experiment 'p_6_2_f_move_even_to_front_array'] [INFO]: Treating GenAIs response as a partial method, not a complete program (Since, the problem spec has a method signature).
+[04/06/26 14:04:52.145] [Experiment 'p_6_2_f_move_even_to_front_array'] [FINE]: Saving program.dfy
+[04/06/26 14:04:52.146] [Experiment 'p_6_2_f_move_even_to_front_array'] [FINE]: Saved 2395 characters to file program.dfy
+[04/06/26 14:04:52.147] [Experiment 'p_6_2_f_move_even_to_front_array'] [INFO]: Context is treated as being fully enabled, meaning that subsequent prompts do not include the full code.
+[04/06/26 14:04:52.147] [Experiment 'p_6_2_f_move_even_to_front_array'] [INFO]: Checking the code for the presence of the 'assume' or 'expect' keyword...
+[04/06/26 14:04:52.148] [Experiment 'p_6_2_f_move_even_to_front_array'] [INFO]: Calling dafny to resolve the generated code...
+[04/06/26 14:05:01.468] [Experiment 'p_6_2_f_move_even_to_front_array'] [INFO]: Program exited with code 0
+[04/06/26 14:05:01.468] [Experiment 'p_6_2_f_move_even_to_front_array'] [INFO]: Program stdout: 
+Dafny program verifier did not attempt verification
+[04/06/26 14:05:01.468] [Experiment 'p_6_2_f_move_even_to_front_array'] [INFO]: Calling dafny to resolve the generated code, but with warnings allowed...
+[04/06/26 14:05:05.658] [Experiment 'p_6_2_f_move_even_to_front_array'] [INFO]: Program exited with code 0
+[04/06/26 14:05:05.659] [Experiment 'p_6_2_f_move_even_to_front_array'] [INFO]: Program stdout: 
+Dafny program verifier did not attempt verification
+[04/06/26 14:05:05.659] [Experiment 'p_6_2_f_move_even_to_front_array'] [INFO]: Resolution passes without warnings.
+[04/06/26 14:05:05.660] [Experiment 'p_6_2_f_move_even_to_front_array'] [INFO]: Dafny resolution check passed.
+[04/06/26 14:05:05.660] [Experiment 'p_6_2_f_move_even_to_front_array'] [INFO]: Calling dafny to verify the generated code...
+[04/06/26 14:05:24.977] [Experiment 'p_6_2_f_move_even_to_front_array'] [INFO]: Program exited with code 0
+[04/06/26 14:05:24.978] [Experiment 'p_6_2_f_move_even_to_front_array'] [INFO]: Program stdout: 
+Dafny program verifier finished with 4 verified, 0 errors
+[04/06/26 14:05:24.978] [Experiment 'p_6_2_f_move_even_to_front_array'] [INFO]: Dafny verification check passed.
+[04/06/26 14:05:24.997] [Experiment 'p_6_2_f_move_even_to_front_array'] [WARNING]: Experiment stopped after using 30344 tokens, which exceeds the limit specified. 
+[04/06/26 14:05:25.054] [Experiment 'p_6_2_f_move_even_to_front_array'] [FINE]: Saving gen_ai_messages.json
+[04/06/26 14:05:25.073] [Experiment 'p_6_2_f_move_even_to_front_array'] [FINE]: Saved 33460 characters to file gen_ai_messages.json
+[04/06/26 14:05:25.308] [Experiment 'p_6_2_f_move_even_to_front_array'] [FINE]: Saving gen_ai_messages_simple.json
+[04/06/26 14:05:25.309] [Experiment 'p_6_2_f_move_even_to_front_array'] [FINE]: Saved 16577 characters to file gen_ai_messages_simple.json
+[04/06/26 14:05:25.367] [Experiment 'p_6_2_f_move_even_to_front_array'] [FINE]: Saving experiment_result.json
+[04/06/26 14:05:25.672] [Experiment 'p_6_2_f_move_even_to_front_array'] [FINE]: Saved 1221 characters to file experiment_result.json
+[04/06/26 14:05:30.745] [Experiment 'p_6_2_f_move_even_to_front_array'] [INFO]: Compilation of experiment report tex file successful
+[04/06/26 18:17:57.622] [Experiment 'p_6_2_f_move_even_to_front_array'] [INFO]: Experiment created.

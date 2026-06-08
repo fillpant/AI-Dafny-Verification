@@ -1,0 +1,57 @@
+[03/06/26 13:07:33.556] [Experiment 'p_3_2_classify_real'] [INFO]: Experiment created.
+[03/06/26 13:07:33.556] [Experiment 'p_3_2_classify_real'] [INFO]: Experiment started.
+[03/06/26 13:07:33.557] [Experiment 'p_3_2_classify_real'] [INFO]: Using initial prompt: You are given the following task to perform in Dafny:
+
+Write a method that takes a floating point number and returns whether it is negative, zero, or positive. Add "small" if the absolute value of the number is less than 1, or "large" if it exceeds 1,000,000.
+
+The signature should be:
+
+p_3_2_classify_real (x: real) returns (s: string)
+
+The method should respect the following contract:
+
+ensures x == 0.0 ==> s == "zero, small", ensures 1.0 > x > 0.0 ==> s == "positive, small", ensures 1.0 <= x < 1000000.0 ==> s == "positive", ensures 1000000.0 <= x  ==> s == "positive, large", ensures 0.0 > x > -1.0 ==> s == "negative, small", ensures -1.0 >= x > -1000000.0 ==> s == "negative", ensures -1000000.0 >= x ==> s == "negative, large"
+
+Produce and show only the Dafny body of this method, including the curly braces that surround it. Do not show the signature nor contract. You must not use 'assume' nor 'expect' anywhere in your code.
+[03/06/26 13:07:33.557] [Experiment 'p_3_2_classify_real'] [INFO]: There are 30000 left in the jar, for the rest of this experiment.
+[03/06/26 13:07:33.557] [Experiment 'p_3_2_classify_real'] [INFO]: Querrying GenAI...
+[03/06/26 13:07:33.557] [Experiment 'p_3_2_classify_real'] [FINE]: Constructing message for GenAI
+[03/06/26 13:07:33.557] [Experiment 'p_3_2_classify_real'] [INFO]: Context is on, attaching 1 previous messages in the request to GenAI.
+[03/06/26 13:07:33.558] [Experiment 'p_3_2_classify_real'] [INFO]: A reasoning model is chosen, but no reasoning effort value is set. Setting reasoning to 'medium'
+[03/06/26 13:07:33.558] [Experiment 'p_3_2_classify_real'] [FINE]: Setting max tokens for the request to 30000
+[03/06/26 13:07:33.558] [Experiment 'p_3_2_classify_real'] [FINE]: Using model gpt-5.5. Awaiting response...
+[03/06/26 13:07:43.365] [Experiment 'p_3_2_classify_real'] [FINE]: Got response with 432 characters.
+[03/06/26 13:07:43.368] [Experiment 'p_3_2_classify_real'] [FINE]: Saving gen_ai_messages.json
+[03/06/26 13:07:43.369] [Experiment 'p_3_2_classify_real'] [FINE]: Saved 3436 characters to file gen_ai_messages.json
+[03/06/26 13:07:43.369] [Experiment 'p_3_2_classify_real'] [FINE]: Saving gen_ai_messages_simple.json
+[03/06/26 13:07:43.370] [Experiment 'p_3_2_classify_real'] [FINE]: Saved 1896 characters to file gen_ai_messages_simple.json
+[03/06/26 13:07:43.370] [Experiment 'p_3_2_classify_real'] [INFO]: Converting GenAI response to a program...
+[03/06/26 13:07:43.370] [Experiment 'p_3_2_classify_real'] [INFO]: Treating GenAIs response as a partial method, not a complete program (Since, the problem spec has a method signature).
+[03/06/26 13:07:43.370] [Experiment 'p_3_2_classify_real'] [FINE]: Saving program.dfy
+[03/06/26 13:07:43.371] [Experiment 'p_3_2_classify_real'] [FINE]: Saved 785 characters to file program.dfy
+[03/06/26 13:07:43.373] [Experiment 'p_3_2_classify_real'] [INFO]: Context is treated as being fully enabled, meaning that subsequent prompts do not include the full code.
+[03/06/26 13:07:43.373] [Experiment 'p_3_2_classify_real'] [INFO]: Checking the code for the presence of the 'assume' or 'expect' keyword...
+[03/06/26 13:07:43.373] [Experiment 'p_3_2_classify_real'] [INFO]: Calling dafny to resolve the generated code...
+[03/06/26 13:07:44.568] [Experiment 'p_3_2_classify_real'] [INFO]: Program exited with code 0
+[03/06/26 13:07:44.568] [Experiment 'p_3_2_classify_real'] [INFO]: Program stdout: 
+Dafny program verifier did not attempt verification
+[03/06/26 13:07:44.569] [Experiment 'p_3_2_classify_real'] [INFO]: Calling dafny to resolve the generated code, but with warnings allowed...
+[03/06/26 13:07:45.786] [Experiment 'p_3_2_classify_real'] [INFO]: Program exited with code 0
+[03/06/26 13:07:45.787] [Experiment 'p_3_2_classify_real'] [INFO]: Program stdout: 
+Dafny program verifier did not attempt verification
+[03/06/26 13:07:45.789] [Experiment 'p_3_2_classify_real'] [INFO]: Resolution passes without warnings.
+[03/06/26 13:07:45.789] [Experiment 'p_3_2_classify_real'] [INFO]: Dafny resolution check passed.
+[03/06/26 13:07:45.790] [Experiment 'p_3_2_classify_real'] [INFO]: Calling dafny to verify the generated code...
+[03/06/26 13:07:48.255] [Experiment 'p_3_2_classify_real'] [INFO]: Program exited with code 0
+[03/06/26 13:07:48.256] [Experiment 'p_3_2_classify_real'] [INFO]: Program stdout: 
+Dafny program verifier finished with 1 verified, 0 errors
+[03/06/26 13:07:48.257] [Experiment 'p_3_2_classify_real'] [INFO]: Dafny verification check passed.
+[03/06/26 13:07:48.258] [Experiment 'p_3_2_classify_real'] [INFO]: Experiment finished.
+[03/06/26 13:07:48.259] [Experiment 'p_3_2_classify_real'] [FINE]: Saving gen_ai_messages.json
+[03/06/26 13:07:48.261] [Experiment 'p_3_2_classify_real'] [FINE]: Saved 3436 characters to file gen_ai_messages.json
+[03/06/26 13:07:48.262] [Experiment 'p_3_2_classify_real'] [FINE]: Saving gen_ai_messages_simple.json
+[03/06/26 13:07:48.262] [Experiment 'p_3_2_classify_real'] [FINE]: Saved 1896 characters to file gen_ai_messages_simple.json
+[03/06/26 13:07:48.263] [Experiment 'p_3_2_classify_real'] [FINE]: Saving experiment_result.json
+[03/06/26 13:07:48.264] [Experiment 'p_3_2_classify_real'] [FINE]: Saved 670 characters to file experiment_result.json
+[03/06/26 13:07:49.010] [Experiment 'p_3_2_classify_real'] [INFO]: Compilation of experiment report tex file successful
+[03/06/26 13:14:09.389] [Experiment 'p_3_2_classify_real'] [INFO]: Experiment created.

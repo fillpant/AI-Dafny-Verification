@@ -1,0 +1,902 @@
+[06/06/26 14:28:21.556] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [INFO]: Experiment created.
+[06/06/26 14:28:21.557] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [INFO]: Experiment started.
+[06/06/26 14:28:21.575] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [INFO]: Using initial prompt: You are given the following task to perform in Dafny:
+
+Write a method that implements the merge sort algorithm to sort an array of strings in lexicographic order.
+
+The signature should be:
+
+p_14_4_merge_sort_lexicographic_seq(inputs: seq<string>) returns (sorted: seq<string>)
+
+The method should respect the following contract:
+
+ensures forall i, j :: 0 <= i < j < |sorted| ==> sorted[i] <= sorted[j], ensures multiset(inputs) == multiset(sorted)
+
+Produce and show only the Dafny body of this method, including the curly braces that surround it. Do not show the signature nor contract. You must not use 'assume' nor 'expect' anywhere in your code.
+[06/06/26 14:28:21.575] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [INFO]: There are 30000 left in the jar, for the rest of this experiment.
+[06/06/26 14:28:21.576] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [INFO]: Querrying GenAI...
+[06/06/26 14:28:21.576] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [FINE]: Constructing message for GenAI
+[06/06/26 14:28:21.591] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [INFO]: Context is on, attaching 1 previous messages in the request to GenAI.
+[06/06/26 14:28:21.592] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [INFO]: A reasoning model is chosen, but no reasoning effort value is set. Setting reasoning to 'medium'
+[06/06/26 14:28:21.592] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [FINE]: Setting max tokens for the request to 30000
+[06/06/26 14:28:21.592] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [FINE]: Using model gpt-5.5. Awaiting response...
+[06/06/26 14:30:16.220] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [FINE]: Got response with 2429 characters.
+[06/06/26 14:30:16.221] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [FINE]: Saving gen_ai_messages.json
+[06/06/26 14:30:16.231] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [FINE]: Saved 8457 characters to file gen_ai_messages.json
+[06/06/26 14:30:16.233] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [FINE]: Saving gen_ai_messages_simple.json
+[06/06/26 14:30:16.233] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [FINE]: Saved 4162 characters to file gen_ai_messages_simple.json
+[06/06/26 14:30:16.234] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [INFO]: Converting GenAI response to a program...
+[06/06/26 14:30:16.234] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [INFO]: Treating GenAIs response as a partial method, not a complete program (Since, the problem spec has a method signature).
+[06/06/26 14:30:16.234] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [FINE]: Saving program.dfy
+[06/06/26 14:30:16.235] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [FINE]: Saved 2560 characters to file program.dfy
+[06/06/26 14:30:16.237] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [INFO]: Context is treated as being fully enabled, meaning that subsequent prompts do not include the full code.
+[06/06/26 14:30:16.237] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [INFO]: Checking the code for the presence of the 'assume' or 'expect' keyword...
+[06/06/26 14:30:16.238] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [INFO]: Calling dafny to resolve the generated code...
+[06/06/26 14:30:19.114] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [INFO]: Program exited with code 0
+[06/06/26 14:30:19.114] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [INFO]: Program stdout: 
+Dafny program verifier did not attempt verification
+[06/06/26 14:30:19.114] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [INFO]: Calling dafny to resolve the generated code, but with warnings allowed...
+[06/06/26 14:30:21.643] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [INFO]: Program exited with code 0
+[06/06/26 14:30:21.643] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [INFO]: Program stdout: 
+Dafny program verifier did not attempt verification
+[06/06/26 14:30:21.644] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [INFO]: Resolution passes without warnings.
+[06/06/26 14:30:21.644] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [INFO]: Dafny resolution check passed.
+[06/06/26 14:30:21.644] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [INFO]: Calling dafny to verify the generated code...
+[06/06/26 14:30:34.869] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [SEVERE]: Program exited with code 4
+[06/06/26 14:30:34.869] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [SEVERE]: Program stdout: problem_data/p_14_4_merge_sort_lexicographic_seq/program.dfy(53,6): Error: assertion might not hold
+   |
+53 |       assert forall a :: 0 <= a < |sorted| && i < |left| ==> sorted[a] <= left[i];
+   |       ^^^^^^
+
+
+Dafny program verifier finished with 1 verified, 1 error
+[06/06/26 14:30:34.869] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [WARNING]: Failed to verify the generated code. Preparing GenAI prompt to fix...
+[06/06/26 14:30:34.871] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [INFO]: There are 24183 left in the jar, for the rest of this experiment.
+[06/06/26 14:30:34.871] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [INFO]: Previous iteration lasted 133296ms
+[06/06/26 14:30:34.871] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [INFO]: Querrying GenAI...
+[06/06/26 14:30:34.871] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [FINE]: Constructing message for GenAI
+[06/06/26 14:30:34.872] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [INFO]: Context is on, attaching 3 previous messages in the request to GenAI.
+[06/06/26 14:30:34.873] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [INFO]: A reasoning model is chosen, but no reasoning effort value is set. Setting reasoning to 'medium'
+[06/06/26 14:30:34.873] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [FINE]: Setting max tokens for the request to 24183
+[06/06/26 14:30:34.874] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [FINE]: Using model gpt-5.5. Awaiting response...
+[06/06/26 14:32:11.272] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [FINE]: Got response with 7388 characters.
+[06/06/26 14:32:11.281] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [FINE]: Saving gen_ai_messages.json
+[06/06/26 14:32:11.282] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [FINE]: Saved 29364 characters to file gen_ai_messages.json
+[06/06/26 14:32:11.283] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [FINE]: Saving gen_ai_messages_simple.json
+[06/06/26 14:32:11.284] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [FINE]: Saved 14506 characters to file gen_ai_messages_simple.json
+[06/06/26 14:32:11.284] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [INFO]: Converting GenAI response to a program...
+[06/06/26 14:32:11.284] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [INFO]: Treating GenAIs response as a partial method, not a complete program (Since, the problem spec has a method signature).
+[06/06/26 14:32:11.285] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [FINE]: Saving program.dfy
+[06/06/26 14:32:11.286] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [FINE]: Saved 7381 characters to file program.dfy
+[06/06/26 14:32:11.286] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [INFO]: Context is treated as being fully enabled, meaning that subsequent prompts do not include the full code.
+[06/06/26 14:32:11.287] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [INFO]: Checking the code for the presence of the 'assume' or 'expect' keyword...
+[06/06/26 14:32:11.288] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [INFO]: Calling dafny to resolve the generated code...
+[06/06/26 14:32:14.636] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [SEVERE]: Program exited with code 2
+[06/06/26 14:32:14.636] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [SEVERE]: Program stdout: problem_data/p_14_4_merge_sort_lexicographic_seq/program.dfy(40,11): Error: unresolved identifier: b
+   |
+40 |         if b < |oldSorted| {
+   |            ^
+
+problem_data/p_14_4_merge_sort_lexicographic_seq/program.dfy(41,24): Error: unresolved identifier: a
+   |
+41 |           assert sorted[a] == oldSorted[a];
+   |                         ^
+
+problem_data/p_14_4_merge_sort_lexicographic_seq/program.dfy(41,40): Error: unresolved identifier: a
+   |
+41 |           assert sorted[a] == oldSorted[a];
+   |                                         ^
+
+problem_data/p_14_4_merge_sort_lexicographic_seq/program.dfy(42,24): Error: unresolved identifier: b
+   |
+42 |           assert sorted[b] == oldSorted[b];
+   |                         ^
+
+problem_data/p_14_4_merge_sort_lexicographic_seq/program.dfy(42,40): Error: unresolved identifier: b
+   |
+42 |           assert sorted[b] == oldSorted[b];
+   |                                         ^
+
+problem_data/p_14_4_merge_sort_lexicographic_seq/program.dfy(44,17): Error: unresolved identifier: b
+   |
+44 |           assert b == |oldSorted|;
+   |                  ^
+
+problem_data/p_14_4_merge_sort_lexicographic_seq/program.dfy(45,17): Error: unresolved identifier: a
+   |
+45 |           assert a < |oldSorted|;
+   |                  ^
+
+problem_data/p_14_4_merge_sort_lexicographic_seq/program.dfy(46,24): Error: unresolved identifier: a
+   |
+46 |           assert sorted[a] == oldSorted[a];
+   |                         ^
+
+problem_data/p_14_4_merge_sort_lexicographic_seq/program.dfy(46,40): Error: unresolved identifier: a
+   |
+46 |           assert sorted[a] == oldSorted[a];
+   |                                         ^
+
+problem_data/p_14_4_merge_sort_lexicographic_seq/program.dfy(47,24): Error: unresolved identifier: b
+   |
+47 |           assert sorted[b] == right[oldJ];
+   |                         ^
+
+problem_data/p_14_4_merge_sort_lexicographic_seq/program.dfy(56,11): Error: unresolved identifier: a
+   |
+56 |         if a < |oldSorted| {
+   |            ^
+
+problem_data/p_14_4_merge_sort_lexicographic_seq/program.dfy(57,24): Error: unresolved identifier: a
+   |
+57 |           assert sorted[a] == oldSorted[a];
+   |                         ^
+
+problem_data/p_14_4_merge_sort_lexicographic_seq/program.dfy(57,40): Error: unresolved identifier: a
+   |
+57 |           assert sorted[a] == oldSorted[a];
+   |                                         ^
+
+problem_data/p_14_4_merge_sort_lexicographic_seq/program.dfy(58,27): Error: unresolved identifier: a
+   |
+58 |           assert oldSorted[a] <= right[oldJ];
+   |                            ^
+
+problem_data/p_14_4_merge_sort_lexicographic_seq/program.dfy(60,17): Error: unresolved identifier: a
+   |
+60 |           assert a == |oldSorted|;
+   |                  ^
+
+problem_data/p_14_4_merge_sort_lexicographic_seq/program.dfy(61,24): Error: unresolved identifier: a
+   |
+61 |           assert sorted[a] == right[oldJ];
+   |                         ^
+
+problem_data/p_14_4_merge_sort_lexicographic_seq/program.dfy(74,11): Error: unresolved identifier: b
+   |
+74 |         if b < |oldSorted| {
+   |            ^
+
+problem_data/p_14_4_merge_sort_lexicographic_seq/program.dfy(75,24): Error: unresolved identifier: a
+   |
+75 |           assert sorted[a] == oldSorted[a];
+   |                         ^
+
+problem_data/p_14_4_merge_sort_lexicographic_seq/program.dfy(75,40): Error: unresolved identifier: a
+   |
+75 |           assert sorted[a] == oldSorted[a];
+   |                                         ^
+
+problem_data/p_14_4_merge_sort_lexicographic_seq/program.dfy(76,24): Error: unresolved identifier: b
+   |
+76 |           assert sorted[b] == oldSorted[b];
+   |                         ^
+
+problem_data/p_14_4_merge_sort_lexicographic_seq/program.dfy(76,40): Error: unresolved identifier: b
+   |
+76 |           assert sorted[b] == oldSorted[b];
+   |                                         ^
+
+problem_data/p_14_4_merge_sort_lexicographic_seq/program.dfy(78,17): Error: unresolved identifier: b
+   |
+78 |           assert b == |oldSorted|;
+   |                  ^
+
+problem_data/p_14_4_merge_sort_lexicographic_seq/program.dfy(79,17): Error: unresolved identifier: a
+   |
+79 |           assert a < |oldSorted|;
+   |                  ^
+
+problem_data/p_14_4_merge_sort_lexicographic_seq/program.dfy(80,24): Error: unresolved identifier: a
+   |
+80 |           assert sorted[a] == oldSorted[a];
+   |                         ^
+
+problem_data/p_14_4_merge_sort_lexicographic_seq/program.dfy(80,40): Error: unresolved identifier: a
+   |
+80 |           assert sorted[a] == oldSorted[a];
+   |                                         ^
+
+problem_data/p_14_4_merge_sort_lexicographic_seq/program.dfy(81,24): Error: unresolved identifier: b
+   |
+81 |           assert sorted[b] == left[oldI];
+   |                         ^
+
+problem_data/p_14_4_merge_sort_lexicographic_seq/program.dfy(89,11): Error: unresolved identifier: a
+   |
+89 |         if a < |oldSorted| {
+   |            ^
+
+problem_data/p_14_4_merge_sort_lexicographic_seq/program.dfy(90,24): Error: unresolved identifier: a
+   |
+90 |           assert sorted[a] == oldSorted[a];
+   |                         ^
+
+problem_data/p_14_4_merge_sort_lexicographic_seq/program.dfy(90,40): Error: unresolved identifier: a
+   |
+90 |           assert sorted[a] == oldSorted[a];
+   |                                         ^
+
+problem_data/p_14_4_merge_sort_lexicographic_seq/program.dfy(91,27): Error: unresolved identifier: a
+   |
+91 |           assert oldSorted[a] <= left[oldI];
+   |                            ^
+
+problem_data/p_14_4_merge_sort_lexicographic_seq/program.dfy(93,17): Error: unresolved identifier: a
+   |
+93 |           assert a == |oldSorted|;
+   |                  ^
+
+problem_data/p_14_4_merge_sort_lexicographic_seq/program.dfy(94,24): Error: unresolved identifier: a
+   |
+94 |           assert sorted[a] == left[oldI];
+   |                         ^
+
+problem_data/p_14_4_merge_sort_lexicographic_seq/program.dfy(111,11): Error: unresolved identifier: b
+    |
+111 |         if b < |oldSorted| {
+    |            ^
+
+problem_data/p_14_4_merge_sort_lexicographic_seq/program.dfy(112,24): Error: unresolved identifier: a
+    |
+112 |           assert sorted[a] == oldSorted[a];
+    |                         ^
+
+problem_data/p_14_4_merge_sort_lexicographic_seq/program.dfy(112,40): Error: unresolved identifier: a
+    |
+112 |           assert sorted[a] == oldSorted[a];
+    |                                         ^
+
+problem_data/p_14_4_merge_sort_lexicographic_seq/program.dfy(113,24): Error: unresolved identifier: b
+    |
+113 |           assert sorted[b] == oldSorted[b];
+    |                         ^
+
+problem_data/p_14_4_merge_sort_lexicographic_seq/program.dfy(113,40): Error: unresolved identifier: b
+    |
+113 |           assert sorted[b] == oldSorted[b];
+    |                                         ^
+
+problem_data/p_14_4_merge_sort_lexicographic_seq/program.dfy(115,17): Error: unresolved identifier: b
+    |
+115 |           assert b == |oldSorted|;
+    |                  ^
+
+problem_data/p_14_4_merge_sort_lexicographic_seq/program.dfy(116,17): Error: unresolved identifier: a
+    |
+116 |           assert a < |oldSorted|;
+    |                  ^
+
+problem_data/p_14_4_merge_sort_lexicographic_seq/program.dfy(117,24): Error: unresolved identifier: a
+    |
+117 |           assert sorted[a] == oldSorted[a];
+    |                         ^
+
+problem_data/p_14_4_merge_sort_lexicographic_seq/program.dfy(117,40): Error: unresolved identifier: a
+    |
+117 |           assert sorted[a] == oldSorted[a];
+    |                                         ^
+
+problem_data/p_14_4_merge_sort_lexicographic_seq/program.dfy(118,24): Error: unresolved identifier: b
+    |
+118 |           assert sorted[b] == left[oldI];
+    |                         ^
+
+problem_data/p_14_4_merge_sort_lexicographic_seq/program.dfy(126,11): Error: unresolved identifier: a
+    |
+126 |         if a < |oldSorted| {
+    |            ^
+
+problem_data/p_14_4_merge_sort_lexicographic_seq/program.dfy(127,24): Error: unresolved identifier: a
+    |
+127 |           assert sorted[a] == oldSorted[a];
+    |                         ^
+
+problem_data/p_14_4_merge_sort_lexicographic_seq/program.dfy(127,40): Error: unresolved identifier: a
+    |
+127 |           assert sorted[a] == oldSorted[a];
+    |                                         ^
+
+problem_data/p_14_4_merge_sort_lexicographic_seq/program.dfy(128,27): Error: unresolved identifier: a
+    |
+128 |           assert oldSorted[a] <= left[oldI];
+    |                            ^
+
+problem_data/p_14_4_merge_sort_lexicographic_seq/program.dfy(130,17): Error: unresolved identifier: a
+    |
+130 |           assert a == |oldSorted|;
+    |                  ^
+
+problem_data/p_14_4_merge_sort_lexicographic_seq/program.dfy(131,24): Error: unresolved identifier: a
+    |
+131 |           assert sorted[a] == left[oldI];
+    |                         ^
+
+problem_data/p_14_4_merge_sort_lexicographic_seq/program.dfy(136,11): Error: unresolved identifier: a
+    |
+136 |         if a < |oldSorted| {
+    |            ^
+
+problem_data/p_14_4_merge_sort_lexicographic_seq/program.dfy(137,24): Error: unresolved identifier: a
+    |
+137 |           assert sorted[a] == oldSorted[a];
+    |                         ^
+
+problem_data/p_14_4_merge_sort_lexicographic_seq/program.dfy(137,40): Error: unresolved identifier: a
+    |
+137 |           assert sorted[a] == oldSorted[a];
+    |                                         ^
+
+problem_data/p_14_4_merge_sort_lexicographic_seq/program.dfy(138,27): Error: unresolved identifier: a
+    |
+138 |           assert oldSorted[a] <= right[oldJ];
+    |                            ^
+
+problem_data/p_14_4_merge_sort_lexicographic_seq/program.dfy(140,17): Error: unresolved identifier: a
+    |
+140 |           assert a == |oldSorted|;
+    |                  ^
+
+problem_data/p_14_4_merge_sort_lexicographic_seq/program.dfy(141,24): Error: unresolved identifier: a
+    |
+141 |           assert sorted[a] == left[oldI];
+    |                         ^
+
+problem_data/p_14_4_merge_sort_lexicographic_seq/program.dfy(159,11): Error: unresolved identifier: b
+    |
+159 |         if b < |oldSorted| {
+    |            ^
+
+problem_data/p_14_4_merge_sort_lexicographic_seq/program.dfy(160,24): Error: unresolved identifier: a
+    |
+160 |           assert sorted[a] == oldSorted[a];
+    |                         ^
+
+problem_data/p_14_4_merge_sort_lexicographic_seq/program.dfy(160,40): Error: unresolved identifier: a
+    |
+160 |           assert sorted[a] == oldSorted[a];
+    |                                         ^
+
+problem_data/p_14_4_merge_sort_lexicographic_seq/program.dfy(161,24): Error: unresolved identifier: b
+    |
+161 |           assert sorted[b] == oldSorted[b];
+    |                         ^
+
+problem_data/p_14_4_merge_sort_lexicographic_seq/program.dfy(161,40): Error: unresolved identifier: b
+    |
+161 |           assert sorted[b] == oldSorted[b];
+    |                                         ^
+
+problem_data/p_14_4_merge_sort_lexicographic_seq/program.dfy(163,17): Error: unresolved identifier: b
+    |
+163 |           assert b == |oldSorted|;
+    |                  ^
+
+problem_data/p_14_4_merge_sort_lexicographic_seq/program.dfy(164,17): Error: unresolved identifier: a
+    |
+164 |           assert a < |oldSorted|;
+    |                  ^
+
+problem_data/p_14_4_merge_sort_lexicographic_seq/program.dfy(165,24): Error: unresolved identifier: a
+    |
+165 |           assert sorted[a] == oldSorted[a];
+    |                         ^
+
+problem_data/p_14_4_merge_sort_lexicographic_seq/program.dfy(165,40): Error: unresolved identifier: a
+    |
+165 |           assert sorted[a] == oldSorted[a];
+    |                                         ^
+
+problem_data/p_14_4_merge_sort_lexicographic_seq/program.dfy(166,24): Error: unresolved identifier: b
+    |
+166 |           assert sorted[b] == right[oldJ];
+    |                         ^
+
+problem_data/p_14_4_merge_sort_lexicographic_seq/program.dfy(173,11): Error: unresolved identifier: a
+    |
+173 |         if a < |oldSorted| {
+    |            ^
+
+problem_data/p_14_4_merge_sort_lexicographic_seq/program.dfy(174,24): Error: unresolved identifier: a
+    |
+174 |           assert sorted[a] == oldSorted[a];
+    |                         ^
+
+problem_data/p_14_4_merge_sort_lexicographic_seq/program.dfy(174,40): Error: unresolved identifier: a
+    |
+174 |           assert sorted[a] == oldSorted[a];
+    |                                         ^
+
+problem_data/p_14_4_merge_sort_lexicographic_seq/program.dfy(175,27): Error: unresolved identifier: a
+    |
+175 |           assert oldSorted[a] <= left[oldI];
+    |                            ^
+
+problem_data/p_14_4_merge_sort_lexicographic_seq/program.dfy(177,17): Error: unresolved identifier: a
+    |
+177 |           assert a == |oldSorted|;
+    |                  ^
+
+problem_data/p_14_4_merge_sort_lexicographic_seq/program.dfy(178,24): Error: unresolved identifier: a
+    |
+178 |           assert sorted[a] == right[oldJ];
+    |                         ^
+
+problem_data/p_14_4_merge_sort_lexicographic_seq/program.dfy(185,11): Error: unresolved identifier: a
+    |
+185 |         if a < |oldSorted| {
+    |            ^
+
+problem_data/p_14_4_merge_sort_lexicographic_seq/program.dfy(186,24): Error: unresolved identifier: a
+    |
+186 |           assert sorted[a] == oldSorted[a];
+    |                         ^
+
+problem_data/p_14_4_merge_sort_lexicographic_seq/program.dfy(186,40): Error: unresolved identifier: a
+    |
+186 |           assert sorted[a] == oldSorted[a];
+    |                                         ^
+
+problem_data/p_14_4_merge_sort_lexicographic_seq/program.dfy(187,27): Error: unresolved identifier: a
+    |
+187 |           assert oldSorted[a] <= right[oldJ];
+    |                            ^
+
+problem_data/p_14_4_merge_sort_lexicographic_seq/program.dfy(189,17): Error: unresolved identifier: a
+    |
+189 |           assert a == |oldSorted|;
+    |                  ^
+
+problem_data/p_14_4_merge_sort_lexicographic_seq/program.dfy(190,24): Error: unresolved identifier: a
+    |
+190 |           assert sorted[a] == right[oldJ];
+    |                         ^
+
+76 resolution/type errors detected in program.dfy
+[06/06/26 14:32:14.772] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [INFO]: Calling dafny to resolve the generated code, but with warnings allowed...
+[06/06/26 14:32:17.957] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [SEVERE]: Program exited with code 2
+[06/06/26 14:32:17.957] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [SEVERE]: Program stdout: problem_data/p_14_4_merge_sort_lexicographic_seq/program.dfy(40,11): Error: unresolved identifier: b
+   |
+40 |         if b < |oldSorted| {
+   |            ^
+
+problem_data/p_14_4_merge_sort_lexicographic_seq/program.dfy(41,24): Error: unresolved identifier: a
+   |
+41 |           assert sorted[a] == oldSorted[a];
+   |                         ^
+
+problem_data/p_14_4_merge_sort_lexicographic_seq/program.dfy(41,40): Error: unresolved identifier: a
+   |
+41 |           assert sorted[a] == oldSorted[a];
+   |                                         ^
+
+problem_data/p_14_4_merge_sort_lexicographic_seq/program.dfy(42,24): Error: unresolved identifier: b
+   |
+42 |           assert sorted[b] == oldSorted[b];
+   |                         ^
+
+problem_data/p_14_4_merge_sort_lexicographic_seq/program.dfy(42,40): Error: unresolved identifier: b
+   |
+42 |           assert sorted[b] == oldSorted[b];
+   |                                         ^
+
+problem_data/p_14_4_merge_sort_lexicographic_seq/program.dfy(44,17): Error: unresolved identifier: b
+   |
+44 |           assert b == |oldSorted|;
+   |                  ^
+
+problem_data/p_14_4_merge_sort_lexicographic_seq/program.dfy(45,17): Error: unresolved identifier: a
+   |
+45 |           assert a < |oldSorted|;
+   |                  ^
+
+problem_data/p_14_4_merge_sort_lexicographic_seq/program.dfy(46,24): Error: unresolved identifier: a
+   |
+46 |           assert sorted[a] == oldSorted[a];
+   |                         ^
+
+problem_data/p_14_4_merge_sort_lexicographic_seq/program.dfy(46,40): Error: unresolved identifier: a
+   |
+46 |           assert sorted[a] == oldSorted[a];
+   |                                         ^
+
+problem_data/p_14_4_merge_sort_lexicographic_seq/program.dfy(47,24): Error: unresolved identifier: b
+   |
+47 |           assert sorted[b] == right[oldJ];
+   |                         ^
+
+problem_data/p_14_4_merge_sort_lexicographic_seq/program.dfy(56,11): Error: unresolved identifier: a
+   |
+56 |         if a < |oldSorted| {
+   |            ^
+
+problem_data/p_14_4_merge_sort_lexicographic_seq/program.dfy(57,24): Error: unresolved identifier: a
+   |
+57 |           assert sorted[a] == oldSorted[a];
+   |                         ^
+
+problem_data/p_14_4_merge_sort_lexicographic_seq/program.dfy(57,40): Error: unresolved identifier: a
+   |
+57 |           assert sorted[a] == oldSorted[a];
+   |                                         ^
+
+problem_data/p_14_4_merge_sort_lexicographic_seq/program.dfy(58,27): Error: unresolved identifier: a
+   |
+58 |           assert oldSorted[a] <= right[oldJ];
+   |                            ^
+
+problem_data/p_14_4_merge_sort_lexicographic_seq/program.dfy(60,17): Error: unresolved identifier: a
+   |
+60 |           assert a == |oldSorted|;
+   |                  ^
+
+problem_data/p_14_4_merge_sort_lexicographic_seq/program.dfy(61,24): Error: unresolved identifier: a
+   |
+61 |           assert sorted[a] == right[oldJ];
+   |                         ^
+
+problem_data/p_14_4_merge_sort_lexicographic_seq/program.dfy(74,11): Error: unresolved identifier: b
+   |
+74 |         if b < |oldSorted| {
+   |            ^
+
+problem_data/p_14_4_merge_sort_lexicographic_seq/program.dfy(75,24): Error: unresolved identifier: a
+   |
+75 |           assert sorted[a] == oldSorted[a];
+   |                         ^
+
+problem_data/p_14_4_merge_sort_lexicographic_seq/program.dfy(75,40): Error: unresolved identifier: a
+   |
+75 |           assert sorted[a] == oldSorted[a];
+   |                                         ^
+
+problem_data/p_14_4_merge_sort_lexicographic_seq/program.dfy(76,24): Error: unresolved identifier: b
+   |
+76 |           assert sorted[b] == oldSorted[b];
+   |                         ^
+
+problem_data/p_14_4_merge_sort_lexicographic_seq/program.dfy(76,40): Error: unresolved identifier: b
+   |
+76 |           assert sorted[b] == oldSorted[b];
+   |                                         ^
+
+problem_data/p_14_4_merge_sort_lexicographic_seq/program.dfy(78,17): Error: unresolved identifier: b
+   |
+78 |           assert b == |oldSorted|;
+   |                  ^
+
+problem_data/p_14_4_merge_sort_lexicographic_seq/program.dfy(79,17): Error: unresolved identifier: a
+   |
+79 |           assert a < |oldSorted|;
+   |                  ^
+
+problem_data/p_14_4_merge_sort_lexicographic_seq/program.dfy(80,24): Error: unresolved identifier: a
+   |
+80 |           assert sorted[a] == oldSorted[a];
+   |                         ^
+
+problem_data/p_14_4_merge_sort_lexicographic_seq/program.dfy(80,40): Error: unresolved identifier: a
+   |
+80 |           assert sorted[a] == oldSorted[a];
+   |                                         ^
+
+problem_data/p_14_4_merge_sort_lexicographic_seq/program.dfy(81,24): Error: unresolved identifier: b
+   |
+81 |           assert sorted[b] == left[oldI];
+   |                         ^
+
+problem_data/p_14_4_merge_sort_lexicographic_seq/program.dfy(89,11): Error: unresolved identifier: a
+   |
+89 |         if a < |oldSorted| {
+   |            ^
+
+problem_data/p_14_4_merge_sort_lexicographic_seq/program.dfy(90,24): Error: unresolved identifier: a
+   |
+90 |           assert sorted[a] == oldSorted[a];
+   |                         ^
+
+problem_data/p_14_4_merge_sort_lexicographic_seq/program.dfy(90,40): Error: unresolved identifier: a
+   |
+90 |           assert sorted[a] == oldSorted[a];
+   |                                         ^
+
+problem_data/p_14_4_merge_sort_lexicographic_seq/program.dfy(91,27): Error: unresolved identifier: a
+   |
+91 |           assert oldSorted[a] <= left[oldI];
+   |                            ^
+
+problem_data/p_14_4_merge_sort_lexicographic_seq/program.dfy(93,17): Error: unresolved identifier: a
+   |
+93 |           assert a == |oldSorted|;
+   |                  ^
+
+problem_data/p_14_4_merge_sort_lexicographic_seq/program.dfy(94,24): Error: unresolved identifier: a
+   |
+94 |           assert sorted[a] == left[oldI];
+   |                         ^
+
+problem_data/p_14_4_merge_sort_lexicographic_seq/program.dfy(111,11): Error: unresolved identifier: b
+    |
+111 |         if b < |oldSorted| {
+    |            ^
+
+problem_data/p_14_4_merge_sort_lexicographic_seq/program.dfy(112,24): Error: unresolved identifier: a
+    |
+112 |           assert sorted[a] == oldSorted[a];
+    |                         ^
+
+problem_data/p_14_4_merge_sort_lexicographic_seq/program.dfy(112,40): Error: unresolved identifier: a
+    |
+112 |           assert sorted[a] == oldSorted[a];
+    |                                         ^
+
+problem_data/p_14_4_merge_sort_lexicographic_seq/program.dfy(113,24): Error: unresolved identifier: b
+    |
+113 |           assert sorted[b] == oldSorted[b];
+    |                         ^
+
+problem_data/p_14_4_merge_sort_lexicographic_seq/program.dfy(113,40): Error: unresolved identifier: b
+    |
+113 |           assert sorted[b] == oldSorted[b];
+    |                                         ^
+
+problem_data/p_14_4_merge_sort_lexicographic_seq/program.dfy(115,17): Error: unresolved identifier: b
+    |
+115 |           assert b == |oldSorted|;
+    |                  ^
+
+problem_data/p_14_4_merge_sort_lexicographic_seq/program.dfy(116,17): Error: unresolved identifier: a
+    |
+116 |           assert a < |oldSorted|;
+    |                  ^
+
+problem_data/p_14_4_merge_sort_lexicographic_seq/program.dfy(117,24): Error: unresolved identifier: a
+    |
+117 |           assert sorted[a] == oldSorted[a];
+    |                         ^
+
+problem_data/p_14_4_merge_sort_lexicographic_seq/program.dfy(117,40): Error: unresolved identifier: a
+    |
+117 |           assert sorted[a] == oldSorted[a];
+    |                                         ^
+
+problem_data/p_14_4_merge_sort_lexicographic_seq/program.dfy(118,24): Error: unresolved identifier: b
+    |
+118 |           assert sorted[b] == left[oldI];
+    |                         ^
+
+problem_data/p_14_4_merge_sort_lexicographic_seq/program.dfy(126,11): Error: unresolved identifier: a
+    |
+126 |         if a < |oldSorted| {
+    |            ^
+
+problem_data/p_14_4_merge_sort_lexicographic_seq/program.dfy(127,24): Error: unresolved identifier: a
+    |
+127 |           assert sorted[a] == oldSorted[a];
+    |                         ^
+
+problem_data/p_14_4_merge_sort_lexicographic_seq/program.dfy(127,40): Error: unresolved identifier: a
+    |
+127 |           assert sorted[a] == oldSorted[a];
+    |                                         ^
+
+problem_data/p_14_4_merge_sort_lexicographic_seq/program.dfy(128,27): Error: unresolved identifier: a
+    |
+128 |           assert oldSorted[a] <= left[oldI];
+    |                            ^
+
+problem_data/p_14_4_merge_sort_lexicographic_seq/program.dfy(130,17): Error: unresolved identifier: a
+    |
+130 |           assert a == |oldSorted|;
+    |                  ^
+
+problem_data/p_14_4_merge_sort_lexicographic_seq/program.dfy(131,24): Error: unresolved identifier: a
+    |
+131 |           assert sorted[a] == left[oldI];
+    |                         ^
+
+problem_data/p_14_4_merge_sort_lexicographic_seq/program.dfy(136,11): Error: unresolved identifier: a
+    |
+136 |         if a < |oldSorted| {
+    |            ^
+
+problem_data/p_14_4_merge_sort_lexicographic_seq/program.dfy(137,24): Error: unresolved identifier: a
+    |
+137 |           assert sorted[a] == oldSorted[a];
+    |                         ^
+
+problem_data/p_14_4_merge_sort_lexicographic_seq/program.dfy(137,40): Error: unresolved identifier: a
+    |
+137 |           assert sorted[a] == oldSorted[a];
+    |                                         ^
+
+problem_data/p_14_4_merge_sort_lexicographic_seq/program.dfy(138,27): Error: unresolved identifier: a
+    |
+138 |           assert oldSorted[a] <= right[oldJ];
+    |                            ^
+
+problem_data/p_14_4_merge_sort_lexicographic_seq/program.dfy(140,17): Error: unresolved identifier: a
+    |
+140 |           assert a == |oldSorted|;
+    |                  ^
+
+problem_data/p_14_4_merge_sort_lexicographic_seq/program.dfy(141,24): Error: unresolved identifier: a
+    |
+141 |           assert sorted[a] == left[oldI];
+    |                         ^
+
+problem_data/p_14_4_merge_sort_lexicographic_seq/program.dfy(159,11): Error: unresolved identifier: b
+    |
+159 |         if b < |oldSorted| {
+    |            ^
+
+problem_data/p_14_4_merge_sort_lexicographic_seq/program.dfy(160,24): Error: unresolved identifier: a
+    |
+160 |           assert sorted[a] == oldSorted[a];
+    |                         ^
+
+problem_data/p_14_4_merge_sort_lexicographic_seq/program.dfy(160,40): Error: unresolved identifier: a
+    |
+160 |           assert sorted[a] == oldSorted[a];
+    |                                         ^
+
+problem_data/p_14_4_merge_sort_lexicographic_seq/program.dfy(161,24): Error: unresolved identifier: b
+    |
+161 |           assert sorted[b] == oldSorted[b];
+    |                         ^
+
+problem_data/p_14_4_merge_sort_lexicographic_seq/program.dfy(161,40): Error: unresolved identifier: b
+    |
+161 |           assert sorted[b] == oldSorted[b];
+    |                                         ^
+
+problem_data/p_14_4_merge_sort_lexicographic_seq/program.dfy(163,17): Error: unresolved identifier: b
+    |
+163 |           assert b == |oldSorted|;
+    |                  ^
+
+problem_data/p_14_4_merge_sort_lexicographic_seq/program.dfy(164,17): Error: unresolved identifier: a
+    |
+164 |           assert a < |oldSorted|;
+    |                  ^
+
+problem_data/p_14_4_merge_sort_lexicographic_seq/program.dfy(165,24): Error: unresolved identifier: a
+    |
+165 |           assert sorted[a] == oldSorted[a];
+    |                         ^
+
+problem_data/p_14_4_merge_sort_lexicographic_seq/program.dfy(165,40): Error: unresolved identifier: a
+    |
+165 |           assert sorted[a] == oldSorted[a];
+    |                                         ^
+
+problem_data/p_14_4_merge_sort_lexicographic_seq/program.dfy(166,24): Error: unresolved identifier: b
+    |
+166 |           assert sorted[b] == right[oldJ];
+    |                         ^
+
+problem_data/p_14_4_merge_sort_lexicographic_seq/program.dfy(173,11): Error: unresolved identifier: a
+    |
+173 |         if a < |oldSorted| {
+    |            ^
+
+problem_data/p_14_4_merge_sort_lexicographic_seq/program.dfy(174,24): Error: unresolved identifier: a
+    |
+174 |           assert sorted[a] == oldSorted[a];
+    |                         ^
+
+problem_data/p_14_4_merge_sort_lexicographic_seq/program.dfy(174,40): Error: unresolved identifier: a
+    |
+174 |           assert sorted[a] == oldSorted[a];
+    |                                         ^
+
+problem_data/p_14_4_merge_sort_lexicographic_seq/program.dfy(175,27): Error: unresolved identifier: a
+    |
+175 |           assert oldSorted[a] <= left[oldI];
+    |                            ^
+
+problem_data/p_14_4_merge_sort_lexicographic_seq/program.dfy(177,17): Error: unresolved identifier: a
+    |
+177 |           assert a == |oldSorted|;
+    |                  ^
+
+problem_data/p_14_4_merge_sort_lexicographic_seq/program.dfy(178,24): Error: unresolved identifier: a
+    |
+178 |           assert sorted[a] == right[oldJ];
+    |                         ^
+
+problem_data/p_14_4_merge_sort_lexicographic_seq/program.dfy(185,11): Error: unresolved identifier: a
+    |
+185 |         if a < |oldSorted| {
+    |            ^
+
+problem_data/p_14_4_merge_sort_lexicographic_seq/program.dfy(186,24): Error: unresolved identifier: a
+    |
+186 |           assert sorted[a] == oldSorted[a];
+    |                         ^
+
+problem_data/p_14_4_merge_sort_lexicographic_seq/program.dfy(186,40): Error: unresolved identifier: a
+    |
+186 |           assert sorted[a] == oldSorted[a];
+    |                                         ^
+
+problem_data/p_14_4_merge_sort_lexicographic_seq/program.dfy(187,27): Error: unresolved identifier: a
+    |
+187 |           assert oldSorted[a] <= right[oldJ];
+    |                            ^
+
+problem_data/p_14_4_merge_sort_lexicographic_seq/program.dfy(189,17): Error: unresolved identifier: a
+    |
+189 |           assert a == |oldSorted|;
+    |                  ^
+
+problem_data/p_14_4_merge_sort_lexicographic_seq/program.dfy(190,24): Error: unresolved identifier: a
+    |
+190 |           assert sorted[a] == right[oldJ];
+    |                         ^
+
+76 resolution/type errors detected in program.dfy
+[06/06/26 14:32:17.959] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [INFO]: Resolution fails as a result of an error.
+[06/06/26 14:32:17.961] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [WARNING]: Treating resolution as failed for the generated code. Preparing GenAI prompt to fix...
+[06/06/26 14:32:17.961] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [INFO]: There are 17406 left in the jar, for the rest of this experiment.
+[06/06/26 14:32:17.961] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [INFO]: Previous iteration lasted 103090ms
+[06/06/26 14:32:17.961] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [INFO]: Querrying GenAI...
+[06/06/26 14:32:17.962] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [FINE]: Constructing message for GenAI
+[06/06/26 14:32:17.962] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [INFO]: Context is on, attaching 5 previous messages in the request to GenAI.
+[06/06/26 14:32:17.967] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [INFO]: A reasoning model is chosen, but no reasoning effort value is set. Setting reasoning to 'medium'
+[06/06/26 14:32:17.968] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [FINE]: Setting max tokens for the request to 17406
+[06/06/26 14:32:17.968] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [FINE]: Using model gpt-5.5. Awaiting response...
+[06/06/26 14:33:17.797] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [FINE]: Got response with 8304 characters.
+[06/06/26 14:33:17.799] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [FINE]: Saving gen_ai_messages.json
+[06/06/26 14:33:17.801] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [FINE]: Saved 67684 characters to file gen_ai_messages.json
+[06/06/26 14:33:17.803] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [FINE]: Saving gen_ai_messages_simple.json
+[06/06/26 14:33:17.805] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [FINE]: Saved 41041 characters to file gen_ai_messages_simple.json
+[06/06/26 14:33:17.805] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [INFO]: Converting GenAI response to a program...
+[06/06/26 14:33:17.806] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [INFO]: Treating GenAIs response as a partial method, not a complete program (Since, the problem spec has a method signature).
+[06/06/26 14:33:17.811] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [FINE]: Saving program.dfy
+[06/06/26 14:33:17.812] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [FINE]: Saved 8263 characters to file program.dfy
+[06/06/26 14:33:17.813] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [INFO]: Context is treated as being fully enabled, meaning that subsequent prompts do not include the full code.
+[06/06/26 14:33:17.813] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [INFO]: Checking the code for the presence of the 'assume' or 'expect' keyword...
+[06/06/26 14:33:17.814] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [INFO]: Calling dafny to resolve the generated code...
+[06/06/26 14:33:20.937] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [INFO]: Program exited with code 0
+[06/06/26 14:33:20.938] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [INFO]: Program stdout: 
+Dafny program verifier did not attempt verification
+[06/06/26 14:33:20.938] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [INFO]: Calling dafny to resolve the generated code, but with warnings allowed...
+[06/06/26 14:33:23.891] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [INFO]: Program exited with code 0
+[06/06/26 14:33:23.893] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [INFO]: Program stdout: 
+Dafny program verifier did not attempt verification
+[06/06/26 14:33:23.893] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [INFO]: Resolution passes without warnings.
+[06/06/26 14:33:23.894] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [INFO]: Dafny resolution check passed.
+[06/06/26 14:33:23.894] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [INFO]: Calling dafny to verify the generated code...
+[06/06/26 14:33:32.924] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [SEVERE]: Program exited with code 4
+[06/06/26 14:33:32.928] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [SEVERE]: Program stdout: problem_data/p_14_4_merge_sort_lexicographic_seq/program.dfy(172,6): Error: assertion might not hold
+    |
+172 |       assert right[j] <= left[i];
+    |       ^^^^^^
+
+
+Dafny program verifier finished with 1 verified, 1 error
+[06/06/26 14:33:32.928] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [WARNING]: Failed to verify the generated code. Preparing GenAI prompt to fix...
+[06/06/26 14:33:32.929] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [INFO]: There are 2259 left in the jar, for the rest of this experiment.
+[06/06/26 14:33:32.929] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [INFO]: Previous iteration lasted 74968ms
+[06/06/26 14:33:32.929] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [INFO]: Querrying GenAI...
+[06/06/26 14:33:32.929] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [FINE]: Constructing message for GenAI
+[06/06/26 14:33:32.930] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [INFO]: Context is on, attaching 7 previous messages in the request to GenAI.
+[06/06/26 14:33:32.930] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [INFO]: A reasoning model is chosen, but no reasoning effort value is set. Setting reasoning to 'medium'
+[06/06/26 14:33:32.931] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [FINE]: Setting max tokens for the request to 2259
+[06/06/26 14:33:32.931] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [FINE]: Using model gpt-5.5. Awaiting response...
+[06/06/26 14:34:19.048] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [SEVERE]: Model finished with non 'stop' reason: length.
+[06/06/26 14:34:19.057] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [FINE]: Saving gen_ai_messages.json
+[06/06/26 14:34:19.058] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [FINE]: Saved 69360 characters to file gen_ai_messages.json
+[06/06/26 14:34:19.060] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [FINE]: Saving gen_ai_messages_simple.json
+[06/06/26 14:34:19.062] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [FINE]: Saved 41721 characters to file gen_ai_messages_simple.json
+[06/06/26 14:34:19.062] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [SEVERE]: Failed to aquire code from GenAI. Will re-try up to limit.
+[06/06/26 14:34:19.063] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [WARNING]: Experiment stopped after using 40155 tokens, which exceeds the limit specified. 
+[06/06/26 14:34:19.141] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [FINE]: Saving gen_ai_messages.json
+[06/06/26 14:34:19.142] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [FINE]: Saved 69360 characters to file gen_ai_messages.json
+[06/06/26 14:34:19.144] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [FINE]: Saving gen_ai_messages_simple.json
+[06/06/26 14:34:19.145] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [FINE]: Saved 41721 characters to file gen_ai_messages_simple.json
+[06/06/26 14:34:19.148] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [FINE]: Saving experiment_result.json
+[06/06/26 14:34:19.149] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [FINE]: Saved 1092 characters to file experiment_result.json
+[06/06/26 14:34:19.168] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [FINE]: Failed to parse GenAI response for LaTeX report generation. Dumping raw JSON
+[06/06/26 14:34:21.690] [Experiment 'p_14_4_merge_sort_lexicographic_seq'] [INFO]: Compilation of experiment report tex file successful

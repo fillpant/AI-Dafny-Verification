@@ -1,0 +1,116 @@
+\documentclass{article}
+\usepackage{lmodern}
+\usepackage{amsmath}
+\usepackage{listings}
+\usepackage{fullpage}
+\usepackage{parskip}
+\usepackage{xcolor}
+\lstset{
+	basicstyle=\ttfamily,
+	columns=fullflexible,
+	frame=single,
+	breaklines=true,
+	postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},
+}
+\begin{document}
+\title{Experiment `p\_4\_3\_c\_replace\_vowels' Results}
+\author{\today}
+\date{}
+\maketitle
+\textbf{Experiment outcome: }SUCCESS
+\\\textbf{Bad responses: }0
+\\\textbf{Responses containing}~\texttt{assume}~\textbf{: }0
+\\\textbf{Responses containing}~\texttt{expect}~\textbf{: }0
+\\\textbf{Resolution attempts: }2
+\\\textbf{Hard fails (resolution): }0
+\\\textbf{Soft fails (resolution): }0
+\\\textbf{Verification attempts: }2
+\section*{Problem Specification}
+\textbf{Problem name: }p\_4\_3\_c\_replace\_vowels
+\\\textbf{Natural language statement: }Write a method that takes a string and returns the string, with all vowels replaced by an underscore.
+\\\textbf{Method signature: }p\_4\_3\_c\_replace\_vowels(s: string) returns (result: string)
+\subsection*{Ensures}
+\begin{itemize}
+\item \texttt{|result| == |s|}
+\item \texttt{forall i :: 0 <= i < |s| ==> (if s[i] in ['a','e','i','o','u','A','E','I','O','U'] then result[i] == '\_' else result[i] == s[i])}
+\end{itemize}
+\clearpage
+\section*{GenAI interactions}
+Below you will find all interactions between the `user' (program) and the `assistant' (OpenAI).
+\subsection*{Program $\rightarrow$ GenAI}
+\begin{lstlisting}
+You are given the following task to perform in Dafny:
+
+Write a method that takes a string and returns the string, with all vowels replaced by an underscore.
+
+The signature should be:
+
+p_4_3_c_replace_vowels(s: string) returns (result: string)
+
+The method should respect the following contract:
+
+ensures |result| == |s|, ensures forall i :: 0 <= i < |s| ==> (if s[i] in ['a','e','i','o','u','A','E','I','O','U'] then result[i] == '_' else result[i] == s[i])
+
+Produce and show only the Dafny body of this method, including the curly braces that surround it. Do not show the signature nor contract. You must not use 'assume' nor 'expect' anywhere in your code.
+\end{lstlisting}
+\subsection*{GenAI $\rightarrow$ Program}
+\textbf{System fingerprint: }null
+\\\textbf{ID: }chatcmpl-DmenXuJ8BxUJ4EJEvSUAETMjjoUcl
+\\\textbf{Model: }gpt-5.5-2026-04-23
+\\\textbf{Created at: }1780488943
+\\\textbf{Finish reason: }stop
+\\\textbf{Usage: }382 tokens in, and 1431 tokens out
+\begin{lstlisting}
+{
+  result := seq(|s|, i => if s[i] in ['a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U'] then '_' else s[i]);
+}
+\end{lstlisting}
+\subsection*{Program $\rightarrow$ GenAI}
+\begin{lstlisting}
+When using dafny verify, the below error is emitted and verify fails:
+
+problem_data/p_4_3_c_replace_vowels/program.dfy(5,30): Error: index out of range
+  |
+5 |   result := seq(|s|, i => if s[i] in ['a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U'] then '_' else s[i]);
+  |                               ^
+
+
+Dafny program verifier finished with 1 verified, 1 error
+
+Correct the error in code by altering only the method body. Produce and show only the Dafny body, including the curly braces that surround it. Do not show the signature nor contract. You must not use 'assume' nor 'expect' anywhere in your code.
+\end{lstlisting}
+\subsection*{GenAI $\rightarrow$ Program}
+\textbf{System fingerprint: }null
+\\\textbf{ID: }chatcmpl-DmeoH1djHlDP0Feu753S1wdlPzInl
+\\\textbf{Model: }gpt-5.5-2026-04-23
+\\\textbf{Created at: }1780488989
+\\\textbf{Finish reason: }stop
+\\\textbf{Usage: }623 tokens in, and 612 tokens out
+\begin{lstlisting}
+{
+  result := seq(|s|, i =>
+    if 0 <= i < |s| && s[i] in ['a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U'] then '_' else
+    if 0 <= i < |s| then s[i] else '_');
+}
+\end{lstlisting}
+\section*{Final Program}
+\begin{lstlisting}
+method p_4_3_c_replace_vowels(s: string) returns (result: string)
+	ensures |result| == |s|
+	ensures forall i :: 0 <= i < |s| ==> (if s[i] in ['a','e','i','o','u','A','E','I','O','U'] then result[i] == '_' else result[i] == s[i])
+{
+  result := seq(|s|, i =>
+    if 0 <= i < |s| && s[i] in ['a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U'] then '_' else
+    if 0 <= i < |s| then s[i] else '_');
+}
+\end{lstlisting}
+\section*{Total Token Usage}
+\textbf{Input tokens: }1005
+\\\textbf{Output tokens: }2043
+\\\textbf{Reasoning tokens: }1858
+\\\textbf{Sum of `total tokens': }3048
+\section*{Experiment Timings}
+\textbf{Overall Experiment} started at 1780488943701, ended at 1780489008861, lasting 65160ms (65.16 seconds)
+\\\textbf{Iteration \#1} started at 1780488943701, ended at 1780488989275, lasting 45574ms (45.57 seconds)
+\\\textbf{Iteration \#2} started at 1780488989275, ended at 1780489008861, lasting 19586ms (19.59 seconds)
+\end{document}

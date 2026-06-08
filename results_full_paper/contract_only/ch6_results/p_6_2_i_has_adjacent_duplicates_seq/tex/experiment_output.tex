@@ -1,0 +1,160 @@
+\documentclass{article}
+\usepackage{lmodern}
+\usepackage{amsmath}
+\usepackage{listings}
+\usepackage{fullpage}
+\usepackage{parskip}
+\usepackage{xcolor}
+\lstset{
+	basicstyle=\ttfamily,
+	columns=fullflexible,
+	frame=single,
+	breaklines=true,
+	postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},
+}
+\begin{document}
+\title{Experiment `p\_6\_2\_i\_has\_adjacent\_duplicates\_seq' Results}
+\author{\today}
+\date{}
+\maketitle
+\textbf{Experiment outcome: }SUCCESS
+\\\textbf{Bad responses: }0
+\\\textbf{Responses containing}~\texttt{assume}~\textbf{: }0
+\\\textbf{Responses containing}~\texttt{expect}~\textbf{: }0
+\\\textbf{Resolution attempts: }1
+\\\textbf{Hard fails (resolution): }0
+\\\textbf{Soft fails (resolution): }0
+\\\textbf{Verification attempts: }1
+\section*{Problem Specification}
+\textbf{Problem name: }p\_6\_2\_i\_has\_adjacent\_duplicates\_seq
+\\\textbf{Natural language statement: }null
+\\\textbf{Method signature: }p\_6\_2\_i\_has\_adjacent\_duplicates\_seq(inputs: seq<int>) returns (has\_duplicates: bool)
+\subsection*{Ensures}
+\begin{itemize}
+\item \texttt{has\_duplicates == (exists i :: 0 <= i < |inputs| - 1 \&\& inputs[i] == inputs[i + 1])}
+\end{itemize}
+\subsection*{Requires}
+\begin{itemize}
+\item \texttt{|inputs| >= 2}
+\end{itemize}
+\clearpage
+\section*{GenAI interactions}
+Below you will find all interactions between the `user' (program) and the `assistant' (OpenAI).
+\subsection*{Program $\rightarrow$ GenAI}
+\begin{lstlisting}
+You are given the following task to perform in Dafny:
+
+Write a method to satisfy the below requirements.
+
+The signature should be:
+
+p_6_2_i_has_adjacent_duplicates_seq(inputs: seq<int>) returns (has_duplicates: bool)
+
+The method should respect the following contract:
+
+requires |inputs| >= 2, ensures has_duplicates == (exists i :: 0 <= i < |inputs| - 1 && inputs[i] == inputs[i + 1])
+
+Produce and show only the Dafny body of this method, including the curly braces that surround it. Do not show the signature nor contract. You must not use 'assume' nor 'expect' anywhere in your code.
+\end{lstlisting}
+\subsection*{GenAI $\rightarrow$ Program}
+\textbf{System fingerprint: }null
+\\\textbf{ID: }chatcmpl-DnO6U7ZSkXOzqE5ByxLrBtIyI8xVZ
+\\\textbf{Model: }gpt-5.5-2026-04-23
+\\\textbf{Created at: }1780663098
+\\\textbf{Finish reason: }stop
+\\\textbf{Usage: }316 tokens in, and 4538 tokens out
+\begin{lstlisting}
+{
+  var i := 0;
+  while i < |inputs| - 1
+    invariant 0 <= i <= |inputs| - 1
+    invariant forall j :: 0 <= j < i ==> inputs[j] != inputs[j + 1]
+    decreases |inputs| - 1 - i
+  {
+    if inputs[i] == inputs[i + 1] {
+      has_duplicates := true;
+      assert 0 <= i < |inputs| - 1 && inputs[i] == inputs[i + 1];
+      assert exists j :: 0 <= j < |inputs| - 1 && inputs[j] == inputs[j + 1];
+      return;
+    }
+
+    assert inputs[i] != inputs[i + 1];
+    var oldI := i;
+    forall j | 0 <= j < oldI + 1
+      ensures inputs[j] != inputs[j + 1]
+    {
+      if j < oldI {
+        assert inputs[j] != inputs[j + 1];
+      } else {
+        assert j == oldI;
+        assert inputs[j] != inputs[j + 1];
+      }
+    }
+    i := i + 1;
+  }
+
+  assert i == |inputs| - 1;
+  assert !(exists j :: 0 <= j < |inputs| - 1 && inputs[j] == inputs[j + 1]) by {
+    if (exists k :: 0 <= k < |inputs| - 1 && inputs[k] == inputs[k + 1]) {
+      var j :| 0 <= j < |inputs| - 1 && inputs[j] == inputs[j + 1];
+      assert inputs[j] != inputs[j + 1];
+      assert false;
+    }
+  }
+  has_duplicates := false;
+}
+\end{lstlisting}
+\section*{Final Program}
+\begin{lstlisting}
+method p_6_2_i_has_adjacent_duplicates_seq(inputs: seq<int>) returns (has_duplicates: bool)
+	requires |inputs| >= 2
+	ensures has_duplicates == (exists i :: 0 <= i < |inputs| - 1 && inputs[i] == inputs[i + 1])
+{
+  var i := 0;
+  while i < |inputs| - 1
+    invariant 0 <= i <= |inputs| - 1
+    invariant forall j :: 0 <= j < i ==> inputs[j] != inputs[j + 1]
+    decreases |inputs| - 1 - i
+  {
+    if inputs[i] == inputs[i + 1] {
+      has_duplicates := true;
+      assert 0 <= i < |inputs| - 1 && inputs[i] == inputs[i + 1];
+      assert exists j :: 0 <= j < |inputs| - 1 && inputs[j] == inputs[j + 1];
+      return;
+    }
+
+    assert inputs[i] != inputs[i + 1];
+    var oldI := i;
+    forall j | 0 <= j < oldI + 1
+      ensures inputs[j] != inputs[j + 1]
+    {
+      if j < oldI {
+        assert inputs[j] != inputs[j + 1];
+      } else {
+        assert j == oldI;
+        assert inputs[j] != inputs[j + 1];
+      }
+    }
+    i := i + 1;
+  }
+
+  assert i == |inputs| - 1;
+  assert !(exists j :: 0 <= j < |inputs| - 1 && inputs[j] == inputs[j + 1]) by {
+    if (exists k :: 0 <= k < |inputs| - 1 && inputs[k] == inputs[k + 1]) {
+      var j :| 0 <= j < |inputs| - 1 && inputs[j] == inputs[j + 1];
+      assert inputs[j] != inputs[j + 1];
+      assert false;
+    }
+  }
+  has_duplicates := false;
+}
+\end{lstlisting}
+\section*{Total Token Usage}
+\textbf{Input tokens: }316
+\\\textbf{Output tokens: }4538
+\\\textbf{Reasoning tokens: }4066
+\\\textbf{Sum of `total tokens': }4854
+\section*{Experiment Timings}
+\textbf{Overall Experiment} started at 1780663097095, ended at 1780663207652, lasting 110557ms (110.56 seconds)
+\\\textbf{Iteration \#1} started at 1780663097095, ended at 1780663207652, lasting 110557ms (110.56 seconds)
+\end{document}

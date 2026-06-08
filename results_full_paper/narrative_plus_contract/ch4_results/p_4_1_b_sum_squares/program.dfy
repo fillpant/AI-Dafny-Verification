@@ -1,0 +1,114 @@
+method p_4_1_b_sum_squares() returns (sum: int)
+	ensures sum == 338350
+{
+  sum := 0;
+  var i := 1;
+  while i <= 100
+    invariant 1 <= i <= 101
+    invariant i == 1 ==> sum == 0
+    invariant i == 2 ==> sum == 1
+    invariant i == 3 ==> sum == 5
+    invariant i == 4 ==> sum == 14
+    invariant i == 5 ==> sum == 30
+    invariant i == 6 ==> sum == 55
+    invariant i == 7 ==> sum == 91
+    invariant i == 8 ==> sum == 140
+    invariant i == 9 ==> sum == 204
+    invariant i == 10 ==> sum == 285
+    invariant i == 11 ==> sum == 385
+    invariant i == 12 ==> sum == 506
+    invariant i == 13 ==> sum == 650
+    invariant i == 14 ==> sum == 819
+    invariant i == 15 ==> sum == 1015
+    invariant i == 16 ==> sum == 1240
+    invariant i == 17 ==> sum == 1496
+    invariant i == 18 ==> sum == 1785
+    invariant i == 19 ==> sum == 2109
+    invariant i == 20 ==> sum == 2470
+    invariant i == 21 ==> sum == 2870
+    invariant i == 22 ==> sum == 3311
+    invariant i == 23 ==> sum == 3795
+    invariant i == 24 ==> sum == 4324
+    invariant i == 25 ==> sum == 4900
+    invariant i == 26 ==> sum == 5525
+    invariant i == 27 ==> sum == 6201
+    invariant i == 28 ==> sum == 6930
+    invariant i == 29 ==> sum == 7714
+    invariant i == 30 ==> sum == 8555
+    invariant i == 31 ==> sum == 9455
+    invariant i == 32 ==> sum == 10416
+    invariant i == 33 ==> sum == 11440
+    invariant i == 34 ==> sum == 12529
+    invariant i == 35 ==> sum == 13685
+    invariant i == 36 ==> sum == 14910
+    invariant i == 37 ==> sum == 16206
+    invariant i == 38 ==> sum == 17575
+    invariant i == 39 ==> sum == 19019
+    invariant i == 40 ==> sum == 20540
+    invariant i == 41 ==> sum == 22140
+    invariant i == 42 ==> sum == 23821
+    invariant i == 43 ==> sum == 25585
+    invariant i == 44 ==> sum == 27434
+    invariant i == 45 ==> sum == 29370
+    invariant i == 46 ==> sum == 31395
+    invariant i == 47 ==> sum == 33511
+    invariant i == 48 ==> sum == 35720
+    invariant i == 49 ==> sum == 38024
+    invariant i == 50 ==> sum == 40425
+    invariant i == 51 ==> sum == 42925
+    invariant i == 52 ==> sum == 45526
+    invariant i == 53 ==> sum == 48230
+    invariant i == 54 ==> sum == 51039
+    invariant i == 55 ==> sum == 53955
+    invariant i == 56 ==> sum == 56980
+    invariant i == 57 ==> sum == 60116
+    invariant i == 58 ==> sum == 63365
+    invariant i == 59 ==> sum == 66729
+    invariant i == 60 ==> sum == 70210
+    invariant i == 61 ==> sum == 73810
+    invariant i == 62 ==> sum == 77531
+    invariant i == 63 ==> sum == 81375
+    invariant i == 64 ==> sum == 85344
+    invariant i == 65 ==> sum == 89440
+    invariant i == 66 ==> sum == 93665
+    invariant i == 67 ==> sum == 98021
+    invariant i == 68 ==> sum == 102510
+    invariant i == 69 ==> sum == 107134
+    invariant i == 70 ==> sum == 111895
+    invariant i == 71 ==> sum == 116795
+    invariant i == 72 ==> sum == 121836
+    invariant i == 73 ==> sum == 127020
+    invariant i == 74 ==> sum == 132349
+    invariant i == 75 ==> sum == 137825
+    invariant i == 76 ==> sum == 143450
+    invariant i == 77 ==> sum == 149226
+    invariant i == 78 ==> sum == 155155
+    invariant i == 79 ==> sum == 161239
+    invariant i == 80 ==> sum == 167480
+    invariant i == 81 ==> sum == 173880
+    invariant i == 82 ==> sum == 180441
+    invariant i == 83 ==> sum == 187165
+    invariant i == 84 ==> sum == 194054
+    invariant i == 85 ==> sum == 201110
+    invariant i == 86 ==> sum == 208335
+    invariant i == 87 ==> sum == 215731
+    invariant i == 88 ==> sum == 223300
+    invariant i == 89 ==> sum == 231044
+    invariant i == 90 ==> sum == 238965
+    invariant i == 91 ==> sum == 247065
+    invariant i == 92 ==> sum == 255346
+    invariant i == 93 ==> sum == 263810
+    invariant i == 94 ==> sum == 272459
+    invariant i == 95 ==> sum == 281295
+    invariant i == 96 ==> sum == 290320
+    invariant i == 97 ==> sum == 299536
+    invariant i == 98 ==> sum == 308945
+    invariant i == 99 ==> sum == 318549
+    invariant i == 100 ==> sum == 328350
+    invariant i == 101 ==> sum == 338350
+    decreases 101 - i
+  {
+    sum := sum + i * i;
+    i := i + 1;
+  }
+}

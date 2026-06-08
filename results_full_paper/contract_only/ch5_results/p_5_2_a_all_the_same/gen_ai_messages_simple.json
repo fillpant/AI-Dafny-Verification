@@ -1,0 +1,10 @@
+[
+  {
+    "role": "user",
+    "content": "You are given the following task to perform in Dafny:\n\nWrite a method to satisfy the below requirements.\n\nThe signature should be:\n\np_5_2_a_all_the_same(x: real, y: real, z: real) returns (all_same: bool)\n\nThe method should respect the following contract:\n\nensures all_same \u003d\u003d (x \u003d\u003d y \u0026\u0026 y \u003d\u003d z)\n\nProduce and show only the Dafny body of this method, including the curly braces that surround it. Do not show the signature nor contract. You must not use \u0027assume\u0027 nor \u0027expect\u0027 anywhere in your code."
+  },
+  {
+    "role": "assistant",
+    "content": "{\"method_body\":\"{\\n  all_same :\u003d x \u003d\u003d y \u0026\u0026 y \u003d\u003d z;\\n}\"}"
+  }
+]

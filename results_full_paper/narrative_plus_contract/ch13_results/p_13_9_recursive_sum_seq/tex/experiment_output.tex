@@ -1,0 +1,120 @@
+\documentclass{article}
+\usepackage{lmodern}
+\usepackage{amsmath}
+\usepackage{listings}
+\usepackage{fullpage}
+\usepackage{parskip}
+\usepackage{xcolor}
+\lstset{
+	basicstyle=\ttfamily,
+	columns=fullflexible,
+	frame=single,
+	breaklines=true,
+	postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},
+}
+\begin{document}
+\title{Experiment `p\_13\_9\_recursive\_sum\_seq' Results}
+\author{\today}
+\date{}
+\maketitle
+\textbf{Experiment outcome: }SUCCESS
+\\\textbf{Bad responses: }0
+\\\textbf{Responses containing}~\texttt{assume}~\textbf{: }0
+\\\textbf{Responses containing}~\texttt{expect}~\textbf{: }0
+\\\textbf{Resolution attempts: }1
+\\\textbf{Hard fails (resolution): }0
+\\\textbf{Soft fails (resolution): }0
+\\\textbf{Verification attempts: }1
+\section*{Problem Specification}
+\textbf{Problem name: }p\_13\_9\_recursive\_sum\_seq
+\\\textbf{Natural language statement: }Write a recursive method that takes an array and returns the sum of the values.
+\\\textbf{Method signature: }p\_13\_9\_recursive\_sum\_seq(inputs: seq<int>) returns (sum: int)
+\subsection*{Ensures}
+\begin{itemize}
+\item \texttt{sum == sum\_array(inputs)}
+\end{itemize}
+\subsection*{Functional Code Given}
+\begin{lstlisting}
+function sum_array(inputs: seq<int>): int
+  ensures sum_array(inputs) == (if |inputs| == 0 then 0 else inputs[0] + sum_array(inputs[1..]))
+{
+  if |inputs| == 0 then 0
+  else inputs[0] + sum_array(inputs[1..])
+}
+\end{lstlisting}
+\clearpage
+\section*{GenAI interactions}
+Below you will find all interactions between the `user' (program) and the `assistant' (OpenAI).
+\subsection*{Program $\rightarrow$ GenAI}
+\begin{lstlisting}
+You are given the following task to perform in Dafny:
+
+Write a recursive method that takes an array and returns the sum of the values.
+
+The signature should be:
+
+p_13_9_recursive_sum_seq(inputs: seq<int>) returns (sum: int)
+
+The method should respect the following contract:
+
+ensures sum == sum_array(inputs)
+
+The contract uses the following dafny code:
+
+function sum_array(inputs: seq<int>): int
+  ensures sum_array(inputs) == (if |inputs| == 0 then 0 else inputs[0] + sum_array(inputs[1..]))
+{
+  if |inputs| == 0 then 0
+  else inputs[0] + sum_array(inputs[1..])
+}
+
+These function(s) must not be used in your implementation of the method.
+
+Produce and show only the Dafny body of this method, including the curly braces that surround it. Do not show the signature nor contract. You must not use 'assume' nor 'expect' anywhere in your code.
+\end{lstlisting}
+\subsection*{GenAI $\rightarrow$ Program}
+\textbf{System fingerprint: }null
+\\\textbf{ID: }chatcmpl-DnAqKOv5n4h4704dYPEXhpmU2Loto
+\\\textbf{Model: }gpt-5.5-2026-04-23
+\\\textbf{Created at: }1780612124
+\\\textbf{Finish reason: }stop
+\\\textbf{Usage: }448 tokens in, and 474 tokens out
+\begin{lstlisting}
+{
+  if |inputs| == 0 {
+    sum := 0;
+  } else {
+    var tailSum := p_13_9_recursive_sum_seq(inputs[1..]);
+    sum := inputs[0] + tailSum;
+  }
+}
+\end{lstlisting}
+\section*{Final Program}
+\begin{lstlisting}
+function sum_array(inputs: seq<int>): int
+  ensures sum_array(inputs) == (if |inputs| == 0 then 0 else inputs[0] + sum_array(inputs[1..]))
+{
+  if |inputs| == 0 then 0
+  else inputs[0] + sum_array(inputs[1..])
+}
+
+method p_13_9_recursive_sum_seq(inputs: seq<int>) returns (sum: int)
+	ensures sum == sum_array(inputs)
+{
+  if |inputs| == 0 {
+    sum := 0;
+  } else {
+    var tailSum := p_13_9_recursive_sum_seq(inputs[1..]);
+    sum := inputs[0] + tailSum;
+  }
+}
+\end{lstlisting}
+\section*{Total Token Usage}
+\textbf{Input tokens: }448
+\\\textbf{Output tokens: }474
+\\\textbf{Reasoning tokens: }397
+\\\textbf{Sum of `total tokens': }922
+\section*{Experiment Timings}
+\textbf{Overall Experiment} started at 1780612123395, ended at 1780612147669, lasting 24274ms (24.27 seconds)
+\\\textbf{Iteration \#1} started at 1780612123395, ended at 1780612147668, lasting 24273ms (24.27 seconds)
+\end{document}

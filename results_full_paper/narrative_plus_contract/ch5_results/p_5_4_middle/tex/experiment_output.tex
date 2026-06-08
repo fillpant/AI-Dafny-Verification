@@ -1,0 +1,124 @@
+\documentclass{article}
+\usepackage{lmodern}
+\usepackage{amsmath}
+\usepackage{listings}
+\usepackage{fullpage}
+\usepackage{parskip}
+\usepackage{xcolor}
+\lstset{
+	basicstyle=\ttfamily,
+	columns=fullflexible,
+	frame=single,
+	breaklines=true,
+	postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},
+}
+\begin{document}
+\title{Experiment `p\_5\_4\_middle' Results}
+\author{\today}
+\date{}
+\maketitle
+\textbf{Experiment outcome: }SUCCESS
+\\\textbf{Bad responses: }0
+\\\textbf{Responses containing}~\texttt{assume}~\textbf{: }0
+\\\textbf{Responses containing}~\texttt{expect}~\textbf{: }0
+\\\textbf{Resolution attempts: }1
+\\\textbf{Hard fails (resolution): }0
+\\\textbf{Soft fails (resolution): }0
+\\\textbf{Verification attempts: }1
+\section*{Problem Specification}
+\textbf{Problem name: }p\_5\_4\_middle
+\\\textbf{Natural language statement: }Write a method that returns the middle character of a string if the length is odd, or the two middle characters if the length is even. For example, middle("middle") returns "dd".
+\\\textbf{Method signature: }p\_5\_4\_middle(str: string) returns (middle\_str: string)
+\subsection*{Ensures}
+\begin{itemize}
+\item \texttt{if |str| \% 2 == 1 then |middle\_str| == 1 else |middle\_str| == 2}
+\item \texttt{if |str| \% 2 == 1 then middle\_str[0] == str[|str| / 2] else middle\_str == str[|str| / 2 - 1 .. (|str| / 2) + 1]}
+\end{itemize}
+\subsection*{Requires}
+\begin{itemize}
+\item \texttt{0 < |str|}
+\end{itemize}
+\clearpage
+\section*{GenAI interactions}
+Below you will find all interactions between the `user' (program) and the `assistant' (OpenAI).
+\subsection*{Program $\rightarrow$ GenAI}
+\begin{lstlisting}
+You are given the following task to perform in Dafny:
+
+Write a method that returns the middle character of a string if the length is odd, or the two middle characters if the length is even. For example, middle("middle") returns "dd".
+
+The signature should be:
+
+p_5_4_middle(str: string) returns (middle_str: string)
+
+The method should respect the following contract:
+
+requires 0 < |str|, ensures if |str| % 2 == 1 then |middle_str| == 1 else |middle_str| == 2, ensures if |str| % 2 == 1 then middle_str[0] == str[|str| / 2] else middle_str == str[|str| / 2 - 1 .. (|str| / 2) + 1]
+
+Produce and show only the Dafny body of this method, including the curly braces that surround it. Do not show the signature nor contract. You must not use 'assume' nor 'expect' anywhere in your code.
+\end{lstlisting}
+\subsection*{GenAI $\rightarrow$ Program}
+\textbf{System fingerprint: }null
+\\\textbf{ID: }chatcmpl-DnSBzakaqzyL7SvcojBSjJmnHObh8
+\\\textbf{Model: }gpt-5.5-2026-04-23
+\\\textbf{Created at: }1780678815
+\\\textbf{Finish reason: }stop
+\\\textbf{Usage: }470 tokens in, and 1224 tokens out
+\begin{lstlisting}
+{
+  var n := |str|;
+  var mid := n / 2;
+
+  if n % 2 == 1 {
+    assert n == 2 * mid + 1;
+    assert mid < n;
+    assert mid + 1 <= n;
+    middle_str := str[mid .. mid + 1];
+    assert |middle_str| == 1;
+    assert middle_str[0] == str[mid];
+  } else {
+    assert n % 2 == 0;
+    assert n == 2 * mid;
+    assert mid > 0;
+    assert mid + 1 <= n;
+    middle_str := str[mid - 1 .. mid + 1];
+    assert |middle_str| == 2;
+  }
+}
+\end{lstlisting}
+\section*{Final Program}
+\begin{lstlisting}
+method p_5_4_middle(str: string) returns (middle_str: string)
+	requires 0 < |str|
+	ensures if |str| % 2 == 1 then |middle_str| == 1 else |middle_str| == 2
+	ensures if |str| % 2 == 1 then middle_str[0] == str[|str| / 2] else middle_str == str[|str| / 2 - 1 .. (|str| / 2) + 1]
+{
+  var n := |str|;
+  var mid := n / 2;
+
+  if n % 2 == 1 {
+    assert n == 2 * mid + 1;
+    assert mid < n;
+    assert mid + 1 <= n;
+    middle_str := str[mid .. mid + 1];
+    assert |middle_str| == 1;
+    assert middle_str[0] == str[mid];
+  } else {
+    assert n % 2 == 0;
+    assert n == 2 * mid;
+    assert mid > 0;
+    assert mid + 1 <= n;
+    middle_str := str[mid - 1 .. mid + 1];
+    assert |middle_str| == 2;
+  }
+}
+\end{lstlisting}
+\section*{Total Token Usage}
+\textbf{Input tokens: }470
+\\\textbf{Output tokens: }1224
+\\\textbf{Reasoning tokens: }1024
+\\\textbf{Sum of `total tokens': }1694
+\section*{Experiment Timings}
+\textbf{Overall Experiment} started at 1780678795916, ended at 1780678910818, lasting 114902ms (114.90 seconds)
+\\\textbf{Iteration \#1} started at 1780678795919, ended at 1780678910814, lasting 114895ms (114.90 seconds)
+\end{document}
